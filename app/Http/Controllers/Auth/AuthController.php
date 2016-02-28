@@ -28,7 +28,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    public $redirectTo = 'dashboard';
+    public $redirectTo = 'home';
 
     /**
      * Login path

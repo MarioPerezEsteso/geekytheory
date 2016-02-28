@@ -27,3 +27,8 @@ Route::get('logout', ['as' => 'auth/logout', 'uses' => 'Auth\AuthController@getL
  */
 Route::get('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController@getRegister']);
 Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController@postRegister']);
+
+/*
+ * Home routes
+ */
+Route::get('home', 'Home\HomeController@index');
