@@ -45,9 +45,10 @@ class User extends Model implements AuthenticatableContract,
     public function getBasicUserData()
     {
         return array(
-            "name" => $this->name,
-            "email" => $this->email,
-            "avatar" => $this->getGravatar($this->email, '100', 'mm', 'g'));
+            "name"      => $this->name,
+            "job"       => $this->job,
+            "email"     => $this->email,
+            "avatar"    => $this->getGravatar($this->email, '100', 'mm', 'g'));
     }
 
     /**

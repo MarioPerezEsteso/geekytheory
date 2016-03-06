@@ -153,8 +153,10 @@
                             <li class="user-header">
                                 <img src="{{ $user['avatar'] }}" class="img-circle" alt="User Image">
                                 <p>
-                                    Alexander Pierce - Web Developer
-                                    <small>Member since Nov. 2012</small>
+                                    {{ $user['name'] }}
+                                    @if (!empty($user['job']))
+                                        - {{ $user['job'] }}
+                                    @endif
                                 </p>
                             </li>
                             <!-- Menu Footer-->
@@ -188,9 +190,8 @@
                     <img src="{{ $user['avatar'] }}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
-                    <p>Alexander Pierce</p>
-                    <!-- Status -->
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    <p>{{  $user['name'] }}</p>
+                    <small>{{ $user['job'] }}</small>
                 </div>
             </div>
 
