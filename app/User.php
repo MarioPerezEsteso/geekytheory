@@ -11,8 +11,8 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 class User extends Model implements AuthenticatableContract,
-                                    AuthorizableContract,
-                                    CanResetPasswordContract
+    AuthorizableContract,
+    CanResetPasswordContract
 {
     use Authenticatable, Authorizable, CanResetPassword;
 
@@ -28,7 +28,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = ['name', 'email', 'password', 'biography', 'job'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -38,6 +38,22 @@ class User extends Model implements AuthenticatableContract,
     protected $hidden = ['password', 'remember_token'];
 
     /**
+     * Social networks available
+     *
+     * @var array
+     */
+    protected $socialNetworks = ['twitter',
+        'instagram',
+        'facebook',
+        'github',
+        'youtube',
+        'dribble',
+        'googleplus',
+        'stackoverflow',
+        'flickr',
+        'bitbucket'];
+
+    /**
      * Returns the basic user data for the admin panel view
      *
      * @return array
@@ -45,10 +61,11 @@ class User extends Model implements AuthenticatableContract,
     public function getBasicUserData()
     {
         return array(
-            "name"      => $this->name,
-            "job"       => $this->job,
-            "email"     => $this->email,
-            "avatar"    => $this->getGravatar($this->email, '100', 'mm', 'g'));
+            'id' => $this->id,
+            'name' => $this->name,
+            'job' => $this->job,
+            'email' => $this->email,
+            'avatar' => $this->getGravatar($this->email, '100', 'mm', 'g'));
     }
 
     /**
@@ -61,9 +78,10 @@ class User extends Model implements AuthenticatableContract,
      * @return String containing Gravatar URL
      * @source http://gravatar.com/site/implement/images/php/
      */
-    public function getGravatar($email, $s = '100', $d = 'mm', $r = 'g') {
+    public function getGravatar($email, $s = '100', $d = 'mm', $r = 'g')
+    {
         $url = '//www.gravatar.com/avatar/';
-        $url .= md5( strtolower( trim( $email ) ) );
+        $url .= md5(strtolower(trim($email)));
         $url .= "?s=$s&d=$d&r=$r";
         return $url;
     }

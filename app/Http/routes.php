@@ -32,3 +32,14 @@ Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController
  * Home routes
  */
 Route::get('home', 'Home\HomeController@index');
+
+Route::get('home/profile/{id?}', [
+    'middleware' => 'auth',
+    'uses' => 'UserController@edit'
+])->where('id', '[0-9]+');
+
+Route::post('home/profile/update/{id?}', [
+    'middleware' => 'auth',
+    'before' => 'csrf',
+    'uses' => 'UserController@update'
+])->where('id', '[0-9]+');;

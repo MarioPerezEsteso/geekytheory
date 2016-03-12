@@ -209,16 +209,26 @@
 
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu">
-                <li class="{{ classActiveRoute('home') }}"><a href="{{ url('home') }}"><i class="fa fa-home"></i> <span>{{ trans('home.home') }}</span></a></li>
-                <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-                <li class="treeview">
+                <li class="{{ classActiveRoute('home') }}">
+                    <a href="{{ url('home') }}">
+                        <i class="fa fa-home"></i>
+                        <span>{{ trans('home.home') }}</span>
+                    </a>
+                </li>
+                <li class="{{ classActiveRoute('home/profile') }}">
+                    <a href="{{ url('home/profile') }}">
+                        <i class="fa fa-user"></i>
+                        <span>{{ trans('home.user_profile') }}</span>
+                    </a>
+                </li>
+                {{--<li class="treeview">
                     <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span> <i
                                 class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
                         <li><a href="#">Link in level 2</a></li>
                         <li><a href="#">Link in level 2</a></li>
                     </ul>
-                </li>
+                </li>--}}
             </ul><!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
@@ -229,8 +239,8 @@
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>
-                Page Header
-                <small>Optional description</small>
+                @yield('pageTitle')
+                <small>@yield('pageDescription')</small>
             </h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
