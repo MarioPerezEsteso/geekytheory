@@ -53,6 +53,16 @@ Route::post('home/profile/update/{id?}', [
 ]);
 
 Route::get('home/posts/{username?}', [
-    'middleware' => 'auth',
-    'uses'       => 'PostController@indexHome'
+    'middleware'    => 'auth',
+    'uses'          => 'PostController@indexHome'
+]);
+
+Route::get('home/posts/delete/{id}', [
+    'middleware'    => 'auth',
+    'uses'          => 'PostController@delete'
+]);
+
+Route::get('home/posts/restore/{id}', [
+    'middleware'    => 'auth',
+    'uses'          => 'PostController@restore'
 ]);

@@ -60,16 +60,24 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="{{ url('home/posts/edit') }}" class="margin">
-                                                <span class="label bg-blue">
-                                                     {{ trans('home.edit') }}
-                                                </span>
-                                            </a>
-                                            <a href="{{ url('home/posts/edit') }}">
-                                                <span class="label bg-red">
-                                                     {{ trans('home.delete') }}
-                                                </span>
-                                            </a>
+                                            @if ($post->status != 'deleted')
+                                                <a href="{{ url('home/posts/edit') }}" class="margin">
+                                                    <span class="label bg-blue">
+                                                         {{ trans('home.edit') }}
+                                                    </span>
+                                                </a>
+                                                <a href="{{ url('home/posts/delete/' . $post->id) }}">
+                                                    <span class="label bg-red">
+                                                         {{ trans('home.delete') }}
+                                                    </span>
+                                                </a>
+                                            @else
+                                                <a href="{{ url('home/posts/restore/' . $post->id) }}" class="margin">
+                                                    <span class="label bg-purple">
+                                                         {{ trans('home.restore') }}
+                                                    </span>
+                                                </a>
+                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

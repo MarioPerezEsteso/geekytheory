@@ -35,4 +35,5 @@ return [
     'post_create'   => 'Crear artículo',
     'categories'    => 'Categorías',
     'tags'          => 'Etiquetas',
+    'restore'       => 'Restaurar',
 ];

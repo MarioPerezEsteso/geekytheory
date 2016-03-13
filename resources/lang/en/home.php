@@ -35,4 +35,5 @@ return [
     'post_create'   => 'Create post',
     'categories'    => 'Categories',
     'tags'          => 'Tags',
+    'restore'       => 'Restore',
 ];

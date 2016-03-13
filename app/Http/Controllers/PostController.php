@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 use App\Post;
 use App\User;
+use Illuminate\Support\Facades\Redirect;
 
 class PostController extends Controller
 {
@@ -103,13 +104,30 @@ class PostController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Set post status as draft after being deleted
+     *
+     * @param $id
+     * @return \Illuminate\Http\Response
+     */
+    public function restore($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->status = Post::STATUS_DRAFT;
+        $post->save();
+        return Redirect::back();
+    }
+
+    /**
+     * Set post status as deleted.
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->status = Post::STATUS_DELETED;
+        $post->save();
+        return Redirect::back();
     }
 }
