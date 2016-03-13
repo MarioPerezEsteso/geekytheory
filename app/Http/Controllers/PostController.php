@@ -14,6 +14,11 @@ class PostController extends Controller
 {
 
     /**
+     * Number of posts to show with pagination
+     */
+    const POSTS_PAGINATION_NUMBER = 10;
+
+    /**
      * Display a listing of posts.
      *
      * @param $username
@@ -24,7 +29,7 @@ class PostController extends Controller
     }
 
     /**
-     * Display a listing of the resource in admin panel.
+     * Display a listing of the posts in admin panel.
      *
      * @param null $username
      * @return \Illuminate\Http\Response
@@ -32,10 +37,12 @@ class PostController extends Controller
     public function indexHome($username = null)
     {
         if (!empty($username)) {
+            /*  Get posts of a concrete user */
             $user = User::where('username', $username)->firstOrFail();
-            $posts = $user->posts()->paginate(5);
+            $posts = $user->posts()->paginate(self::POSTS_PAGINATION_NUMBER);
         } else {
-            $posts = Post::paginate(5);
+            /* Get all posts */
+            $posts = Post::paginate(self::POSTS_PAGINATION_NUMBER);
         }
         return view('home.posts.index', compact('posts'));
     }
