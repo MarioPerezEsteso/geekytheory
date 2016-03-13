@@ -6,9 +6,16 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Tag;
 
 class TagController extends Controller
 {
+
+    /**
+     * Number of tags to show with pagination
+     */
+    const TAGS_PAGINATION_NUMBER = 10;
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +23,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        $tags = Tag::paginate(self::TAGS_PAGINATION_NUMBER);
+        return view('home.posts.tags', compact('tags'));
     }
 
     /**

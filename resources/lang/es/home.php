@@ -36,4 +36,5 @@ return [
     'categories'    => 'Categorías',
     'tags'          => 'Etiquetas',
     'restore'       => 'Restaurar',
+    'tags_page_description'     => 'En esta página podrá gestionar sus etiquetas',
 ];

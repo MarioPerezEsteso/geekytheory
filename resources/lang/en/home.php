@@ -36,4 +36,5 @@ return [
     'categories'    => 'Categories',
     'tags'          => 'Tags',
     'restore'       => 'Restore',
+    'tags_page_description'     => 'Here is where you can manage your tags',
 ];
