@@ -32,4 +32,7 @@ return [
     'showing'       => 'Mostrando',
     'to'            => 'a',
     'of'            => 'de',
+    'post_create'   => 'Crear artículo',
+    'categories'    => 'Categorías',
+    'tags'          => 'Etiquetas',
 ];

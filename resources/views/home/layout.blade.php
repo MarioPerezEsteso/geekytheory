@@ -227,6 +227,21 @@
                                 {{ trans('home.all_posts') }}
                             </a>
                         </li>
+                        <li class="{{ classActiveRoute('home/posts/create') }}">
+                            <a href="{{ url('home/posts/create') }}">
+                                {{ trans('home.post_create') }}
+                            </a>
+                        </li>
+                        <li class="{{ classActiveRoute('home/categories') }}">
+                            <a href="{{ url('home/categories') }}">
+                                {{ trans('home.categories') }}
+                            </a>
+                        </li>
+                        <li class="{{ classActiveRoute('home/tags') }}">
+                            <a href="{{ url('home/tags') }}">
+                                {{ trans('home.tags') }}
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="{{ classActiveRoute('home/profile') }}">
