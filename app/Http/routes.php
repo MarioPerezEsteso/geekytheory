@@ -66,3 +66,8 @@ Route::get('home/posts/restore/{id}', [
     'middleware'    => 'auth',
     'uses'          => 'PostController@restore'
 ]);
+
+Route::get('home/tags', [
+    'middleware'    => 'auth',
+    'uses'          => 'TagController@index'
+]);
