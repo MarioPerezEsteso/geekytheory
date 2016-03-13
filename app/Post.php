@@ -49,16 +49,21 @@ class Post extends Model
     }
 
     /**
-     *
+     * Get post tags
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function getTags()
+    public function tags()
     {
         return $this->hasMany('App\Tag');
     }
 
-    public function getCategories()
+    /**
+     * Get post categories
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function categories()
     {
         return $this->hasMany('App\Categories');
     }
