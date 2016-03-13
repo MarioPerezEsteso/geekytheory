@@ -15,55 +15,30 @@
 @section('content')
     <div class="box">
         <div class="box-header">
-            <h3 class="box-title">Data Table With Full Features</h3>
+            <h3 class="box-title"></h3>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
             <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <div class="dataTables_length" id="example1_length">
-                            <label>
-                                Show
-                                <select name="example1_length" aria-controls="example1" class="form-control input-sm">
-                                    <option value="10">10</option>
-                                    <option value="25">25</option>
-                                    <option value="50">50</option>
-                                    <option value="100">100</option>
-                                </select>
-                                entries
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div id="example1_filter" class="dataTables_filter">
-                            <label>
-                                Search:
-                                <input type="search" class="form-control input-sm" placeholder=""
-                                       aria-controls="example1">
-                            </label>
-                        </div>
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-sm-12">
                         <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
                                aria-describedby="example1_info">
                             <thead>
                             <tr role="row">
-                                <th class="sorting_asc" style="width: 296px;">
+                                <th class="sorting_asc" style="width: 20%;">
                                     {{ trans('home.post_title') }}
                                 </th>
-                                <th class="sorting" style="width: 361px;">
+                                <th class="sorting" style="width: 50%;">
                                     {{ trans('home.description') }}
                                 </th>
-                                <th class="sorting" style="width: 321px;">
+                                <th class="sorting" style="width: 5%;">
                                     {{ trans('home.status') }}
                                 </th>
-                                <th class="sorting" style="width: 256px;">
+                                <th class="sorting hidden-xs" style="width: 15%;">
                                     {{ trans('home.author') }}
                                 </th>
-                                <th class="sorting" style="width: 190px;">
+                                <th class="sorting" style="width: 10%;">
                                     {{ trans('home.actions') }}
                                 </th>
                             </tr>
@@ -74,13 +49,28 @@
                                     <tr role="row" class="odd">
                                         <td>{{ $post->title }}</td>
                                         <td>{{ $post->description }}</td>
-                                        <td>{{ trans('home.status_' . $post->status) }}</td>
                                         <td>
+                                            <span class="label {{ getStatusLabelClass($post->status) }}">
+                                                {{ trans('home.status_' . $post->status) }}
+                                            </span>
+                                        </td>
+                                        <td class="hidden-xs">
                                             <a href="{{ url('home/posts/' . $post->user->username) }}">
                                                 {{ $post->user->name }}
                                             </a>
                                         </td>
-                                        <td>A</td>
+                                        <td>
+                                            <a href="{{ url('home/posts/edit') }}" class="margin">
+                                                <span class="label bg-blue">
+                                                     {{ trans('home.edit') }}
+                                                </span>
+                                            </a>
+                                            <a href="{{ url('home/posts/edit') }}">
+                                                <span class="label bg-red">
+                                                     {{ trans('home.delete') }}
+                                                </span>
+                                            </a>
+                                        </td>
                                     </tr>
                                 @endforeach
                             @else
@@ -92,37 +82,39 @@
 
                             </tbody>
                             <tfoot>
-                            <th class="sorting_asc" style="width: 296px;">
+                            <th class="sorting_asc" style="width: 20%;">
                                 {{ trans('home.post_title') }}
                             </th>
-                            <th class="sorting" style="width: 361px;">
+                            <th class="sorting" style="width: 50%;">
                                 {{ trans('home.description') }}
                             </th>
-                            <th class="sorting" style="width: 321px;">
+                            <th class="sorting" style="width: 5%;">
                                 {{ trans('home.status') }}
                             </th>
-                            <th class="sorting" style="width: 256px;">
+                            <th class="sorting hidden-xs" style="width: 15%;">
                                 {{ trans('home.author') }}
                             </th>
-                            <th class="sorting" style="width: 190px;">
+                            <th class="sorting" style="width: 10%;">
                                 {{ trans('home.actions') }}
                             </th>
                             </tfoot>
                         </table>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-5">
-                        <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">Showing 1 to 25
-                            of 57 entries
+                @if (count($posts) > 0)
+                    <div class="row">
+                        <div class="col-sm-5">
+                            <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
+                                {{ getPaginationText($posts) }}
+                            </div>
+                        </div>
+                        <div class="col-sm-7">
+                            <div class="dataTables_paginate paging_simple_numbers pull-right">
+                                {!! $posts !!}
+                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-7">
-                        <div class="dataTables_paginate paging_simple_numbers" id="example1_paginate">
-                            {!! $posts !!}
-                        </div>
-                    </div>
-                </div>
+                @endif
             </div>
         </div>
         <!-- /.box-body -->
