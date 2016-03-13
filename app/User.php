@@ -28,7 +28,7 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password', 'biography', 'job'];
+    protected $fillable = ['name', 'username', 'email', 'password', 'biography', 'job'];
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -52,6 +52,14 @@ class User extends Model implements AuthenticatableContract,
         'stackoverflow',
         'flickr',
         'bitbucket'];
+
+    /**
+     * Get the posts of the user.
+     */
+    public function posts()
+    {
+        return $this->hasMany('App\Post');
+    }
 
     /**
      * Returns the basic user data for the admin panel view

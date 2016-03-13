@@ -13,6 +13,7 @@ class UsersTableSeeder extends Seeder
     {
         DB::table('users')->insert([
             'name'          => 'user',
+            'username'      => 'username',
             'email'         => 'alias@domain.com',
             'password'      => bcrypt('password'),
             'created_at'    => \Carbon\Carbon::now()->toDateTimeString(),
