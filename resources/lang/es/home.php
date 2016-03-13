@@ -8,9 +8,22 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'home'      => 'Inicio',
+    'home'          => 'Inicio',
     'user_profile'  => 'Perfil de usuario',
     'user_profile_page_description'  => 'Aquí puede editar su perfil de usuario',
-    'save'  => 'Guardar',
-
+    'save'          => 'Guardar',
+    'posts'         => 'Artículos',
+    'posts_page_description'    => 'Lista de artículos de la página',
+    'post_title'    => 'Título',
+    'description'   => 'Descripción',
+    'actions'       => 'Acciones',
+    'author'        => 'Autor',
+    'status'        => 'Estado',
+    'status_pending'    => 'Pendiente',
+    'status_draft'  => 'Borrador',
+    'status_published'  => 'Publicado',
+    'status_deleted'    => 'Eliminado',
+    'status_scheduled'  => 'Programado',
+    'no_posts'      => 'No se ha encontrado ningún artículo',
+    'all_posts'     => 'Todos los artículos',
 ];
