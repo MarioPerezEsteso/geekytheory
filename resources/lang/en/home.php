@@ -8,11 +8,12 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'home'      => 'Home',
+    'home'          => 'Home',
     'user_profile'  => 'User profile',
     'user_profile_page_description'  => 'Here is where you can edit you user profile',
-    'save'  => 'Save',
+    'save'          => 'Save',
     'posts'         => 'Posts',
+    'posts_min'     => 'posts',
     'posts_page_description'    => 'List of posts',
     'post_title'    => 'Title',
     'description'   => 'Description',
@@ -26,4 +27,9 @@ return [
     'status_scheduled'  => 'Scheduled',
     'no_posts'      => 'No posts were found',
     'all_posts'     => 'All posts',
+    'edit'          => 'Edit',
+    'delete'        => 'Delete',
+    'showing'       => 'Showing',
+    'to'            => 'to',
+    'of'            => 'of',
 ];
