@@ -15,22 +15,9 @@
 @section('content')
     <div class="row">
         <div class="col-md-4">
-            @if (count($errors))
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>
-                                {{ $error }}
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            @if (Session::has('success'))
-                <div class="alert alert-success">
-                    {{ Session::get('success') }}
-                </div>
-            @endif
+
+            @include('home.posts.partials.formMessages')
+
             {!! Form::model($userProfile, ['url' => 'home/profile/update/' . $userProfile->id, 'class' => 'form']) !!}
 
             <div class="form-group">
