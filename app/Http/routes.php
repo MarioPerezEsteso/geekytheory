@@ -69,5 +69,22 @@ Route::get('home/posts/restore/{id}', [
 
 Route::get('home/tags', [
     'middleware'    => 'auth',
-    'uses'          => 'TagController@index'
+    'uses'          => 'TagController@create'
+]);
+
+Route::get('home/tags/edit/{id}', [
+    'middleware'    => 'auth',
+    'uses'          => 'TagController@edit'
+]);
+
+Route::post('home/tags/store', [
+    'middleware' => 'auth',
+    'before' => 'csrf',
+    'uses' => 'TagController@store'
+]);
+
+Route::post('home/tags/update/{id}', [
+    'middleware' => 'auth',
+    'before' => 'csrf',
+    'uses' => 'TagController@update'
 ]);
