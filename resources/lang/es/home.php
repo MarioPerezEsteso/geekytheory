@@ -37,4 +37,12 @@ return [
     'tags'          => 'Etiquetas',
     'restore'       => 'Restaurar',
     'tags_page_description'     => 'En esta página podrá gestionar sus etiquetas',
+    'tag_add'       => 'Añadir etiqueta',
+    'tag_list'      => 'Lista de etiquetas',
+    'tag_min'       => 'Etiqueta',
+    'slug'          => 'Slug',
+    'no_tags'       => 'No se ha encontrado ninguna etiqueta',
+    'tag_create_success'    => 'La etiqueta se ha creado exitosamente',
+    'tag_edit'      => 'Editar etiqueta',
+    'update'        => 'Actualizar',
 ];

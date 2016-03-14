@@ -37,4 +37,13 @@ return [
     'tags'          => 'Tags',
     'restore'       => 'Restore',
     'tags_page_description'     => 'Here is where you can manage your tags',
+    'tag_add'       => 'Add tag',
+    'tag_list'      => 'List of tags',
+    'tag_min'       => 'Tag',
+    'slug'          => 'Slug',
+    'no_tags'       => 'No tags were found',
+    'tag_create_success'    => 'The tag has been created successfully',
+    'tag_updated_success'   => 'The tag has been updated successfully',
+    'tag_edit'      => 'Edit tag',
+    'update'        => 'Update',
 ];
