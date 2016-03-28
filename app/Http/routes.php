@@ -88,3 +88,25 @@ Route::post('home/tags/update/{id}', [
     'before' => 'csrf',
     'uses' => 'TagController@update'
 ]);
+
+Route::get('home/categories', [
+    'middleware'    => 'auth',
+    'uses'          => 'CategoryController@create'
+]);
+
+Route::get('home/categories/edit/{id}', [
+    'middleware'    => 'auth',
+    'uses'          => 'CategoryController@edit'
+]);
+
+Route::post('home/categories/store', [
+    'middleware' => 'auth',
+    'before' => 'csrf',
+    'uses' => 'CategoryController@store'
+]);
+
+Route::post('home/categories/update/{id}', [
+    'middleware' => 'auth',
+    'before' => 'csrf',
+    'uses' => 'CategoryController@update'
+]);
