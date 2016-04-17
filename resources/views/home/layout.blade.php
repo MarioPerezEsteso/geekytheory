@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
     {!! Html::style('admin/assets/css/AdminLTE.min.css') !!}
+    {!! Html::style('admin/assets/css/app.css') !!}
     <!-- AdminLTE Skin -->
     {!! Html::style('admin/assets/css/skins/skin-blue.min.css') !!}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -215,6 +216,35 @@
                         <span>{{ trans('home.home') }}</span>
                     </a>
                 </li>
+                <li class="{{ classActiveRoute('home/posts') }} treeview">
+                    <a href="{{ url('home/posts') }}">
+                        <i class="fa fa-book"></i>
+                        <span>{{ trans('home.posts') }}</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{{ classActiveRoute('home/posts') }}">
+                            <a href="{{ url('home/posts') }}">
+                                {{ trans('home.all_posts') }}
+                            </a>
+                        </li>
+                        <li class="{{ classActiveRoute('home/posts/create') }}">
+                            <a href="{{ url('home/posts/create') }}">
+                                {{ trans('home.post_create') }}
+                            </a>
+                        </li>
+                        <li class="{{ classActiveRoute('home/categories') }}">
+                            <a href="{{ url('home/categories') }}">
+                                {{ trans('home.categories') }}
+                            </a>
+                        </li>
+                        <li class="{{ classActiveRoute('home/tags') }}">
+                            <a href="{{ url('home/tags') }}">
+                                {{ trans('home.tags') }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="{{ classActiveRoute('home/profile') }}">
                     <a href="{{ url('home/profile') }}">
                         <i class="fa fa-user"></i>
@@ -242,10 +272,6 @@
                 @yield('pageTitle')
                 <small>@yield('pageDescription')</small>
             </h1>
-            <ol class="breadcrumb">
-                <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-                <li class="active">Here</li>
-            </ol>
         </section>
 
         <!-- Main content -->
@@ -255,16 +281,6 @@
 
         </section><!-- /.content -->
     </div><!-- /.content-wrapper -->
-
-    <!-- Main Footer -->
-    <footer class="main-footer">
-        <!-- To the right -->
-        <div class="pull-right hidden-xs">
-            Anything you want
-        </div>
-        <!-- Default to the left -->
-        <strong>Copyright &copy; 2015 <a href="#">Company</a>.</strong> All rights reserved.
-    </footer>
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -293,7 +309,7 @@
                 <h3 class="control-sidebar-heading">Tasks Progress</h3>
                 <ul class="control-sidebar-menu">
                     <li>
-                        <a href="javascript::;">
+                        <a href="javascript(0);">
                             <h4 class="control-sidebar-subheading">
                                 Custom Template Design
                                 <span class="label label-danger pull-right">70%</span>
@@ -338,5 +354,7 @@
 {!! Html::script('assets/js/bootstrap/bootstrap.min.js') !!}
 <!-- AdminLTE App -->
 {!! Html::script('admin/assets/js/app.min.js') !!}
+<!-- Custom Javascript -->
+@yield('custom-javascript')
 </body>
 </html>
