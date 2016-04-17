@@ -52,7 +52,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        @if(empty($post))
+                        @if(empty($post) || (!empty($post) && $post->status == \App\Http\Controllers\PostController::POST_STATUS_DRAFT))
                             <button class="btn btn-primary">
                                 <i class="glyphicon glyphicon-floppy-disk"></i>
                                 {{ trans('home.save_draft') }}

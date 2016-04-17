@@ -88,6 +88,7 @@ class PostController extends Controller
                               . self::POST_STATUS_PUBLISHED . ','
                               . self::POST_STATUS_SCHEDULED,
             'description' => 'required|max:170',
+            'slug' => 'required|unique:posts',
         );
 
         $requestParams = array(
@@ -96,6 +97,7 @@ class PostController extends Controller
             'description' => $request->description,
             'status' => $request->status,
             'tags' => $request->tags,
+            'slug' => $slug,
             'categories' => $request->categories,
         );
 
@@ -109,6 +111,7 @@ class PostController extends Controller
             $post->body = $requestParams['body'];
             $post->description = $requestParams['description'];
             $post->status = $requestParams['status'];
+            $post->slug = $slug;
             $post->user_id = Auth::user()->id;
             $post->save();
             $categories = Category::whereIn('id', $requestParams['categories'])->get();
@@ -151,7 +154,41 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $rules = array(
+            'title' => 'required|max:255unique:posts,id,' . $id,
+            'body' => 'required',
+            'status' => 'in:' . self::POST_STATUS_PENDING . ','
+                . self::POST_STATUS_DRAFT   . ','
+                . self::POST_STATUS_PUBLISHED . ','
+                . self::POST_STATUS_SCHEDULED,
+            'description' => 'required|max:170',
+        );
+
+        $requestParams = array(
+            'title' => $request->title,
+            'body'  => $request->body,
+            'description' => $request->description,
+            'status' => $request->status,
+            'tags' => $request->tags,
+            'categories' => $request->categories,
+        );
+
+        $validator = Validator::make($requestParams, $rules);
+
+        if ($validator->fails()) {
+            return Redirect::to('home/posts/create')->withErrors($validator->messages());
+        } else {
+            $post = Post::findOrFail($id);
+            $post->title = $requestParams['title'];
+            $post->body = $requestParams['body'];
+            $post->description = $requestParams['description'];
+            $post->status = $requestParams['status'];
+            $post->save();
+            $categories = Category::whereIn('id', $requestParams['categories'])->get();
+            $post->categories()->sync($categories);
+        }
+
+        return Redirect::to('home/posts/edit/' . $post->id)->withSuccess(trans('home.tag_create_success'));
     }
 
     /**

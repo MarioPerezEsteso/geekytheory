@@ -42,14 +42,14 @@ Route::post('register', ['as' => 'auth/register', 'uses' => 'Auth\AuthController
 Route::get('home', 'Home\HomeController@index');
 
 Route::get('home/profile/{id?}', [
-    'middleware' => 'auth',
-    'uses' => 'UserController@edit'
+    'middleware'    => 'auth',
+    'uses'          => 'UserController@edit'
 ]);
 
 Route::post('home/profile/update/{id?}', [
-    'middleware' => 'auth',
-    'before' => 'csrf',
-    'uses' => 'UserController@update'
+    'middleware'    => 'auth',
+    'before'        => 'csrf',
+    'uses'          => 'UserController@update'
 ]);
 
 Route::get('home/posts/create', [
@@ -62,15 +62,21 @@ Route::get('home/posts/edit/{id?}', [
     'uses'          => 'PostController@edit'
 ]);
 
+Route::post('home/posts/update/{id?}', [
+    'middleware'    => 'auth',
+    'before'        => 'csrf',
+    'uses'          => 'PostController@update'
+]);
+
 Route::get('home/posts/{username?}', [
     'middleware'    => 'auth',
     'uses'          => 'PostController@indexHome'
 ]);
 
 Route::post('home/posts/store', [
-    'middleware' => 'auth',
-    'before' => 'csrf',
-    'uses' => 'PostController@store'
+    'middleware'    => 'auth',
+    'before'        => 'csrf',
+    'uses'          => 'PostController@store'
 ]);
 
 Route::get('home/posts/delete/{id}', [
@@ -94,15 +100,15 @@ Route::get('home/tags/edit/{id}', [
 ]);
 
 Route::post('home/tags/store', [
-    'middleware' => 'auth',
-    'before' => 'csrf',
-    'uses' => 'TagController@store'
+    'middleware'    => 'auth',
+    'before'        => 'csrf',
+    'uses'          => 'TagController@store'
 ]);
 
 Route::post('home/tags/update/{id}', [
-    'middleware' => 'auth',
-    'before' => 'csrf',
-    'uses' => 'TagController@update'
+    'middleware'    => 'auth',
+    'before'        => 'csrf',
+    'uses'          => 'TagController@update'
 ]);
 
 Route::get('home/categories', [
@@ -116,13 +122,13 @@ Route::get('home/categories/edit/{id}', [
 ]);
 
 Route::post('home/categories/store', [
-    'middleware' => 'auth',
-    'before' => 'csrf',
-    'uses' => 'CategoryController@store'
+    'middleware'    => 'auth',
+    'before'        => 'csrf',
+    'uses'          => 'CategoryController@store'
 ]);
 
 Route::post('home/categories/update/{id}', [
-    'middleware' => 'auth',
-    'before' => 'csrf',
-    'uses' => 'CategoryController@update'
+    'middleware'    => 'auth',
+    'before'        => 'csrf',
+    'uses'          => 'CategoryController@update'
 ]);

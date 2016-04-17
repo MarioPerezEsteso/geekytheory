@@ -107,14 +107,14 @@ if (!function_exists('slugify')) {
  * @return string
  */
 if (!function_exists('getAvailableSlug')) {
-    function getAvailableSlug($text, $table)
+    function getAvailableSlug($text, $table, $column = 'slug')
     {
         $slugAvailable = false;
         $slugSuffix = "";
         $counter = 1;
         while (!$slugAvailable) {
             $slug = slugify($text . $slugSuffix);
-            if (DB::table($table)->where('slug', $slug)->first() == null) {
+            if (DB::table($table)->where($column, $slug)->first() == null) {
                 $slugAvailable = true;
             }
             $slugSuffix = "-" . $counter++;
