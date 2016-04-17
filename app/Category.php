@@ -25,7 +25,7 @@ class Category extends Model
         'slug',
     );
 
-    public function getPost()
+    public function posts()
     {
         return $this->belongsToMany('App\Post');
     }

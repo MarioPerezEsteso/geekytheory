@@ -61,7 +61,7 @@
                                         </td>
                                         <td>
                                             @if ($post->status != 'deleted')
-                                                <a href="{{ url('home/posts/edit') }}" class="margin">
+                                                <a href="{{ url('home/posts/edit/' . $post->id) }}" class="margin">
                                                     <span class="label bg-blue">
                                                          {{ trans('home.edit') }}
                                                     </span>

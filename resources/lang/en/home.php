@@ -34,6 +34,7 @@ return [
     'of'            => 'of',
     'post_create'   => 'Create post',
     'categories'    => 'Categories',
+    'categories_page_description'   => 'Here is where you can manage your categories',
     'tags'          => 'Tags',
     'restore'       => 'Restore',
     'tags_page_description'     => 'Here is where you can manage your tags',
@@ -46,4 +47,9 @@ return [
     'tag_updated_success'   => 'The tag has been updated successfully',
     'tag_edit'      => 'Edit tag',
     'update'        => 'Update',
+    'save_draft'    => 'Save draft',
+    'publish'       => 'Publish',
+    'move_to_trash' => 'Move to trash',
+    ''
+
 ];

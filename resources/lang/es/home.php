@@ -34,6 +34,7 @@ return [
     'of'            => 'de',
     'post_create'   => 'Crear artículo',
     'categories'    => 'Categorías',
+    'categories_page_description'   => 'En esta página podrá gestionar sus Categorías',
     'tags'          => 'Etiquetas',
     'restore'       => 'Restaurar',
     'tags_page_description'     => 'En esta página podrá gestionar sus etiquetas',
@@ -45,4 +46,7 @@ return [
     'tag_create_success'    => 'La etiqueta se ha creado exitosamente',
     'tag_edit'      => 'Editar etiqueta',
     'update'        => 'Actualizar',
+    'save_draft'    => 'Guardar borrador',
+    'publish'       => 'Publicar',
+    'move_to_trash' => 'Mover a la papelera',
 ];

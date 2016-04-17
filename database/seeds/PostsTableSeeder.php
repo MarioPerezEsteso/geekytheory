@@ -17,7 +17,7 @@ class PostsTableSeeder extends Seeder
             DB::table('posts')->insert([
                 'user_id' => 1,
                 'title' => $faker->unique()->sentence(),
-                'content' => $faker->text(),
+                'body' => $faker->text(),
                 'description' => $faker->text($maxNbChars = 150),
                 'slug' => $faker->unique()->word,
                 'status' => 'published',

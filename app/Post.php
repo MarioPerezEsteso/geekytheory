@@ -32,7 +32,7 @@ class Post extends Model
         'user_id',
         'slug',
         'title',
-        'content',
+        'body',
         'description',
         'status',
         'image',
@@ -55,7 +55,7 @@ class Post extends Model
      */
     public function tags()
     {
-        return $this->hasMany('App\Tag');
+        return $this->belongsToMany('App\Tag', 'posts_tags');
     }
 
     /**
@@ -65,7 +65,7 @@ class Post extends Model
      */
     public function categories()
     {
-        return $this->hasMany('App\Categories');
+        return $this->belongsToMany('App\Category', 'posts_categories');
     }
 
 }

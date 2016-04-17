@@ -99,6 +99,31 @@ if (!function_exists('slugify')) {
 }
 
 /**
+ * Returns slug from a text
+ *
+ * @see http://stackoverflow.com/a/2955878
+ *
+ * @param string $text
+ * @return string
+ */
+if (!function_exists('getAvailableSlug')) {
+    function getAvailableSlug($text, $table)
+    {
+        $slugAvailable = false;
+        $slugSuffix = "";
+        $counter = 1;
+        while (!$slugAvailable) {
+            $slug = slugify($text . $slugSuffix);
+            if (DB::table($table)->where('slug', $slug)->first() == null) {
+                $slugAvailable = true;
+            }
+            $slugSuffix = "-" . $counter++;
+        }
+        return $slug;
+    }
+}
+
+/**
  * Returns name of an image
  */
 if (!function_exists('getImageName')) {

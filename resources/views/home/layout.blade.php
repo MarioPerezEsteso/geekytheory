@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
     {!! Html::style('admin/assets/css/AdminLTE.min.css') !!}
+    {!! Html::style('admin/assets/css/app.css') !!}
     <!-- AdminLTE Skin -->
     {!! Html::style('admin/assets/css/skins/skin-blue.min.css') !!}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -281,16 +282,6 @@
         </section><!-- /.content -->
     </div><!-- /.content-wrapper -->
 
-    <!-- Main Footer -->
-    <footer class="main-footer">
-        <!-- To the right -->
-        <div class="pull-right hidden-xs">
-            Anything you want
-        </div>
-        <!-- Default to the left -->
-        <strong>Copyright &copy; 2015 <a href="#">Company</a>.</strong> All rights reserved.
-    </footer>
-
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
@@ -318,7 +309,7 @@
                 <h3 class="control-sidebar-heading">Tasks Progress</h3>
                 <ul class="control-sidebar-menu">
                     <li>
-                        <a href="javascript::;">
+                        <a href="javascript(0);">
                             <h4 class="control-sidebar-subheading">
                                 Custom Template Design
                                 <span class="label label-danger pull-right">70%</span>
@@ -363,5 +354,7 @@
 {!! Html::script('assets/js/bootstrap/bootstrap.min.js') !!}
 <!-- AdminLTE App -->
 {!! Html::script('admin/assets/js/app.min.js') !!}
+<!-- Custom Javascript -->
+@yield('custom-javascript')
 </body>
 </html>

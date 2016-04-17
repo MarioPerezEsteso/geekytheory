@@ -17,7 +17,7 @@ class CreatePostsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->string('slug')->unique();
             $table->string('title');
-            $table->text('content');
+            $table->text('body');
             $table->string('description', 170);
             $table->enum('status', array('pending', 'draft', 'deleted', 'published', 'scheduled'));
             $table->string('image');

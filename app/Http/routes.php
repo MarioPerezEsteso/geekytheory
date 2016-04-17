@@ -52,9 +52,25 @@ Route::post('home/profile/update/{id?}', [
     'uses' => 'UserController@update'
 ]);
 
+Route::get('home/posts/create', [
+    'middleware'    => 'auth',
+    'uses'          => 'PostController@create'
+]);
+
+Route::get('home/posts/edit/{id?}', [
+    'middleware'    => 'auth',
+    'uses'          => 'PostController@edit'
+]);
+
 Route::get('home/posts/{username?}', [
     'middleware'    => 'auth',
     'uses'          => 'PostController@indexHome'
+]);
+
+Route::post('home/posts/store', [
+    'middleware' => 'auth',
+    'before' => 'csrf',
+    'uses' => 'PostController@store'
 ]);
 
 Route::get('home/posts/delete/{id}', [
