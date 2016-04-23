@@ -141,6 +141,6 @@
 @endsection
 
 @section('custom-javascript')
-    {!! Html::script('assets/js/tinymce/tinymce.min.js') !!}
+    {!! Html::script('admin/assets/js/tinymce/tinymce.min.js') !!}
     {!! Html::script('admin/assets/js/post.js') !!}
 @endsection
