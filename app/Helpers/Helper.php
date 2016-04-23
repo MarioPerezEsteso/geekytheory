@@ -132,7 +132,7 @@ if (!function_exists('getImageName')) {
      * @param UploadedFile $image
      * @return string
      */
-    function getImageName($image, $path = \App\Http\Controllers\Controller::PATH_IMAGE_UPLOADS)
+    function getImageName($image, $path = \App\Http\Controllers\ImageManagerController::PATH_IMAGE_UPLOADS)
     {
         $fileExtension = '.' . $image->getClientOriginalExtension();
         $fileName = substr($image->getClientOriginalName(), 0, -1 * strlen($fileExtension));

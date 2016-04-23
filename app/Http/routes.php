@@ -132,3 +132,18 @@ Route::post('home/categories/update/{id}', [
     'before'        => 'csrf',
     'uses'          => 'CategoryController@update'
 ]);
+
+Route::get('home/posts/imagemanager/upload', [
+    'middleware'    => 'auth',
+    'uses'          => 'ImageManagerController@create'
+]);
+
+Route::get('home/posts/edit/imagemanager/upload', [
+    'middleware'    => 'auth',
+    'uses'          => 'ImageManagerController@create'
+]);
+
+Route::post('home/imagemanager/upload', [
+    'middleware'    => 'auth',
+    'uses'          => 'ImageManagerController@store'
+]);

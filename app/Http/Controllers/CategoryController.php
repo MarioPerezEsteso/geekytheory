@@ -74,9 +74,9 @@ class CategoryController extends Controller
             $category->category = $request->category;
             $category->slug = $slug;
             if ($image) {
-                $fileName = getImageName($image, Controller::PATH_IMAGE_UPLOADS);
+                $fileName = getImageName($image, ImageManagerController::PATH_IMAGE_UPLOADS);
                 $category->image = $fileName;
-                $image->move(Controller::PATH_IMAGE_UPLOADS, $fileName);
+                $image->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
             }
             $category->save();
         }
