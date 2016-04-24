@@ -19,9 +19,8 @@ Route::pattern('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]
 Route::pattern('base', '[a-zA-Z0-9]+');
 Route::pattern('slug', '[a-z0-9-]+');
 Route::pattern('username', '[a-z0-9_-]{3,20}');
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::get('/', 'IndexController@index');
 
 /*
  * Authentication routes
@@ -147,3 +146,7 @@ Route::post('home/imagemanager/upload', [
     'middleware'    => 'auth',
     'uses'          => 'ImageManagerController@store'
 ]);
+
+Route::group(array('prefix' => 'api'), function () {
+   Route::resource('posts', 'PostController');
+});
