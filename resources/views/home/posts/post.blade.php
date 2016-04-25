@@ -136,6 +136,35 @@
                 </div>
             </div>
         </div>
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">{{ trans('home.post_image') }}</h3>
+            </div>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <?php $imgSrc = ""; ?>
+                        <?php $postId = ""; ?>
+                        @if(!empty($post))
+                            <?php $postId = $post->id; ?>
+                            @if(!empty($post->image))
+                                <?php $imgSrc = '/' . \App\Http\Controllers\ImageManagerController::PATH_IMAGE_UPLOADS . '/' . $post->image; ?>
+                            @endif
+                        @endif
+                        <img id="post-image" data-post-id="{{ $postId }}" class="img-responsive" src="{{ $imgSrc }}"/>
+                    </div>
+                </div>
+                <div class="row top15">
+                    <div class="col-md-12">
+                        <span class="btn btn-primary btn-file">
+                            {{ trans('home.browse') }}
+                            {!! Form::file('image', array('id' => 'post-image-file-input')) !!}
+                        </span>
+                        <button id="delete-post-image" class="btn btn-danger {{ (!empty($imgSrc)) ? '' : ' hidden ' }}"><i class="glyphicon glyphicon-trash"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     {!! Form::close() !!}
 @endsection

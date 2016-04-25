@@ -50,6 +50,7 @@ return [
     'save_draft'    => 'Save draft',
     'publish'       => 'Publish',
     'move_to_trash' => 'Move to trash',
-    ''
+    'post_image'    => 'Image of the post',
+    'browse'        => 'Browse',
 
 ];

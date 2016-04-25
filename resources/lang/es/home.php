@@ -49,4 +49,6 @@ return [
     'save_draft'    => 'Guardar borrador',
     'publish'       => 'Publicar',
     'move_to_trash' => 'Mover a la papelera',
+    'post_image'    => 'Imagen del post',
+    'browse'        => 'Subir',
 ];
