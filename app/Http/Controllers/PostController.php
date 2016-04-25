@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use Auth;
 use App\Post;
 use App\User;
+use Illuminate\Support\Facades\Response;
 use Validator;
 use Illuminate\Support\Facades\Redirect;
 
@@ -35,9 +36,16 @@ class PostController extends Controller
      *
      * @param $username
      */
-    public function index($username)
+    public function index($username = null)
     {
-        //
+        if ($username === null) {
+            $posts = Post::paginate(self::POSTS_PAGINATION_NUMBER)->where('status', self::POST_STATUS_PUBLISHED)->sortByDesc('created_at');
+        } else {
+            $user = User::where('username', $username)->firstOrFail();
+            $posts = $user->posts()->paginate(self::POSTS_PAGINATION_NUMBER)->where('status', self::POST_STATUS_PUBLISHED);
+        }
+
+        return view('');
     }
 
     /**
@@ -127,9 +135,10 @@ class PostController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $post = Post::where('slug', $slug)->firstOrFail();
+        return view('themes.' . IndexController::THEME . '.blog.singlepost', compact('post'));
     }
 
     /**

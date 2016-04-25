@@ -147,6 +147,4 @@ Route::post('home/imagemanager/upload', [
     'uses'          => 'ImageManagerController@store'
 ]);
 
-Route::group(array('prefix' => 'api'), function () {
-   Route::resource('posts', 'PostController');
-});
+Route::get('/{slug?}', 'PostController@show');
