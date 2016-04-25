@@ -227,4 +227,23 @@ class PostController extends Controller
         $post->save();
         return Redirect::back();
     }
+
+    /**
+     * Delete the image of a post
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function deletePostImage(Request $request)
+    {
+        if(!empty($request->id)) {
+            $post = Post::findOrFail($request->id);
+            $post->image = NULL;
+            $post->save();
+            return response()->json(['error' => 0]);
+        } else {
+            return response()->json(['error' => 1]);
+        }
+
+    }
+
 }

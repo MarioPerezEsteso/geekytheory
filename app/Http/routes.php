@@ -142,8 +142,15 @@ Route::get('home/posts/edit/imagemanager/upload', [
     'uses'          => 'ImageManagerController@create'
 ]);
 
+Route::post('home/posts/delete-image', [
+    'middleware'    => 'auth',
+    'before'        => 'csrf',
+    'uses'          => 'PostController@deletePostImage',
+]);
+
 Route::post('home/imagemanager/upload', [
     'middleware'    => 'auth',
+
     'uses'          => 'ImageManagerController@store'
 ]);
 
