@@ -60,9 +60,9 @@ class CategoryController extends Controller
         $image = $request->file('image');
 
         $rules = array(
-            'category' => 'required|unique:categories',
-            'slug' => 'required|unique:categories',
-            'image' => 'mimes:jpeg,gif,png'
+            'category'  => 'required|unique:categories',
+            'slug'      => 'required|unique:categories',
+            'image'     => 'mimes:jpeg,gif,png'
         );
 
         $validator = Validator::make(array('category' => $request->category, 'slug' => $slug, 'image' => $request->file('image')), $rules);
@@ -74,8 +74,7 @@ class CategoryController extends Controller
             $category->category = $request->category;
             $category->slug = $slug;
             if ($image) {
-                $imageManager = new ImageManagerController();
-                $fileName = $imageManager->getImageName($image, ImageManagerController::PATH_IMAGE_UPLOADS);
+                $fileName = ImageManagerController::getImageName($image, ImageManagerController::PATH_IMAGE_UPLOADS);
                 $category->image = $fileName;
                 $image->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
             }

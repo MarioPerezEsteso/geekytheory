@@ -35,6 +35,7 @@ class PostController extends Controller
      * Display a listing of posts.
      *
      * @param $username
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index($username = null)
     {
@@ -99,14 +100,18 @@ class PostController extends Controller
             'slug' => 'required|unique:posts',
         );
 
+        /** @var UploadedFile $image */
+        $image = $request->file('image');
+
         $requestParams = array(
-            'title' => $request->title,
-            'body'  => $request->body,
-            'description' => $request->description,
-            'status' => $request->status,
-            'tags' => $request->tags,
-            'slug' => $slug,
-            'categories' => $request->categories,
+            'title'          => $request->title,
+            'body'          => $request->body,
+            'description'   => $request->description,
+            'status'        => $request->status,
+            'tags'          => $request->tags,
+            'slug'          => $slug,
+            'categories'    => $request->categories,
+            'image'         => $image,
         );
 
         $validator = Validator::make($requestParams, $rules);
@@ -121,6 +126,11 @@ class PostController extends Controller
             $post->status = $requestParams['status'];
             $post->slug = $slug;
             $post->user_id = Auth::user()->id;
+            if ($image) {
+                $fileName = ImageManagerController::getImageName($image, ImageManagerController::PATH_IMAGE_UPLOADS);
+                $post->image = $fileName;
+                $image->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
+            }
             $post->save();
             $categories = Category::whereIn('id', $requestParams['categories'])->get();
             $post->categories()->sync($categories);
@@ -132,7 +142,7 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int $id
+     * @param $slug
      * @return \Illuminate\Http\Response
      */
     public function show($slug)
@@ -229,7 +239,8 @@ class PostController extends Controller
     }
 
     /**
-     * Delete the image of a post
+     * Delete the image of a post.
+     *
      * @param Request $request
      * @return \Illuminate\Http\Response
      */

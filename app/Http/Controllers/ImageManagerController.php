@@ -103,7 +103,7 @@ class ImageManagerController extends Controller
      * @param UploadedFile $image
      * @return string
      */
-    public  function getImageName($image, $path = self::PATH_IMAGE_UPLOADS)
+    public static function getImageName($image, $path = self::PATH_IMAGE_UPLOADS)
     {
         $fileExtension = '.' . $image->getClientOriginalExtension();
         $fileName = substr($image->getClientOriginalName(), 0, -1 * strlen($fileExtension));
