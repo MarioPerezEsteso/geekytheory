@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row multi-columns-row">
             @foreach($posts as $post)
-                @include('themes.vortex.partials.blog.postitem')
+                @include('themes.vortex.partials.index.postitem')
             @endforeach
         </div>
         <!-- PAGINATION -->

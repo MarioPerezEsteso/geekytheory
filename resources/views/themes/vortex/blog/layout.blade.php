@@ -73,7 +73,7 @@
                     <article class="post post-single">
                         <!-- META -->
                         <div class="post-meta font-alt">
-                            Por <a href="blog-single.html#">{{ $post->user->name }}</a>
+                            {{ trans('public.by') }} <a href="blog-single.html#">{{ $post->user->name }}</a>
                         </div>
                         <!-- /META -->
                         <!-- HEADER -->
@@ -91,9 +91,9 @@
 
                         <!-- TAGS -->
                         <div class="tags">
-                            <a href="blog-single.html#">Art</a>
-                            <a href="blog-single.html#">Design</a>
-                            <a href="blog-single.html#">Pop Culture</a>
+                            @foreach($post->tags as $tag)
+                                @include('themes.vortex.partials.blog.tags')
+                            @endforeach
                         </div>
                         <!-- /TAGS -->
 

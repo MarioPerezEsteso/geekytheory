@@ -1,0 +1,1 @@
+<a href="{{ $tag->slug }}">{{ $tag->tag }}</a>

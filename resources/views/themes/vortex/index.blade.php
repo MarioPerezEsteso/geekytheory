@@ -7,6 +7,6 @@
 <!-- /HERO -->
 
 <!-- BLOG 3 COLUMN -->
-@include('themes.vortex.partials.blog.postlist')
+@include('themes.vortex.partials.index.postlist')
 <!-- /BLOG 3 COLUMN -->
 @endsection
