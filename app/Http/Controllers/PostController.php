@@ -98,6 +98,7 @@ class PostController extends Controller
                               . self::POST_STATUS_SCHEDULED,
             'description' => 'required|max:170',
             'slug' => 'required|unique:posts',
+            'image'     => 'mimes:jpeg,gif,png',
         );
 
         /** @var UploadedFile $image */
@@ -136,7 +137,7 @@ class PostController extends Controller
             $post->categories()->sync($categories);
         }
 
-        return Redirect::to('home/posts/edit/' . $post->id)->withSuccess(trans('home.tag_create_success'));
+        return Redirect::to('home/posts/edit/' . $post->id)->withSuccess(trans('home.post_create_success'));
     }
 
     /**
@@ -181,7 +182,11 @@ class PostController extends Controller
                 . self::POST_STATUS_PUBLISHED . ','
                 . self::POST_STATUS_SCHEDULED,
             'description' => 'required|max:170',
+            'image'     => 'mimes:jpeg,gif,png',
         );
+
+        /** @var UploadedFile $image */
+        $image = $request->file('image');
 
         $requestParams = array(
             'title' => $request->title,
@@ -202,6 +207,11 @@ class PostController extends Controller
             $post->body = $requestParams['body'];
             $post->description = $requestParams['description'];
             $post->status = $requestParams['status'];
+            if ($image) {
+                $fileName = ImageManagerController::getImageName($image, ImageManagerController::PATH_IMAGE_UPLOADS);
+                $post->image = $fileName;
+                $image->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
+            }
             $post->save();
             $categories = Category::whereIn('id', $requestParams['categories'])->get();
             $post->categories()->sync($categories);

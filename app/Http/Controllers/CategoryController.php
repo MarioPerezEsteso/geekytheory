@@ -62,7 +62,7 @@ class CategoryController extends Controller
         $rules = array(
             'category'  => 'required|unique:categories',
             'slug'      => 'required|unique:categories',
-            'image'     => 'mimes:jpeg,gif,png'
+            'image'     => 'mimes:jpeg,gif,png',
         );
 
         $validator = Validator::make(array('category' => $request->category, 'slug' => $slug, 'image' => $request->file('image')), $rules);
