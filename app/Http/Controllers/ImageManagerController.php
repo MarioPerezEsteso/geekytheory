@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 class ImageManagerController extends Controller
 {
@@ -44,7 +45,7 @@ class ImageManagerController extends Controller
     {
         /** @var UploadedFile $image */
         $image = $request->file('image');
-        $fileName = getImageName($image, self::PATH_IMAGE_UPLOADS);
+        $fileName = ImageManagerController::getImageName($image, self::PATH_IMAGE_UPLOADS);
         $image->move(self::PATH_IMAGE_UPLOADS, $fileName);
         $imgSrc = '/' . self::PATH_IMAGE_UPLOADS . '/' . $fileName;
         return view('home.imagemanager.imageupload', compact('imgSrc'));
@@ -93,5 +94,24 @@ class ImageManagerController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Returns the filename of a new uploaded image
+     *
+     * @param string $path
+     * @param UploadedFile $image
+     * @return string
+     */
+    public  function getImageName($image, $path = self::PATH_IMAGE_UPLOADS)
+    {
+        $fileExtension = '.' . $image->getClientOriginalExtension();
+        $fileName = substr($image->getClientOriginalName(), 0, -1 * strlen($fileExtension));
+        $completeFileName = $fileName . $fileExtension;
+        $i = 1;
+        while (File::exists($path . '/' . $completeFileName)) {
+            $completeFileName = $fileName . '(' . $i++ . ')' . $fileExtension;
+        }
+        return $completeFileName;
     }
 }

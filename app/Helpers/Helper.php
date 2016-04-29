@@ -1,7 +1,6 @@
 <?php
 
 use App\Post;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * Returns class 'active' if the route request matches
@@ -120,27 +119,5 @@ if (!function_exists('getAvailableSlug')) {
             $slugSuffix = "-" . $counter++;
         }
         return $slug;
-    }
-}
-
-/**
- * Returns name of an image
- */
-if (!function_exists('getImageName')) {
-    /**
-    *  @param string $path
-     * @param UploadedFile $image
-     * @return string
-     */
-    function getImageName($image, $path = \App\Http\Controllers\ImageManagerController::PATH_IMAGE_UPLOADS)
-    {
-        $fileExtension = '.' . $image->getClientOriginalExtension();
-        $fileName = substr($image->getClientOriginalName(), 0, -1 * strlen($fileExtension));
-        $completeFileName = $fileName . $fileExtension;
-        $i = 1;
-        while (File::exists($path . '/' . $completeFileName)) {
-            $completeFileName = $fileName . ' (' . $i++ . ')' . $fileExtension;
-        }
-        return $completeFileName;
     }
 }

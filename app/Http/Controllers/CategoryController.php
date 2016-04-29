@@ -74,14 +74,15 @@ class CategoryController extends Controller
             $category->category = $request->category;
             $category->slug = $slug;
             if ($image) {
-                $fileName = getImageName($image, ImageManagerController::PATH_IMAGE_UPLOADS);
+                $imageManager = new ImageManagerController();
+                $fileName = $imageManager->getImageName($image, ImageManagerController::PATH_IMAGE_UPLOADS);
                 $category->image = $fileName;
                 $image->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
             }
             $category->save();
         }
 
-        return Redirect::to('home/categories')->withSuccess(trans('home.tag_create_success'));
+        return Redirect::to('home/categories')->withSuccess(trans('home.category_create_success'));
 
     }
 
