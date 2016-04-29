@@ -3,11 +3,11 @@
     <div class="post">
         <div class="post-media">
             <a href="{{ url($post->slug) }}">
-                <img src="{{ \App\Http\Controllers\ImageManagerController::PATH_IMAGE_UPLOADS. '/' . $post->image }}" alt="">
+                <img src="{{'/' . \App\Http\Controllers\ImageManagerController::PATH_IMAGE_UPLOADS. '/' . $post->image }}" alt="">
             </a>
         </div>
         <div class="post-meta font-alt">
-            {{ trans('public.by') }} <a href="{{ url($post->slug) }}">{{ $post->name }}</a>
+            {{ trans('public.by') }} <a href="{{ url('/user/' . $post->user->username) }}">{{ $post->name }}</a>
         </div>
         <div class="post-header">
             <h4 class="post-title font-alt">

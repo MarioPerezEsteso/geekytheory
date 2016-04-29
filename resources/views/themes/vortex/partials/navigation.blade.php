@@ -6,7 +6,7 @@
             <!-- YOU LOGO HERE -->
             <a class="navbar-brand" href="index.html">
                 <!-- IMAGE OR SIMPLE TEXT -->
-                <img src="themes/vortex/assets/images/logo-dark.png" width="95" alt="">
+                <img src="/themes/vortex/assets/images/logo-dark.png" width="95" alt="">
             </a>
         </div>
 
@@ -23,7 +23,7 @@
         <!-- /ICONS NAVBAR -->
 
         <ul class="extra-navbar nav navbar-nav navbar-right">
-            <li><a href="index.html" title="Home">Home</a></li>
+            <li><a href="/" title="Home">Home</a></li>
             <li><a href="about.html" title="About">About</a></li>
             <li><a href="contact.html" title="Contact">Contact</a></li>
         </ul>

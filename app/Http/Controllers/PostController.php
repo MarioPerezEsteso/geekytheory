@@ -143,13 +143,26 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param $slug
+     * @param string $slug
      * @return \Illuminate\Http\Response
      */
     public function show($slug)
     {
         $post = Post::where('slug', $slug)->firstOrFail();
         return view('themes.' . IndexController::THEME . '.blog.singlepost', compact('post'));
+    }
+
+    /**
+     * Display list of posts by username.
+     *
+     * @param string $username
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showByUsername($username)
+    {
+        $author = User::where('username', $username)->firstOrFail();
+        $posts = Post::join('users', 'users.id', '=', 'posts.user_id')->orderBy('posts.created_at', 'DESC')->where('posts.status', PostController::POST_STATUS_PUBLISHED)->where('users.username', $username)->paginate(6);
+        return view('themes.' . IndexController::THEME . '.userposts', compact('posts', 'author'));
     }
 
     /**
