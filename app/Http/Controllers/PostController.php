@@ -161,7 +161,11 @@ class PostController extends Controller
     public function showByUsername($username)
     {
         $author = User::where('username', $username)->firstOrFail();
-        $posts = Post::join('users', 'users.id', '=', 'posts.user_id')->orderBy('posts.created_at', 'DESC')->where('posts.status', PostController::POST_STATUS_PUBLISHED)->where('users.username', $username)->paginate(6);
+        $posts = Post::join('users', 'users.id', '=', 'posts.user_id')
+            ->orderBy('posts.created_at', 'DESC')
+            ->where('posts.status', PostController::POST_STATUS_PUBLISHED)
+            ->where('users.username', $username)
+            ->paginate(6);
         return view('themes.' . IndexController::THEME . '.userposts', compact('posts', 'author'));
     }
 

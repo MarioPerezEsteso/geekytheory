@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Post;
 use File;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -94,6 +95,24 @@ class CategoryController extends Controller
     public function show($id)
     {
         //
+    }
+
+    /**
+     * Display list of posts by category.
+     *
+     * @param string $username
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showByCategory($category)
+    {
+        $category = Category::where('slug', $category)->firstOrFail();
+        $posts = $category->posts()
+            ->join('users', 'users.id', '=', 'posts.user_id')
+            ->orderBy('posts.created_at', 'DESC')
+            ->where('posts.status', PostController::POST_STATUS_PUBLISHED)
+            ->select('users.*', 'posts.*')
+            ->paginate(6);
+        return view('themes.' . IndexController::THEME . '.categoryposts', compact('posts', 'category'));
     }
 
     /**

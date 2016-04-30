@@ -157,3 +157,5 @@ Route::post('home/imagemanager/upload', [
 Route::get('/{slug?}', 'PostController@show');
 
 Route::get('user/{username}', 'PostController@showByUsername');
+
+Route::get('category/{category}', 'CategoryController@showByCategory');
