@@ -8,9 +8,10 @@ return [
     'facebook'  => 'Facebook',
     'github'    => 'Github',
     'youtube'   => 'YouTube',
-    'googleplus'    => 'Google Plus',
-    'stackoverflow' => 'Stackoverflow',
+    'google-plus'    => 'Google Plus',
+    'stack-overflow' => 'Stackoverflow',
     'flickr'    => 'Flickr',
     'bitbucket' => 'Bitbucket',
-    'dribble'   => 'Dribble',
+    'dribbble'   => 'Dribbble',
+    'social-networks' => 'Social networks',
 ];

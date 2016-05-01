@@ -18,9 +18,9 @@ class AddSocialNetworksToUsersTable extends Migration
             $table->string('facebook')->default(null);
             $table->string('github')->default(null);
             $table->string('youtube')->default(null);
-            $table->string('dribble')->default(null);
-            $table->string('googleplus')->default(null);
-            $table->string('stackoverflow')->default(null);
+            $table->string('dribbble')->default(null);
+            $table->string('google-plus')->default(null);
+            $table->string('stack-overflow')->default(null);
             $table->string('flickr')->default(null);
             $table->string('bitbucket')->default(null);
         });
@@ -40,9 +40,9 @@ class AddSocialNetworksToUsersTable extends Migration
             $table->dropColumn('facebook');
             $table->dropColumn('github');
             $table->dropColumn('youtube');
-            $table->dropColumn('dribble');
-            $table->dropColumn('googleplus');
-            $table->dropColumn('stackoverflow');
+            $table->dropColumn('dribbble');
+            $table->dropColumn('google-plus');
+            $table->dropColumn('stack-overflow');
             $table->dropColumn('flickr');
             $table->dropColumn('bitbucket');
         });

@@ -40,50 +40,14 @@
                 {!! Form::text('job', null, ['class' => 'form-control']) !!}
             </div>
 
-            <div class="form-group">
-                {!! Form::label('instagram', trans('public.instagram')) !!}
-                {!! Form::text('instagram', null, ['class' => 'form-control']) !!}
-            </div>
+            <h3>{{ trans('public.social-networks') }}</h3>
 
-            <div class="form-group">
-                {!! Form::label('twitter', trans('public.twitter')) !!}
-                {!! Form::text('twitter', null, ['class' => 'form-control']) !!}
-            </div>
-
-            <div class="form-group">
-                {!! Form::label('facebook', trans('public.facebook')) !!}
-                {!! Form::text('facebook', null, ['class' => 'form-control']) !!}
-            </div>
-
-            <div class="form-group">
-                {!! Form::label('github', trans('public.github')) !!}
-                {!! Form::text('github', null, ['class' => 'form-control']) !!}
-            </div>
-
-            <div class="form-group">
-                {!! Form::label('youtube', trans('public.dribble')) !!}
-                {!! Form::text('youtube', null, ['class' => 'form-control']) !!}
-            </div>
-
-            <div class="form-group">
-                {!! Form::label('googleplus', trans('public.googleplus')) !!}
-                {!! Form::text('googleplus', null, ['class' => 'form-control']) !!}
-            </div>
-
-            <div class="form-group">
-                {!! Form::label('stackoverflow', trans('public.stackoverflow')) !!}
-                {!! Form::text('stackoverflow', null, ['class' => 'form-control']) !!}
-            </div>
-
-            <div class="form-group">
-                {!! Form::label('flickr', trans('public.flickr')) !!}
-                {!! Form::text('flickr', null, ['class' => 'form-control']) !!}
-            </div>
-
-            <div class="form-group">
-                {!! Form::label('bitbucket', trans('public.bitbucket')) !!}
-                {!! Form::text('bitbucket', null, ['class' => 'form-control']) !!}
-            </div>
+            @foreach(\App\Http\Controllers\UserController::$socialNetworks as $socialNetwork)
+                <div class="form-group">
+                    {!! Form::label($socialNetwork, trans('public.' . $socialNetwork)) !!}
+                    {!! Form::text($socialNetwork, null, ['class' => 'form-control']) !!}
+                </div>
+            @endforeach
 
             <div>
                 {!! Form::submit(trans('home.save'),['class' => 'btn btn-primary']) !!}
