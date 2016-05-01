@@ -28,21 +28,14 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'username', 'email', 'password', 'biography', 'job'];
-
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $hidden = ['password', 'remember_token'];
-
-    /**
-     * Social networks available
-     *
-     * @var array
-     */
-    protected $socialNetworks = ['twitter',
+    protected $fillable = array(
+        'name',
+        'username',
+        'email',
+        'password',
+        'biography',
+        'job',
+        'twitter',
         'instagram',
         'facebook',
         'github',
@@ -51,7 +44,14 @@ class User extends Model implements AuthenticatableContract,
         'googleplus',
         'stackoverflow',
         'flickr',
-        'bitbucket'];
+        'bitbucket');
+
+    /**
+     * The attributes excluded from the model's JSON form.
+     *
+     * @var array
+     */
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * Get the posts of the user.
