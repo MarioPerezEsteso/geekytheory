@@ -1,4 +1,4 @@
-<section class="module module-parallax bg-light-30" data-background="{{ '/' . \App\Http\Controllers\ImageManagerController::PATH_IMAGE_UPLOADS . '/' . $category->image }}">
+<section class="module module-parallax bg-light-30" data-background="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($category->image) }}">
     <!-- HERO TEXT -->
     <div class="container">
         <div class="row">

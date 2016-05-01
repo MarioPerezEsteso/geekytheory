@@ -3,7 +3,7 @@
     <div class="post">
         <div class="post-media">
             <a href="{{ url($post->slug) }}">
-                <img src="{{'/' . \App\Http\Controllers\ImageManagerController::PATH_IMAGE_UPLOADS. '/' . $post->image }}" alt="">
+                <img src="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($post->image) }}" alt="">
             </a>
         </div>
         <div class="post-meta font-alt">

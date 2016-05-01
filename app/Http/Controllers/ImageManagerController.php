@@ -103,4 +103,12 @@ class ImageManagerController extends Controller
         }
         return $completeFileName;
     }
+
+    /**
+     *
+     */
+    public static function getPublicImageUrl($imageName)
+    {
+        return '/' . self::PATH_IMAGE_UPLOADS . '/' . $imageName;
+    }
 }

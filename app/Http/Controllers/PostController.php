@@ -25,11 +25,17 @@ class PostController extends Controller
     /**
      * Possible statuses of a post
      */
-    const POST_STATUS_PENDING = 'pending';
-    const POST_STATUS_DRAFT = 'draft';
-    const POST_STATUS_DELETED = 'deleted';
+    const POST_STATUS_PENDING   = 'pending';
+    const POST_STATUS_DRAFT     = 'draft';
+    const POST_STATUS_DELETED   = 'deleted';
     const POST_STATUS_PUBLISHED = 'published';
     const POST_STATUS_SCHEDULED = 'scheduled';
+
+    /**
+     * Actions when editing a post
+     */
+    const POST_ACTION_PUBLISH   = 'publish';
+    const POST_ACTION_UPDATE    = 'update';
 
     /**
      * Display a listing of posts.
@@ -125,6 +131,9 @@ class PostController extends Controller
             $post->body = $requestParams['body'];
             $post->description = $requestParams['description'];
             $post->status = $requestParams['status'];
+            if ($request->action == self::POST_ACTION_PUBLISH) {
+                $post->status = self::POST_STATUS_PUBLISHED;
+            }
             $post->slug = $slug;
             $post->user_id = Auth::user()->id;
             if ($image) {
@@ -224,6 +233,9 @@ class PostController extends Controller
             $post->body = $requestParams['body'];
             $post->description = $requestParams['description'];
             $post->status = $requestParams['status'];
+            if ($request->action == self::POST_ACTION_PUBLISH) {
+                $post->status = self::POST_STATUS_PUBLISHED;
+            }
             if ($image) {
                 $fileName = ImageManagerController::getImageName($image, ImageManagerController::PATH_IMAGE_UPLOADS);
                 $post->image = $fileName;
@@ -234,7 +246,7 @@ class PostController extends Controller
             $post->categories()->sync($categories);
         }
 
-        return Redirect::to('home/posts/edit/' . $post->id)->withSuccess(trans('home.tag_create_success'));
+        return Redirect::to('home/posts/edit/' . $post->id)->withSuccess(trans('home.post_update_success'));
     }
 
     /**

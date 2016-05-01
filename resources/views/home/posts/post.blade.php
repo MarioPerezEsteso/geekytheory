@@ -1,11 +1,11 @@
 @extends('home.layout')
 
 @section('title')
-    {{ trans('home.new_post') }}
+    {{ trans('home.edit_post') }}
 @endsection
 
 @section('pageTitle')
-    {{ trans('home.new_post') }}
+    {{ trans('home.edit_post') }}
 @endsection
 
 @section('pageDescription')
@@ -53,7 +53,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         @if(empty($post) || (!empty($post) && $post->status == \App\Http\Controllers\PostController::POST_STATUS_DRAFT))
-                            <button class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary" name="action" value="{{ \App\Http\Controllers\PostController::POST_ACTION_UPDATE }}">
                                 <i class="glyphicon glyphicon-floppy-disk"></i>
                                 {{ trans('home.save_draft') }}
                             </button>
@@ -65,6 +65,11 @@
                         <div class="form-group">
                             <label>{{ trans('home.status') }}</label>
                             <select name='status' class="form-control">
+                                @if(!empty($post) && $post->status == \App\Http\Controllers\PostController::POST_STATUS_PUBLISHED)
+                                    <option value="{{ \App\Http\Controllers\PostController::POST_STATUS_PUBLISHED }}">
+                                        {{ trans('home.status_published') }}
+                                    </option>
+                                @endif
                                 <option value="{{ \App\Http\Controllers\PostController::POST_STATUS_DRAFT }}">
                                     {{ trans('home.status_draft') }}
                                 </option>
@@ -85,20 +90,20 @@
                                 {{ trans('home.move_to_trash') }}
                             </a>
                         @else
-                            <a href="/home/posts" class="btn btn-danger">
+                            <a href="/home/posts/delete/" class="btn btn-danger">
                                 <i class="glyphicon glyphicon-trash"></i>
                                 {{ trans('home.move_to_trash') }}
                             </a>
                         @endif
                     </div>
                     <div class="col-md-5 col-md-offset-2">
-                        @if(empty($post))
-                            <button type="submit" class="btn btn-primary btn-block">
+                        @if(empty($post) || (!empty($post) && $post->status == \App\Http\Controllers\PostController::POST_STATUS_DRAFT))
+                            <button type="submit" class="btn btn-primary btn-block" name="action" value="{{ \App\Http\Controllers\PostController::POST_ACTION_PUBLISH }}">
                                 <i class="glyphicon glyphicon-bullhorn"></i>
                                 {{ trans('home.publish') }}
                             </button>
                         @else
-                            <button type="submit" class="btn btn-primary btn-block">
+                            <button type="submit" class="btn btn-primary btn-block" name="action" value="{{ \App\Http\Controllers\PostController::POST_ACTION_UPDATE }}">
                                 <i class="glyphicon glyphicon-refresh"></i>
                                 {{ trans('home.update') }}
                             </button>
@@ -148,7 +153,7 @@
                         @if(!empty($post))
                             <?php $postId = $post->id; ?>
                             @if(!empty($post->image))
-                                <?php $imgSrc = '/' . \App\Http\Controllers\ImageManagerController::PATH_IMAGE_UPLOADS . '/' . $post->image; ?>
+                                <?php $imgSrc = \App\Http\Controllers\ImageManagerController::getPublicImageUrl($post->image); ?>
                             @endif
                         @endif
                         <img id="post-image" data-post-id="{{ $postId }}" class="img-responsive" src="{{ $imgSrc }}"/>
