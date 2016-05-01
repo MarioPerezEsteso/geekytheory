@@ -51,4 +51,8 @@ return [
     'move_to_trash' => 'Mover a la papelera',
     'post_image'    => 'Imagen del post',
     'browse'        => 'Subir',
+    'post_update_success' => 'El artículo se ha editado correctamente',
+    'post_create_success' => 'El artículo se ha creado correctamente',
+    'edit_post'     => 'Editar artículo',
+    'edit_post_page_description' => 'En esta página podrá editar un artículo'
 ];
