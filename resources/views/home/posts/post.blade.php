@@ -39,7 +39,7 @@
             </div>
             <div class="box-body">
                 <div class="form-group">
-                    {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => '3', 'id' => 'post-description']) !!}
+                    {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => '3', 'required' => true, 'id' => 'post-description']) !!}
                 </div>
             </div>
         </div>
