@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Repositories\CategoryRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
@@ -21,9 +23,14 @@ class PostController extends Controller
     protected $postRepository;
 
     /**
-     * Number of posts to show with pagination
+     * Number of posts to show with pagination in admin panel
      */
     const POSTS_PAGINATION_NUMBER = 10;
+
+    /**
+     * Number of posts to show with pagination in public view
+     */
+    const POSTS_PUBLIC_PAGINATION_NUMBER = 6;
 
     /**
      * Possible statuses of a post
@@ -76,7 +83,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = (new CategoryRepository())->all();
         return view('home.posts.post', compact('categories'));
     }
 
@@ -164,12 +171,8 @@ class PostController extends Controller
      */
     public function showByUsername($username)
     {
-        $author = User::where('username', $username)->firstOrFail();
-        $posts = Post::join('users', 'users.id', '=', 'posts.user_id')
-            ->orderBy('posts.created_at', 'DESC')
-            ->where('posts.status', PostController::POST_STATUS_PUBLISHED)
-            ->where('users.username', $username)
-            ->paginate(6);
+        $author = (new UserRepository())->findUserByUsername($username);
+        $posts = $this->postRepository->findPostsByAuthor($author, self::POSTS_PUBLIC_PAGINATION_NUMBER);
         return view('themes.' . IndexController::THEME . '.userposts', compact('posts', 'author'));
     }
 
