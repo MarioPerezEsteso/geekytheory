@@ -21,7 +21,6 @@ class PostRepository extends Repository implements PostRepositoryInterface {
      */
     public function findPostBySlug($slug)
     {
-        $where = call_user_func_array("{$this->modelClassName}::where", array('slug', $slug));
-        return $where->firstOrFail();
+        return call_user_func_array("{$this->modelClassName}::where", array('slug', $slug))->firstOrFail();;
     }
 }
