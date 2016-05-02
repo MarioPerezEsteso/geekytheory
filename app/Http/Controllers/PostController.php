@@ -4,18 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Auth;
 use App\Post;
 use App\User;
-use Illuminate\Support\Facades\Response;
+use App\Repositories\PostRepository;
 use Validator;
 use Illuminate\Support\Facades\Redirect;
 
 class PostController extends Controller
 {
+
+    /**
+     * @var PostRepository
+     */
+    protected $postRepository;
 
     /**
      * Number of posts to show with pagination
@@ -38,21 +41,13 @@ class PostController extends Controller
     const POST_ACTION_UPDATE    = 'update';
 
     /**
-     * Display a listing of posts.
+     * PostController constructor.
      *
-     * @param $username
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @param PostRepository $postRepository
      */
-    public function index($username = null)
+    public function __construct(PostRepository $postRepository)
     {
-        if ($username === null) {
-            $posts = Post::paginate(self::POSTS_PAGINATION_NUMBER)->where('status', self::POST_STATUS_PUBLISHED)->sortByDesc('created_at');
-        } else {
-            $user = User::where('username', $username)->firstOrFail();
-            $posts = $user->posts()->paginate(self::POSTS_PAGINATION_NUMBER)->where('status', self::POST_STATUS_PUBLISHED);
-        }
-
-        return view('');
+        $this->postRepository = $postRepository;
     }
 
     /**
@@ -69,7 +64,7 @@ class PostController extends Controller
             $posts = $user->posts()->paginate(self::POSTS_PAGINATION_NUMBER);
         } else {
             /* Get all posts */
-            $posts = Post::paginate(self::POSTS_PAGINATION_NUMBER);
+            $posts = $this->postRepository->paginate(self::POSTS_PAGINATION_NUMBER);
         }
         return view('home.posts.index', compact('posts'));
     }
@@ -99,26 +94,26 @@ class PostController extends Controller
             'title' => 'required|unique:posts|max:255',
             'body' => 'required',
             'status' => 'in:' . self::POST_STATUS_PENDING . ','
-                              . self::POST_STATUS_DRAFT   . ','
-                              . self::POST_STATUS_PUBLISHED . ','
-                              . self::POST_STATUS_SCHEDULED,
+                . self::POST_STATUS_DRAFT . ','
+                . self::POST_STATUS_PUBLISHED . ','
+                . self::POST_STATUS_SCHEDULED,
             'description' => 'required|max:170',
             'slug' => 'required|unique:posts',
-            'image'     => 'mimes:jpeg,gif,png',
+            'image' => 'mimes:jpeg,gif,png',
         );
 
         /** @var UploadedFile $image */
         $image = $request->file('image');
 
         $requestParams = array(
-            'title'          => $request->title,
-            'body'          => $request->body,
-            'description'   => $request->description,
-            'status'        => $request->status,
-            'tags'          => $request->tags,
-            'slug'          => $slug,
-            'categories'    => $request->categories,
-            'image'         => $image,
+            'title' => $request->title,
+            'body' => $request->body,
+            'description' => $request->description,
+            'status' => $request->status,
+            'tags' => $request->tags,
+            'slug' => $slug,
+            'categories' => $request->categories,
+            'image' => $image,
         );
 
         $validator = Validator::make($requestParams, $rules);
@@ -157,7 +152,7 @@ class PostController extends Controller
      */
     public function show($slug)
     {
-        $post = Post::where('slug', $slug)->firstOrFail();
+        $post = $this->postRepository->findPostBySlug($slug);
         return view('themes.' . IndexController::THEME . '.blog.singlepost', compact('post'));
     }
 
@@ -186,7 +181,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = Post::findOrFail($id);
+        $post = $this->postRepository->findOrFail($id);
         $categories = Category::all();
         return view('home.posts.post', compact('categories', 'post'));
     }
@@ -204,11 +199,11 @@ class PostController extends Controller
             'title' => 'required|max:255unique:posts,id,' . $id,
             'body' => 'required',
             'status' => 'in:' . self::POST_STATUS_PENDING . ','
-                . self::POST_STATUS_DRAFT   . ','
+                . self::POST_STATUS_DRAFT . ','
                 . self::POST_STATUS_PUBLISHED . ','
                 . self::POST_STATUS_SCHEDULED,
             'description' => 'required|max:170',
-            'image'     => 'mimes:jpeg,gif,png',
+            'image' => 'mimes:jpeg,gif,png',
         );
 
         /** @var UploadedFile $image */
@@ -216,7 +211,7 @@ class PostController extends Controller
 
         $requestParams = array(
             'title' => $request->title,
-            'body'  => $request->body,
+            'body' => $request->body,
             'description' => $request->description,
             'status' => $request->status,
             'tags' => $request->tags,
@@ -285,7 +280,7 @@ class PostController extends Controller
      */
     public function deletePostImage(Request $request)
     {
-        if(!empty($request->id)) {
+        if (!empty($request->id)) {
             $post = Post::findOrFail($request->id);
             $post->image = NULL;
             $post->save();
