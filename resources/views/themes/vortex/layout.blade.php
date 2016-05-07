@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Vortex - Responsive HTML5 Portfolio</title>
+    <title>@yield('title')</title>
 
     <!-- Favicons -->
     <link rel="shortcut icon" href="/themes/vortex/assets/images/favicon.png">

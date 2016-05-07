@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\SiteMeta;
 use Auth;
 use Illuminate\Support\ServiceProvider;
 
@@ -14,6 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        view()->share('siteMeta', SiteMeta::first());
         view()->composer('*', function($view) {
             $user = Auth::user();
             if ($user != null) {

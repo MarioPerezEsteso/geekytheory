@@ -1,12 +1,10 @@
 @extends('themes.vortex.layout')
 
+@section('title')
+    {{ $siteMeta->title }}
+@endsection
+
 @section('content')
-
-<!-- HERO -->
-@include('themes.vortex.partials.hero')
-<!-- /HERO -->
-
-<!-- BLOG 3 COLUMN -->
-@include('themes.vortex.partials.index.postlist')
-<!-- /BLOG 3 COLUMN -->
+    @include('themes.vortex.partials.hero')
+    @include('themes.vortex.partials.index.postlist')
 @endsection
