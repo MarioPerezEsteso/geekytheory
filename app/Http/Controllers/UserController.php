@@ -12,19 +12,6 @@ use Validator;
 class UserController extends Controller
 {
 
-    public static $socialNetworks = array(
-        'twitter',
-        'instagram',
-        'facebook',
-        'github',
-        'youtube',
-        'dribbble',
-        'google-plus',
-        'stack-overflow',
-        'flickr',
-        'bitbucket'
-    );
-
     /**
      * Display a listing of the resource.
      *

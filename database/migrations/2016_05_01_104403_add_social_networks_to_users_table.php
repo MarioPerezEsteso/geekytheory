@@ -23,6 +23,7 @@ class AddSocialNetworksToUsersTable extends Migration
             $table->string('stack-overflow')->default(null);
             $table->string('flickr')->default(null);
             $table->string('bitbucket')->default(null);
+            $table->string('linkedin')->default(null);
         });
     }
 
@@ -45,6 +46,7 @@ class AddSocialNetworksToUsersTable extends Migration
             $table->dropColumn('stack-overflow');
             $table->dropColumn('flickr');
             $table->dropColumn('bitbucket');
+            $table->dropColumn('linkedin');
         });
     }
 }

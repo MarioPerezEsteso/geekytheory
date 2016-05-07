@@ -9,7 +9,7 @@
             <h5 class="author-name font-alt">{{ $post->user->name }}</h5>
             <p>{{ $post->user->biography }}</p>
             <ul class="social-icon-links socicon-round">
-                @foreach(\App\Http\Controllers\UserController::$socialNetworks as $socialNetwork)
+                @foreach(\App\Http\Controllers\Controller::$socialNetworks as $socialNetwork)
                     @if(!empty($post->user->$socialNetwork))
                         <li>
                             <a href="{{ $post->user->$socialNetwork }}" target="_blank"><i class="fa fa-{{ $socialNetwork }}"></i></a>

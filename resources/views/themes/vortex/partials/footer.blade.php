@@ -3,11 +3,13 @@
         <div class="row">
             <div class="col-sm-12">
                 <ul class="social-text-links font-alt text-center m-b-20">
-                    <li><a href="index.html#">Facebook</a></li>
-                    <li><a href="index.html#">Google plus</a></li>
-                    <li><a href="index.html#">Twitter</a></li>
-                    <li><a href="index.html#">Linkedin</a></li>
-                    <li><a href="index.html#">Dribbble</a></li>
+                    @foreach(\App\Http\Controllers\Controller::$socialNetworks as $socialNetwork)
+                        @if(!empty($siteMeta->$socialNetwork))
+                            <li>
+                                <a href="{{ $siteMeta->socialNetwork }}">{{ trans('public.' . $socialNetwork) }}</a>
+                            </li>
+                        @endif
+                    @endforeach
                 </ul>
             </div>
         </div>

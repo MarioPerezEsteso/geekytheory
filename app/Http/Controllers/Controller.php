@@ -11,4 +11,23 @@ abstract class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    /**
+     * Available social networks
+     *
+     * @var array
+     */
+    public static $socialNetworks = array(
+        'twitter',
+        'instagram',
+        'facebook',
+        'linkedin',
+        'github',
+        'youtube',
+        'dribbble',
+        'google-plus',
+        'stack-overflow',
+        'flickr',
+        'bitbucket'
+    );
+
 }

@@ -42,7 +42,7 @@
 
             <h3>{{ trans('public.social-networks') }}</h3>
 
-            @foreach(\App\Http\Controllers\UserController::$socialNetworks as $socialNetwork)
+            @foreach(\App\Http\Controllers\Controller::$socialNetworks as $socialNetwork)
                 <div class="form-group">
                     {!! Form::label($socialNetwork, trans('public.' . $socialNetwork)) !!}
                     {!! Form::text($socialNetwork, null, ['class' => 'form-control']) !!}

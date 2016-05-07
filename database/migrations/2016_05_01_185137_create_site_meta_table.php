@@ -18,16 +18,17 @@ class CreateSiteMetaTable extends Migration
             $table->string('subtitle');
             $table->string('description');
             $table->string('image');
-            $table->string('twitter');
-            $table->string('instagram');
-            $table->string('facebook');
-            $table->string('github');
-            $table->string('youtube');
-            $table->string('dribbble');
-            $table->string('google-plus');
-            $table->string('stack-overflow');
-            $table->string('flickr');
-            $table->string('bitbucket');
+            $table->string('twitter')->default(null);
+            $table->string('instagram')->default(null);
+            $table->string('facebook')->default(null);
+            $table->string('github')->default(null);
+            $table->string('youtube')->default(null);
+            $table->string('dribbble')->default(null);
+            $table->string('google-plus')->default(null);
+            $table->string('stack-overflow')->default(null);
+            $table->string('flickr')->default(null);
+            $table->string('bitbucket')->default(null);
+            $table->string('linkedin')->default(null);
         });
     }
 
