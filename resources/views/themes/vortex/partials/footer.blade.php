@@ -6,7 +6,7 @@
                     @foreach(\App\Http\Controllers\Controller::$socialNetworks as $socialNetwork)
                         @if(!empty($siteMeta->$socialNetwork))
                             <li>
-                                <a href="{{ $siteMeta->socialNetwork }}">{{ trans('public.' . $socialNetwork) }}</a>
+                                <a href="{{ $siteMeta->$socialNetwork }}">{{ trans('public.' . $socialNetwork) }}</a>
                             </li>
                         @endif
                     @endforeach
