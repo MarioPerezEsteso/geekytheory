@@ -18,6 +18,11 @@ class CreateSiteMetaTable extends Migration
             $table->string('subtitle');
             $table->string('description');
             $table->string('image');
+            $table->string('logo');
+            $table->string('favicon');
+            $table->string('logo_57');
+            $table->string('logo_72');
+            $table->string('logo_114');
             $table->string('twitter')->default(null);
             $table->string('instagram')->default(null);
             $table->string('facebook')->default(null);
@@ -39,6 +44,6 @@ class CreateSiteMetaTable extends Migration
      */
     public function down()
     {
-        Schema::drop('site_meta');
+        Schema::dropIfExists('site_meta');
     }
 }
