@@ -2,9 +2,9 @@
 
 namespace App\Repositories;
 
-interface CategoryRepositoryInterface
+interface SiteMetaRepositoryInterface
 {
 
-    public function findCategoryBySlug($slug);
+    public function getSiteMeta();
 
 }

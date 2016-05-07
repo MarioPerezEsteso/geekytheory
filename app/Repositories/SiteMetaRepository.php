@@ -2,25 +2,24 @@
 
 namespace App\Repositories;
 
-use App\Category;
+use App\SiteMeta;
 
-class CategoryRepository extends Repository implements CategoryRepositoryInterface
+class SiteMetaRepository extends Repository implements SiteMetaRepositoryInterface
 {
     /**
      * Model class name
      *
      * @var string
      */
-    protected $modelClassName = 'App\Category';
+    protected $modelClassName = 'App\SiteMeta';
 
     /**
-     * Find category by its slug
+     * Get SiteMeta
      *
-     * @param $slug
-     * @return Category
+     * @return SiteMeta
      */
-    public function findCategoryBySlug($slug)
+    public function getSiteMeta()
     {
-        return call_user_func_array("{$this->modelClassName}::where", array('slug', $slug))->firstOrFail();;
+        return call_user_func_array("{$this->modelClassName}::first", array());
     }
 }
