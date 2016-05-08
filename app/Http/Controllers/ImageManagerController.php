@@ -13,7 +13,8 @@ class ImageManagerController extends Controller
     /**
      * Path for the uploaded images
      */
-    const PATH_IMAGE_UPLOADS = 'images';
+    const PATH_IMAGE_UPLOADS   = 'images';
+    const PATH_IMAGE_NOT_FOUND = '/assets/img/imagenotfound.jpg';
 
     /**
      * Display a listing of the resource.
@@ -110,8 +111,16 @@ class ImageManagerController extends Controller
      * @param string $imageName
      * @return string
      */
-    public static function getPublicImageUrl($imageName)
+    public static function getPublicImageUrl($imageName, $checkIfExists = false)
     {
-        return '/' . self::PATH_IMAGE_UPLOADS . '/' . $imageName;
+        $publicImageUrl = self::PATH_IMAGE_UPLOADS . '/' . $imageName;
+        if ($checkIfExists) {
+            if (File::exists($publicImageUrl)) {
+                return '/' . $publicImageUrl;
+            } else {
+                return self::PATH_IMAGE_NOT_FOUND;
+            }
+        }
+        return '/' . $publicImageUrl;
     }
 }
