@@ -32,7 +32,9 @@
             <ul class="nav navbar-nav navbar-right">
                 @if (Auth::guest())
                     <li><a href="{{route('auth/login')}}">{{ trans('auth.login') }}</a></li>
-                    <li><a href="{{route('auth/register')}}">{{ trans('auth.register') }}</a></li>
+                    @if ($siteMeta->allow_register)
+                        <li><a href="{{route('auth/register')}}">{{ trans('auth.register') }}</a></li>
+                    @endif
                 @else
                     <li>
                         <a href="#">{{ Auth::user()->name }}</a>
