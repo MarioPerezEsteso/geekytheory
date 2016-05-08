@@ -58,23 +58,17 @@ class SiteMetaController extends Controller
     public function update(Request $request)
     {
         $rules = array(
-            'title' => 'required|max:255',
-            'subtitle' => 'required|max:255',
-            'description' => 'required|max:170',
-            'image' => 'mimes:jpeg,gif,png',
-            'logo' => 'mimes:jpeg,gif,png',
-            'favicon' => 'mimes:jpeg,gif,png',
-            'logo_57' => 'mimes:jpeg,gif,png',
-            'logo_72' => 'mimes:jpeg,gif,png',
-            'logo_114' => 'mimes:jpeg,gif,png',
+            'title'         => 'required|max:255',
+            'subtitle'      => 'required|max:255',
+            'description'   => 'required|max:170',
+            'image'         => 'mimes:jpeg,gif,png',
+            'logo'          => 'mimes:jpeg,gif,png',
+            'favicon'       => 'mimes:jpeg,gif,png',
+            'logo_57'       => 'mimes:jpeg,gif,png',
+            'logo_72'       => 'mimes:jpeg,gif,png',
+            'logo_114'      => 'mimes:jpeg,gif,png',
         );
 
-        /**
-         * Also validate that social networks are URLs
-         */
-        foreach (self::$socialNetworks as $socialNetwork) {
-
-        }
 
         /** @var UploadedFile $siteImage */
         $siteImage = $request->file('image');
@@ -90,15 +84,16 @@ class SiteMetaController extends Controller
         $siteLogo114 = $request->file('logo_114');
 
         $requestParams = array(
-            'title' => $request->title,
-            'subtitle' => $request->subtitle,
-            'description' => $request->description,
-            'image' => $siteImage,
-            'logo' => $siteLogo,
-            'favicon' => $siteFavicon,
-            'logo_57' => $siteLogo57,
-            'logo_72' => $siteLogo72,
-            'logo_114' => $siteLogo114,
+            'url'           => $request->url,
+            'title'         => $request->title,
+            'subtitle'      => $request->subtitle,
+            'description'   => $request->description,
+            'image'         => $siteImage,
+            'logo'          => $siteLogo,
+            'favicon'       => $siteFavicon,
+            'logo_57'       => $siteLogo57,
+            'logo_72'       => $siteLogo72,
+            'logo_114'      => $siteLogo114,
         );
 
         /**
@@ -119,6 +114,11 @@ class SiteMetaController extends Controller
             $siteMeta = self::getSiteMeta();
             $imageItems = array('image', 'logo', 'favicon', 'logo_57', 'logo_72', 'logo_114');
             $siteMeta->update(array_except($requestParams, $imageItems));
+            $allowRegister = false;
+            if ($request->allow_register && $request->allow_register == 'on') {
+                $allowRegister = true;
+            }
+            $siteMeta->allow_register = $allowRegister;
             foreach ($imageItems as $item) {
                 if ($requestParams[$item]) {
                     $fileName = ImageManagerController::getImageName($requestParams[$item], ImageManagerController::PATH_IMAGE_UPLOADS);

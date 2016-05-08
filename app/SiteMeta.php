@@ -26,6 +26,7 @@ class SiteMeta extends Model
      * @var array
      */
     protected $fillable = array(
+        'url',
         'title',
         'subtitle',
         'description',
@@ -45,6 +46,7 @@ class SiteMeta extends Model
         'stack-overflow',
         'flickr',
         'bitbucket',
-        'linkedin');
+        'linkedin',
+        'allow_register');
 
 }

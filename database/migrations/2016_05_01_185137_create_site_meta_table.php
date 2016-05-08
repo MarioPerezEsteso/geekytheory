@@ -14,6 +14,7 @@ class CreateSiteMetaTable extends Migration
     {
         Schema::create('site_meta', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('url');
             $table->string('title');
             $table->string('subtitle');
             $table->string('description');
@@ -34,6 +35,7 @@ class CreateSiteMetaTable extends Migration
             $table->string('flickr')->default(null);
             $table->string('bitbucket')->default(null);
             $table->string('linkedin')->default(null);
+            $table->boolean('allow_register')->default(false);
         });
     }
 

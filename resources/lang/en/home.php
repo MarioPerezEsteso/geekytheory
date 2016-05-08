@@ -73,4 +73,6 @@ return [
     'site_logo_72'  => 'Logo (PNG format 72x72px)',
     'site_logo_114' => 'Logo (PNG format 114x114px)',
     'sitemeta_update_success'   => 'The site options have been updated successfully',
+    'site_url'      => 'Site URL',
+    'allow_register'    => 'Allow registration of new users',
 ];
