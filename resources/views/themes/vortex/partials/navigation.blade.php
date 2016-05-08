@@ -2,7 +2,7 @@
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="/">
-                <img src="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo) }}" width="95" alt="">
+                <img src="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo) }}" class="navbar-logo" alt="">
             </a>
         </div>
 

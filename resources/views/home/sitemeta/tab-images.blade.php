@@ -13,7 +13,7 @@
         <div class="col-md-12">
         <span class="btn btn-primary btn-file">
             {{ trans('home.browse') }}
-            {!! Form::file('image', array('id' => $key . '-file-input', 'class' => 'js-file-input', 'data-image' => $key)) !!}
+            {!! Form::file($key, array('id' => $key . '-file-input', 'class' => 'js-file-input', 'data-image' => $key)) !!}
         </span>
             <button id="button-delete-{{ $key }}" data-image="{{ $key }}" class="btn btn-danger delete-image {{ (!empty($imgSrc)) ? '' : ' hidden ' }}">
                 <i class="glyphicon glyphicon-trash"></i>

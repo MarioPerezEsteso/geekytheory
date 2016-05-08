@@ -16,13 +16,13 @@
     <div class="row">
         <div class="col-md-4">
             @include('home.posts.partials.formMessages')
-            {!! Form::model($siteMeta, ['url' => 'home/sitemeta/update', 'class' => 'form']) !!}
+            {!! Form::model($siteMeta, ['url' => 'home/sitemeta/update', 'class' => 'form', 'files' => true]) !!}
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="">
+                    <li class="active">
                         <a href="#options" data-toggle="tab" aria-expanded="true">{{ trans('home.options') }}</a>
                     </li>
-                    <li class="active">
+                    <li class="">
                         <a href="#images" data-toggle="tab" aria-expanded="false">{{ trans('home.images') }}</a>
                     </li>
                     <li class="">
@@ -30,10 +30,10 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane" id="options">
+                    <div class="tab-pane active" id="options">
                         @include('home.sitemeta.tab-options')
                     </div>
-                    <div class="tab-pane active" id="images">
+                    <div class="tab-pane" id="images">
                         @include('home.sitemeta.tab-images')
                     </div>
                     <div class="tab-pane" id="social-networks">

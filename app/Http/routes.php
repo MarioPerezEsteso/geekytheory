@@ -158,6 +158,12 @@ Route::get('home/sitemeta', [
     'uses'          => 'SiteMetaController@edit',
 ]);
 
+Route::post('home/sitemeta/update', [
+    'middleware'    => 'auth',
+    'before'        => 'csrf',
+    'uses'          => 'SiteMetaController@update',
+]);
+
 Route::post('home/sitemeta/delete-image', [
     'middleware'    => 'auth',
     'before'        => 'csrf',

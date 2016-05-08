@@ -48,6 +48,7 @@ return [
     'slug'          => 'Slug',
     'no_tags'       => 'No se ha encontrado ninguna etiqueta',
     'tag_create_success'    => 'La etiqueta se ha creado exitosamente',
+    'tag_updated_success'   => 'La etiqueta se ha actualizado exitosamente',
     'tag_edit'      => 'Editar etiqueta',
     'update'        => 'Actualizar',
     'save_draft'    => 'Guardar borrador',
@@ -71,4 +72,5 @@ return [
     'site_logo_57'  => 'Logo (formato PNG 57x57px)',
     'site_logo_72'  => 'Logo (formato PNG 72x72px)',
     'site_logo_114' => 'Logo (formato PNG 114x114px)',
+    'sitemeta_update_success'   => 'Las opciones del sitio han sido actualizadas exitosamente',
 ];
