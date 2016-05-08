@@ -109,6 +109,7 @@ class ImageManagerController extends Controller
      * Get the public URL of an image
      *
      * @param string $imageName
+     * @param bool $checkIfExists
      * @return string
      */
     public static function getPublicImageUrl($imageName, $checkIfExists = false)
