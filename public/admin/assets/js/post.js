@@ -8,7 +8,8 @@ $(document).ready(function () {
             ed.on('init', function () {
                 this.getDoc().body.style.fontSize = '15px';
             });
-        }
+        },
+        convert_urls: false
     });
 
     $.ajaxSetup({
