@@ -25,5 +25,7 @@ return [
     'send'      => 'Enviar',
     'remember-me'   => 'Recuérdame',
     'something-went-wrong'   => 'Ups! Algo ha ido mal',
-    'user_update_success'    => 'Su perfil de usuario ha sido actualizado exitosamente'
+    'user_update_success'    => 'Su perfil de usuario ha sido actualizado exitosamente',
+    'biography' => 'Biografía',
+    'job_position'  => 'Puesto de trabajo',
 ];

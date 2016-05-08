@@ -9,7 +9,7 @@
 @endsection
 
 @section('pageDescription')
-    {{ trans('home.new_post_page_description') }}
+    {{ trans('home.edit_post_page_description') }}
 @endsection
 
 @section('content')

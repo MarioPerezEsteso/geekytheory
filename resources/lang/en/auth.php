@@ -25,6 +25,7 @@ return [
     'send'      => 'Send',
     'remember-me'   => 'Remember me',
     'something-went-wrong'   => 'Ooops! Something went wrong',
-    'user_update_success'    => 'Your profile has been updated successfully'
-
+    'user_update_success'    => 'Your profile has been updated successfully',
+    'biography' => 'Biography',
+    'job_position'  => 'Job position',
 ];
