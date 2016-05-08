@@ -1,4 +1,4 @@
-<section class="module module-parallax bg-light-30" data-background="">
+<section class="module module-parallax bg-light-30" data-background="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->image) }}" style="background-image: url('{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->image) }}')">
     <!-- HERO TEXT -->
     <div class="container">
         <div class="row">
