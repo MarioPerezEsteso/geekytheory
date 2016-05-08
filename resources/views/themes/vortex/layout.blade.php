@@ -9,10 +9,10 @@
     <title>@yield('title')</title>
 
     <!-- Favicons -->
-    <link rel="shortcut icon" href="/themes/vortex/assets/images/favicon.png">
-    <link rel="apple-touch-icon" href="/themes/vortex/assets/images/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/themes/vortex/assets/images/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/themes/vortex/assets/images/apple-touch-icon-114x114.png">
+    <link rel="shortcut icon" href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->favicon) }}">
+    <link rel="apple-touch-icon" href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo_57) }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo_72) }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo_114) }}">
 
     <!-- Bootstrap core CSS -->
     <link href="/assets/css/bootstrap/bootstrap.min.css" rel="stylesheet">

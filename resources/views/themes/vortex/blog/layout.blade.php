@@ -9,10 +9,10 @@
     <title>@yield('postTitle')</title>
 
     <!-- Favicons -->
-    <link rel="shortcut icon" href="/themes/vortex/assets/images/favicon.png">
-    <link rel="apple-touch-icon" href="/themes/vortex/assets/images/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="/themes/vortex/assets/images/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="/themes/vortex/assets/images/apple-touch-icon-114x114.png">
+    <link rel="shortcut icon" href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->favicon) }}">
+    <link rel="apple-touch-icon" href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo_57) }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo_72) }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo_114) }}">
 
     <!-- Bootstrap core CSS -->
     <link href="/assets/css/bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -102,104 +102,6 @@
                     <!-- AUTHOR -->
                     @include('themes.vortex.partials.blog.author')
                     <!-- /AUTHOR -->
-
-                    <!-- COMMENTS -->
-                    <div class="comments">
-                        <h4 class="comment-title font-alt">3 comments</h4>
-                        <hr class="divider m-b-30">
-
-                        <!-- COMMENT 1 -->
-                        <div class="comment clearfix">
-                            <div class="comment-avatar">
-                                <img src="https://s3.amazonaws.com/uifaces/faces/twitter/ryanbattles/128.jpg" alt="">
-                            </div>
-                            <div class="comment-content clearfix">
-                                <h5 class="comment-author font-alt">
-                                    <a href="blog-single.html#">John Doe</a>
-                                </h5>
-                                <div class="comment-body">
-                                    <p>The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary. The European languages are members of the same family. Their separate existence is a myth.</p>
-                                </div>
-                                <div class="comment-meta font-alt">Today, 14:55 - <a href="blog-single.html#">Reply</a></div>
-                            </div>
-
-                            <!-- COMMENT 2 -->
-                            <div class="comment clearfix">
-                                <div class="comment-avatar">
-                                    <img src="https://s3.amazonaws.com/uifaces/faces/twitter/draganbabic/128.jpg" alt="">
-                                </div>
-                                <div class="comment-content clearfix">
-                                    <h5 class="comment-author font-alt">
-                                        <a href="blog-single.html#">Mark Stone</a>
-                                    </h5>
-                                    <div class="comment-body">
-                                        <p>The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary. The European languages are members of the same family. Their separate existence is a myth.</p>
-                                    </div>
-                                    <div class="comment-meta font-alt">Today, 14:55 - <a href="blog-single.html#">Reply</a></div>
-                                </div>
-                            </div>
-                            <!-- /COMMENT 2 -->
-
-                        </div>
-                        <!-- /COMMENT 1 -->
-
-                        <!-- COMMENT 3 -->
-                        <div class="comment clearfix">
-                            <div class="comment-avatar">
-                                <img src="https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg" alt="">
-                            </div>
-                            <div class="comment-content clearfix">
-                                <h5 class="comment-author font-alt">
-                                    <a href="blog-single.html#">Andy</a>
-                                </h5>
-                                <div class="comment-body">
-                                    <p>The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary. The European languages are members of the same family. Their separate existence is a myth.</p>
-                                </div>
-                                <div class="comment-meta font-alt">Today, 14:55 - <a href="blog-single.html#">Reply</a></div>
-                            </div>
-                        </div>
-                        <!-- COMMENT 3 -->
-
-                    </div>
-                    <!-- /COMMENTS -->
-
-                    <!-- COMMENT FORM -->
-                    <div class="comment-form">
-                        <h4 class="comment-form-title font-alt">Leave a comment</h4>
-                        <hr class="divider m-b-30">
-
-                        <div class="row">
-
-                            <form>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <input id="name" type="text" class="form-control" placeholder="Name" name="name">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <input id="email" type="email" class="form-control" placeholder="E-mail" name="email">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <input id="website" type="text" class="form-control" placeholder="Website" name="website">
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <textarea id="message" name="message" class="form-control" placeholder="Message" rows="6"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <button class="btn btn-round btn-g">Post Comment</button>
-                                </div>
-                            </form>
-
-                        </div>
-
-                    </div>
-                    <!-- /COMMENT FORM -->
 
                 </div>
                 <!-- /CONTENT -->

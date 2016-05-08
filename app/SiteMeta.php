@@ -14,6 +14,13 @@ class SiteMeta extends Model
     protected $table = 'site_meta';
 
     /**
+     * Do not save timestamps
+     *
+     * @var bool
+     */
+    public $timestamps = false;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -23,6 +30,11 @@ class SiteMeta extends Model
         'subtitle',
         'description',
         'image',
+        'logo',
+        'favicon',
+        'logo_57',
+        'logo_72',
+        'logo_114',
         'twitter',
         'instagram',
         'facebook',
@@ -32,6 +44,7 @@ class SiteMeta extends Model
         'google-plus',
         'stack-overflow',
         'flickr',
-        'bitbucket');
+        'bitbucket',
+        'linkedin');
 
 }

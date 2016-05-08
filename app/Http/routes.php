@@ -150,8 +150,18 @@ Route::post('home/posts/delete-image', [
 
 Route::post('home/imagemanager/upload', [
     'middleware'    => 'auth',
+    'uses'          => 'ImageManagerController@store',
+]);
 
-    'uses'          => 'ImageManagerController@store'
+Route::get('home/sitemeta', [
+    'middleware'    => 'auth',
+    'uses'          => 'SiteMetaController@edit',
+]);
+
+Route::post('home/sitemeta/delete-image', [
+    'middleware'    => 'auth',
+    'before'        => 'csrf',
+    'uses'          => 'SiteMetaController@deleteImage',
 ]);
 
 Route::get('/{slug?}', 'PostController@show');

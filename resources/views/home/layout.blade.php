@@ -140,6 +140,12 @@
                         </li>
                     </ul>
                 </li>
+                <li class="{{ classActiveRoute('home/sitemeta') }}">
+                    <a href="{{ url('home/sitemeta') }}">
+                        <i class="fa fa-cogs"></i>
+                        <span>{{ trans('home.site_options') }}</span>
+                    </a>
+                </li>
                 <li class="{{ classActiveRoute('home/profile') }}">
                     <a href="{{ url('home/profile') }}">
                         <i class="fa fa-user"></i>

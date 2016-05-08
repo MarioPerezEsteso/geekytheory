@@ -12,6 +12,7 @@ return [
     'stack-overflow' => 'Stackoverflow',
     'flickr'    => 'Flickr',
     'bitbucket' => 'Bitbucket',
-    'dribbble'   => 'Dribbble',
+    'dribbble'  => 'Dribbble',
+    'linkedin'  => 'LinkedIn',
     'social-networks' => 'Redes sociales',
 ];

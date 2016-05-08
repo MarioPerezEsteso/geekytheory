@@ -1,12 +1,8 @@
 <nav class="navbar navbar-custom navbar-transparent navbar-light navbar-fixed-top">
-
     <div class="container">
-
         <div class="navbar-header">
-            <!-- YOU LOGO HERE -->
-            <a class="navbar-brand" href="index.html">
-                <!-- IMAGE OR SIMPLE TEXT -->
-                <img src="/themes/vortex/assets/images/logo-dark.png" width="95" alt="">
+            <a class="navbar-brand" href="/">
+                <img src="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo) }}" width="95" alt="">
             </a>
         </div>
 
