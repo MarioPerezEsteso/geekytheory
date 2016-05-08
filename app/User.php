@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Controllers\UserController;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -11,8 +12,8 @@ use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 class User extends Model implements AuthenticatableContract,
-                                    AuthorizableContract,
-                                    CanResetPasswordContract
+    AuthorizableContract,
+    CanResetPasswordContract
 {
     use Authenticatable, Authorizable, CanResetPassword;
 
@@ -28,7 +29,23 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $fillable = array(
+        'name',
+        'username',
+        'email',
+        'password',
+        'biography',
+        'job',
+        'twitter',
+        'instagram',
+        'facebook',
+        'github',
+        'youtube',
+        'dribbble',
+        'google-plus',
+        'stack-overflow',
+        'flickr',
+        'bitbucket');
 
     /**
      * The attributes excluded from the model's JSON form.
@@ -36,4 +53,28 @@ class User extends Model implements AuthenticatableContract,
      * @var array
      */
     protected $hidden = ['password', 'remember_token'];
+
+    /**
+     * Get the posts of the user.
+     */
+    public function posts()
+    {
+        return $this->hasMany('App\Post');
+    }
+
+    /**
+     * Returns the basic user data for the admin panel view
+     *
+     * @return array
+     */
+    public function getBasicUserData()
+    {
+        return array(
+            'id' => $this->id,
+            'name' => $this->name,
+            'job' => $this->job,
+            'email' => $this->email,
+            'avatar' => UserController::getGravatar($this->email, '100', 'mm', 'g'));
+    }
+
 }
