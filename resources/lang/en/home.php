@@ -57,7 +57,7 @@ return [
     'post_image'    => 'Image of the post',
     'browse'        => 'Browse',
     'post_update_success' => 'The post has been updated successfully',
-    'post_create_success' => 'The post has benn created successfully',
+    'post_create_success' => 'The post has been created successfully',
     'edit_post'      => 'Edit post',
     'edit_post_page_description' => 'Here is where you can edit a post',
     'site_options'  => 'Site options',

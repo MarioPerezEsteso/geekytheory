@@ -85,6 +85,7 @@ class UserController extends Controller
         $rules = array(
             'name'      => 'required',
             'email'     => 'required|email|unique:users,email,' . $user->id,
+            'username'  => 'required|unique:users,username,' . $user->id,
         );
 
         $validator = Validator::make($request->all(), $rules);
