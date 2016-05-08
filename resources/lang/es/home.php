@@ -54,5 +54,17 @@ return [
     'post_update_success' => 'El artículo se ha editado correctamente',
     'post_create_success' => 'El artículo se ha creado correctamente',
     'edit_post'     => 'Editar artículo',
-    'edit_post_page_description' => 'En esta página podrá editar un artículo'
+    'edit_post_page_description' => 'En esta página podrá editar un artículo',
+    'site_options'  => 'Opciones del sitio',
+    'site_options_page_description' => 'En esta página podrá editar las opciones de su web',
+    'title'         => 'Título',
+    'subtitle'      => 'Subtítulo',
+    'options'       => 'Opciones',
+    'images'        => 'Imágenes',
+    'site_image'    => 'Imagen de portada',
+    'site_logo'     => 'Logo',
+    'site_favicon'  => 'Favicon (formato PNG 32x32px)',
+    'site_logo_57'  => 'Logo (formato PNG 57x57px)',
+    'site_logo_72'  => 'Logo (formato PNG 72x72px)',
+    'site_logo_114' => 'Logo (formato PNG 114x114px)',
 ];

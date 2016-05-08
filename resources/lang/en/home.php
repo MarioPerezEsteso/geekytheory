@@ -55,5 +55,17 @@ return [
     'post_update_success' => 'The post has been updated successfully',
     'post_create_success' => 'The post has benn created successfully',
     'edit_post'      => 'Edit post',
-    'edit_post_page_description' => 'Here is where you can edit a post'
+    'edit_post_page_description' => 'Here is where you can edit a post',
+    'site_options'  => 'Site options',
+    'site_options_page_description' => 'Here is where you can edit your site options',
+    'title'         => 'Title',
+    'subtitle'      => 'Subtitle',
+    'options'       => 'Options',
+    'images'        => 'Images',
+    'site_image'    => 'Site home image',
+    'site_logo'     => 'Logo',
+    'site_favicon'  => 'Favicon (PNG format 32x32px)',
+    'site_logo_57'  => 'Logo (PNG format 57x57px)',
+    'site_logo_72'  => 'Logo (PNG format 72x72px)',
+    'site_logo_114' => 'Logo (PNG format 114x114px)',
 ];
