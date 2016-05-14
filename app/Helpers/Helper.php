@@ -6,13 +6,20 @@ use App\Post;
  * Returns class 'active' if the route request matches
  * with the menu item
  *
- * @param string $path
+ * @param array $paths
  * @return string
  */
 if (!function_exists('classActiveRoute')) {
-    function classActiveRoute($path)
+    function classActiveRoute(array $paths)
     {
-        return Request::is($path) ? ' active ' : '';
+        $class = '';
+        foreach ($paths as $path) {
+            if (Request::is($path)) {
+                $class = ' active ';
+                break;
+            }
+        }
+        return $class;
     }
 }
 
