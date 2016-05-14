@@ -77,4 +77,5 @@ return [
     'allow_register'    => 'Permitir el registro de nuevos usuarios',
     'settings'      => 'Ajustes',
     'menu'          => 'Menú',
+    'menu_page_description' => 'En esta página podrá editar el menú de su web',
 ];

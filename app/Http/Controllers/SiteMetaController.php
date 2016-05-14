@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Redirect;
 class SiteMetaController extends Controller
 {
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the site meta.
      *
      * @return \Illuminate\Http\Response
      */
@@ -47,6 +47,16 @@ class SiteMetaController extends Controller
             ),
         );
         return view('home.sitemeta.sitemeta', compact('siteMeta', 'fileUploaders'));
+    }
+
+    /**
+     * Show the form for editing the menu of the site.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editMenu()
+    {
+        return view('home.menu.menu');
     }
 
     /**

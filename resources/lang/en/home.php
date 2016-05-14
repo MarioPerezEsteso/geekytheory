@@ -77,4 +77,5 @@ return [
     'allow_register'    => 'Allow registration of new users',
     'settings'      => 'Settings',
     'menu'          => 'Menu',
+    'menu_page_description' => 'Here is where you can edit your menu',
 ];

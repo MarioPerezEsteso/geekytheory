@@ -178,6 +178,11 @@ Route::post('home/sitemeta/delete-image', [
     'uses'          => 'SiteMetaController@deleteImage',
 ]);
 
+Route::get('home/menu', [
+    'middleware'    => 'auth',
+    'uses'          => 'SiteMetaController@editMenu',
+]);
+
 Route::get('/{slug?}', 'PostController@show');
 
 Route::get('user/{username}', 'PostController@showByUsername');
