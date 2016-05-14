@@ -125,7 +125,7 @@
                         </li>
                         <li class="{{ classActiveRoute('home/posts/create') }}">
                             <a href="{{ url('home/posts/create') }}">
-                                {{ trans('home.post_create') }}
+                                {{ trans('home.post_create') }}t
                             </a>
                         </li>
                         <li class="{{ classActiveRoute('home/categories') }}">
@@ -140,11 +140,26 @@
                         </li>
                     </ul>
                 </li>
-                <li class="{{ classActiveRoute('home/sitemeta') }}">
+                <li class="{{ classActiveRoute('home/sitemeta') }} treeview">
                     <a href="{{ url('home/sitemeta') }}">
                         <i class="fa fa-cogs"></i>
-                        <span>{{ trans('home.site_options') }}</span>
+                        <span>{{ trans('home.settings') }}</span>
+                        <i class="fa fa-angle-left pull-right"></i>
                     </a>
+                    <ul class="treeview-menu">
+                        <li class="{{ classActiveRoute('home/sitemeta') }}">
+                            <a href="{{ url('home/sitemeta') }}">
+                                <i class="fa fa-gear"></i>
+                                <span>{{ trans('home.site_options') }}</span>
+                            </a>
+                        </li>
+                        <li class="{{ classActiveRoute('home/menu') }}">
+                            <a href="{{ url('home/menu') }}">
+                                <i class="fa fa-bars"></i>
+                                <span>{{ trans('home.menu') }}</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
                 <li class="{{ classActiveRoute('home/profile') }}">
                     <a href="{{ url('home/profile') }}">

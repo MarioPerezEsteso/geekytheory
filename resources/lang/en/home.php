@@ -75,4 +75,6 @@ return [
     'sitemeta_update_success'   => 'The site options have been updated successfully',
     'site_url'      => 'Site URL',
     'allow_register'    => 'Allow registration of new users',
+    'settings'      => 'Settings',
+    'menu'          => 'Menu',
 ];
