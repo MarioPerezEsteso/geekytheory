@@ -78,4 +78,13 @@ return [
     'settings'      => 'Settings',
     'menu'          => 'Menu',
     'menu_page_description' => 'Here is where you can edit your menu',
+    'articles'      => 'Articles',
+    'all_articles'  => 'All articles',
+    'create_article'    => 'Create article',
+    'all_pages'     => 'All pages',
+    'edit_page_page_description' => 'Here is where you can edit a page',
+    'page_create'   => 'Create page',
+    'edit_page'     => 'Edit page',
+    'pages'         => 'Pages',
+    'pages_page_description'    => 'List of pages',
 ];

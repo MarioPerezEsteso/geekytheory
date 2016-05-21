@@ -122,7 +122,7 @@
                         </li>
                         <li class="{{ classActiveRoute(array('home/articles/create')) }}">
                             <a href="{{ url('home/articles/create') }}">
-                                {{ trans('home.post_create') }}
+                                {{ trans('home.create_article') }}
                             </a>
                         </li>
                         <li class="{{ classActiveRoute(array('home/categories')) }}">
