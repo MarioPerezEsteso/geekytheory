@@ -59,31 +59,58 @@ Route::post('home/profile/update/{id?}', [
     'uses'          => 'UserController@update'
 ]);
 
-Route::get('home/posts/create', [
+Route::get('home/articles/create', [
     'middleware'    => 'auth',
-    'uses'          => 'PostController@create'
+    'uses'          => 'ArticleController@create'
 ]);
 
-Route::get('home/posts/edit/{id?}', [
+Route::get('home/articles/edit/{id?}', [
     'middleware'    => 'auth',
-    'uses'          => 'PostController@edit'
+    'uses'          => 'ArticleController@edit'
 ]);
 
-Route::post('home/posts/update/{id?}', [
+Route::post('home/articles/update/{id?}', [
     'middleware'    => 'auth',
     'before'        => 'csrf',
-    'uses'          => 'PostController@update'
+    'uses'          => 'ArticleController@update'
 ]);
 
-Route::get('home/posts/{username?}', [
+Route::get('home/articles/{username?}', [
     'middleware'    => 'auth',
-    'uses'          => 'PostController@indexHome'
+    'uses'          => 'ArticleController@indexHome'
 ]);
 
-Route::post('home/posts/store', [
+Route::post('home/articles/store', [
     'middleware'    => 'auth',
     'before'        => 'csrf',
-    'uses'          => 'PostController@store'
+    'uses'          => 'ArticleController@store'
+]);
+
+Route::get('home/pages/create', [
+    'middleware'    => 'auth',
+    'uses'          => 'PageController@create'
+]);
+
+Route::get('home/pages/edit/{id?}', [
+    'middleware'    => 'auth',
+    'uses'          => 'PageController@edit'
+]);
+
+Route::post('home/pages/update/{id}', [
+    'middleware'    => 'auth',
+    'before'        => 'csrf',
+    'uses'          => 'PageController@update'
+]);
+
+Route::get('home/pages/{username?}', [
+    'middleware'    => 'auth',
+    'uses'          => 'PageController@indexHome'
+]);
+
+Route::post('home/pages/store', [
+    'middleware'    => 'auth',
+    'before'        => 'csrf',
+    'uses'          => 'PageController@store'
 ]);
 
 Route::get('home/posts/delete/{id}', [
@@ -140,12 +167,22 @@ Route::post('home/categories/update/{id}', [
     'uses'          => 'CategoryController@update'
 ]);
 
-Route::get('home/posts/imagemanager/upload', [
+Route::get('home/articles/imagemanager/upload', [
     'middleware'    => 'auth',
     'uses'          => 'ImageManagerController@create'
 ]);
 
-Route::get('home/posts/edit/imagemanager/upload', [
+Route::get('home/articles/edit/imagemanager/upload', [
+    'middleware'    => 'auth',
+    'uses'          => 'ImageManagerController@create'
+]);
+
+Route::get('home/pages/imagemanager/upload', [
+    'middleware'    => 'auth',
+    'uses'          => 'ImageManagerController@create'
+]);
+
+Route::get('home/pages/edit/imagemanager/upload', [
     'middleware'    => 'auth',
     'uses'          => 'ImageManagerController@create'
 ]);
@@ -183,8 +220,10 @@ Route::get('home/menu', [
     'uses'          => 'SiteMetaController@editMenu',
 ]);
 
-Route::get('/{slug?}', 'PostController@show');
+Route::get('/{slug?}', 'ArticleController@show');
 
-Route::get('user/{username}', 'PostController@showByUsername');
+Route::get('/p/{slug?}', 'PageController@show');
+
+Route::get('user/{username}', 'ArticleController@showByUsername');
 
 Route::get('category/{category}', 'CategoryController@showByCategory');

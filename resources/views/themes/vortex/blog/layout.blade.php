@@ -64,54 +64,7 @@
     </section>
     <!-- /HERO -->
 
-    <!-- SINGLE POST -->
-    <section class="module">
-        <div class="container">
-            <div class="row">
-                <!-- CONTENT -->
-                <div class="col-sm-10 col-sm-offset-1">
-                    <article class="post post-single">
-                        <!-- META -->
-                        <div class="post-meta font-alt">
-                            {{ trans('public.by') }} <a href="{{ url('/user/' . $post->user->username) }}">{{ $post->user->name }}</a>
-                        </div>
-                        <!-- /META -->
-                        <!-- HEADER -->
-                        <div class="post-header">
-                            <h1 class="post-title font-alt">
-                                {{ $post->title }}
-                            </h1>
-                        </div>
-                        <!-- /HEADER -->
-                        <!-- POST CONTENT -->
-                        <div class="post-entry">
-                            {!! $post->body !!}
-                        </div>
-                        <!-- /POST CONTENT -->
-
-                        <!-- TAGS -->
-                        <div class="tags">
-                            @foreach($post->tags as $tag)
-                                @include('themes.vortex.partials.blog.tags')
-                            @endforeach
-                        </div>
-                        <!-- /TAGS -->
-
-                    </article>
-
-                    <!-- AUTHOR -->
-                    @include('themes.vortex.partials.blog.author')
-                    <!-- /AUTHOR -->
-
-                </div>
-                <!-- /CONTENT -->
-
-            </div>
-
-        </div>
-
-    </section>
-    <!-- /SINGLE POST -->
+    @yield('content')
 
     <!-- FOOTER -->
     @include('themes.vortex.partials.footer')

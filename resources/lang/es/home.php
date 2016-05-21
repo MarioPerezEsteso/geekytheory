@@ -78,4 +78,13 @@ return [
     'settings'      => 'Ajustes',
     'menu'          => 'Menú',
     'menu_page_description' => 'En esta página podrá editar el menú de su web',
+    'articles'      => 'Artículos',
+    'all_articles'  => 'Todos los artículos',
+    'create_article'    => 'Crear artículo',
+    'all_pages'     => 'Todas las páginas',
+    'edit_page_page_description' => 'Aquí puede editar su página',
+    'page_create'   => 'Crear página',
+    'edit_page'     => 'Editar página',
+    'pages'         => 'Páginas',
+    'pages_page_description'    => 'Lista de páginas',
 ];
