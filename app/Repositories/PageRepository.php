@@ -17,13 +17,13 @@ class PageRepository extends PostRepository implements PageRepositoryInterface
     /**
      * Find all pages.
      *
+     * @param User $author
      * @param int $paginate
      * @return mixed
      */
-    public function findAllPages($paginate = Repository::PAGINATION_DEFAULT)
+    public function findPagesByAuthor(User $author, $paginate = Repository::PAGINATION_DEFAULT)
     {
-        return call_user_func_array("{$this->modelClassName}::where", array('type', PostController::POST_PAGE))
-            ->paginate($paginate);
+        return $this->findPages($paginate, $author);
     }
 
     /**
@@ -44,12 +44,17 @@ class PageRepository extends PostRepository implements PageRepositoryInterface
      * @param int $paginate
      * @return mixed
      */
-    public function findPagesByAuthor(User $author, $paginate = Repository::PAGINATION_DEFAULT)
+    public function findPages($paginate = Repository::PAGINATION_DEFAULT, User $author = null)
     {
-        return call_user_func_array("{$this->modelClassName}::join", array('users', 'users.id', '=', 'posts.user_id'))
+        $columns = User::$mappings;
+        array_push($columns, 'posts.*');
+        $query = call_user_func_array("{$this->modelClassName}::join", array('users', 'users.id', '=', 'posts.user_id'))
+            ->select($columns)
             ->orderBy('posts.created_at', 'DESC')
-            ->where('posts.type', PostController::POST_ARTICLE)
-            ->where('users.username', $author->username)
-            ->paginate($paginate);
+            ->where('posts.type', PostController::POST_PAGE);
+        if ($author !== null) {
+            $query->where('users.username', $author->username);
+        }
+        return $query->paginate($paginate);
     }
 }

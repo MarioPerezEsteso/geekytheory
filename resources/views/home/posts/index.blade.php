@@ -14,16 +14,11 @@
 
 @section('content')
     <div class="box">
-        <div class="box-header">
-            <h3 class="box-title"></h3>
-        </div>
-        <!-- /.box-header -->
         <div class="box-body">
-            <div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+            <div class="dataTables_wrapper form-inline dt-bootstrap">
                 <div class="row">
                     <div class="col-sm-12">
-                        <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
-                               aria-describedby="example1_info">
+                        <table class="table table-bordered table-striped dataTable" role="grid">
                             <thead>
                             <tr role="row">
                                 <th class="sorting_asc" style="width: 20%;">
@@ -55,24 +50,24 @@
                                             </span>
                                         </td>
                                         <td class="hidden-xs">
-                                            <a href="{{ url('home/articles/' . $post->user->username) }}">
-                                                {{ $post->user->name }}
+                                            <a href="{{ url(\App\Http\Controllers\PostController::getPostDashboardUrlByType($post->type) . $post->user_username) }}">
+                                                {{ $post->user_name }}
                                             </a>
                                         </td>
                                         <td>
                                             @if ($post->status != 'deleted')
-                                                <a href="{{ url('home/articles/edit/' . $post->id) }}" class="margin">
+                                                <a href="{{ url(\App\Http\Controllers\PostController::getPostDashboardUrlByType($post->type) . 'edit/' . $post->id) }}" class="margin">
                                                     <span class="label bg-blue">
                                                          {{ trans('home.edit') }}
                                                     </span>
                                                 </a>
-                                                <a href="{{ url('home/articles/delete/' . $post->id) }}">
+                                                <a href="{{ url(\App\Http\Controllers\PostController::getPostDashboardUrlByType($post->type) . 'delete/' . $post->id) }}">
                                                     <span class="label bg-red">
                                                          {{ trans('home.delete') }}
                                                     </span>
                                                 </a>
                                             @else
-                                                <a href="{{ url('home/articles/restore/' . $post->id) }}" class="margin">
+                                                <a href="{{ url(\App\Http\Controllers\PostController::getPostDashboardUrlByType($post->type) . '/restore/' . $post->id) }}" class="margin">
                                                     <span class="label bg-purple">
                                                          {{ trans('home.restore') }}
                                                     </span>
@@ -86,7 +81,6 @@
                                     {{ trans('home.no_posts') }}
                                 </td>
                             @endif
-
 
                             </tbody>
                             <tfoot>

@@ -42,7 +42,7 @@ class PageController extends PostController
             $posts = $this->repository->findPagesByAuthor($author, self::POSTS_PAGINATION_NUMBER);
         } else {
             /* Get all pages */
-            $posts = $this->repository->findAllPages(self::POSTS_PAGINATION_NUMBER);
+            $posts = $this->repository->findPages(self::POSTS_PAGINATION_NUMBER);
         }
         return view('home.posts.index', compact('posts'));
     }
