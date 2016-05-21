@@ -34,7 +34,10 @@ class PageRepository extends PostRepository implements PageRepositoryInterface
      */
     public function findPageBySlug($slug)
     {
-        return call_user_func_array("{$this->modelClassName}::where", array('slug', $slug))->where('type', PostController::POST_PAGE)->firstOrFail();
+        return call_user_func_array("{$this->modelClassName}::where", array('slug', $slug))
+            ->where('type', PostController::POST_PAGE)
+            ->where('status', PostController::POST_STATUS_PUBLISHED)
+            ->firstOrFail();
     }
 
     /**
