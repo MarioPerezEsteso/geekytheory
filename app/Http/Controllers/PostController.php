@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Redirect;
 
 class PostController extends Controller
 {
-
     /**
      * @var PageRepository|ArticleRepository
      */
@@ -258,7 +257,6 @@ class PostController extends Controller
         } else {
             return response()->json(['error' => 1]);
         }
-
     }
 
 }

@@ -167,12 +167,22 @@ Route::post('home/categories/update/{id}', [
     'uses'          => 'CategoryController@update'
 ]);
 
-Route::get('home/posts/imagemanager/upload', [
+Route::get('home/articles/imagemanager/upload', [
     'middleware'    => 'auth',
     'uses'          => 'ImageManagerController@create'
 ]);
 
-Route::get('home/posts/edit/imagemanager/upload', [
+Route::get('home/articles/edit/imagemanager/upload', [
+    'middleware'    => 'auth',
+    'uses'          => 'ImageManagerController@create'
+]);
+
+Route::get('home/pages/imagemanager/upload', [
+    'middleware'    => 'auth',
+    'uses'          => 'ImageManagerController@create'
+]);
+
+Route::get('home/pages/edit/imagemanager/upload', [
     'middleware'    => 'auth',
     'uses'          => 'ImageManagerController@create'
 ]);

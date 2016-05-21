@@ -19,6 +19,7 @@ class ArticleController extends PostController
 
     /**
      * ArticleController constructor.
+     *
      * @param ArticleRepository $repository
      * @param CategoryRepository $categoryRepository
      * @param UserRepository $userRepository
@@ -26,16 +27,6 @@ class ArticleController extends PostController
     public function __construct(ArticleRepository $repository, CategoryRepository $categoryRepository, UserRepository $userRepository)
     {
         parent::__construct($repository, $categoryRepository, $userRepository);
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
     }
 
     /**
@@ -139,16 +130,5 @@ class ArticleController extends PostController
         } else {
             return Redirect::to('home/articles/edit/' . $id)->withErrors($result['messages']);
         }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

@@ -70,7 +70,7 @@ class PageController extends PostController
     {
         $result = parent::store($request, $type);
         if (!$result['error']) {
-            return Redirect::to('home/pages/edit/' . $result['id'])->withSuccess($result['success']);
+            return Redirect::to('home/pages/edit/' . $result['id'])->withSuccess($result['messages']);
         } else {
             return Redirect::to('home/pages/create')->withErrors($result['messages']);
         }
