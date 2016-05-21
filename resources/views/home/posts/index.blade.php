@@ -61,13 +61,13 @@
                                                          {{ trans('home.edit') }}
                                                     </span>
                                                 </a>
-                                                <a href="{{ url(\App\Http\Controllers\PostController::getPostDashboardUrlByType($post->type) . 'delete/' . $post->id) }}">
+                                                <a href="{{ url('home/posts/delete/' . $post->id) }}">
                                                     <span class="label bg-red">
                                                          {{ trans('home.delete') }}
                                                     </span>
                                                 </a>
                                             @else
-                                                <a href="{{ url(\App\Http\Controllers\PostController::getPostDashboardUrlByType($post->type) . '/restore/' . $post->id) }}" class="margin">
+                                                <a href="{{ url('home/posts/restore/' . $post->id) }}" class="margin">
                                                     <span class="label bg-purple">
                                                          {{ trans('home.restore') }}
                                                     </span>
