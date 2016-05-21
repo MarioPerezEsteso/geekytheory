@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
 use App\Post;
-use App\User;
-use App\Repositories\PostRepository;
+use App\Repositories\PageRepository;
 use Validator;
 use Illuminate\Support\Facades\Redirect;
 
@@ -18,9 +18,19 @@ class PostController extends Controller
 {
 
     /**
-     * @var PostRepository
+     * @var PageRepository|ArticleRepository
      */
-    protected $postRepository;
+    protected $repository;
+
+    /**
+     * @var CategoryRepository
+     */
+    protected $categoryRepository;
+
+    /**
+     * @var UserRepository
+     */
+    protected $userRepository;
 
     /**
      * Number of posts to show with pagination in admin panel
@@ -42,6 +52,12 @@ class PostController extends Controller
     const POST_STATUS_SCHEDULED = 'scheduled';
 
     /**
+     * Possible types of a post
+     */
+    const POST_ARTICLE      = 'article';
+    const POST_PAGE         = 'page';
+
+    /**
      * Actions when editing a post
      */
     const POST_ACTION_PUBLISH   = 'publish';
@@ -49,51 +65,23 @@ class PostController extends Controller
 
     /**
      * PostController constructor.
-     *
-     * @param PostRepository $postRepository
+     * @param PageRepository|ArticleRepository $repository
      */
-    public function __construct(PostRepository $postRepository)
+    public function __construct($repository, $categoryRepository, $userRepository)
     {
-        $this->postRepository = $postRepository;
-    }
-
-    /**
-     * Display a listing of the posts in admin panel.
-     *
-     * @param null $username
-     * @return \Illuminate\Http\Response
-     */
-    public function indexHome($username = null)
-    {
-        if (!empty($username)) {
-            /*  Get posts of a concrete user */
-            $user = User::where('username', $username)->firstOrFail();
-            $posts = $user->posts()->paginate(self::POSTS_PAGINATION_NUMBER);
-        } else {
-            /* Get all posts */
-            $posts = $this->postRepository->paginate(self::POSTS_PAGINATION_NUMBER);
-        }
-        return view('home.posts.index', compact('posts'));
-    }
-
-    /**
-     * Show the form for creating a new post.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        $categories = (new CategoryRepository())->all();
-        return view('home.posts.post', compact('categories'));
+        $this->repository = $repository;
+        $this->categoryRepository = $categoryRepository;
+        $this->userRepository = $userRepository;
     }
 
     /**
      * Store a newly created post in storage.
      *
      * @param  \Illuminate\Http\Request $request
+     * @param string $type
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $type)
     {
         $slug = getAvailableSlug($request->title, (new Post())->getTable());
 
@@ -107,6 +95,7 @@ class PostController extends Controller
             'description' => 'required|max:170',
             'slug' => 'required|unique:posts',
             'image' => 'mimes:jpeg,gif,png',
+            'type'  => 'in:' . self::POST_PAGE . ',' . self::POST_ARTICLE,
         );
 
         /** @var UploadedFile $image */
@@ -121,18 +110,23 @@ class PostController extends Controller
             'slug' => $slug,
             'categories' => $request->categories,
             'image' => $image,
+            'type' => $type,
         );
 
         $validator = Validator::make($requestParams, $rules);
 
         if ($validator->fails()) {
-            return Redirect::to('home/posts/create')->withErrors($validator->messages());
+            return array(
+                'error'     => true,
+                'messages'  => $validator->messages(),
+            );
         } else {
             $post = new Post;
             $post->title = $requestParams['title'];
             $post->body = $requestParams['body'];
             $post->description = $requestParams['description'];
             $post->status = $requestParams['status'];
+            $post->type = $requestParams['type'];
             if ($request->action == self::POST_ACTION_PUBLISH) {
                 $post->status = self::POST_STATUS_PUBLISHED;
             }
@@ -148,45 +142,11 @@ class PostController extends Controller
             $post->categories()->sync($categories);
         }
 
-        return Redirect::to('home/posts/edit/' . $post->id)->withSuccess(trans('home.post_create_success'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param string $slug
-     * @return \Illuminate\Http\Response
-     */
-    public function show($slug)
-    {
-        $post = $this->postRepository->findPostBySlug($slug);
-        return view('themes.' . IndexController::THEME . '.blog.singlepost', compact('post'));
-    }
-
-    /**
-     * Display list of posts by username.
-     *
-     * @param string $username
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function showByUsername($username)
-    {
-        $author = (new UserRepository())->findUserByUsername($username);
-        $posts = $this->postRepository->findPostsByAuthor($author, self::POSTS_PUBLIC_PAGINATION_NUMBER);
-        return view('themes.' . IndexController::THEME . '.userposts', compact('posts', 'author'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $post = $this->postRepository->findOrFail($id);
-        $categories = Category::all();
-        return view('home.posts.post', compact('categories', 'post'));
+        return array(
+            'id'        => $post->id,
+            'error'     => false,
+            'messages'  => trans('home.post_create_success'),
+        );
     }
 
     /**
@@ -224,7 +184,10 @@ class PostController extends Controller
         $validator = Validator::make($requestParams, $rules);
 
         if ($validator->fails()) {
-            return Redirect::to('home/posts/create')->withErrors($validator->messages());
+            return array(
+                'error'     => true,
+                'messages'  => $validator->messages(),
+            );
         } else {
             $post = Post::findOrFail($id);
             $post->title = $requestParams['title'];
@@ -244,7 +207,11 @@ class PostController extends Controller
             $post->categories()->sync($categories);
         }
 
-        return Redirect::to('home/posts/edit/' . $post->id)->withSuccess(trans('home.post_update_success'));
+        return array(
+            'id'        => $post->id,
+            'error'     => false,
+            'messages'  => trans('home.post_update_success'),
+        );
     }
 
     /**
