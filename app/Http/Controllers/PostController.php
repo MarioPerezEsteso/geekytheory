@@ -64,9 +64,12 @@ class PostController extends Controller
 
     /**
      * PostController constructor.
+     * 
      * @param PageRepository|ArticleRepository $repository
+     * @param CategoryRepository $categoryRepository
+     * @param UserRepository $userRepository
      */
-    public function __construct($repository, $categoryRepository, $userRepository)
+    public function __construct($repository = null, CategoryRepository $categoryRepository, UserRepository $userRepository)
     {
         $this->repository = $repository;
         $this->categoryRepository = $categoryRepository;
