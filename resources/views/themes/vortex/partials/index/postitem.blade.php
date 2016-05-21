@@ -7,7 +7,7 @@
             </a>
         </div>
         <div class="post-meta font-alt">
-            {{ trans('public.by') }} <a href="{{ url('/user/' . $post->user->username) }}">{{ $post->name }}</a>
+            {{ trans('public.by') }} <a href="{{ url('/user/' . $post->user_username) }}">{{ $post->user_name }}</a>
         </div>
         <div class="post-header">
             <h4 class="post-title font-alt">

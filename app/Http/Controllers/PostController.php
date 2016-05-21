@@ -64,7 +64,7 @@ class PostController extends Controller
 
     /**
      * PostController constructor.
-     * 
+     *
      * @param PageRepository|ArticleRepository $repository
      * @param CategoryRepository $categoryRepository
      * @param UserRepository $userRepository
