@@ -55,24 +55,24 @@
                                             </span>
                                         </td>
                                         <td class="hidden-xs">
-                                            <a href="{{ url('home/posts/' . $post->user->username) }}">
+                                            <a href="{{ url('home/articles/' . $post->user->username) }}">
                                                 {{ $post->user->name }}
                                             </a>
                                         </td>
                                         <td>
                                             @if ($post->status != 'deleted')
-                                                <a href="{{ url('home/posts/edit/' . $post->id) }}" class="margin">
+                                                <a href="{{ url('home/articles/edit/' . $post->id) }}" class="margin">
                                                     <span class="label bg-blue">
                                                          {{ trans('home.edit') }}
                                                     </span>
                                                 </a>
-                                                <a href="{{ url('home/posts/delete/' . $post->id) }}">
+                                                <a href="{{ url('home/articles/delete/' . $post->id) }}">
                                                     <span class="label bg-red">
                                                          {{ trans('home.delete') }}
                                                     </span>
                                                 </a>
                                             @else
-                                                <a href="{{ url('home/posts/restore/' . $post->id) }}" class="margin">
+                                                <a href="{{ url('home/articles/restore/' . $post->id) }}" class="margin">
                                                     <span class="label bg-purple">
                                                          {{ trans('home.restore') }}
                                                     </span>
