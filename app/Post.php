@@ -36,6 +36,7 @@ class Post extends Model
         'description',
         'status',
         'image',
+        'type',
     );
 
     /**

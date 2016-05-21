@@ -28,4 +28,5 @@ return [
     'user_update_success'    => 'Your profile has been updated successfully',
     'biography' => 'Biography',
     'job_position'  => 'Job position',
+    'username'  => 'Username',
 ];

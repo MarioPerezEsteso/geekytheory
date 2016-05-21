@@ -31,6 +31,11 @@
             </div>
 
             <div class="form-group">
+                {!! Form::label('username', trans('auth.username')) !!}
+                {!! Form::text('username', null, ['class' => 'form-control', 'required' => 'required']) !!}
+            </div>
+
+            <div class="form-group">
                 {!! Form::label('biography', trans('auth.biography')) !!}
                 {!! Form::textarea('biography', null, ['class' => 'form-control', 'rows' => '4']) !!}
             </div>

@@ -28,4 +28,5 @@ return [
     'user_update_success'    => 'Su perfil de usuario ha sido actualizado exitosamente',
     'biography' => 'Biografía',
     'job_position'  => 'Puesto de trabajo',
+    'username'  => 'Nombre de usuario',
 ];
