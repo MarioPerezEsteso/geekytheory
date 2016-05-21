@@ -60,7 +60,10 @@ class ArticleRepository extends PostRepository implements ArticleRepositoryInter
      */
     public function findArticles(User $author = null, $onlyPublishedArticles = false, $paginate = Repository::PAGINATION_DEFAULT)
     {
+        $columns = User::$mappings;
+        array_push($columns, 'posts.*');
         $query = call_user_func_array("{$this->modelClassName}::join", array('users', 'users.id', '=', 'posts.user_id'))
+            ->select($columns)
             ->orderBy('posts.created_at', 'DESC')
             ->where('posts.type', PostController::POST_ARTICLE);
         if ($author !== null) {
