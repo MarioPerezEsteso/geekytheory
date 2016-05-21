@@ -108,20 +108,20 @@
                         <span>{{ trans('home.home') }}</span>
                     </a>
                 </li>
-                <li class="{{ classActiveRoute(array('home/posts', 'home/posts/create', 'home/categories', 'home/tags')) }} treeview">
-                    <a href="{{ url('home/posts') }}">
+                <li class="{{ classActiveRoute(array('home/articles', 'home/articles/create', 'home/categories', 'home/tags')) }} treeview">
+                    <a href="{{ url('home/articles') }}">
                         <i class="fa fa-book"></i>
-                        <span>{{ trans('home.posts') }}</span>
+                        <span>{{ trans('home.articles') }}</span>
                         <i class="fa fa-angle-left pull-right"></i>
                     </a>
                     <ul class="treeview-menu">
-                        <li class="{{ classActiveRoute(array('home/posts')) }}">
-                            <a href="{{ url('home/posts') }}">
-                                {{ trans('home.all_posts') }}
+                        <li class="{{ classActiveRoute(array('home/articles')) }}">
+                            <a href="{{ url('home/articles') }}">
+                                {{ trans('home.all_articles') }}
                             </a>
                         </li>
-                        <li class="{{ classActiveRoute(array('home/posts/create')) }}">
-                            <a href="{{ url('home/posts/create') }}">
+                        <li class="{{ classActiveRoute(array('home/articles/create')) }}">
+                            <a href="{{ url('home/articles/create') }}">
                                 {{ trans('home.post_create') }}
                             </a>
                         </li>
@@ -133,6 +133,25 @@
                         <li class="{{ classActiveRoute(array('home/tags')) }}">
                             <a href="{{ url('home/tags') }}">
                                 {{ trans('home.tags') }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="{{ classActiveRoute(array('home/pages', 'home/pages/create')) }} treeview">
+                    <a href="{{ url('home/pages') }}">
+                        <i class="fa fa-book"></i>
+                        <span>{{ trans('home.pages') }}</span>
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{{ classActiveRoute(array('home/articles')) }}">
+                            <a href="{{ url('home/pages') }}">
+                                {{ trans('home.all_pages') }}
+                            </a>
+                        </li>
+                        <li class="{{ classActiveRoute(array('home/pages/create')) }}">
+                            <a href="{{ url('home/pages/create') }}">
+                                {{ trans('home.page_create') }}
                             </a>
                         </li>
                     </ul>
