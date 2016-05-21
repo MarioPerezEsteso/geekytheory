@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
+use App\Repositories\PostRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -71,7 +72,11 @@ class PostController extends Controller
      */
     public function __construct($repository = null, CategoryRepository $categoryRepository, UserRepository $userRepository)
     {
-        $this->repository = $repository;
+        if ($repository !== null) {
+            $this->repository = $repository;
+        } else {
+            $this->repository = new PostRepository();
+        }
         $this->categoryRepository = $categoryRepository;
         $this->userRepository = $userRepository;
     }
