@@ -95,7 +95,7 @@ class ArticleController extends PostController
     public function show($slug)
     {
         $post = $this->repository->findArticleBySlug($slug);
-        return view('themes.' . IndexController::THEME . '.blog.singlepost', compact('post'));
+        return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post'));
     }
 
     /**
