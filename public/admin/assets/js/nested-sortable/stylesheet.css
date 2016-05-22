@@ -1,0 +1,142 @@
+a,a:visited {
+    color: #4183C4;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+small {
+    font-size: 90%;
+}
+
+small code {
+    font-size: 11px;
+}
+
+.placeholder {
+    outline: 1px dashed #4183C4;
+}
+
+.mjs-nestedSortable-error {
+    background: #fbe3e4;
+    border-color: transparent;
+}
+
+#tree {
+    width: 550px;
+    margin: 0;
+}
+
+ol {
+    max-width: 450px;
+    padding-left: 25px;
+}
+
+ol.sortable,ol.sortable ol {
+    list-style-type: none;
+}
+
+.sortable li div.menuDiv {
+    border: 1px solid #d4d4d4;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    cursor: move;
+    border-color: #D4D4D4 #D4D4D4 #BCBCBC;
+    margin: 0;
+    padding: 3px;
+}
+
+li.mjs-nestedSortable-collapsed.mjs-nestedSortable-hovering div {
+    border-color: #999;
+}
+
+.disclose, .expandEditor {
+    cursor: pointer;
+    width: 20px;
+    display: none;
+}
+
+.sortable li.mjs-nestedSortable-collapsed > ol {
+    display: none;
+}
+
+.sortable li.mjs-nestedSortable-branch > div > .disclose {
+    display: inline-block;
+}
+
+.sortable span.ui-icon {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.menuDiv {
+    background: #EBEBEB;
+}
+
+.menuEdit {
+    background: #FFF;
+}
+
+.menuEditForm {
+    width: 100%;
+    padding-left: 5%;
+    padding-top: 10px;
+}
+
+.itemTitle {
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.deleteMenu {
+    float: right;
+    cursor: pointer;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 0;
+}
+
+h2 {
+    font-size: 1.2em;
+    font-weight: 400;
+    font-style: italic;
+    margin-top: .2em;
+    margin-bottom: 1.5em;
+}
+
+h3 {
+    font-size: 1em;
+    margin: 1em 0 .3em;
+}
+
+p,ol,ul,pre,form {
+    margin-top: 0;
+    margin-bottom: 1em;
+}
+
+dl {
+    margin: 0;
+}
+
+dd {
+    margin: 0;
+    padding: 0 0 0 1.5em;
+}
+
+code {
+    background: #e5e5e5;
+}
+
+input {
+    vertical-align: text-bottom;
+}
+
+.notice {
+    color: #c33;
+}
