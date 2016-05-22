@@ -89,6 +89,18 @@ class PageController extends PostController
     }
 
     /**
+     * Preview a page while it is being edited.
+     *
+     * @param $slug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function preview($slug)
+    {
+        $post = $this->repository->findPageBySlug($slug, true);
+        return view('themes.' . IndexController::THEME . '.blog.singlepage', compact('post'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id

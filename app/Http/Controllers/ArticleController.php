@@ -90,6 +90,18 @@ class ArticleController extends PostController
     }
 
     /**
+     * Preview an article while it is being edited.
+     *
+     * @param string $slug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function preview($slug)
+    {
+        $post = $this->repository->findArticleBySlug($slug, true);
+        return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post'));
+    }
+
+    /**
      * Display list of posts by username.
      *
      * @param string $username

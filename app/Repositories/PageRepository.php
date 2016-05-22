@@ -30,14 +30,17 @@ class PageRepository extends PostRepository implements PageRepositoryInterface
      * Find a page by its slug.
      *
      * @param $slug
+     * @param bool $isPreview
      * @return mixed
      */
-    public function findPageBySlug($slug)
+    public function findPageBySlug($slug, $isPreview = false)
     {
-        return call_user_func_array("{$this->modelClassName}::where", array('slug', $slug))
-            ->where('type', PostController::POST_PAGE)
-            ->where('status', PostController::POST_STATUS_PUBLISHED)
-            ->firstOrFail();
+        $query = call_user_func_array("{$this->modelClassName}::where", array('slug', $slug))
+            ->where('type', PostController::POST_PAGE);
+        if (!$isPreview) {
+            $query->where('status', PostController::POST_STATUS_PUBLISHED);
+        }
+        return $query->firstOrFail();
     }
 
     /**
