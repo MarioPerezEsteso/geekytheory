@@ -87,4 +87,6 @@ return [
     'edit_page'     => 'Edit page',
     'pages'         => 'Pages',
     'pages_page_description'    => 'List of pages',
+    'preview'       => 'Preview',
+    'view'          => 'View',
 ];
