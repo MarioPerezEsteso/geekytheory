@@ -270,13 +270,13 @@ class PostController extends Controller
     /**
      * Gets the base URL of a post depending of its type
      *
-     * @param $type
+     * @param Post $post
      * @return string
      */
-    public static function getPostDashboardUrlByType($type)
+    public static function getPostDashboardUrlByType(Post $post)
     {
         $url = '';
-        switch ($type) {
+        switch ($post->type) {
             case self::POST_ARTICLE:
                 $url = 'home/articles/';
                 break;

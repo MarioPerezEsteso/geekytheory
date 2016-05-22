@@ -39,7 +39,7 @@
                         </button>
                     @endif
                     @if(!empty($post) && $post->status != \App\Http\Controllers\PostController::POST_STATUS_DELETED)
-                        <?php $viewButtonHref = url(\App\Http\Controllers\PostController::getPostDashboardUrlByType($post->type) . 'preview/' . $post->slug); ?>
+                        <?php $viewButtonHref = url(\App\Http\Controllers\PostController::getPostDashboardUrlByType($post) . 'preview/' . $post->slug); ?>
                         <?php $viewButtonText = trans('home.preview'); ?>
                         @if($post->status == \App\Http\Controllers\PostController::POST_STATUS_PUBLISHED)
                             <?php //$viewButtonHref = $siteMeta->url . '/' . $post->slug; ?>
