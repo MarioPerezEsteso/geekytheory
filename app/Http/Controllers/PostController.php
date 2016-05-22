@@ -287,4 +287,19 @@ class PostController extends Controller
         return $url;
     }
 
+    /**
+     * Gets the public URL of a post depending of its type
+     *
+     * @param Post $post
+     * @return string
+     */
+    public static function getPostPublicUrlByType(Post $post)
+    {
+        $url = '/' . $post->slug;
+        if ($post->type == self::POST_PAGE) {
+            $url = '/p' . $url;
+        }
+        return $url;
+    }
+
 }

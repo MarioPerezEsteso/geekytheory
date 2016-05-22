@@ -33,10 +33,23 @@
             <div class="row">
                 <div class="col-md-12">
                     @if(empty($post) || (!empty($post) && $post->status == \App\Http\Controllers\PostController::POST_STATUS_DRAFT))
-                        <button type="submit" class="btn btn-primary" name="action" value="{{ \App\Http\Controllers\PostController::POST_ACTION_UPDATE }}">
+                        <button type="submit" class="btn btn-primary margin-r-5" name="action" value="{{ \App\Http\Controllers\PostController::POST_ACTION_UPDATE }}">
                             <i class="glyphicon glyphicon-floppy-disk"></i>
                             {{ trans('home.save_draft') }}
                         </button>
+                    @endif
+                    @if(!empty($post) && $post->status != \App\Http\Controllers\PostController::POST_STATUS_DELETED)
+                        <?php $viewButtonHref = url(\App\Http\Controllers\PostController::getPostDashboardUrlByType($post->type) . 'preview/' . $post->slug); ?>
+                        <?php $viewButtonText = trans('home.preview'); ?>
+                        @if($post->status == \App\Http\Controllers\PostController::POST_STATUS_PUBLISHED)
+                            <?php //$viewButtonHref = $siteMeta->url . '/' . $post->slug; ?>
+                            <?php $viewButtonHref = \App\Http\Controllers\PostController::getPostPublicUrlByType($post); ?>
+                            <?php $viewButtonText = trans('home.view'); ?>
+                        @endif
+                        <a target="_blank" class="btn btn-default" href="{{ $viewButtonHref }}">
+                            <i class="glyphicon glyphicon-eye-open"></i>
+                            {{ $viewButtonText }}
+                        </a>
                     @endif
                 </div>
             </div>
