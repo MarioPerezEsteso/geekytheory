@@ -29,14 +29,17 @@ class ArticleRepository extends PostRepository implements ArticleRepositoryInter
      * Find an article by its slug.
      *
      * @param $slug
+     * @param bool $isPreview
      * @return mixed
      */
-    public function findArticleBySlug($slug)
+    public function findArticleBySlug($slug, $isPreview = false)
     {
-        return call_user_func_array("{$this->modelClassName}::where", array('slug', $slug))
-            ->where('type', PostController::POST_ARTICLE)
-            ->where('status', PostController::POST_STATUS_PUBLISHED)
-            ->firstOrFail();
+        $query = call_user_func_array("{$this->modelClassName}::where", array('slug', $slug))
+            ->where('type', PostController::POST_ARTICLE);
+        if (!$isPreview) {
+            $query->where('status', PostController::POST_STATUS_PUBLISHED);
+        }
+        return $query->firstOrFail();
     }
 
     /**

@@ -8,7 +8,7 @@ use App\User;
 interface PageRepositoryInterface extends PostRepositoryInterface
 {
 
-    public function findPageBySlug($slug);
+    public function findPageBySlug($slug, $isPreview = false);
 
     public function findPages($paginate = Repository::PAGINATION_DEFAULT, User $author = null);
 
