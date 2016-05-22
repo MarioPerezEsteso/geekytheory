@@ -50,13 +50,13 @@
                                             </span>
                                         </td>
                                         <td class="hidden-xs">
-                                            <a href="{{ url(\App\Http\Controllers\PostController::getPostDashboardUrlByType($post->type) . $post->user_username) }}">
+                                            <a href="{{ url(\App\Http\Controllers\PostController::getPostDashboardUrlByType($post) . $post->user_username) }}">
                                                 {{ $post->user_name }}
                                             </a>
                                         </td>
                                         <td>
                                             @if ($post->status != 'deleted')
-                                                <a href="{{ url(\App\Http\Controllers\PostController::getPostDashboardUrlByType($post->type) . 'edit/' . $post->id) }}" class="margin">
+                                                <a href="{{ url(\App\Http\Controllers\PostController::getPostDashboardUrlByType($post) . 'edit/' . $post->id) }}" class="margin">
                                                     <span class="label bg-blue">
                                                          {{ trans('home.edit') }}
                                                     </span>

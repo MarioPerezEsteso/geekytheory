@@ -6,7 +6,7 @@ use App\User;
 
 interface ArticleRepositoryInterface extends PostRepositoryInterface
 {
-    public function findArticleBySlug($slug);
+    public function findArticleBySlug($slug, $isPreview = false);
 
     public function findAllArticles($paginate = Repository::PAGINATION_DEFAULT);
 

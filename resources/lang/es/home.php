@@ -87,4 +87,6 @@ return [
     'edit_page'     => 'Editar página',
     'pages'         => 'Páginas',
     'pages_page_description'    => 'Lista de páginas',
+    'preview'       => 'Vista previa',
+    'view'          => 'Ver',
 ];

@@ -86,6 +86,11 @@ Route::post('home/articles/store', [
     'uses'          => 'ArticleController@store'
 ]);
 
+Route::get('home/articles/preview/{slug}', [
+    'middleware'    => 'auth',
+    'uses'          => 'ArticleController@preview'
+]);
+
 Route::get('home/pages/create', [
     'middleware'    => 'auth',
     'uses'          => 'PageController@create'
@@ -111,6 +116,11 @@ Route::post('home/pages/store', [
     'middleware'    => 'auth',
     'before'        => 'csrf',
     'uses'          => 'PageController@store'
+]);
+
+Route::get('home/pages/preview/{slug}', [
+    'middleware'    => 'auth',
+    'uses'          => 'PageController@preview'
 ]);
 
 Route::get('home/posts/delete/{id}', [
