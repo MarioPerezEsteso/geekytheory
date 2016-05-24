@@ -83,7 +83,6 @@ class SiteMetaController extends Controller
         if (!empty($request->menu)) {
             $siteMeta->menu = $request->menu;
             $siteMeta->save();
-            $menu = json_decode($request->menu, true);
             return array(
                 'error'     => 0,
                 'message'   => trans('home.menu_updated_successfully'),

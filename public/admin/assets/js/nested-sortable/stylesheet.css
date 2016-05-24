@@ -24,6 +24,14 @@ small code {
     border-color: transparent;
 }
 
+.box-header-menu-item {
+    background-color: #eeeeee;
+}
+
+.box-body-menu-item {
+    background-color: ghostwhite;
+}
+
 #tree {
     width: 550px;
     margin: 0;
@@ -36,6 +44,7 @@ ol {
 
 ol.sortable,ol.sortable ol {
     list-style-type: none;
+    padding-top: 22px;
 }
 
 .sortable li div.menuDiv {
@@ -139,4 +148,8 @@ input {
 
 .notice {
     color: #c33;
+}
+
+.success {
+    color: #00a65a;
 }

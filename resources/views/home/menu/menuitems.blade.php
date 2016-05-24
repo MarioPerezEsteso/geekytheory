@@ -1,79 +1,47 @@
     <ol class="sortable ui-sortable mjs-nestedSortable-branch mjs-nestedSortable-expanded">
-        <?php $itemCount = 1; ?>
         @foreach($menu as $menuItem)
-            <li style="display: list-item;" class="mjs-nestedSortable-branch mjs-nestedSortable-expanded"
-                id="menuItem_{{ $itemCount }}">
-                <div class="menuDiv">
-			   <span title="Click to show/hide children" class="disclose">
-                   <i class="glyphicon glyphicon-minus"></i>
-			   </span>
-			   <span title="Click to show/hide item editor" data-id="{{ $itemCount }}" class="expandEditor">
-                   <i class="glyphicon glyphicon-triangle-bottom"></i>
-			   </span>
-                    <span data-id="{{ $itemCount }}" class="itemTitle">{{ $menuItem['text'] }}</span>
-			   <span title="Click to delete item." data-id="{{ $itemCount }}"
-                     class="deleteMenu glyphicon glyphicon-remove">
-			   </span>
-                    <div id="menuEdit{{ $itemCount }}" class="menuEdit hidden">
-                        <div class="row menuEditForm">
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="text">Text</label>
-                                    <input class="form-control" name="text" type="text" value="{{ $menuItem['text'] }}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="link">Link</label>
-                                    <input class="form-control" name="link" type="text" value="{{ $menuItem['link'] }}">
-                                </div>
+            <li style="display: list-item;" class="mjs-nestedSortable-branch mjs-nestedSortable-expanded">
+                <div class="box box-default collapsed-box">
+                    <div class="box-header with-border box-header-menu-item">
+                        <h3 class="box-title">{{ $menuItem['text'] }}</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove">
+                                <i class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body box-body-menu-item">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="text">Text</label>
+                                <input class="form-control" name="text" type="text"
+                                       value="{{ $menuItem['text'] }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="link">Link</label>
+                                <input class="form-control" name="link" type="text"
+                                       value="{{ $menuItem['link'] }}">
                             </div>
                         </div>
                     </div>
                 </div>
-                @if ($menuItem['submenu'] !== null)
-                    <?php $submenuItemCount = 1; ?>
-                    @foreach($menuItem['submenu'] as $submenuItem)
-                        <?php $submenuIndex = $itemCount . '-' . $submenuItemCount; ?>
-                        <ol>
-                            <li style="display: list-item;"
-                                class="mjs-nestedSortable-branch mjs-nestedSortable-expanded"
-                                id="menuItem_{{ $submenuIndex }}">
-                                <div class="menuDiv">
-                           <span title="Click to show/hide children" class="disclose glyphicon glyphicon-minus">
-                           </span>
-                           <span title="Click to show/hide item editor" data-id="{{ $submenuIndex }}"
-                                 class="expandEditor glyphicon glyphicon-triangle-bottom">
-                           </span>
-                           <span>
-                           <span data-id="{{ $submenuIndex }}" class="itemTitle">{{ $submenuItem['text'] }}</span>
-                           <span title="Click to delete item." data-id="{{ $submenuIndex }}"
-                                 class="deleteMenu glyphicon glyphicon-remove">
-                           </span>
-                           </span>
-                                    <div id="menuEdit{{ $submenuIndex }}" class="menuEdit hidden">
-                                        <div class="row menuEditForm">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label for="text">Text</label>
-                                                    <input class="form-control" name="text" type="text"
-                                                           value="{{ $submenuItem['text'] }}">
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label for="link">Link</label>
-                                                    <input class="form-control" name="link" type="text"
-                                                           value="{{ $submenuItem['link'] }}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ol>
-                        <?php $submenuItemCount++; ?>
-                    @endforeach
-                @endif
             </li>
-            <?php $itemCount++; ?>
         @endforeach
     </ol>
-    <input type="submit" class="btn btn-default pull-right" name="saveMenu" id="saveMenu" value="{{ trans('home.save') }}">
+    <div class="row">
+        <div class="col-md-12">
+            <p id="save-errormessage-feedback" class="notice pull-right hidden">
+                The menu could not be saved
+            </p>
+        </div>
+    </div>
+    <button class="btn btn-default pull-right" name="saveMenu" id="saveMenu">
+        {{ trans('home.save') }}
+        <i id="save-loading-feedback" class="fa fa-circle-o-notch fa-spin hidden"></i>
+        <i id="save-success-feedback" class="glyphicon glyphicon-ok success hidden"></i>
+        <i id="save-error-feedback" class="glyphicon glyphicon-remove notice hidden"></i>
+    </button>
