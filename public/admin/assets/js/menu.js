@@ -46,6 +46,8 @@ $.ajaxSetup({
 
 $('#saveMenu').click(function () {
     var menuJson = [];
+    $('#save-loading-feedback').removeClass('hidden');
+    $('#save-success-feedback,#save-error-feedback,#save-errormessage-feedback').addClass('hidden');
     $('ol.sortable > li').each(function () {
         var current = $(this);
         var currentMenuJson = {};
@@ -72,10 +74,18 @@ $('#saveMenu').click(function () {
         },
         dataType: 'json',
         success: function (response) {
-
+            $('#save-loading-feedback').addClass('hidden');
+            if (response.error == 0) {
+                $('#save-success-feedback').removeClass('hidden');
+            } else {
+                $('#save-error-feedback').removeClass('hidden');
+                $('#save-errormessage-feedback').removeClass('hidden');
+            }
         },
         error: function (response) {
-
+            $('#save-loading-feedback').addClass('hidden');
+            $('#save-error-feedback').removeClass('hidden');
+            $('#save-errormessage-feedback').removeClass('hidden');
         }
     });
 });
