@@ -76,4 +76,4 @@
             <?php $itemCount++; ?>
         @endforeach
     </ol>
-    <input type="submit" class="btn btn-default" name="saveMenu" id="saveMenu" value="{{ trans('home.save') }}">
+    <input type="submit" class="btn btn-default pull-right" name="saveMenu" id="saveMenu" value="{{ trans('home.save') }}">

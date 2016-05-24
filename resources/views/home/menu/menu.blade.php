@@ -14,10 +14,26 @@
 
 @section('content')
     <section class="content">
-        <div class="box">
-            <div class="box-body">
-                <div class="col-md-offset-4 col-md-8">
-                    @include('home.menu.menuitems')
+        <div class="col-md-8 col-sm-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Add menu item</h3>
+                </div>
+                <div class="box-body">
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="text">Text</label>
+                            <input class="form-control" name="new-menu-item-text" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="link">Link</label>
+                            <input class="form-control" name="new-menu-item-link" type="url">
+                        </div>
+                        <button class="btn btn-primary pull-right">Add new item</button>
+                    </div>
+                    <div class="col-md-offset-1 col-md-6">
+                        @include('home.menu.menuitems')
+                    </div>
                 </div>
             </div>
         </div>
@@ -25,7 +41,7 @@
 @endsection
 
 @section('custom-css')
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"/>
     {!! Html::style('admin/assets/js/nested-sortable/stylesheet.css') !!}
 @endsection
 
