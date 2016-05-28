@@ -230,6 +230,18 @@ Route::get('home/menu', [
     'uses'          => 'SiteMetaController@editMenu',
 ]);
 
+Route::post('home/menu/update', [
+    'middleware'    => 'auth',
+    'before'        => 'csrf',
+    'uses'          => 'SiteMetaController@updateMenu',
+]);
+
+Route::get('home/menu/getNewMenuItemHtml', [
+    'middleware'    => 'auth',
+    'before'        => 'csrf',
+    'uses'          => 'SiteMetaController@getNewMenuItemHtml',
+]);
+
 Route::get('/{slug?}', 'ArticleController@show');
 
 Route::get('/p/{slug?}', 'PageController@show');
