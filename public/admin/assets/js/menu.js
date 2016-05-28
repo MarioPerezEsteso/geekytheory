@@ -107,6 +107,10 @@ $('#add-new-item').click(function () {
     }
 });
 
+$('button[name=remove-menu-item]').click(function () {
+    $(this).closest('li').remove();
+});
+
 /**
  * Check if the new menu item is valid
  *

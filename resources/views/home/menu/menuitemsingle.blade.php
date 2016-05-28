@@ -6,7 +6,7 @@
                 <button type="button" class="btn btn-box-tool" data-widget="collapse">
                     <i class="fa fa-plus"></i>
                 </button>
-                <button type="button" class="btn btn-box-tool" data-widget="remove">
+                <button name="remove-menu-item" type="button" class="btn btn-box-tool" data-widget="remove">
                     <i class="fa fa-times"></i>
                 </button>
             </div>
