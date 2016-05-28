@@ -91,4 +91,8 @@ return [
     'view'          => 'Ver',
     'menu_updated_successfully' => 'El menú ha sido actualizado correctamente',
     'menu_not_updated_successfully' => 'Ha ocurrido un error al actualizar el menú',
+    'menu_items_configure'  => 'Configurar el menú',
+    'text'          => 'Texto',
+    'link'          => 'Enlace',
+    'add_new_item'  => 'Añadir nuevo ítem',
 ];

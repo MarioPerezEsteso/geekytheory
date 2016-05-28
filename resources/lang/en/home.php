@@ -91,4 +91,8 @@ return [
     'view'          => 'View',
     'menu_updated_successfully' => 'The menu has been updated successfully',
     'menu_not_updated_successfully' => 'There has been an error updating the menu',
+    'menu_items_configure'  => 'Configure menu items',
+    'text'          => 'Text',
+    'link'          => 'Link',
+    'add_new_item'  => 'Add new item',
 ];

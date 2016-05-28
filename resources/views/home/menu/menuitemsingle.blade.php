@@ -15,12 +15,12 @@
         <div class="box-body box-body-menu-item">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="text">Text</label>
+                    <label for="text">{{ trans('home.text') }}</label>
                     <input class="form-control" name="text" type="text"
                            value="{{ $menuItem['text'] }}">
                 </div>
                 <div class="form-group">
-                    <label for="link">Link</label>
+                    <label for="link">{{ trans('home.link') }}</label>
                     <input class="form-control" name="link" type="text"
                            value="{{ $menuItem['link'] }}">
                 </div>

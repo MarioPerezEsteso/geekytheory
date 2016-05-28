@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12">
             <p id="save-errormessage-feedback" class="notice pull-right hidden">
-                The menu could not be saved
+                {{ trans('home.menu_not_updated_successfully') }}
             </p>
         </div>
     </div>

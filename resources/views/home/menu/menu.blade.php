@@ -17,20 +17,20 @@
         <div class="col-md-8 col-sm-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Configure menu items</h3>
+                    <h3 class="box-title">{{ trans('home.menu_items_configure') }}</h3>
                 </div>
                 <div class="box-body">
                     <div class="col-md-5">
                         <div class="form-group">
-                            <label for="text">Text</label>
+                            <label for="text">{{ trans('home.text') }}</label>
                             <input class="form-control" id="new-menu-item-text" type="text">
                         </div>
                         <div class="form-group">
-                            <label for="link">Link</label>
+                            <label for="link">{{ trans('home.link') }}</label>
                             <input class="form-control" id="new-menu-item-link" type="url">
                         </div>
                         <button id="add-new-item" class="btn btn-primary pull-right">
-                            Add new item
+                            {{ trans('home.add_new_item') }}
                         </button>
                     </div>
                     <div class="col-md-offset-1 col-md-6">
