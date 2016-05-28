@@ -89,3 +89,49 @@ $('#saveMenu').click(function () {
         }
     });
 });
+
+$('#add-new-item').click(function () {
+    if (validateNewMenuItem()) {
+        $.ajax({
+            method: 'get',
+            url: '/home/menu/getNewMenuItemHtml',
+            data: {
+                text: $('#new-menu-item-text').val(),
+                link: $('#new-menu-item-link').val()
+            },
+            success: function (response) {
+                $('ol.sortable').append(response);
+                emptyNewMenuItem();
+            }
+        });
+    }
+});
+
+/**
+ * Check if the new menu item is valid
+ *
+ * @returns {boolean}
+ */
+function validateNewMenuItem() {
+    var textInput = $('#new-menu-item-text');
+    var linkInput = $('#new-menu-item-link');
+    var valid = true;
+    if (!textInput.val() || 0 === textInput.val().length) {
+        textInput.closest('div').addClass('has-error');
+        valid = false;
+    }
+    if (!linkInput.val() || 0 === linkInput.val().length) {
+        linkInput.closest("div.form-group").addClass('has-error');
+        valid = false;
+    }
+    return valid;
+}
+
+/**
+ * Set to empty the value of new menu item inputs and remove
+ * error feedback messages if any
+ */
+function emptyNewMenuItem() {
+    $('#new-menu-item-text,#new-menu-item-link').val('');
+    $('#new-menu-item-text,#new-menu-item-link').closest('div').removeClass('has-error');
+}

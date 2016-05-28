@@ -236,6 +236,12 @@ Route::post('home/menu/update', [
     'uses'          => 'SiteMetaController@updateMenu',
 ]);
 
+Route::get('home/menu/getNewMenuItemHtml', [
+    'middleware'    => 'auth',
+    'before'        => 'csrf',
+    'uses'          => 'SiteMetaController@getNewMenuItemHtml',
+]);
+
 Route::get('/{slug?}', 'ArticleController@show');
 
 Route::get('/p/{slug?}', 'PageController@show');

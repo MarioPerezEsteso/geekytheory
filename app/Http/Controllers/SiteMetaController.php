@@ -95,6 +95,22 @@ class SiteMetaController extends Controller
     }
 
     /**
+     * Return HTML for a new menu item in editor
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getNewMenuItemHtml(Request $request)
+    {
+        $menuItem = array(
+            'text'      => $request->text,
+            'link'      => $request->link,
+            'submenu'   => null,
+        );
+        return view('home.menu.menuitemsingle', compact('menuItem'));
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
