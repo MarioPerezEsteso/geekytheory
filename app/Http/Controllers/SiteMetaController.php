@@ -13,6 +13,16 @@ use Illuminate\Support\Facades\Redirect;
 class SiteMetaController extends Controller
 {
     /**
+     * @var SiteMetaRepository
+     */
+    protected $repository;
+
+    public function __construct(SiteMetaRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
+    /**
      * Show the form for editing the site meta.
      *
      * @return \Illuminate\Http\Response
@@ -56,7 +66,48 @@ class SiteMetaController extends Controller
      */
     public function editMenu()
     {
-        return view('home.menu.menu');
+        $menu = json_decode($this->repository->getSiteMeta()->menu, true);
+        return view('home.menu.menu', compact('menu'));
+    }
+
+    /**
+     * Update the site menu
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function updateMenu(Request $request)
+    {
+        // TODO: validate json menu
+        $siteMeta = $this->repository->getSiteMeta();
+        if (!empty($request->menu)) {
+            $siteMeta->menu = $request->menu;
+            $siteMeta->save();
+            return array(
+                'error'     => 0,
+                'message'   => trans('home.menu_updated_successfully'),
+            );
+        }
+        return array(
+            'error'     => 1,
+            'message'   => trans('home.menu_not_updated_successfully'),
+        );
+    }
+
+    /**
+     * Return HTML for a new menu item in editor
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getNewMenuItemHtml(Request $request)
+    {
+        $menuItem = array(
+            'text'      => $request->text,
+            'link'      => $request->link,
+            'submenu'   => null,
+        );
+        return view('home.menu.menuitemsingle', compact('menuItem'));
     }
 
     /**
