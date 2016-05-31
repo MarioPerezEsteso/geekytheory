@@ -32,6 +32,7 @@ class SiteMetaTableSeeder extends Seeder
             'flickr'            => 'http://link-to-social-network.com',
             'bitbucket'         => 'http://link-to-social-network.com',
             'linkedin'          => 'http://link-to-social-network.com',
+            'menu'              => '[{"text":"Home","link":"http://domain.com","submenu":null}]',
         ]);
     }
 }
