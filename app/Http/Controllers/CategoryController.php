@@ -3,21 +3,44 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use App\Post;
+use App\Repositories\CategoryRepository;
+use App\Repositories\PostRepository;
 use File;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Validator;
 use Illuminate\Support\Facades\Redirect;
+use App\Validators\CategoryValidator;
 
 class CategoryController extends Controller
 {
-
     /**
      * Number of tags to show with pagination
      */
     const TAGS_PAGINATION_NUMBER = 10;
+
+    /**
+     * @var CategoryRepository
+     */
+    protected $repository;
+
+    /**
+     * @var CategoryValidator
+     */
+    protected $validator;
+
+    /**
+     * CategoryController constructor.
+     *
+     * @param CategoryRepository $categoryRepository
+     * @param CategoryValidator $categoryValidator
+     */
+    public function __construct(CategoryRepository $categoryRepository, CategoryValidator $categoryValidator)
+    {
+        $this->repository = $categoryRepository;
+        $this->validator = $categoryValidator;
+    }
 
     /**
      * Display a listing of the resource.
@@ -26,7 +49,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(self::TAGS_PAGINATION_NUMBER);
+        $categories = $this->repository->paginate(self::TAGS_PAGINATION_NUMBER);
         return view('home.posts.categories', compact('categories'));
     }
 
@@ -37,7 +60,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::paginate(self::TAGS_PAGINATION_NUMBER);
+        $categories = $this->repository->paginate(self::TAGS_PAGINATION_NUMBER);
         return view('home.posts.categories', compact('categories'));
     }
 
@@ -100,18 +123,13 @@ class CategoryController extends Controller
     /**
      * Display list of posts by category.
      *
-     * @param string $username
+     * @param string $categorySlug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showByCategory($category)
+    public function showByCategory($categorySlug)
     {
-        $category = Category::where('slug', $category)->firstOrFail();
-        $posts = $category->posts()
-            ->join('users', 'users.id', '=', 'posts.user_id')
-            ->orderBy('posts.created_at', 'DESC')
-            ->where('posts.status', PostController::POST_STATUS_PUBLISHED)
-            ->select('users.*', 'posts.*')
-            ->paginate(6);
+        $category = $this->repository->findCategoryBySlug($categorySlug);
+        $posts = (new PostRepository())->findPostsByCategory($category);
         return view('themes.' . IndexController::THEME . '.categoryposts', compact('posts', 'category'));
     }
 
