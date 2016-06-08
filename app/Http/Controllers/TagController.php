@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\TagRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -11,11 +12,25 @@ use Illuminate\Support\Facades\Redirect;
 
 class TagController extends Controller
 {
-
     /**
      * Number of tags to show with pagination
      */
     const TAGS_PAGINATION_NUMBER = 10;
+
+    /**
+     * @var TagRepository
+     */
+    protected $repository;
+
+    /**
+     * TagController constructor.
+     *
+     * @param TagRepository $tagRepository
+     */
+    public function __construct(TagRepository $tagRepository)
+    {
+        $this->repository = $tagRepository;
+    }
 
     /**
      * Display a listing of the resource.
@@ -24,7 +39,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::paginate(self::TAGS_PAGINATION_NUMBER);
+        $tags = $this->repository->paginate(self::TAGS_PAGINATION_NUMBER);
         return view('home.posts.tags', compact('tags'));
     }
 
@@ -35,7 +50,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        $tags = Tag::paginate(self::TAGS_PAGINATION_NUMBER);
+        $tags = $this->repository->paginate(self::TAGS_PAGINATION_NUMBER);
         return view('home.posts.tags', compact('tags'));
     }
 
@@ -47,7 +62,6 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-
         if (empty($request->slug)) {
             if (!empty($request->tag)) {
                 $slug = $this->getAvailableSlug($request->tag);
@@ -94,8 +108,8 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        $tag = Tag::findOrFail($id);
-        $tags = Tag::paginate(self::TAGS_PAGINATION_NUMBER);
+        $tag = $this->repository->findOrFail($id);
+        $tags = $this->repository->paginate(self::TAGS_PAGINATION_NUMBER);
         return view('home.posts.tags', compact('tag', 'tags'));
     }
 
