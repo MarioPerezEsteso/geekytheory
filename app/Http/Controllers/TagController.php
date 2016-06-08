@@ -90,17 +90,6 @@ class TagController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id
@@ -122,7 +111,7 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // TODO
     }
 
     /**
@@ -133,7 +122,7 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // TODO
     }
 
     public function getAvailableSlug($text)
@@ -150,5 +139,4 @@ class TagController extends Controller
         }
         return $slug;
     }
-
 }
