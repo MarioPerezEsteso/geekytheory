@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Category;
 use App\Http\Controllers\PostController;
 use App\Post;
 use App\User;
@@ -39,6 +40,23 @@ class PostRepository extends Repository implements PostRepositoryInterface
             ->orderBy('posts.created_at', 'DESC')
             ->where('posts.status', PostController::POST_STATUS_PUBLISHED)
             ->where('users.username', $author->username)
+            ->paginate($paginate);
+    }
+
+    /**
+     * Find posts by category
+     *
+     * @param Category $category
+     * @param int $paginate
+     * @return array Post
+     */
+    public function findPostsByCategory($category, $paginate = self::PAGINATION_DEFAULT)
+    {
+        return $category->posts()
+            ->join('users', 'users.id', '=', 'posts.user_id')
+            ->orderBy('posts.created_at', 'DESC')
+            ->where('posts.status', PostController::POST_STATUS_PUBLISHED)
+            ->select('users.*', 'posts.*')
             ->paginate($paginate);
     }
 }
