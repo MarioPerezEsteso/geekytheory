@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Repositories\CategoryRepository;
 use App\Repositories\PostRepository;
+use App\Validators\CategoryCreateValidator;
 use File;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -26,20 +27,24 @@ class CategoryController extends Controller
     protected $repository;
 
     /**
-     * @var CategoryValidator
+     * Validator for Category creation
+     *
+     * @var CategoryCreateValidator
      */
-    protected $validator;
+    protected $creationValidator;
+
+    protected $updateValidator;
 
     /**
      * CategoryController constructor.
      *
      * @param CategoryRepository $categoryRepository
-     * @param CategoryValidator $categoryValidator
+     * @param CategoryCreateValidator $categoryCreateValidator
      */
-    public function __construct(CategoryRepository $categoryRepository, CategoryValidator $categoryValidator)
+    public function __construct(CategoryRepository $categoryRepository, CategoryCreateValidator $categoryCreateValidator)
     {
         $this->repository = $categoryRepository;
-        $this->validator = $categoryValidator;
+        $this->creationValidator = $categoryCreateValidator;
     }
 
     /**
@@ -72,52 +77,34 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        if (empty($request->slug)) {
-            if (!empty($request->category)) {
-                $slug = $this->getAvailableSlug($request->category);
-            }
+        if (empty($request->slug) && !empty($request->category)) {
+            $slug = $this->getAvailableSlug($request->category);
         } else {
             $slug = $this->getAvailableSlug($request->slug);
         }
 
-        /** @var UploadedFile $image */
-        $image = $request->file('image');
-
-        $rules = array(
-            'category'  => 'required|unique:categories',
-            'slug'      => 'required|unique:categories',
-            'image'     => 'mimes:jpeg,gif,png',
+        $data = array(
+            'category' => $request->category,
+            'slug' => $slug,
+            'image' => $request->file('image')
         );
 
-        $validator = Validator::make(array('category' => $request->category, 'slug' => $slug, 'image' => $request->file('image')), $rules);
-
-        if ($validator->fails()) {
-            return Redirect::to('home/categories')->withErrors($validator->messages());
+        if (!$this->creationValidator->with($data)->passes()) {
+            return Redirect::to('home/categories')->withErrors($this->creationValidator->errors());
         } else {
             $category = new Category;
             $category->category = $request->category;
             $category->slug = $slug;
-            if ($image) {
-                $fileName = ImageManagerController::getImageName($image, ImageManagerController::PATH_IMAGE_UPLOADS);
+            if ($data['image']) {
+                $fileName = ImageManagerController::getImageName($data['image'], ImageManagerController::PATH_IMAGE_UPLOADS);
                 $category->image = $fileName;
-                $image->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
+                $data['image']->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
             }
             $category->save();
         }
 
         return Redirect::to('home/categories')->withSuccess(trans('home.category_create_success'));
 
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -141,7 +128,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        // TODO
     }
 
     /**
@@ -153,7 +140,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // TODO
     }
 
     /**
@@ -164,7 +151,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // TODO
     }
 
     public function getAvailableSlug($text)
@@ -181,5 +168,4 @@ class CategoryController extends Controller
         }
         return $slug;
     }
-
 }
