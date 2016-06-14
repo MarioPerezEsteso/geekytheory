@@ -5,14 +5,13 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Repositories\CategoryRepository;
 use App\Repositories\PostRepository;
-use App\Validators\CategoryCreateValidator;
+use App\Validators\CategoryValidator;
 use File;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Validator;
 use Illuminate\Support\Facades\Redirect;
-use App\Validators\CategoryValidator;
 
 class CategoryController extends Controller
 {
@@ -27,24 +26,22 @@ class CategoryController extends Controller
     protected $repository;
 
     /**
-     * Validator for Category creation
+     * Validator for Category creation and update.
      *
-     * @var CategoryCreateValidator
+     * @var CategoryValidator
      */
-    protected $creationValidator;
-
-    protected $updateValidator;
+    protected $validator;
 
     /**
      * CategoryController constructor.
      *
      * @param CategoryRepository $categoryRepository
-     * @param CategoryCreateValidator $categoryCreateValidator
+     * @param CategoryValidator $categoryValidator
      */
-    public function __construct(CategoryRepository $categoryRepository, CategoryCreateValidator $categoryCreateValidator)
+    public function __construct(CategoryRepository $categoryRepository, CategoryValidator $categoryValidator)
     {
         $this->repository = $categoryRepository;
-        $this->creationValidator = $categoryCreateValidator;
+        $this->validator = $categoryValidator;
     }
 
     /**
@@ -89,8 +86,8 @@ class CategoryController extends Controller
             'image' => $request->file('image')
         );
 
-        if (!$this->creationValidator->with($data)->passes()) {
-            return Redirect::to('home/categories')->withErrors($this->creationValidator->errors());
+        if (!$this->validator->with($data)->passes()) {
+            return Redirect::to('home/categories')->withErrors($this->validator->errors());
         } else {
             $category = new Category;
             $category->category = $request->category;

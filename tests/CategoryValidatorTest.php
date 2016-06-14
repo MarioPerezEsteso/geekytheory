@@ -1,13 +1,13 @@
 <?php
 
-class CategoryCreateValidatorTest extends TestCase
+class CategoryValidatorTest extends TestCase
 {
     /**
      * Test valid data.
      */
     public function testCreateSuccess()
     {
-        $validator = new \App\Validators\CategoryCreateValidator(App::make('validator'));
+        $validator = new \App\Validators\CategoryValidator(App::make('validator'));
         $this->assertTrue($validator->with($this->getValidCreateData())->passes());
     }
 
@@ -16,7 +16,7 @@ class CategoryCreateValidatorTest extends TestCase
      */
     public function testCreateFailure()
     {
-        $validator = new \App\Validators\CategoryCreateValidator(App::make('validator'));
+        $validator = new \App\Validators\CategoryValidator(App::make('validator'));
         $this->assertFalse($validator->with($this->getInvalidCreateData())->passes());
         $this->assertEquals(2, count($validator->errors()));
         $this->assertInstanceOf('Illuminate\Support\MessageBag', $validator->errors());
