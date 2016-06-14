@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\TagRepository;
+use App\Validators\TagCreateValidator;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -23,13 +24,24 @@ class TagController extends Controller
     protected $repository;
 
     /**
+     * Validator for Tag creation
+     *
+     * @var TagCreateValidator
+     */
+    protected $createValidator;
+
+    protected $updateValidator;
+
+    /**
      * TagController constructor.
      *
      * @param TagRepository $tagRepository
+     * @param TagCreateValidator $createValidator
      */
-    public function __construct(TagRepository $tagRepository)
+    public function __construct(TagRepository $tagRepository, TagCreateValidator $createValidator)
     {
         $this->repository = $tagRepository;
+        $this->createValidator = $createValidator;
     }
 
     /**
@@ -70,14 +82,12 @@ class TagController extends Controller
             $slug = $this->getAvailableSlug($request->slug);
         }
 
-        $rules = array(
-            'tag' => 'required|unique:tags',
-            'slug' => 'required|unique:tags',
+        $data = array(
+            'tag'   => $request->tag,
+            'slug'  => $slug
         );
 
-        $validator = Validator::make(array('tag' => $request->tag, 'slug' => $slug), $rules);
-
-        if ($validator->fails()) {
+        if (!$this->createValidator->with($data)->passes()) {
             return Redirect::to('home/tags')->withErrors($validator->messages());
         } else {
             $tag = new Tag;
