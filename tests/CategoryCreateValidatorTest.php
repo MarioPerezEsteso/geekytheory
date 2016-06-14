@@ -2,12 +2,18 @@
 
 class CategoryCreateValidatorTest extends TestCase
 {
+    /**
+     * Test valid data.
+     */
     public function testCreateSuccess()
     {
         $validator = new \App\Validators\CategoryCreateValidator(App::make('validator'));
         $this->assertTrue($validator->with($this->getValidCreateData())->passes());
     }
 
+    /**
+     * Test invalid data.
+     */
     public function testCreateFailure()
     {
         $validator = new \App\Validators\CategoryCreateValidator(App::make('validator'));
@@ -16,6 +22,11 @@ class CategoryCreateValidatorTest extends TestCase
         $this->assertInstanceOf('Illuminate\Support\MessageBag', $validator->errors());
     }
 
+    /**
+     * Returns an array with an example of valid data.
+     *
+     * @return array
+     */
     private function getValidCreateData()
     {
         $file = tempnam(sys_get_temp_dir(), 'upl'); // create file
@@ -35,6 +46,11 @@ class CategoryCreateValidatorTest extends TestCase
         );
     }
 
+    /**
+     * Returns an array with an example of invalid data.
+     *
+     * @return array
+     */
     public function getInvalidCreateData()
     {
         $image = new \Symfony\Component\HttpFoundation\File\UploadedFile(
