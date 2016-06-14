@@ -2,10 +2,6 @@
 
 class CategoryCreateValidatorTest extends TestCase
 {
-
-    protected $file;
-    protected $image;
-
     public function testCreateSuccess()
     {
         $validator = new \App\Validators\CategoryCreateValidator(App::make('validator'));
