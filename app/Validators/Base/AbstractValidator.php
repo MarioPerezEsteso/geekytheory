@@ -3,6 +3,8 @@
 namespace App\Validators\Base;
 
 
+use App\Http\Controllers\Controller;
+
 abstract class AbstractValidator
 {
     /**
@@ -54,6 +56,8 @@ abstract class AbstractValidator
     {
         return $this->errors;
     }
+
+    abstract function update($id = null);
 
     /**
      * Pass the data and the rules to the validator

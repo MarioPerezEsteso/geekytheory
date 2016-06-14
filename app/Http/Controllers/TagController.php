@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\TagRepository;
 use App\Validators\TagCreateValidator;
+use App\Validators\TagValidator;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -26,22 +27,20 @@ class TagController extends Controller
     /**
      * Validator for Tag creation
      *
-     * @var TagCreateValidator
+     * @var TagValidator
      */
-    protected $createValidator;
-
-    protected $updateValidator;
+    protected $validator;
 
     /**
      * TagController constructor.
      *
      * @param TagRepository $tagRepository
-     * @param TagCreateValidator $createValidator
+     * @param TagValidator $tagValidator
      */
-    public function __construct(TagRepository $tagRepository, TagCreateValidator $createValidator)
+    public function __construct(TagRepository $tagRepository, TagValidator $tagValidator)
     {
         $this->repository = $tagRepository;
-        $this->createValidator = $createValidator;
+        $this->validator = $tagValidator;
     }
 
     /**
@@ -74,10 +73,8 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        if (empty($request->slug)) {
-            if (!empty($request->tag)) {
-                $slug = $this->getAvailableSlug($request->tag);
-            }
+        if (empty($request->slug) && !empty($request->tag)) {
+            $slug = $this->getAvailableSlug($request->tag);
         } else {
             $slug = $this->getAvailableSlug($request->slug);
         }
@@ -87,7 +84,7 @@ class TagController extends Controller
             'slug'  => $slug
         );
 
-        if (!$this->createValidator->with($data)->passes()) {
+        if (!$this->validator->with($data)->passes()) {
             return Redirect::to('home/tags')->withErrors($validator->messages());
         } else {
             $tag = new Tag;
@@ -121,7 +118,8 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // TODO
+        // TODO: update tag
+        return Redirect::to('home/tags')->withSuccess(trans('home.tag_create_success'));
     }
 
     /**

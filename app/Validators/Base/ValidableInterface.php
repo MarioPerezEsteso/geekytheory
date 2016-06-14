@@ -2,8 +2,18 @@
 
 namespace App\Validators\Base;
 
+use App\Http\Controllers\Controller;
+
 interface ValidableInterface
 {
+    /**
+     * Modify the rules for updating a Model
+     *
+     * @param int $id
+     * @return self
+     */
+    public function update($id = null);
+
     /**
      * With
      *
