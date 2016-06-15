@@ -7,6 +7,7 @@ class ValidatorTest extends TestCase
     public function tearDown()
     {
         m::close();
+        parent::tearDown();
     }
 
     /**
