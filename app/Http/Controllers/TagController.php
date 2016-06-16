@@ -85,7 +85,7 @@ class TagController extends Controller
         );
 
         if (!$this->validator->with($data)->passes()) {
-            return Redirect::to('home/tags')->withErrors($this->validator->messages());
+            return Redirect::to('home/tags')->withErrors($this->validator->errors());
         } else {
             $tag = new Tag;
             $tag->tag = $request->tag;
@@ -118,7 +118,16 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // TODO: update tag
+        $data = array(
+            'tag'   => $request->tag,
+            'slug'  => $request->slug,
+        );
+
+        if (!$this->validator->update($id)->with($data)->passes()) {
+            return Redirect::to('home/tags')->withErrors($this->validator->errors());
+        } else {
+            $this->repository->update($id, $data);
+        }
         return Redirect::to('home/tags')->withSuccess(trans('home.tag_create_success'));
     }
 
