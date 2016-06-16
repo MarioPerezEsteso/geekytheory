@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 interface RepositoryInterface
 {
-
     public function create(array $attributes);
 
     public function all($columns = array('*'));
@@ -14,6 +13,8 @@ interface RepositoryInterface
     public function find($id, $columns = array('*'));
 
     public function findOrFail($id, $columns = array('*'));
+
+    public function update($id = null, $data = array());
 
     public function destroy($ids);
 }
