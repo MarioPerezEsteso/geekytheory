@@ -75,6 +75,8 @@ abstract class Repository implements RepositoryInterface
         return call_user_func_array("{$this->modelClassName}::paginate", array($pagination, $columns));
     }
 
+
+
     /**
      * Destroy a list of entities by their identifiers
      *

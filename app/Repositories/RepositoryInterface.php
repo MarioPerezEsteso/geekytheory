@@ -9,6 +9,8 @@ interface RepositoryInterface
 
     public function all($columns = array('*'));
 
+    public function paginate($pagination = self::PAGINATION_DEFAULT, $columns = array('*'));
+
     public function find($id, $columns = array('*'));
 
     public function destroy($ids);
