@@ -85,7 +85,7 @@ class TagController extends Controller
         );
 
         if (!$this->validator->with($data)->passes()) {
-            return Redirect::to('home/tags')->withErrors($validator->messages());
+            return Redirect::to('home/tags')->withErrors($this->validator->messages());
         } else {
             $tag = new Tag;
             $tag->tag = $request->tag;
