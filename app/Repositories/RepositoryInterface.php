@@ -13,5 +13,7 @@ interface RepositoryInterface
 
     public function find($id, $columns = array('*'));
 
+    public function findOrFail($id, $columns = array('*'));
+
     public function destroy($ids);
 }
