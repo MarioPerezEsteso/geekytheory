@@ -137,7 +137,19 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // TODO
+        $data = array(
+            'category'   => $request->tag,
+            'slug'  => $request->slug,
+        );
+
+        // TODO: update image
+
+        if (!$this->validator->update($id)->with($data)->passes()) {
+            return Redirect::to('home/categories')->withErrors($this->validator->errors());
+        } else {
+            $this->repository->update($id, $data);
+        }
+        return Redirect::to('home/categories')->withSuccess(trans('home.category_update_success'));
     }
 
     /**
