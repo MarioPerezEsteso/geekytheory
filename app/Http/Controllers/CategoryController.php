@@ -125,7 +125,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        // TODO
+        $category = $this->repository->findOrFail($id);
+        $categories = $this->repository->paginate(self::TAGS_PAGINATION_NUMBER);
+        return view('home.posts.categories', compact('category', 'categories'));
     }
 
     /**
