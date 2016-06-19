@@ -7,6 +7,8 @@ use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\PostRepository;
 use App\Repositories\UserRepository;
+use App\Validators\ArticleValidator;
+use App\Validators\PageValidator;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
@@ -31,6 +33,11 @@ class PostController extends Controller
      * @var UserRepository
      */
     protected $userRepository;
+
+    /**
+     * @var PageValidator|ArticleValidator
+     */
+    protected $validator;
 
     /**
      * Number of posts to show with pagination in admin panel
@@ -70,7 +77,7 @@ class PostController extends Controller
      * @param CategoryRepository $categoryRepository
      * @param UserRepository $userRepository
      */
-    public function __construct($repository = null, CategoryRepository $categoryRepository, UserRepository $userRepository)
+    public function __construct($repository = null, CategoryRepository $categoryRepository, UserRepository $userRepository, $validator)
     {
         if ($repository !== null) {
             $this->repository = $repository;
@@ -79,6 +86,7 @@ class PostController extends Controller
         }
         $this->categoryRepository = $categoryRepository;
         $this->userRepository = $userRepository;
+        $this->validator = $validator;
     }
 
     /**
@@ -92,23 +100,10 @@ class PostController extends Controller
     {
         $slug = getAvailableSlug($request->title, (new Post())->getTable());
 
-        $rules = array(
-            'title' => 'required|unique:posts|max:255',
-            'body' => 'required',
-            'status' => 'in:' . self::POST_STATUS_PENDING . ','
-                . self::POST_STATUS_DRAFT . ','
-                . self::POST_STATUS_PUBLISHED . ','
-                . self::POST_STATUS_SCHEDULED,
-            'description' => 'required|max:170',
-            'slug' => 'required|unique:posts',
-            'image' => 'mimes:jpeg,gif,png',
-            'type'  => 'in:' . self::POST_PAGE . ',' . self::POST_ARTICLE,
-        );
-
         /** @var UploadedFile $image */
         $image = $request->file('image');
 
-        $requestParams = array(
+        $data = array(
             'title' => $request->title,
             'body' => $request->body,
             'description' => $request->description,
@@ -120,20 +115,18 @@ class PostController extends Controller
             'type' => $type,
         );
 
-        $validator = Validator::make($requestParams, $rules);
-
-        if ($validator->fails()) {
+        if (!$this->validator->with($data)->passes()) {
             return array(
                 'error'     => true,
                 'messages'  => $validator->messages(),
             );
         } else {
             $post = new Post;
-            $post->title = $requestParams['title'];
-            $post->body = $requestParams['body'];
-            $post->description = $requestParams['description'];
-            $post->status = $requestParams['status'];
-            $post->type = $requestParams['type'];
+            $post->title = $data['title'];
+            $post->body = $data['body'];
+            $post->description = $data['description'];
+            $post->status = $data['status'];
+            $post->type = $data['type'];
             if ($request->action == self::POST_ACTION_PUBLISH) {
                 $post->status = self::POST_STATUS_PUBLISHED;
             }
@@ -145,7 +138,7 @@ class PostController extends Controller
                 $image->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
             }
             $post->save();
-            $categories = Category::whereIn('id', $requestParams['categories'])->get();
+            $categories = Category::whereIn('id', $data['categories'])->get();
             $post->categories()->sync($categories);
         }
 

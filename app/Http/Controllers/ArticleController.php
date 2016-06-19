@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\ArticleRepository;
 use App\Repositories\UserRepository;
+use App\Validators\ArticleValidator;
 use Illuminate\Http\Request;
 use App\Repositories\CategoryRepository;
 use App\User;
@@ -18,15 +19,20 @@ class ArticleController extends PostController
     const TYPE = PostController::POST_ARTICLE;
 
     /**
+     * @var ArticleValidator
+     */
+    protected $validator;
+
+    /**
      * ArticleController constructor.
      *
      * @param ArticleRepository $repository
      * @param CategoryRepository $categoryRepository
      * @param UserRepository $userRepository
      */
-    public function __construct(ArticleRepository $repository, CategoryRepository $categoryRepository, UserRepository $userRepository)
+    public function __construct(ArticleRepository $repository, CategoryRepository $categoryRepository, UserRepository $userRepository, ArticleValidator $articleValidator)
     {
-        parent::__construct($repository, $categoryRepository, $userRepository);
+        parent::__construct($repository, $categoryRepository, $userRepository, $articleValidator);
     }
 
     /**

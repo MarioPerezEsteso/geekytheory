@@ -10,7 +10,15 @@ class ArticleValidator extends LaravelValidator implements ValidableInterface
     /**
      * Validation rules for creating an Article.
      */
-    protected $rules = array();
+    protected $rules = array(
+        'title' => 'required|unique:posts|max:255',
+        'body' => 'required',
+        'status' => 'required|in:pending,draft,published,scheduled',
+        'description' => 'required|max:170',
+        'slug' => 'required|unique:posts',
+        'image' => 'mimes:jpeg,gif,png',
+        'type'  => 'required|in:article',
+    );
 
     /**
      * Modify the rules for updating an Article.
