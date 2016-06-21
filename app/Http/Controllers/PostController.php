@@ -118,7 +118,7 @@ class PostController extends Controller
         if (!$this->validator->with($data)->passes()) {
             return array(
                 'error'     => true,
-                'messages'  => $validator->messages(),
+                'messages'  => $this->validator->errors(),
             );
         } else {
             $post = new Post;
@@ -156,7 +156,7 @@ class PostController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $type)
     {
         /** @var UploadedFile $image */
         $image = $request->file('image');
@@ -167,6 +167,7 @@ class PostController extends Controller
             'description' => $request->description,
             'status' => $request->status,
             'image' => $image,
+            'type'  => $type,
             'tags' => $request->tags,
             'categories' => $request->categories,
         );

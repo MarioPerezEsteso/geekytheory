@@ -138,11 +138,12 @@ class ArticleController extends PostController
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
+     * @param string $type
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $type = self::TYPE)
     {
-        $result = parent::update($request, $id);
+        $result = parent::update($request, $id, $type);
         if (!$result['error']) {
             return Redirect::to('home/articles/edit/' . $id)->withSuccess($result['messages']);
         } else {

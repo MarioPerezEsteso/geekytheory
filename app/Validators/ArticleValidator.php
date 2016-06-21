@@ -34,6 +34,7 @@ class ArticleValidator extends LaravelValidator implements ValidableInterface
             'status' => 'required|in:pending,draft,published,scheduled',
             'description' => 'required|max:170',
             'image' => 'mimes:jpeg,gif,png',
+            'type'  => 'required|in:article',
         );
         return $this;
     }
