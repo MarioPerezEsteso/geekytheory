@@ -158,42 +158,30 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $rules = array(
-            'title' => 'required|max:255unique:posts,id,' . $id,
-            'body' => 'required',
-            'status' => 'in:' . self::POST_STATUS_PENDING . ','
-                . self::POST_STATUS_DRAFT . ','
-                . self::POST_STATUS_PUBLISHED . ','
-                . self::POST_STATUS_SCHEDULED,
-            'description' => 'required|max:170',
-            'image' => 'mimes:jpeg,gif,png',
-        );
-
         /** @var UploadedFile $image */
         $image = $request->file('image');
 
-        $requestParams = array(
+        $data = array(
             'title' => $request->title,
             'body' => $request->body,
             'description' => $request->description,
             'status' => $request->status,
+            'image' => $image,
             'tags' => $request->tags,
             'categories' => $request->categories,
         );
 
-        $validator = Validator::make($requestParams, $rules);
-
-        if ($validator->fails()) {
+        if (!$this->validator->update($id)->with($data)) {
             return array(
                 'error'     => true,
-                'messages'  => $validator->messages(),
+                'messages'  => $this->validator->errors(),
             );
         } else {
-            $post = Post::findOrFail($id);
-            $post->title = $requestParams['title'];
-            $post->body = $requestParams['body'];
-            $post->description = $requestParams['description'];
-            $post->status = $requestParams['status'];
+            $post = $this->repository->findOrFail($id);
+            $post->title = $data['title'];
+            $post->body = $data['body'];
+            $post->description = $data['description'];
+            $post->status = $data['status'];
             if ($request->action == self::POST_ACTION_PUBLISH) {
                 $post->status = self::POST_STATUS_PUBLISHED;
             }
@@ -203,7 +191,7 @@ class PostController extends Controller
                 $image->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
             }
             $post->save();
-            $categories = Category::whereIn('id', $requestParams['categories'])->get();
+            $categories = Category::whereIn('id', $data['categories'])->get();
             $post->categories()->sync($categories);
         }
 

@@ -28,6 +28,13 @@ class ArticleValidator extends LaravelValidator implements ValidableInterface
      */
     public function update($id = null)
     {
+        $this->rules = array(
+            'title' => 'required|unique:posts|max:255,id,' . $id,
+            'body' => 'required',
+            'status' => 'required|in:pending,draft,published,scheduled',
+            'description' => 'required|max:170',
+            'image' => 'mimes:jpeg,gif,png',
+        );
         return $this;
     }
 }
