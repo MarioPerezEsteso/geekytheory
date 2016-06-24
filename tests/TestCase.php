@@ -16,7 +16,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      */
     public function createApplication()
     {
-        $app = require __DIR__.'/../bootstrap/app.php';
+        $app = require __DIR__ . '/../bootstrap/app.php';
 
         $app->make(Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
@@ -28,6 +28,7 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         parent::setUp();
         $this->createApplication();
         Artisan::call('migrate');
+        Artisan::call('db:seed', array("--class" => "TestDatabaseSeeder"));
     }
 
     public function tearDown()
