@@ -25,17 +25,22 @@ class TagValidatorTest extends TestCase
     /**
      * Test valid data update.
      */
-//    public function testUpdateSuccess()
-//    {
-//        $validator = new \App\Validators\TagValidator(App::make('validator'));
-//        $this->assertTrue($validator->update(1)->with($this->getValidCreateData())->passes());
-//    }
+    public function testUpdateSuccess()
+    {
+        $validator = new \App\Validators\TagValidator(App::make('validator'));
+        $this->assertTrue($validator->update(1)->with($this->getValidCreateData())->passes());
+    }
 
-//    public function testUpdateFailure()
-//    {
-//        $validator = new \App\Validators\TagValidator(App::make('validator'));
-//        $this->assertTrue($validator->update(2)->with($this->getExistentData())->passes());
-//    }
+    /**
+     * Test update failure.
+     */
+    public function testUpdateFailure()
+    {
+        /** @var \App\Tag $tag */
+        $tag = (new \App\Repositories\TagRepository())->find(1);
+        $validator = new \App\Validators\TagValidator(App::make('validator'));
+        $this->assertFalse($validator->update(2)->with($tag->getAttributes())->passes());
+    }
 
     /**
      * Returns an array with an example of valid data.
