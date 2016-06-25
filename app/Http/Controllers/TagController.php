@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\TagRepository;
+use App\Validators\TagCreateValidator;
+use App\Validators\TagValidator;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -11,11 +14,34 @@ use Illuminate\Support\Facades\Redirect;
 
 class TagController extends Controller
 {
-
     /**
      * Number of tags to show with pagination
      */
     const TAGS_PAGINATION_NUMBER = 10;
+
+    /**
+     * @var TagRepository
+     */
+    protected $repository;
+
+    /**
+     * Validator for Tag creation
+     *
+     * @var TagValidator
+     */
+    protected $validator;
+
+    /**
+     * TagController constructor.
+     *
+     * @param TagRepository $tagRepository
+     * @param TagValidator $tagValidator
+     */
+    public function __construct(TagRepository $tagRepository, TagValidator $tagValidator)
+    {
+        $this->repository = $tagRepository;
+        $this->validator = $tagValidator;
+    }
 
     /**
      * Display a listing of the resource.
@@ -24,7 +50,7 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::paginate(self::TAGS_PAGINATION_NUMBER);
+        $tags = $this->repository->paginate(self::TAGS_PAGINATION_NUMBER);
         return view('home.posts.tags', compact('tags'));
     }
 
@@ -35,7 +61,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        $tags = Tag::paginate(self::TAGS_PAGINATION_NUMBER);
+        $tags = $this->repository->paginate(self::TAGS_PAGINATION_NUMBER);
         return view('home.posts.tags', compact('tags'));
     }
 
@@ -47,24 +73,19 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-
-        if (empty($request->slug)) {
-            if (!empty($request->tag)) {
-                $slug = $this->getAvailableSlug($request->tag);
-            }
+        if (empty($request->slug) && !empty($request->tag)) {
+            $slug = $this->getAvailableSlug($request->tag);
         } else {
             $slug = $this->getAvailableSlug($request->slug);
         }
 
-        $rules = array(
-            'tag' => 'required|unique:tags',
-            'slug' => 'required|unique:tags',
+        $data = array(
+            'tag'   => $request->tag,
+            'slug'  => $slug
         );
 
-        $validator = Validator::make(array('tag' => $request->tag, 'slug' => $slug), $rules);
-
-        if ($validator->fails()) {
-            return Redirect::to('home/tags')->withErrors($validator->messages());
+        if (!$this->validator->with($data)->passes()) {
+            return Redirect::to('home/tags')->withErrors($this->validator->errors());
         } else {
             $tag = new Tag;
             $tag->tag = $request->tag;
@@ -76,17 +97,6 @@ class TagController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id
@@ -94,8 +104,8 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        $tag = Tag::findOrFail($id);
-        $tags = Tag::paginate(self::TAGS_PAGINATION_NUMBER);
+        $tag = $this->repository->findOrFail($id);
+        $tags = $this->repository->paginate(self::TAGS_PAGINATION_NUMBER);
         return view('home.posts.tags', compact('tag', 'tags'));
     }
 
@@ -108,7 +118,17 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = array(
+            'tag'   => $request->tag,
+            'slug'  => $request->slug,
+        );
+
+        if (!$this->validator->update($id)->with($data)->passes()) {
+            return Redirect::to('home/tags')->withErrors($this->validator->errors());
+        } else {
+            $this->repository->update($id, $data);
+        }
+        return Redirect::to('home/tags')->withSuccess(trans('home.tag_create_success'));
     }
 
     /**
@@ -119,7 +139,7 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // TODO
     }
 
     public function getAvailableSlug($text)
@@ -136,5 +156,4 @@ class TagController extends Controller
         }
         return $slug;
     }
-
 }

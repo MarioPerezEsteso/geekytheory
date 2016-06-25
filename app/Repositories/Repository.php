@@ -76,6 +76,17 @@ abstract class Repository implements RepositoryInterface
     }
 
     /**
+     * Update an entity
+     *
+     * @param null $id
+     * @param array $data
+     */
+    public function update($id = null, $data = array())
+    {
+        return call_user_func_array("{$this->modelClassName}::findOrFail", array($id))->update($data);
+    }
+
+    /**
      * Destroy a list of entities by their identifiers
      *
      * @param $ids

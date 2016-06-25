@@ -13,7 +13,7 @@ class AddBiographyToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->text('biography')->default(null);
+            $table->text('biography')->nullable()->default(null);
         });
     }
 
@@ -25,7 +25,9 @@ class AddBiographyToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('biography');
+            if (Schema::hasColumn('users', 'biography')) {
+                $table->dropColumn('biography');
+            }
         });
     }
 }

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use App\Post;
+use App\Repositories\CategoryRepository;
+use App\Repositories\PostRepository;
+use App\Validators\CategoryValidator;
 use File;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -13,11 +15,34 @@ use Illuminate\Support\Facades\Redirect;
 
 class CategoryController extends Controller
 {
-
     /**
      * Number of tags to show with pagination
      */
     const TAGS_PAGINATION_NUMBER = 10;
+
+    /**
+     * @var CategoryRepository
+     */
+    protected $repository;
+
+    /**
+     * Validator for Category creation and update.
+     *
+     * @var CategoryValidator
+     */
+    protected $validator;
+
+    /**
+     * CategoryController constructor.
+     *
+     * @param CategoryRepository $categoryRepository
+     * @param CategoryValidator $categoryValidator
+     */
+    public function __construct(CategoryRepository $categoryRepository, CategoryValidator $categoryValidator)
+    {
+        $this->repository = $categoryRepository;
+        $this->validator = $categoryValidator;
+    }
 
     /**
      * Display a listing of the resource.
@@ -26,7 +51,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::paginate(self::TAGS_PAGINATION_NUMBER);
+        $categories = $this->repository->paginate(self::TAGS_PAGINATION_NUMBER);
         return view('home.posts.categories', compact('categories'));
     }
 
@@ -37,7 +62,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::paginate(self::TAGS_PAGINATION_NUMBER);
+        $categories = $this->repository->paginate(self::TAGS_PAGINATION_NUMBER);
         return view('home.posts.categories', compact('categories'));
     }
 
@@ -49,35 +74,28 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        if (empty($request->slug)) {
-            if (!empty($request->category)) {
-                $slug = $this->getAvailableSlug($request->category);
-            }
+        if (empty($request->slug) && !empty($request->category)) {
+            $slug = $this->getAvailableSlug($request->category);
         } else {
             $slug = $this->getAvailableSlug($request->slug);
         }
 
-        /** @var UploadedFile $image */
-        $image = $request->file('image');
-
-        $rules = array(
-            'category'  => 'required|unique:categories',
-            'slug'      => 'required|unique:categories',
-            'image'     => 'mimes:jpeg,gif,png',
+        $data = array(
+            'category' => $request->category,
+            'slug' => $slug,
+            'image' => $request->file('image')
         );
 
-        $validator = Validator::make(array('category' => $request->category, 'slug' => $slug, 'image' => $request->file('image')), $rules);
-
-        if ($validator->fails()) {
-            return Redirect::to('home/categories')->withErrors($validator->messages());
+        if (!$this->validator->with($data)->passes()) {
+            return Redirect::to('home/categories')->withErrors($this->validator->errors());
         } else {
             $category = new Category;
             $category->category = $request->category;
             $category->slug = $slug;
-            if ($image) {
-                $fileName = ImageManagerController::getImageName($image, ImageManagerController::PATH_IMAGE_UPLOADS);
+            if ($data['image']) {
+                $fileName = ImageManagerController::getImageName($data['image'], ImageManagerController::PATH_IMAGE_UPLOADS);
                 $category->image = $fileName;
-                $image->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
+                $data['image']->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
             }
             $category->save();
         }
@@ -87,31 +105,15 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Display list of posts by category.
      *
-     * @param string $username
+     * @param string $categorySlug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showByCategory($category)
+    public function showByCategory($categorySlug)
     {
-        $category = Category::where('slug', $category)->firstOrFail();
-        $posts = $category->posts()
-            ->join('users', 'users.id', '=', 'posts.user_id')
-            ->orderBy('posts.created_at', 'DESC')
-            ->where('posts.status', PostController::POST_STATUS_PUBLISHED)
-            ->select('users.*', 'posts.*')
-            ->paginate(6);
+        $category = $this->repository->findCategoryBySlug($categorySlug);
+        $posts = (new PostRepository())->findPostsByCategory($category);
         return view('themes.' . IndexController::THEME . '.categoryposts', compact('posts', 'category'));
     }
 
@@ -123,7 +125,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = $this->repository->findOrFail($id);
+        $categories = $this->repository->paginate(self::TAGS_PAGINATION_NUMBER);
+        return view('home.posts.categories', compact('category', 'categories'));
     }
 
     /**
@@ -135,7 +139,19 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = array(
+            'category'   => $request->tag,
+            'slug'  => $request->slug,
+        );
+
+        // TODO: update image
+
+        if (!$this->validator->update($id)->with($data)->passes()) {
+            return Redirect::to('home/categories')->withErrors($this->validator->errors());
+        } else {
+            $this->repository->update($id, $data);
+        }
+        return Redirect::to('home/categories')->withSuccess(trans('home.category_update_success'));
     }
 
     /**
@@ -146,7 +162,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // TODO
     }
 
     public function getAvailableSlug($text)
@@ -163,5 +179,4 @@ class CategoryController extends Controller
         }
         return $slug;
     }
-
 }

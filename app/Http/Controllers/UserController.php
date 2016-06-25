@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Auth;
 use App\User;
@@ -11,47 +12,19 @@ use Validator;
 
 class UserController extends Controller
 {
+    /**
+     * @var UserRepository
+     */
+    protected $repository;
 
     /**
-     * Display a listing of the resource.
+     * UserController constructor.
      *
-     * @return \Illuminate\Http\Response
+     * @param UserRepository $userRepository
      */
-    public function index()
+    public function __construct(UserRepository $userRepository)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+        $this->repository = $userRepository;
     }
 
     /**
@@ -64,9 +37,9 @@ class UserController extends Controller
     {
         $user = null;
         if (!$id) {
-            $user = Auth::user();
+            $user = $this->repository->getCurrentUser();
         } else {
-            $user = User::findOrFail($id);
+            $user = $this->repository->findOrFail($id);
         }
         return view('home.profile.profile', ['userProfile' => $user]);
     }
@@ -80,7 +53,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        $user = $this->repository->findOrFail($id);
 
         $rules = array(
             'name'      => 'required',
@@ -97,17 +70,6 @@ class UserController extends Controller
         }
 
         return Redirect::to('home/profile/' . $user->id)->withSuccess(trans('auth.user_update_success'));
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     /**
