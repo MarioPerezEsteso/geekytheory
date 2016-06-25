@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\SiteMetaRepository;
+use App\Validators\SiteMetaValidator;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -17,9 +18,15 @@ class SiteMetaController extends Controller
      */
     protected $repository;
 
-    public function __construct(SiteMetaRepository $repository)
+    /**
+     * @var SiteMetaValidator
+     */
+    protected $validator;
+
+    public function __construct(SiteMetaRepository $repository, SiteMetaValidator $siteMetaValidator)
     {
         $this->repository = $repository;
+        $this->validator = $siteMetaValidator;
     }
 
     /**
@@ -118,19 +125,6 @@ class SiteMetaController extends Controller
      */
     public function update(Request $request)
     {
-        $rules = array(
-            'title'         => 'required|max:255',
-            'subtitle'      => 'required|max:255',
-            'description'   => 'required|max:170',
-            'image'         => 'mimes:jpeg,gif,png',
-            'logo'          => 'mimes:jpeg,gif,png',
-            'favicon'       => 'mimes:jpeg,gif,png',
-            'logo_57'       => 'mimes:jpeg,gif,png',
-            'logo_72'       => 'mimes:jpeg,gif,png',
-            'logo_114'      => 'mimes:jpeg,gif,png',
-        );
-
-
         /** @var UploadedFile $siteImage */
         $siteImage = $request->file('image');
         /** @var UploadedFile $siteFavicon */
@@ -144,7 +138,7 @@ class SiteMetaController extends Controller
         /** @var UploadedFile $siteLogo114 */
         $siteLogo114 = $request->file('logo_114');
 
-        $requestParams = array(
+        $data = array(
             'url'           => $request->url,
             'title'         => $request->title,
             'subtitle'      => $request->subtitle,
@@ -157,34 +151,27 @@ class SiteMetaController extends Controller
             'logo_114'      => $siteLogo114,
         );
 
-        /**
-         * Also validate that social networks are URLs
-         */
+        // Add social networks to $data.
         foreach (self::$socialNetworks as $socialNetwork) {
-            // Add social network validators to $rules
-            $rules[$socialNetwork] = self::$urlRegexValidator;
-            // Add social network form inputs to $requestParams
-            $requestParams[$socialNetwork] = $request->get($socialNetwork);
+            $data[$socialNetwork] = $request->get($socialNetwork);
         }
 
-        $validator = Validator::make($requestParams, $rules);
-
-        if ($validator->fails()) {
-            return Redirect::to('home/sitemeta')->withErrors($validator->messages());
+        if (!$this->validator->update($this->getSiteMeta()->getAttributes('id'))->with($data)->passes()) {
+            return Redirect::to('home/sitemeta')->withErrors($this->validator->errors());
         } else {
             $siteMeta = self::getSiteMeta();
             $imageItems = array('image', 'logo', 'favicon', 'logo_57', 'logo_72', 'logo_114');
-            $siteMeta->update(array_except($requestParams, $imageItems));
+            $siteMeta->update(array_except($data, $imageItems));
             $allowRegister = false;
             if ($request->allow_register && $request->allow_register == 'on') {
                 $allowRegister = true;
             }
             $siteMeta->allow_register = $allowRegister;
             foreach ($imageItems as $item) {
-                if ($requestParams[$item]) {
-                    $fileName = ImageManagerController::getImageName($requestParams[$item], ImageManagerController::PATH_IMAGE_UPLOADS);
+                if ($data[$item]) {
+                    $fileName = ImageManagerController::getImageName($data[$item], ImageManagerController::PATH_IMAGE_UPLOADS);
                     $siteMeta->setAttribute($item, $fileName);
-                    $requestParams[$item]->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
+                    $data[$item]->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
                 }
             }
             $siteMeta->save();
