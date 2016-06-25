@@ -13,17 +13,17 @@ class AddSocialNetworksToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('twitter')->default(null);
-            $table->string('instagram')->default(null);
-            $table->string('facebook')->default(null);
-            $table->string('github')->default(null);
-            $table->string('youtube')->default(null);
-            $table->string('dribbble')->default(null);
-            $table->string('google-plus')->default(null);
-            $table->string('stack-overflow')->default(null);
-            $table->string('flickr')->default(null);
-            $table->string('bitbucket')->default(null);
-            $table->string('linkedin')->default(null);
+            $table->string('twitter')->nullable()->default(null);
+            $table->string('instagram')->nullable()->default(null);
+            $table->string('facebook')->nullable()->default(null);
+            $table->string('github')->nullable()->default(null);
+            $table->string('youtube')->nullable()->default(null);
+            $table->string('dribbble')->nullable()->default(null);
+            $table->string('google-plus')->nullable()->default(null);
+            $table->string('stack-overflow')->nullable()->default(null);
+            $table->string('flickr')->nullable()->default(null);
+            $table->string('bitbucket')->nullable()->default(null);
+            $table->string('linkedin')->nullable()->default(null);
         });
     }
 

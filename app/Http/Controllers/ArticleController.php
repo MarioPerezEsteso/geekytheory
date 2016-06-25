@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\ArticleRepository;
 use App\Repositories\UserRepository;
+use App\Validators\ArticleValidator;
 use Illuminate\Http\Request;
 use App\Repositories\CategoryRepository;
 use App\User;
@@ -18,15 +19,20 @@ class ArticleController extends PostController
     const TYPE = PostController::POST_ARTICLE;
 
     /**
+     * @var ArticleValidator
+     */
+    protected $validator;
+
+    /**
      * ArticleController constructor.
      *
      * @param ArticleRepository $repository
      * @param CategoryRepository $categoryRepository
      * @param UserRepository $userRepository
      */
-    public function __construct(ArticleRepository $repository, CategoryRepository $categoryRepository, UserRepository $userRepository)
+    public function __construct(ArticleRepository $repository, CategoryRepository $categoryRepository, UserRepository $userRepository, ArticleValidator $articleValidator)
     {
-        parent::__construct($repository, $categoryRepository, $userRepository);
+        parent::__construct($repository, $categoryRepository, $userRepository, $articleValidator);
     }
 
     /**
@@ -132,11 +138,12 @@ class ArticleController extends PostController
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
+     * @param string $type
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, $type = self::TYPE)
     {
-        $result = parent::update($request, $id);
+        $result = parent::update($request, $id, $type);
         if (!$result['error']) {
             return Redirect::to('home/articles/edit/' . $id)->withSuccess($result['messages']);
         } else {

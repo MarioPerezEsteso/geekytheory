@@ -13,7 +13,7 @@ class AddPostTypeToUsersTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->enum('type', array('article', 'page'));
+            $table->enum('type', array('article', 'page'))->default('article');
         });
     }
 
