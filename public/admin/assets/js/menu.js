@@ -9,7 +9,7 @@ var ns = $('ol.sortable').nestedSortable({
     tabSize: 25,
     tolerance: 'pointer',
     toleranceElement: '> div',
-    maxLevels: 1,
+    maxLevels: 2,
     isTree: true,
     expandOnHover: 700,
     startCollapsed: false,
