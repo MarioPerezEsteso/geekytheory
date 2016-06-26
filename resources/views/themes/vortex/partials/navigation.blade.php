@@ -38,25 +38,6 @@
                     @endif
                 </li>
             @endforeach
-            <li>
-                <a href="http://laraweb.com" title="Laraweb">Laraweb <i class="glyphicon glyphicon-chevron-down"></i>
-                </a>
-                <ul class="sub-menu">
-                    <li><a href="http://laraweb.com">Aplicaciones</a></li>
-                    <li><a href="http://laraweb.com">Noticias</a></li>
-                    <li><a href="http://laraweb.com">Opinión</a></li>
-                    <li><a href="http://laraweb.com">Tecnología</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="http://laraweb.com" title="Laraweb">Random text <i class="glyphicon glyphicon-chevron-down"></i> </a>
-                <ul class="sub-menu">
-                    <li><a href="http://laraweb.com">Aplicaciones</a></li>
-                    <li><a href="http://laraweb.com">Noticias</a></li>
-                    <li><a href="http://laraweb.com">Opinión</a></li>
-                    <li><a href="http://laraweb.com">Tecnología</a></li>
-                </ul>
-            </li>
         </ul>
     </div>
 </nav>
