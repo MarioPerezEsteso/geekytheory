@@ -4,8 +4,22 @@
         <nav class="overlay-menu-nav">
             <ul id="nav">
                 @foreach(json_decode($siteMeta->menu, true) as $menuItem)
-                    <li>
+                    <?php $bulletListClass = ''; ?>
+                    <?php $hasSubmenu = ($menuItem['submenu'] !== null); ?>
+                    @if ($hasSubmenu)
+                        <?php $bulletListClass = 'slidedown'; ?>
+                    @endif
+                    <li class="{{ $bulletListClass }}">
                         <a href="{{ $menuItem['link'] }}" title="{{ $menuItem['text'] }}">{{ $menuItem['text'] }}</a>
+                        @if ($hasSubmenu)
+                            <ul>
+                                @foreach($menuItem['submenu'] as $submenuItem)
+                                    <li>
+                                        <a href="{{ $submenuItem['link'] }}" title="{{ $submenuItem['text'] }}">{{ $submenuItem['text'] }}</a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
                     </li>
                 @endforeach
             </ul>

@@ -17,10 +17,25 @@
             </li>
         </ul>
         <!-- /ICONS NAVBAR -->
-        <ul class="extra-navbar nav navbar-nav navbar-right">
+        <ul class="extra-navbar nav navbar-nav navbar-right clearfix-menu menu">
             @foreach(json_decode($siteMeta->menu, true) as $menuItem)
+                <?php $hasSubmenu = ($menuItem['submenu'] !== null); ?>
                 <li>
-                    <a href="{{ $menuItem['link'] }}" title="{{ $menuItem['text'] }}">{{ $menuItem['text'] }}</a>
+                    <a href="{{ $menuItem['link'] }}" title="{{ $menuItem['text'] }}">
+                        {{ $menuItem['text'] }}
+                        @if ($hasSubmenu)
+                            <i class="glyphicon glyphicon-chevron-down"></i>
+                        @endif
+                    </a>
+                    @if ($hasSubmenu)
+                        <ul class="sub-menu">
+                            @foreach($menuItem['submenu'] as $submenuItem)
+                                <li>
+                                    <a href="{{ $submenuItem['link'] }}" title="{{ $submenuItem['text'] }}">{{ $submenuItem['text'] }}</a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </li>
             @endforeach
         </ul>
