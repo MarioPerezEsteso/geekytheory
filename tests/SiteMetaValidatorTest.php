@@ -41,8 +41,67 @@ class SiteMetaValidatorTest extends TestCase
     {
         $validator = new SiteMetaValidator(App::make('validator'));
         $this->assertFalse($validator->update(SiteMetaController::getSiteMeta()->getAttributes('id'))->with($this->getInvalidFile())->passes());
-        print_r($validator->errors());
         $this->assertEquals(1, count($validator->errors()));
+    }
+
+    /**
+     * Test menu update success on post valid JSON.
+     */
+    public function testMenuUpdateSuccess()
+    {
+        $validator = new SiteMetaValidator(App::make('validator'));
+        $this->assertTrue($validator->with($this->getValidMenu())->menuPasses());
+    }
+
+    /**
+     * Test menu update failure on post invalid JSON.
+     */
+    public function testMenuUpdateFailure()
+    {
+        $validator = new SiteMetaValidator(App::make('validator'));
+        $this->assertFalse($validator->with($this->getInvalidMenu())->menuPasses());
+        $this->assertEquals(2, count($validator->errors()));
+    }
+
+    public function getValidMenu()
+    {
+        $menu = array(
+            array(
+                'text' => 'Item',
+                'link' => 'http://laraweb.com',
+                'submenu' => array(
+                    'text' => 'Submenu text',
+                    'link' => 'http://laraweb.com/submenu',
+                    'submenu' => null,
+                )
+            ),
+            array(
+                'text' => 'This is another item',
+                'link' => 'http://laraweb.com/link',
+                'submenu' => null,
+            )
+        );
+        return $menu;
+    }
+
+    public function getInvalidMenu()
+    {
+        $menu = array(
+            array(
+                'link' => 'malfor med%%url.com',
+                'submenu' => array(
+                    'text' => 'Submenu text',
+                    'link' => 'http://laraweb.com/submenu',
+                    'submenu' => null,
+                )
+            ),
+            array(
+                'text' => 'This is another item',
+                'link' => 'http://laraweb.com/link',
+                'submenu' => null,
+            )
+        );
+        return $menu;
     }
 
     /**

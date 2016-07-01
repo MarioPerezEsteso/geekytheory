@@ -40,4 +40,23 @@ class SiteMetaValidator extends LaravelValidator implements ValidableInterface
         }
         return $this;
     }
+
+    /**
+     * Validate the menu.
+     */
+    public function menuPasses()
+    {
+        $this->rules = array(
+            'text' => 'required',
+            'link' => SiteMetaController::$urlRegexValidator,
+        );
+        $valid = true;
+        foreach ($this->data as $menuItem) {
+            if (!$this->with($menuItem)->passes()) {
+                $valid = false;
+                break;
+            }
+        }
+        return $valid;
+    }
 }
