@@ -1,17 +1,6 @@
 <ol class="sortable ui-sortable mjs-nestedSortable-branch mjs-nestedSortable-expanded">
     @foreach($menu as $menuItem)
-        <li style="display: list-item;" class="mjs-nestedSortable-branch mjs-nestedSortable-expanded">
-            @include('home.menu.menuitemsingle', array('$menuItem' => $menuItem))
-            @if ($menuItem['submenu'] !== null)
-                <ol>
-                    @foreach($menuItem['submenu'] as $submenuItem)
-                        <li style="display: list-item;" class="mjs-nestedSortable-branch mjs-nestedSortable-expanded">
-                            @include('home.menu.menuitemsingle', array('menuItem' => $submenuItem))
-                        </li>
-                    @endforeach
-                </ol>
-            @endif
-        </li>
+        @include('home.menu.menuitemsingle', array('$menuItem' => $menuItem))
     @endforeach
 </ol>
 <div class="row">
