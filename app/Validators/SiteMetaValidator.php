@@ -23,16 +23,16 @@ class SiteMetaValidator extends LaravelValidator implements ValidableInterface
     public function update($id = null)
     {
         $this->rules = array(
-            'title'         => 'required|max:255',
-            'subtitle'      => 'required|max:255',
-            'description'   => 'required|max:170',
-            'url'           => SiteMetaController::$urlRegexValidator,
-            'image'         => 'mimes:jpeg,gif,png',
-            'logo'          => 'mimes:jpeg,gif,png',
-            'favicon'       => 'mimes:jpeg,gif,png',
-            'logo_57'       => 'mimes:jpeg,gif,png',
-            'logo_72'       => 'mimes:jpeg,gif,png',
-            'logo_114'      => 'mimes:jpeg,gif,png',
+            'title' => 'required|max:255',
+            'subtitle' => 'required|max:255',
+            'description' => 'required|max:170',
+            'url' => SiteMetaController::$urlRegexValidator,
+            'image' => 'mimes:jpeg,gif,png',
+            'logo' => 'mimes:jpeg,gif,png',
+            'favicon' => 'mimes:jpeg,gif,png',
+            'logo_57' => 'mimes:jpeg,gif,png',
+            'logo_72' => 'mimes:jpeg,gif,png',
+            'logo_114' => 'mimes:jpeg,gif,png',
         );
         // Add social networks to rules
         foreach (SiteMetaController::$socialNetworks as $socialNetwork) {
@@ -55,6 +55,14 @@ class SiteMetaValidator extends LaravelValidator implements ValidableInterface
             if (!$this->with($menuItem)->passes()) {
                 $valid = false;
                 break;
+            }
+            if ($menuItem['submenu'] !== null) {
+                foreach ($menuItem['submenu'] as $submenuItem) {
+                    if (!$this->with($submenuItem)->passes()) {
+                        $valid = false;
+                        break;
+                    }
+                }
             }
         }
         return $valid;

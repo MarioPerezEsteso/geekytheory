@@ -70,9 +70,11 @@ class SiteMetaValidatorTest extends TestCase
                 'text' => 'Item',
                 'link' => 'http://laraweb.com',
                 'submenu' => array(
-                    'text' => 'Submenu text',
-                    'link' => 'http://laraweb.com/submenu',
-                    'submenu' => null,
+                    array(
+                        'text' => 'Submenu text',
+                        'link' => 'http://laraweb.com/submenu',
+                        'submenu' => null,
+                    )
                 )
             ),
             array(
@@ -90,9 +92,11 @@ class SiteMetaValidatorTest extends TestCase
             array(
                 'link' => 'malfor med%%url.com',
                 'submenu' => array(
-                    'text' => 'Submenu text',
-                    'link' => 'http://laraweb.com/submenu',
-                    'submenu' => null,
+                    array(
+                        'text' => 'Submenu text',
+                        'link' => 'http://another     malformedurl.com/submenu',
+                        'submenu' => null,
+                    )
                 )
             ),
             array(
