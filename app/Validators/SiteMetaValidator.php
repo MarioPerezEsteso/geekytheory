@@ -56,7 +56,7 @@ class SiteMetaValidator extends LaravelValidator implements ValidableInterface
                 $valid = false;
                 break;
             }
-            if ($menuItem['submenu'] !== null) {
+            if (!empty($menuItem['submenu'])) {
                 foreach ($menuItem['submenu'] as $submenuItem) {
                     if (!$this->with($submenuItem)->passes()) {
                         $valid = false;
