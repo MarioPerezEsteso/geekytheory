@@ -23,21 +23,48 @@ class SiteMetaValidator extends LaravelValidator implements ValidableInterface
     public function update($id = null)
     {
         $this->rules = array(
-            'title'         => 'required|max:255',
-            'subtitle'      => 'required|max:255',
-            'description'   => 'required|max:170',
-            'url'           => SiteMetaController::$urlRegexValidator,
-            'image'         => 'mimes:jpeg,gif,png',
-            'logo'          => 'mimes:jpeg,gif,png',
-            'favicon'       => 'mimes:jpeg,gif,png',
-            'logo_57'       => 'mimes:jpeg,gif,png',
-            'logo_72'       => 'mimes:jpeg,gif,png',
-            'logo_114'      => 'mimes:jpeg,gif,png',
+            'title' => 'required|max:255',
+            'subtitle' => 'required|max:255',
+            'description' => 'required|max:170',
+            'url' => SiteMetaController::$urlRegexValidator,
+            'image' => 'mimes:jpeg,gif,png',
+            'logo' => 'mimes:jpeg,gif,png',
+            'favicon' => 'mimes:jpeg,gif,png',
+            'logo_57' => 'mimes:jpeg,gif,png',
+            'logo_72' => 'mimes:jpeg,gif,png',
+            'logo_114' => 'mimes:jpeg,gif,png',
         );
         // Add social networks to rules
         foreach (SiteMetaController::$socialNetworks as $socialNetwork) {
             $this->rules[$socialNetwork] = SiteMetaController::$urlRegexValidator;
         }
         return $this;
+    }
+
+    /**
+     * Validate the menu.
+     */
+    public function menuPasses()
+    {
+        $this->rules = array(
+            'text' => 'required',
+            'link' => SiteMetaController::$urlRegexValidator,
+        );
+        $valid = true;
+        foreach ($this->data as $menuItem) {
+            if (!$this->with($menuItem)->passes()) {
+                $valid = false;
+                break;
+            }
+            if (!empty($menuItem['submenu'])) {
+                foreach ($menuItem['submenu'] as $submenuItem) {
+                    if (!$this->with($submenuItem)->passes()) {
+                        $valid = false;
+                        break;
+                    }
+                }
+            }
+        }
+        return $valid;
     }
 }

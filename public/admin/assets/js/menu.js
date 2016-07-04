@@ -9,7 +9,7 @@ var ns = $('ol.sortable').nestedSortable({
     tabSize: 25,
     tolerance: 'pointer',
     toleranceElement: '> div',
-    maxLevels: 1,
+    maxLevels: 2,
     isTree: true,
     expandOnHover: 700,
     startCollapsed: false,
@@ -53,11 +53,13 @@ $('#saveMenu').click(function () {
         var currentMenuJson = {};
         currentMenuJson['text'] = current.find('input[name=text]').val()
         currentMenuJson['link'] = current.find('input[name=link]').val();
-        var submenuJson = {};
+        var submenuJson = [];
         current.find('ol > li').each(function () {
-            submenuJson['text'] = $(this).find('input[name=text]').val();
-            submenuJson['link'] = $(this).find('input[name=link]').val();
-            submenuJson['submenu'] = null;
+            var currentSubmenuJson = {};
+            currentSubmenuJson['text'] = $(this).find('input[name=text]').val();
+            currentSubmenuJson['link'] = $(this).find('input[name=link]').val();
+            currentSubmenuJson['submenu'] = null;
+            submenuJson.push(currentSubmenuJson);
         });
         if (submenuJson.length == 0) {
             currentMenuJson['submenu'] = null;

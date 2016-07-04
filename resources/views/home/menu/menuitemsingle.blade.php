@@ -11,7 +11,6 @@
                 </button>
             </div>
         </div>
-        <!-- /.box-header -->
         <div class="box-body box-body-menu-item">
             <div class="col-md-12">
                 <div class="form-group">
@@ -27,4 +26,11 @@
             </div>
         </div>
     </div>
+    @if ($menuItem['submenu'] !== null)
+        <ol>
+            @foreach($menuItem['submenu'] as $submenuItem)
+                @include('home.menu.menuitemsingle', array('menuItem' => $submenuItem))
+            @endforeach
+        </ol>
+    @endif
 </li>

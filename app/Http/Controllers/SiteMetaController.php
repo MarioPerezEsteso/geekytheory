@@ -85,9 +85,14 @@ class SiteMetaController extends Controller
      */
     public function updateMenu(Request $request)
     {
-        // TODO: validate json menu
         $siteMeta = $this->repository->getSiteMeta();
-        if (!empty($request->menu)) {
+        $menu = json_decode($request->menu, true);
+        if (!$this->validator->with($menu)->menuPasses()) {
+            return array(
+                'error'     => 1,
+                'message'   => trans('home.menu_not_updated_successfully'),
+            );
+        } else {
             $siteMeta->menu = $request->menu;
             $siteMeta->save();
             return array(
@@ -95,10 +100,7 @@ class SiteMetaController extends Controller
                 'message'   => trans('home.menu_updated_successfully'),
             );
         }
-        return array(
-            'error'     => 1,
-            'message'   => trans('home.menu_not_updated_successfully'),
-        );
+
     }
 
     /**
