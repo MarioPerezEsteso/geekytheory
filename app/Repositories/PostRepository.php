@@ -52,11 +52,14 @@ class PostRepository extends Repository implements PostRepositoryInterface
      */
     public function findPostsByCategory($category, $paginate = self::PAGINATION_DEFAULT)
     {
-        return $category->posts()
+        $columns = User::$mappings;
+        array_push($columns, 'posts.*');
+        $query = $category->posts()
             ->join('users', 'users.id', '=', 'posts.user_id')
             ->orderBy('posts.created_at', 'DESC')
+            ->where('posts.type', PostController::POST_ARTICLE)
             ->where('posts.status', PostController::POST_STATUS_PUBLISHED)
-            ->select('users.*', 'posts.*')
-            ->paginate($paginate);
+            ->select($columns);
+        return $query->paginate($paginate);
     }
 }
