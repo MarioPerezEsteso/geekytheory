@@ -15,4 +15,5 @@ return [
     'dribbble'  => 'Dribbble',
     'linkedin'  => 'LinkedIn',
     'social-networks' => 'Social networks',
+    'in'        => 'in',
 ];
