@@ -44,12 +44,33 @@
                 </div>
 
                 <div class="form-group">
-                    {!! Form::label('image','home.upload_image') !!}
-                    {!! Form::file('image') !!}
+                    <div class="row">
+                        <div class="col-md-12">
+                            {!! Form::label('image', trans('home.upload_image')) !!}
+                            <?php $imgSrc = ""; ?>
+                            <?php $categoryId = ""; ?>
+                            @if(!empty($category))
+                                <?php $categoryId = $category->id; ?>
+                                @if(!empty($category->image))
+                                    <?php $imgSrc = \App\Http\Controllers\ImageManagerController::getPublicImageUrl($category->image); ?>
+                                @endif
+                            @endif
+                            <img id="post-image" data-post-id="{{ $categoryId }}" class="img-responsive" src="{{ $imgSrc }}"/>
+                        </div>
+                    </div>
+                    <div class="row top15">
+                        <div class="col-md-12">
+                        <span class="btn btn-primary btn-file">
+                            {{ trans('home.browse') }}
+                            {!! Form::file('image', array('id' => 'post-image-file-input')) !!}
+                        </span>
+                            <button id="delete-post-image" class="btn btn-danger {{ (!empty($imgSrc)) ? '' : ' hidden ' }}"><i class="glyphicon glyphicon-trash"></i></button>
+                        </div>
+                    </div>
                 </div>
 
-                <div>
-                    {!! Form::submit(trans('home.save'),['class' => 'btn btn-primary']) !!}
+                <div class="pull-right">
+                    {!! Form::submit(trans('home.category_save'),['class' => 'btn btn-primary']) !!}
                 </div>
 
                 {!! Form::close() !!}

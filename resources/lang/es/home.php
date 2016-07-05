@@ -96,4 +96,5 @@ return [
     'link'          => 'Enlace',
     'add_new_item'  => 'Añadir nuevo ítem',
     'category_edit' => 'Editar categoría',
+    'category_save' => 'Guardar categoría',
 ];

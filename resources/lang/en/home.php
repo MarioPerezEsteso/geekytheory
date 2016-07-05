@@ -96,4 +96,5 @@ return [
     'link'          => 'Link',
     'add_new_item'  => 'Add new item',
     'category_edit' => 'Edit category',
+    'category_save' => 'Save category',
 ];
