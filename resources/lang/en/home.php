@@ -95,4 +95,5 @@ return [
     'text'          => 'Text',
     'link'          => 'Link',
     'add_new_item'  => 'Add new item',
+    'category_edit' => 'Edit category',
 ];
