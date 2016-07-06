@@ -55,16 +55,16 @@
                                     <?php $imgSrc = \App\Http\Controllers\ImageManagerController::getPublicImageUrl($category->image); ?>
                                 @endif
                             @endif
-                            <img id="post-image" data-post-id="{{ $categoryId }}" class="img-responsive" src="{{ $imgSrc }}"/>
+                            <img id="category-image" data-category-id="{{ $categoryId }}" class="img-responsive" src="{{ $imgSrc }}"/>
                         </div>
                     </div>
                     <div class="row top15">
                         <div class="col-md-12">
                         <span class="btn btn-primary btn-file">
                             {{ trans('home.browse') }}
-                            {!! Form::file('image', array('id' => 'post-image-file-input')) !!}
+                            {!! Form::file('image', array('id' => 'category-image-file-input')) !!}
                         </span>
-                            <button id="delete-post-image" class="btn btn-danger {{ (!empty($imgSrc)) ? '' : ' hidden ' }}"><i class="glyphicon glyphicon-trash"></i></button>
+                            <button id="delete-category-image" class="btn btn-danger {{ (!empty($imgSrc)) ? '' : ' hidden ' }}"><i class="glyphicon glyphicon-trash"></i></button>
                         </div>
                     </div>
                 </div>
