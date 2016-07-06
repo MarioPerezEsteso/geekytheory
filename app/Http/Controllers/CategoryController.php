@@ -165,6 +165,24 @@ class CategoryController extends Controller
         // TODO
     }
 
+    /**
+     * Delete the image of a category.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteImage(Request $request)
+    {
+        if (!empty($request->id)) {
+            $category = $this->repository->findOrFail($request->id);
+            $category->image = NULL;
+            $category->save();
+            return response()->json(['error' => 0]);
+        } else {
+            return response()->json(['error' => 1]);
+        }
+    }
+
     public function getAvailableSlug($text)
     {
         $slugAvailable = false;
