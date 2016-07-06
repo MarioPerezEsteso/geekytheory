@@ -123,3 +123,7 @@
         </div>
     </div>
 @endsection
+
+@section('custom-javascript')
+    {!! Html::script('admin/assets/js/categories.js') !!}
+@endsection
