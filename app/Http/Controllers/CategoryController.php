@@ -83,7 +83,7 @@ class CategoryController extends Controller
         $data = array(
             'category' => $request->category,
             'slug' => $slug,
-            'image' => $request->file('image')
+            'image' => $request->file('image'),
         );
 
         if (!$this->validator->with($data)->passes()) {
@@ -142,13 +142,17 @@ class CategoryController extends Controller
         $data = array(
             'category'   => $request->category,
             'slug'  => $request->slug,
+            'image' => $request->file('image'),
         );
-
-        // TODO: update image
 
         if (!$this->validator->update($id)->with($data)->passes()) {
             return Redirect::to('home/categories')->withErrors($this->validator->errors());
         } else {
+            if ($data['image']) {
+                $fileName = ImageManagerController::getImageName($data['image'], ImageManagerController::PATH_IMAGE_UPLOADS);
+                $data['image']->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
+                $data['image'] = $fileName;
+            }
             $this->repository->update($id, $data);
         }
         return Redirect::to('home/categories')->withSuccess(trans('home.category_update_success'));
