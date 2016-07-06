@@ -140,7 +140,7 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $data = array(
-            'category'   => $request->tag,
+            'category'   => $request->category,
             'slug'  => $request->slug,
         );
 
