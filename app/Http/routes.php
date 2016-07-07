@@ -165,6 +165,11 @@ Route::get('home/categories/edit/{id}', [
     'uses'          => 'CategoryController@edit'
 ]);
 
+Route::get('home/categories/delete/{id}', [
+    'middleware'    => 'auth',
+    'uses'          => 'CategoryController@destroy'
+]);
+
 Route::post('home/categories/store', [
     'middleware'    => 'auth',
     'before'        => 'csrf',
@@ -175,6 +180,12 @@ Route::post('home/categories/update/{id}', [
     'middleware'    => 'auth',
     'before'        => 'csrf',
     'uses'          => 'CategoryController@update'
+]);
+
+Route::post('home/categories/delete-image', [
+    'middleware'    => 'auth',
+    'before'        => 'csrf',
+    'uses'          => 'CategoryController@deleteImage',
 ]);
 
 Route::get('home/articles/imagemanager/upload', [
