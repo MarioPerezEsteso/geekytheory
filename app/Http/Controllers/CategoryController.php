@@ -166,7 +166,8 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        // TODO
+        $this->repository->destroy($id);
+        return Redirect::to('home/categories')->withSuccess(trans('home.category_delete_success'));
     }
 
     /**

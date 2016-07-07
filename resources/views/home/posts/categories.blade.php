@@ -89,7 +89,7 @@
                         <th style="width: 10px">#</th>
                         <th>{{ trans('home.category_min') }}</th>
                         <th>{{ trans('home.slug') }}</th>
-                        <th style="width: 100px">{{ trans('home.actions') }}</th>
+                        <th style="width: 150px">{{ trans('home.actions') }}</th>
                     </tr>
                     @if(count($categories) > 0)
                         @foreach($categories as $category)
@@ -98,6 +98,9 @@
                                 <td>{{ $category->category }}</td>
                                 <td>{{ $category->slug }}</td>
                                 <td>
+                                    <a href="{{ url('home/categories/delete/' . $category->id) }}" class="label bg-red margin-r-5">
+                                        {{ trans('home.delete') }}
+                                    </a>
                                     <a href="{{ url('home/categories/edit/' . $category->id) }}" class="label bg-blue margin-r-5">
                                         {{ trans('home.edit') }}
                                     </a>

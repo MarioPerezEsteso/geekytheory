@@ -165,6 +165,11 @@ Route::get('home/categories/edit/{id}', [
     'uses'          => 'CategoryController@edit'
 ]);
 
+Route::get('home/categories/delete/{id}', [
+    'middleware'    => 'auth',
+    'uses'          => 'CategoryController@destroy'
+]);
+
 Route::post('home/categories/store', [
     'middleware'    => 'auth',
     'before'        => 'csrf',
