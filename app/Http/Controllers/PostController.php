@@ -211,7 +211,7 @@ class PostController extends Controller
      */
     public function restore($id)
     {
-        $post = Post::findOrFail($id);
+        $post = $this->repository->findOrFail($id);
         $post->status = Post::STATUS_DRAFT;
         $post->save();
         return Redirect::back();
@@ -225,7 +225,7 @@ class PostController extends Controller
      */
     public function delete($id)
     {
-        $post = Post::findOrFail($id);
+        $post = $this->repository->findOrFail($id);
         $post->status = Post::STATUS_DELETED;
         $post->save();
         return Redirect::back();
@@ -240,7 +240,7 @@ class PostController extends Controller
     public function deletePostImage(Request $request)
     {
         if (!empty($request->id)) {
-            $post = Post::findOrFail($request->id);
+            $post = $this->repository->findOrFail($request->id);
             $post->image = NULL;
             $post->save();
             return response()->json(['error' => 0]);
