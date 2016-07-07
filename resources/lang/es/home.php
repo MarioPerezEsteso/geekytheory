@@ -98,4 +98,5 @@ return [
     'category_edit' => 'Editar categoría',
     'category_save' => 'Guardar categoría',
     'category_update_success'   => 'La categoría ha sido actualizada correctamente',
+    'category_delete_success'   => 'La categoría ha sido eliminada correctamente',
 ];

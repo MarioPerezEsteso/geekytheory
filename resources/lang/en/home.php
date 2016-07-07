@@ -98,4 +98,5 @@ return [
     'category_edit' => 'Edit category',
     'category_save' => 'Save category',
     'category_update_success'   => 'The category has been updated successfully',
+    'category_delete_success'   => 'The category has been deleted successfully',
 ];
