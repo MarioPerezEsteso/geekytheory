@@ -92,9 +92,10 @@
                         <th style="width: 150px">{{ trans('home.actions') }}</th>
                     </tr>
                     @if(count($categories) > 0)
+                        <?php $index = 1; ?>
                         @foreach($categories as $category)
                             <tr>
-                                <td>{{ $category->id }}.</td>
+                                <td>{{ $index++ }}.</td>
                                 <td>{{ $category->category }}</td>
                                 <td>{{ $category->slug }}</td>
                                 <td>
