@@ -12,7 +12,7 @@ class AddOnDeleteCascadeToPostsTags extends Migration
      */
     public function up()
     {
-        Schema::table('tags', function (Blueprint $table) {
+        Schema::table('posts_tags', function (Blueprint $table) {
             // Drop existent foreign keys before creating the new ones
             $table->dropForeign(['post_id']);
             $table->dropForeign(['tag_id']);
@@ -40,6 +40,22 @@ class AddOnDeleteCascadeToPostsTags extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('posts_tags', function (Blueprint $table) {
+            // Drop existent foreign keys before creating the new ones
+            $table->dropForeign(['post_id']);
+            $table->dropForeign(['tag_id']);
+
+            // Foreign key to post
+            $table->foreign('post_id')
+                ->references('id')
+                ->on('posts')
+                ->onUpdate('cascade');
+
+            // Foreign key to tags
+            $table->foreign('tag_id')
+                ->references('id')
+                ->on('tags')
+                ->onUpdate('cascade');
+        });
     }
 }
