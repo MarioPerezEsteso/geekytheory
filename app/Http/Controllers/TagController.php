@@ -139,7 +139,8 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        // TODO
+        $this->repository->destroy($id);
+        return Redirect::to('home/tags')->withSuccess(trans('home.tag_delete_success'));
     }
 
     public function getAvailableSlug($text)
