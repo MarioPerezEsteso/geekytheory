@@ -8,5 +8,8 @@ interface PostRepositoryInterface
 
     public function findPostsByAuthor($author, $paginate = Repository::PAGINATION_DEFAULT);
 
-    public function findPostsByCategory($category, $paginate = self::PAGINATION_DEFAULT);
+    public function findPostsByCategory($category, $paginate = Repository::PAGINATION_DEFAULT);
+
+    public function findPostsByTag($tag, $paginate = Repository::PAGINATION_DEFAULT);
+
 }
