@@ -66,9 +66,10 @@
                         <th style="width: 40px">{{ trans('home.actions') }}</th>
                     </tr>
                     @if(count($tags) > 0)
+                        <?php $index = 1; ?>
                         @foreach($tags as $tag)
                             <tr>
-                                <td>{{ $tag->id }}.</td>
+                                <td>{{ $index++ }}.</td>
                                 <td>{{ $tag->tag }}</td>
                                 <td>{{ $tag->slug }}</td>
                                 <td>
