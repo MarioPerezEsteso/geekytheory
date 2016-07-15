@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tag extends Model
 {
-
     /**
      * The database table used by the model.
      *
@@ -24,9 +23,14 @@ class Tag extends Model
         'slug',
     );
 
-    public function post()
+    /**
+     * Get posts by Tag.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function posts()
     {
-        return $this->belongsToMany('App\Post');
+        return $this->belongsToMany('App\Post', 'posts_tags');
     }
 
 }
