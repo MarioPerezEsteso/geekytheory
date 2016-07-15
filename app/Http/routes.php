@@ -143,6 +143,11 @@ Route::get('home/tags/edit/{id}', [
     'uses'          => 'TagController@edit'
 ]);
 
+Route::get('home/tags/delete/{id}', [
+    'middleware'    => 'auth',
+    'uses'          => 'TagController@destroy'
+]);
+
 Route::post('home/tags/store', [
     'middleware'    => 'auth',
     'before'        => 'csrf',
@@ -259,4 +264,6 @@ Route::get('/p/{slug?}', 'PageController@show');
 
 Route::get('user/{username}', 'ArticleController@showByUsername');
 
-Route::get('category/{category}', 'CategoryController@showByCategory');
+Route::get('category/{slug}', 'CategoryController@showByCategory');
+
+Route::get('tag/{slug}', 'TagController@showByTag');
