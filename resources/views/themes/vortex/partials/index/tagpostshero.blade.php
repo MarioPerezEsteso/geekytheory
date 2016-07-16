@@ -1,4 +1,4 @@
-<section class="module module-parallax bg-light-30">
+<section class="module module-small bg-light-30">
     <div class="container">
         <div class="row">
             <div class="col-sm-12 text-center">
