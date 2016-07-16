@@ -63,17 +63,24 @@
                         <th style="width: 10px">#</th>
                         <th>{{ trans('home.tag_min') }}</th>
                         <th>{{ trans('home.slug') }}</th>
-                        <th style="width: 40px">{{ trans('home.actions') }}</th>
+                        <th style="width: 150px">{{ trans('home.actions') }}</th>
                     </tr>
                     @if(count($tags) > 0)
+                        <?php $index = 1; ?>
                         @foreach($tags as $tag)
                             <tr>
-                                <td>{{ $tag->id }}.</td>
+                                <td>{{ $index++ }}.</td>
                                 <td>{{ $tag->tag }}</td>
                                 <td>{{ $tag->slug }}</td>
                                 <td>
-                                    <a href="{{ url('home/tags/edit/' . $tag->id) }}" class="label bg-blue">
+                                    <a href="{{ url('home/tags/delete/' . $tag->id) }}" class="label bg-red margin-r-5">
+                                        {{ trans('home.delete') }}
+                                    </a>
+                                    <a href="{{ url('home/tags/edit/' . $tag->id) }}" class="label bg-blue margin-r-5">
                                         {{ trans('home.edit') }}
+                                    </a>
+                                    <a href="{{ url('/tag/' . $tag->slug) }}" class="label bg-green">
+                                        {{ trans('home.view') }}
                                     </a>
                                 </td>
                             </tr>

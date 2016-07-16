@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\PostRepository;
 use App\Repositories\TagRepository;
 use App\Validators\TagCreateValidator;
 use App\Validators\TagValidator;
@@ -97,6 +98,20 @@ class TagController extends Controller
     }
 
     /**
+     * Display list of posts by tag.
+     *
+     * @param string $tagSlug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showByTag($tagSlug)
+    {
+        $tag = $this->repository->findTagBySlug($tagSlug);
+        $posts = (new PostRepository())->findPostsByTag($tag);
+        return view('themes.' . IndexController::THEME . '.tagposts', compact('posts', 'tag'));
+    }
+
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int $id
@@ -139,7 +154,8 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        // TODO
+        $this->repository->destroy($id);
+        return Redirect::to('home/tags')->withSuccess(trans('home.tag_delete_success'));
     }
 
     public function getAvailableSlug($text)
