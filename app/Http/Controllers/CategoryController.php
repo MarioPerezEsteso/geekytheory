@@ -82,6 +82,7 @@ class CategoryController extends Controller
 
         $data = array(
             'category' => $request->category,
+            'description' => $request->description,
             'slug' => $slug,
             'image' => $request->file('image'),
         );
@@ -89,15 +90,12 @@ class CategoryController extends Controller
         if (!$this->validator->with($data)->passes()) {
             return Redirect::to('home/categories')->withErrors($this->validator->errors());
         } else {
-            $category = new Category;
-            $category->category = $request->category;
-            $category->slug = $slug;
             if ($data['image']) {
                 $fileName = ImageManagerController::getImageName($data['image'], ImageManagerController::PATH_IMAGE_UPLOADS);
-                $category->image = $fileName;
                 $data['image']->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
+                $data['image'] = $fileName;
             }
-            $category->save();
+            $this->repository->create($data);
         }
 
         return Redirect::to('home/categories')->withSuccess(trans('home.category_create_success'));
