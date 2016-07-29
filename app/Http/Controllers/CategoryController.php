@@ -139,6 +139,7 @@ class CategoryController extends Controller
     {
         $data = array(
             'category'   => $request->category,
+            'description' => $request->description,
             'slug'  => $request->slug,
             'image' => $request->file('image'),
         );
