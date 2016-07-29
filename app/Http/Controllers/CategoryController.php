@@ -145,7 +145,7 @@ class CategoryController extends Controller
         );
 
         if (!$this->validator->update($id)->with($data)->passes()) {
-            return Redirect::to('home/categories')->withErrors($this->validator->errors());
+            return Redirect::to("home/categories/edit/$id")->withErrors($this->validator->errors());
         } else {
             if ($data['image']) {
                 $fileName = ImageManagerController::getImageName($data['image'], ImageManagerController::PATH_IMAGE_UPLOADS);
