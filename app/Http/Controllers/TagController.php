@@ -138,7 +138,7 @@ class TagController extends Controller
         );
 
         if (!$this->validator->update($id)->with($data)->passes()) {
-            return Redirect::to('home/tags')->withErrors($this->validator->errors());
+            return Redirect::to("home/tags/edit/$id")->withErrors($this->validator->errors());
         } else {
             $this->repository->update($id, $data);
         }
