@@ -90,16 +90,17 @@ class CategoryController extends Controller
         if (!$this->validator->with($data)->passes()) {
             return Redirect::to('home/categories')->withErrors($this->validator->errors());
         } else {
+
             if ($data['image']) {
-                $fileName = ImageManagerController::getImageName($data['image'], ImageManagerController::PATH_IMAGE_UPLOADS);
-                $data['image']->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
-                $data['image'] = $fileName;
+                $fileName = ImageManagerController::getUploadFilename($data['image']);
+                $data['image']->move(ImageManagerController::getPathYearMonth(), $fileName);
+                $data['image'] = ImageManagerController::getPathYearMonth() . $fileName;
             }
+
             $this->repository->create($data);
         }
 
         return Redirect::to('home/categories')->withSuccess(trans('home.category_create_success'));
-
     }
 
     /**
@@ -148,9 +149,9 @@ class CategoryController extends Controller
             return Redirect::to("home/categories/edit/$id")->withErrors($this->validator->errors());
         } else {
             if ($data['image']) {
-                $fileName = ImageManagerController::getImageName($data['image'], ImageManagerController::PATH_IMAGE_UPLOADS);
-                $data['image']->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
-                $data['image'] = $fileName;
+                $fileName = ImageManagerController::getUploadFilename($data['image']);
+                $data['image']->move(ImageManagerController::getPathYearMonth(), $fileName);
+                $data['image'] = ImageManagerController::getPathYearMonth() . $fileName;
             }
             $this->repository->update($id, $data);
         }

@@ -94,7 +94,7 @@ class PostController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param string $type
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function store(Request $request, $type)
     {
@@ -116,6 +116,7 @@ class PostController extends Controller
         );
 
         if (!$this->validator->with($data)->passes()) {
+
             return array(
                 'error'     => true,
                 'messages'  => $this->validator->errors(),
@@ -127,16 +128,20 @@ class PostController extends Controller
             $post->description = $data['description'];
             $post->status = $data['status'];
             $post->type = $data['type'];
+
             if ($request->action == self::POST_ACTION_PUBLISH) {
                 $post->status = self::POST_STATUS_PUBLISHED;
             }
+
             $post->slug = $slug;
             $post->user_id = Auth::user()->id;
+
             if ($image) {
-                $fileName = ImageManagerController::getImageName($image, ImageManagerController::PATH_IMAGE_UPLOADS);
-                $post->image = $fileName;
-                $image->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
+                $fileName = ImageManagerController::getUploadFilename($image);
+                $post->image = ImageManagerController::getPathYearMonth() . $fileName;
+                $image->move(ImageManagerController::getPathYearMonth(), $fileName);
             }
+
             $post->save();
             $categories = Category::whereIn('id', $data['categories'])->get();
             $post->categories()->sync($categories);
@@ -154,7 +159,7 @@ class PostController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function update(Request $request, $id, $type)
     {
@@ -187,9 +192,9 @@ class PostController extends Controller
                 $post->status = self::POST_STATUS_PUBLISHED;
             }
             if ($image) {
-                $fileName = ImageManagerController::getImageName($image, ImageManagerController::PATH_IMAGE_UPLOADS);
-                $post->image = $fileName;
-                $image->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
+                $fileName = ImageManagerController::getUploadFilename($image);
+                $post->image = ImageManagerController::getPathYearMonth() . $fileName;
+                $image->move(ImageManagerController::getPathYearMonth(), $fileName);
             }
             $post->save();
             $categories = Category::whereIn('id', $data['categories'])->get();

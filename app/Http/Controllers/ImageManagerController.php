@@ -36,29 +36,45 @@ class ImageManagerController extends Controller
     {
         /** @var UploadedFile $image */
         $image = $request->file('image');
-        $fileName = ImageManagerController::getImageName($image, self::PATH_IMAGE_UPLOADS);
-        $image->move(self::PATH_IMAGE_UPLOADS, $fileName);
-        $imgSrc = '/' . self::PATH_IMAGE_UPLOADS . '/' . $fileName;
+        $fileName = ImageManagerController::getUploadFilename($image);
+        $image->move(self::getPathYearMonth(), $fileName);
+        $imgSrc = self::getPublicImageUrl(self::getPathYearMonth() . $fileName);
         return view('home.imagemanager.imageupload', compact('imgSrc'));
     }
 
     /**
-     * Returns the filename of a new uploaded image
+     * Returns the filename of a new uploaded file. It could be and image, document, etc.
      *
      * @param string $path
      * @param UploadedFile $image
      * @return string
      */
-    public static function getImageName($image, $path = self::PATH_IMAGE_UPLOADS)
+    public static function getUploadFilename($image, $path = null)
     {
+        if ($path === null) {
+            $path = self::getPathYearMonth();
+        }
+
         $fileExtension = '.' . $image->getClientOriginalExtension();
         $fileName = substr($image->getClientOriginalName(), 0, -1 * strlen($fileExtension));
-        $completeFileName = $fileName . $fileExtension;
+        $completeFileName =  $fileName . $fileExtension;
         $i = 1;
-        while (File::exists($path . '/' . $completeFileName)) {
+
+        while (File::exists($path . $completeFileName)) {
             $completeFileName = $fileName . '(' . $i++ . ')' . $fileExtension;
         }
+
         return $completeFileName;
+    }
+
+    /**
+     * Get upload path with the year and the month.
+     *
+     * @return string
+     */
+    public static function getPathYearMonth()
+    {
+        return self::PATH_IMAGE_UPLOADS . '/' . date('Y') . '/' .date('m') . '/';
     }
 
     /**
@@ -70,7 +86,7 @@ class ImageManagerController extends Controller
      */
     public static function getPublicImageUrl($imageName, $checkIfExists = false)
     {
-        $publicImageUrl = self::PATH_IMAGE_UPLOADS . '/' . $imageName;
+        $publicImageUrl = $imageName;
         if ($checkIfExists) {
             if (File::exists($publicImageUrl)) {
                 return '/' . $publicImageUrl;

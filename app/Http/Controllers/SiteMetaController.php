@@ -81,12 +81,13 @@ class SiteMetaController extends Controller
      * Update the site menu
      *
      * @param Request $request
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return array
      */
     public function updateMenu(Request $request)
     {
         $siteMeta = $this->repository->getSiteMeta();
         $menu = json_decode($request->menu, true);
+
         if (!$this->validator->with($menu)->menuPasses()) {
             return array(
                 'error'     => 1,
@@ -171,9 +172,9 @@ class SiteMetaController extends Controller
             $siteMeta->allow_register = $allowRegister;
             foreach ($imageItems as $item) {
                 if ($data[$item]) {
-                    $fileName = ImageManagerController::getImageName($data[$item], ImageManagerController::PATH_IMAGE_UPLOADS);
-                    $siteMeta->setAttribute($item, $fileName);
-                    $data[$item]->move(ImageManagerController::PATH_IMAGE_UPLOADS, $fileName);
+                    $fileName = ImageManagerController::getUploadFilename($data[$item]);
+                    $data[$item]->move(ImageManagerController::getPathYearMonth(), $fileName);
+                    $data[$item] = ImageManagerController::getPathYearMonth() . $fileName;
                 }
             }
             $siteMeta->save();
