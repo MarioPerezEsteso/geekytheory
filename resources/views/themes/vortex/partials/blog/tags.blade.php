@@ -1,1 +1,1 @@
-<a href="{{ $tag->slug }}">{{ $tag->tag }}</a>
+<a href="/tag/{{ $tag->slug }}">{{ $tag->tag }}</a>

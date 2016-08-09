@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddOnDeleteCascadeToPostsCategories extends Migration
+class AddOnDeleteCascadeToPostsTags extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class AddOnDeleteCascadeToPostsCategories extends Migration
      */
     public function up()
     {
-        Schema::table('posts_categories', function (Blueprint $table) {
+        Schema::table('posts_tags', function (Blueprint $table) {
             // Drop existent foreign keys before creating the new ones
             $table->dropForeign(['post_id']);
-            $table->dropForeign(['category_id']);
+            $table->dropForeign(['tag_id']);
 
             // Foreign key to posts
             $table->foreign('post_id')
@@ -25,9 +25,9 @@ class AddOnDeleteCascadeToPostsCategories extends Migration
                 ->onDelete('cascade');
 
             // Foreign key to categories
-            $table->foreign('category_id')
+            $table->foreign('tag_id')
                 ->references('id')
-                ->on('categories')
+                ->on('tags')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
@@ -40,21 +40,21 @@ class AddOnDeleteCascadeToPostsCategories extends Migration
      */
     public function down()
     {
-        Schema::table('posts_categories', function (Blueprint $table) {
+        Schema::table('posts_tags', function (Blueprint $table) {
             // Drop existent foreign keys before creating the new ones
             $table->dropForeign(['post_id']);
-            $table->dropForeign(['category_id']);
+            $table->dropForeign(['tag_id']);
 
-            // Foreign key to posts
+            // Foreign key to post
             $table->foreign('post_id')
                 ->references('id')
                 ->on('posts')
                 ->onUpdate('cascade');
 
-            // Foreign key to categories
-            $table->foreign('category_id')
+            // Foreign key to tags
+            $table->foreign('tag_id')
                 ->references('id')
-                ->on('categories')
+                ->on('tags')
                 ->onUpdate('cascade');
         });
     }

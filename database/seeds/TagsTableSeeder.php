@@ -11,12 +11,10 @@ class TagsTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker\Factory::create();
-
         for ($i = 0; $i < 10; $i++) {
             DB::table('tags')->insert([
-                'tag' => $faker->unique()->word,
-                'slug' => $faker->unique()->word,
+                'tag' => "Tag $i",
+                'slug' => "tag-$i",
             ]);
         }
     }

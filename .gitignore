@@ -5,4 +5,5 @@ Homestead.json
 .env
 .idea/
 public/images/
+public/uploads/
 phpunit.xml
