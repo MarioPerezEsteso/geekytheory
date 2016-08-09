@@ -13,7 +13,7 @@ class ImageManagerController extends Controller
     /**
      * Path for the uploaded images
      */
-    const PATH_IMAGE_UPLOADS   = 'uploads';
+    const PATH_UPLOADS = 'uploads';
     const PATH_IMAGE_NOT_FOUND = '/assets/img/imagenotfound.jpg';
 
     /**
@@ -74,7 +74,7 @@ class ImageManagerController extends Controller
      */
     public static function getPathYearMonth()
     {
-        return self::PATH_IMAGE_UPLOADS . '/' . date('Y') . '/' .date('m') . '/';
+        return self::PATH_UPLOADS . '/' . date('Y') . '/' .date('m') . '/';
     }
 
     /**
