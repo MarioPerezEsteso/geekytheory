@@ -50,7 +50,7 @@
     <!-- /NAVIGATION -->
 
     <!-- HERO -->
-    <section class="module module-parallax bg-light-30" data-background="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($post->image) }}" style="background-image: url('{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($post->image) }}');">
+    <section class="module module-parallax bg-light-30" style="background-image: url('{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($post->image) }}');">
         <!-- HERO TEXT -->
         <div class="container">
             <div class="row">

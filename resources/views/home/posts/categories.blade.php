@@ -39,6 +39,11 @@
                 </div>
 
                 <div class="form-group">
+                    {!! Form::label('description', trans('home.description')) !!}
+                    {!! Form::textarea('description', null, ['class' => 'form-control']) !!}
+                </div>
+
+                <div class="form-group">
                     {!! Form::label('slug', trans('home.slug')) !!}
                     {!! Form::text('slug', null, ['class' => 'form-control']) !!}
                 </div>
