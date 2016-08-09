@@ -74,24 +74,22 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        if (empty($request->slug) && !empty($request->tag)) {
-            $slug = $this->getAvailableSlug($request->tag);
+        if (empty($request->get('slug')) && !empty($request->get('tag'))) {
+            $slug = $this->getAvailableSlug($request->get('tag'));
         } else {
-            $slug = $this->getAvailableSlug($request->slug);
+            $slug = $this->getAvailableSlug($request->get('slug'));
         }
 
         $data = array(
-            'tag'   => $request->tag,
+            'tag'   => $request->get('tag'),
+            'description' => $request->get('description'),
             'slug'  => $slug
         );
 
         if (!$this->validator->with($data)->passes()) {
             return Redirect::to('home/tags')->withErrors($this->validator->errors());
         } else {
-            $tag = new Tag;
-            $tag->tag = $request->tag;
-            $tag->slug = $slug;
-            $tag->save();
+            $this->repository->create($data);
         }
 
         return Redirect::to('home/tags')->withSuccess(trans('home.tag_create_success'));
@@ -134,12 +132,13 @@ class TagController extends Controller
     public function update(Request $request, $id)
     {
         $data = array(
-            'tag'   => $request->tag,
-            'slug'  => $request->slug,
+            'tag'   => $request->get('tag'),
+            'description'   => $request->get('description'),
+            'slug'  => $request->get('slug'),
         );
 
         if (!$this->validator->update($id)->with($data)->passes()) {
-            return Redirect::to('home/tags')->withErrors($this->validator->errors());
+            return Redirect::to("home/tags/edit/$id")->withErrors($this->validator->errors());
         } else {
             $this->repository->update($id, $data);
         }
