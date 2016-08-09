@@ -11,13 +11,11 @@ class CategoriesTableSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker\Factory::create();
-
         for ($i = 0; $i < 10; $i++) {
             DB::table('categories')->insert([
-                'category' => $faker->unique()->word,
-                'slug' => $faker->unique()->word,
-                'image' => 'some_image',
+                'category' => "Category $i",
+                'slug' => "category-$i",
+                'image' => 'some_image.png',
             ]);
         }
     }
