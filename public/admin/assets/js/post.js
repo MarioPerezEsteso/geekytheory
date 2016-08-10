@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     tinymce.init({
         selector: "#post-body",
-        plugins: ["advlist autolink lists link image charmap print preview anchor", "searchreplace visualblocks code fullscreen", "insertdatetime media table contextmenu paste", "imageupload"],
+        plugins: ["advlist autolink lists link image charmap anchor", "searchreplace visualblocks code", "insertdatetime media table contextmenu paste", "imageupload"],
         toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | imageupload",
         setup: function (ed) {
             ed.on('init', function () {
@@ -32,7 +32,7 @@ $(document).ready(function () {
             reader.onload = function (e) {
                 $('#post-image').attr('src', e.target.result);
                 $('#delete-post-image').removeClass('hidden');
-            }
+            };
             reader.readAsDataURL(this.files[0]);
         }
     });
