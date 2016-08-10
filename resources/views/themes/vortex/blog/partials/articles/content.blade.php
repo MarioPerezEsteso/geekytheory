@@ -31,9 +31,8 @@
                         @endforeach
                     </div>
                 </article>
-
                 @include('themes.vortex.partials.blog.author')
-
+                @include('themes.vortex.partials.blog.comments')
             </div>
         </div>
     </div>
