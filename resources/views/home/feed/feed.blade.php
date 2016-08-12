@@ -2,5 +2,41 @@
      xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"
      xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
      version="2.0">
+    <channel>
+        <title><?= $siteMeta->title; ?></title>
+        <atom:link href="<?= $siteMeta->url; ?>/feed/" rel="self" type="application/rss+xml"/>
+        <link>
+        <?= $siteMeta->url; ?>
+        </link>
+        <description><?= $siteMeta->description ?></description>
+        <lastBuildDate>
 
+        </lastBuildDate>
+        <language>es-ES</language>
+        <generator>https://github.com/marioperezesteso/laraweb</generator>
+        <item>
+            <title></title>
+            <link>
+
+            </link>
+            <comments>
+
+            </comments>
+            <pubDate>
+
+            </pubDate>
+            <dc:creator>
+                <![CDATA[ ]]>
+            </dc:creator>
+            <category>
+                <![CDATA[ ]]>
+            </category>
+            <description>
+                <![CDATA[ ]]>
+            </description>
+            <content:encoded>
+                <![CDATA[ ]]>
+            </content:encoded>
+        </item>
+    </channel>
 </rss>
