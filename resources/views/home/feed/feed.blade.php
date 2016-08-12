@@ -14,29 +14,33 @@
         </lastBuildDate>
         <language>es-ES</language>
         <generator>https://github.com/marioperezesteso/laraweb</generator>
-        <item>
-            <title></title>
-            <link>
+        @if ($articles !== null)
+            @foreach($articles as $article)
+                <item>
+                    <title><?= $article->title; ?></title>
+                    <link>
+                    <?= $siteMeta->url . '/' . $article->slug; ?>
+                    </link>
+                    <comments>
 
-            </link>
-            <comments>
+                    </comments>
+                    <pubDate>
 
-            </comments>
-            <pubDate>
-
-            </pubDate>
-            <dc:creator>
-                <![CDATA[ ]]>
-            </dc:creator>
-            <category>
-                <![CDATA[ ]]>
-            </category>
-            <description>
-                <![CDATA[ ]]>
-            </description>
-            <content:encoded>
-                <![CDATA[ ]]>
-            </content:encoded>
-        </item>
+                    </pubDate>
+                    <dc:creator>
+                        <![CDATA[ ]]>
+                    </dc:creator>
+                    <category>
+                        <![CDATA[ ]]>
+                    </category>
+                    <description>
+                        <![CDATA[ <?= $article->description; ?> ]]>
+                    </description>
+                    <content:encoded>
+                        <![CDATA[ <?= $article->body ?> ]]>
+                    </content:encoded>
+                </item>
+            @endforeach
+        @endif
     </channel>
 </rss>
