@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\ArticleRepository;
 use App\Repositories\SiteMetaRepository;
 
 class FeedController extends Controller
@@ -13,10 +14,12 @@ class FeedController extends Controller
     const MAX_ITEMS = 10;
 
     private $siteMetaRepository;
+    private $articleRepository;
 
-    public function __construct(SiteMetaRepository $siteMetaRepository)
+    public function __construct(SiteMetaRepository $siteMetaRepository, ArticleRepository $articleRepository)
     {
         $this->siteMetaRepository = $siteMetaRepository;
+        $this->articleRepository = $articleRepository;
     }
 
     /**
@@ -24,6 +27,8 @@ class FeedController extends Controller
      */
     public function feed()
     {
-        return response(view('home.feed.feed'), 200)->header('Content-Type', 'text/xml');
+        $siteMeta = $this->siteMetaRepository->getSiteMeta();
+        $articles = $this->articleRepository->findArticles(null, true, self::MAX_ITEMS);
+        return response(view('home.feed.feed', compact('siteMeta', 'articles')), 200)->header('Content-Type', 'text/xml');
     }
 }
