@@ -25,15 +25,17 @@
 
                     </comments>
                     <pubDate>
-                        <?php $objDateTime = new DateTime($article->published_at); ?>
-                        <?= $objDateTime->format(DateTime::RFC822); ?>
+                        <?php $publishedDate = new DateTime($article->published_at); ?>
+                        <?= $publishedDate->format(DateTime::RFC822); ?>
                     </pubDate>
                     <dc:creator>
                         <![CDATA[ ]]>
                     </dc:creator>
+                    @foreach($article->categories()->get() as $category)
                     <category>
-                        <![CDATA[ ]]>
+                        <![CDATA[ <?= $category->category; ?> ]]>
                     </category>
+                    @endforeach
                     <description>
                         <![CDATA[ <?= $article->description; ?> ]]>
                     </description>
