@@ -25,7 +25,8 @@
 
                     </comments>
                     <pubDate>
-
+                        <?php $objDateTime = new DateTime($article->published_at); ?>
+                        <?= $objDateTime->format(DateTime::RFC822); ?>
                     </pubDate>
                     <dc:creator>
                         <![CDATA[ ]]>
