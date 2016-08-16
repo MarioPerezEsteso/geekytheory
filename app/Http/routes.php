@@ -258,6 +258,8 @@ Route::get('home/menu/getNewMenuItemHtml', [
     'uses'          => 'SiteMetaController@getNewMenuItemHtml',
 ]);
 
+Route::get('feed', 'FeedController@feed');
+
 Route::get('/{slug?}', 'ArticleController@show');
 
 Route::get('/p/{slug?}', 'PageController@show');
@@ -267,3 +269,4 @@ Route::get('user/{username}', 'ArticleController@showByUsername');
 Route::get('category/{slug}', 'CategoryController@showByCategory');
 
 Route::get('tag/{slug}', 'TagController@showByTag');
+
