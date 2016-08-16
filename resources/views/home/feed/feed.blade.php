@@ -9,9 +9,6 @@
         <?= $siteMeta->url; ?>
         </link>
         <description><?= $siteMeta->description ?></description>
-        <lastBuildDate>
-
-        </lastBuildDate>
         <language>es-ES</language>
         <generator>https://github.com/marioperezesteso/laraweb</generator>
         @if ($articles !== null)
@@ -21,15 +18,12 @@
                     <link>
                     <?= $siteMeta->url . '/' . $article->slug; ?>
                     </link>
-                    <comments>
-
-                    </comments>
                     <pubDate>
                         <?php $publishedDate = new DateTime($article->published_at); ?>
-                        <?= $publishedDate->format(DateTime::RFC822); ?>
+                        <?= $publishedDate->format(DateTime::RSS); ?>
                     </pubDate>
                     <dc:creator>
-                        <![CDATA[ ]]>
+                        <![CDATA[ <?= $article->user->name; ?>]]>
                     </dc:creator>
                     @foreach($article->categories()->get() as $category)
                     <category>
