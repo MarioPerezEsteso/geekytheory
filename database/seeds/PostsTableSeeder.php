@@ -14,7 +14,7 @@ class PostsTableSeeder extends Seeder
         $faker = Faker\Factory::create();
 
         // Create 10 articles
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 15; $i++) {
             DB::table('posts')->insert([
                 'user_id' => 1,
                 'title' => $faker->unique()->sentence(),
@@ -24,8 +24,23 @@ class PostsTableSeeder extends Seeder
                 'status' => 'published',
                 'image' => 'some_image',
                 'type' => 'article',
+                'published_at' => \Carbon\Carbon::now(),
             ]);
         }
+
+        for ($i = 0; $i < 3; $i++) {
+            DB::table('posts')->insert([
+                'user_id' => 1,
+                'title' => $faker->unique()->sentence(),
+                'body' => $faker->text(),
+                'description' => $faker->text($maxNbChars = 150),
+                'slug' => $faker->unique()->word,
+                'status' => 'draft',
+                'image' => 'some_image',
+                'type' => 'article',
+            ]);
+        }
+
         // Create 10 pages
         for ($i = 0; $i < 10; $i++) {
             DB::table('posts')->insert([

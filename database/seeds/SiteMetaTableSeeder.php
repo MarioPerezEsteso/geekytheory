@@ -15,6 +15,7 @@ class SiteMetaTableSeeder extends Seeder
             'title'             => 'Site title',
             'subtitle'          => 'Site subtitle',
             'description'       => 'Site description',
+            'url'               => 'http://laraweb.com',
             'image'             => 'site-image.png',
             'logo'              => 'site-logo.png',
             'favicon'           => 'site-favicon.png',
