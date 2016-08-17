@@ -1,22 +1,57 @@
-<div id="disqus_thread"></div>
-<script>
-    /**
-     *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-     *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-     */
-    /*
-     var disqus_config = function () {
-     this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-     this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-     };
-     */
-    (function() {  // REQUIRED CONFIGURATION VARIABLE: EDIT THE SHORTNAME BELOW
-        var d = document, s = d.createElement('script');
+<div class="comments">
+    <h4 class="comment-title font-alt">3 comments</h4>
+    <hr class="divider m-b-30">
 
-        s.src = '//EXAMPLE.disqus.com/embed.js';  // IMPORTANT: Replace EXAMPLE with your forum shortname!
+    <!-- COMMENT 1 -->
+    <div class="comment clearfix">
+        <div class="comment-avatar">
+            <img src="https://s3.amazonaws.com/uifaces/faces/twitter/ryanbattles/128.jpg" alt="">
+        </div>
+        <div class="comment-content clearfix">
+            <h5 class="comment-author font-alt">
+                <a href="#">John Doe</a>
+            </h5>
+            <div class="comment-body">
+                <p>The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary. The European languages are members of the same family. Their separate existence is a myth.</p>
+            </div>
+            <div class="comment-meta font-alt">Today, 14:55 - <a href="#">Reply</a></div>
+        </div>
 
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+        <!-- COMMENT 2 -->
+        <div class="comment clearfix">
+            <div class="comment-avatar">
+                <img src="https://s3.amazonaws.com/uifaces/faces/twitter/draganbabic/128.jpg" alt="">
+            </div>
+            <div class="comment-content clearfix">
+                <h5 class="comment-author font-alt">
+                    <a href="#">Mark Stone</a>
+                </h5>
+                <div class="comment-body">
+                    <p>The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary. The European languages are members of the same family. Their separate existence is a myth.</p>
+                </div>
+                <div class="comment-meta font-alt">Today, 14:55 - <a href="#">Reply</a></div>
+            </div>
+        </div>
+        <!-- /COMMENT 2 -->
+
+    </div>
+    <!-- /COMMENT 1 -->
+
+    <!-- COMMENT 3 -->
+    <div class="comment clearfix">
+        <div class="comment-avatar">
+            <img src="https://s3.amazonaws.com/uifaces/faces/twitter/pixeliris/128.jpg" alt="">
+        </div>
+        <div class="comment-content clearfix">
+            <h5 class="comment-author font-alt">
+                <a href="#">Andy</a>
+            </h5>
+            <div class="comment-body">
+                <p>The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary. The European languages are members of the same family. Their separate existence is a myth.</p>
+            </div>
+            <div class="comment-meta font-alt">Today, 14:55 - <a href="#">Reply</a></div>
+        </div>
+    </div>
+    <!-- COMMENT 3 -->
+
+</div>
