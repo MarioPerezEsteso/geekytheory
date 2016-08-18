@@ -37,6 +37,7 @@ class Post extends Model
         'status',
         'image',
         'type',
+        'allow_comments',
     );
 
     /**
