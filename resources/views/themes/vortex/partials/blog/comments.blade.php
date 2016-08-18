@@ -55,3 +55,5 @@
     <!-- COMMENT 3 -->
 
 </div>
+
+@include('themes.vortex.partials.blog.commentForm')
