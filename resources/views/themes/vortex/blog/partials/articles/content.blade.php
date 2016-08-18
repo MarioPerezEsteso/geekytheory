@@ -10,10 +10,12 @@
                 @include('themes.vortex.partials.blog.author')
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-                @include('themes.vortex.partials.blog.comments')
+        @if($post->allow_comments)
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    @include('themes.vortex.partials.blog.comments')
+                </div>
             </div>
-        </div>
+        @endif
     </div>
 </section>
