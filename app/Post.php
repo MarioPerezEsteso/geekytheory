@@ -41,7 +41,7 @@ class Post extends Model
     );
 
     /**
-     * Get the user that owns the post
+     * Get the user that owns the post.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -51,7 +51,7 @@ class Post extends Model
     }
 
     /**
-     * Get post tags
+     * Get post tags.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -61,13 +61,21 @@ class Post extends Model
     }
 
     /**
-     * Get post categories
+     * Get post categories.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function categories()
     {
         return $this->belongsToMany('App\Category', 'posts_categories');
+    }
+
+    /**
+     * Get the comments of the post.
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
     }
 
 }
