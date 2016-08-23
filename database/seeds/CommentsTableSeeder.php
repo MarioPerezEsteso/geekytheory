@@ -23,6 +23,8 @@ class CommentsTableSeeder extends Seeder
             'approved' => 1,
             'spam' => 0,
             'ip' => '0.0.0.0',
+            'created_at' => \Carbon\Carbon::now(-5),
+            'updated_at' => \Carbon\Carbon::now(-5),
         ]);
 
         DB::table('comments')->insert([
@@ -35,6 +37,8 @@ class CommentsTableSeeder extends Seeder
             'approved' => 1,
             'spam' => 0,
             'ip' => '0.0.0.0',
+            'created_at' => \Carbon\Carbon::now(-3),
+            'updated_at' => \Carbon\Carbon::now(-3),
         ]);
 
         DB::table('comments')->insert([
@@ -48,6 +52,8 @@ class CommentsTableSeeder extends Seeder
             'approved' => 1,
             'spam' => 0,
             'ip' => '0.0.0.0',
+            'created_at' => \Carbon\Carbon::now(-1),
+            'updated_at' => \Carbon\Carbon::now(-1),
         ]);
 
         DB::table('comments')->insert([
@@ -59,6 +65,8 @@ class CommentsTableSeeder extends Seeder
             'approved' => 1,
             'spam' => 0,
             'ip' => '0.0.0.0',
+            'created_at' => \Carbon\Carbon::now(),
+            'updated_at' => \Carbon\Carbon::now(),
         ]);
     }
 }
