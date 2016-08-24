@@ -84,4 +84,41 @@ class CommentController extends Controller
     {
         //
     }
+
+    /**
+     * Sort array of comments.
+     *
+     * @param $comments
+     * @param bool $addChildToParent
+     * @return array
+     */
+    public static function sortByParent($comments, $addChildToParent = true)
+    {
+        if (!$addChildToParent) {
+            return $comments;
+        }
+
+        $sort = [];
+        foreach ($comments as $comment) {
+            $comment->children = [];
+            $sort[$comment->id] = $comment;
+        }
+
+        foreach ($sort as $key => &$comment) {
+            if ($comment->parent !== null) {
+                $children = $sort[$comment->parent]->getAttribute('children');
+                $children[$comment->id] = $comment;
+                $sort[$comment->parent]->setAttribute('children', $children);
+            }
+        }
+        unset($comment);
+
+        foreach ($sort as $key => $comment) {
+            if ($comment->parent !== null) {
+                unset($sort[$key]);
+            }
+        }
+
+        return $sort;
+    }
 }
