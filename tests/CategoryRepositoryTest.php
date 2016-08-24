@@ -20,4 +20,14 @@ class CategoryRepositoryTest extends TestCase
         $this->assertEquals('category-1', $category->getAttribute('slug'));
     }
 
+    /**
+     * Test method findCategoryBySlug when slug is null.
+     */
+    public function testFindCategoryBySlugWithNullSlug()
+    {
+        $categoryRepository = new CategoryRepository();
+        $category = $categoryRepository->findCategoryBySlug(null);
+        $this->assertNull($category);
+    }
+
 }
