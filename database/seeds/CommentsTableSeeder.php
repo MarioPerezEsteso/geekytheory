@@ -23,8 +23,6 @@ class CommentsTableSeeder extends Seeder
             'approved' => 1,
             'spam' => 0,
             'ip' => '0.0.0.0',
-            'created_at' => \Carbon\Carbon::now(-5),
-            'updated_at' => \Carbon\Carbon::now(-5),
         ]);
 
         DB::table('comments')->insert([
@@ -37,23 +35,31 @@ class CommentsTableSeeder extends Seeder
             'approved' => 1,
             'spam' => 0,
             'ip' => '0.0.0.0',
-            'created_at' => \Carbon\Carbon::now(-3),
-            'updated_at' => \Carbon\Carbon::now(-3),
         ]);
 
         DB::table('comments')->insert([
             'post_id' => 1,
             'user_id' => 1,
             'parent' => 2,
-            'author_name' => 'John Doe',
-            'author_email' => 'johndoe@domain.com',
-            'author_url' => 'http://doe.com',
+            'author_name' => 'John nhoJ',
+            'author_email' => 'doejohn@domain.com',
+            'author_url' => 'http://jhhoonn.com',
             'content' => $faker->text(),
             'approved' => 1,
             'spam' => 0,
             'ip' => '0.0.0.0',
-            'created_at' => \Carbon\Carbon::now(-1),
-            'updated_at' => \Carbon\Carbon::now(-1),
+        ]);
+
+        DB::table('comments')->insert([
+            'post_id' => 1,
+            'parent' => 1,
+            'author_name' => 'Alex',
+            'author_email' => 'alex@domain.com',
+            'author_url' => 'http://alex.com',
+            'content' => $faker->text(),
+            'approved' => 1,
+            'spam' => 0,
+            'ip' => '0.0.0.0',
         ]);
 
         DB::table('comments')->insert([
@@ -65,8 +71,6 @@ class CommentsTableSeeder extends Seeder
             'approved' => 1,
             'spam' => 0,
             'ip' => '0.0.0.0',
-            'created_at' => \Carbon\Carbon::now(),
-            'updated_at' => \Carbon\Carbon::now(),
         ]);
     }
 }
