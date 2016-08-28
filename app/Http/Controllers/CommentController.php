@@ -104,14 +104,13 @@ class CommentController extends Controller
             $sort[$comment->id] = $comment;
         }
 
-        foreach ($sort as $key => &$comment) {
+        foreach ($sort as $key => $comment) {
             if ($comment->parent !== null) {
                 $children = $sort[$comment->parent]->getAttribute('children');
                 $children[$comment->id] = $comment;
                 $sort[$comment->parent]->setAttribute('children', $children);
             }
         }
-        unset($comment);
 
         foreach ($sort as $key => $comment) {
             if ($comment->parent !== null) {
