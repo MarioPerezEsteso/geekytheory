@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
+use App\Post;
 use App\Repositories\ArticleRepository;
 use App\Repositories\UserRepository;
 use App\Validators\ArticleValidator;
@@ -91,8 +93,12 @@ class ArticleController extends PostController
      */
     public function show($slug)
     {
+        /** @var Post $post */
         $post = $this->repository->findArticleBySlug($slug);
-        return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post'));
+        $comments = $post->comments()->get();
+        $comments = CommentController::sortByParent($comments);
+
+        return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'comments'));
     }
 
     /**
