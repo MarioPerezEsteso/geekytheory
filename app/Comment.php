@@ -32,6 +32,16 @@ class Comment extends Model
     );
 
     /**
+     * Check if the comments has children comments.
+     *
+     * @return bool
+     */
+    public function hasChildren()
+    {
+        return ($this->children !== null) && (count($this->children) > 0);
+    }
+
+    /**
      * Get the user that owns the comment.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

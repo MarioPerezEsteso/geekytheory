@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -32,7 +33,7 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -43,7 +44,7 @@ class CommentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -54,7 +55,7 @@ class CommentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -65,8 +66,8 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -77,7 +78,7 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -119,5 +120,34 @@ class CommentController extends Controller
         }
 
         return $sort;
+    }
+
+    /**
+     * Show comments ordered.
+     *
+     * @param array $comments
+     */
+    public static function showCommentsOrdered($comments)
+    {
+        foreach ($comments as $comment) {
+            /** @var Comment $comment */
+            print view('themes.vortex.partials.blog.singleComment', compact('comment'));
+        }
+    }
+
+    /**
+     * Get gravatar or the author.
+     *
+     * @param $comment
+     * @return String
+     */
+    public static function getAuthorAvatar($comment)
+    {
+        if ($comment->user_id !== null) {
+            $avatar = getGravatar($comment->user->email);
+        } else {
+            $avatar = getGravatar($comment->author_email);
+        }
+        return $avatar;
     }
 }

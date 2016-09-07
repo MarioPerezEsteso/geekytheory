@@ -96,9 +96,10 @@ class ArticleController extends PostController
         /** @var Post $post */
         $post = $this->repository->findArticleBySlug($slug);
         $comments = $post->comments()->get();
+        $commentCount = count($comments);
         $comments = CommentController::sortByParent($comments);
 
-        return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'comments'));
+        return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'comments', 'commentCount'));
     }
 
     /**
