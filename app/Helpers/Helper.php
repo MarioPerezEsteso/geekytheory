@@ -148,3 +148,30 @@ if (!function_exists('getGravatar')) {
         return $url;
     }
 }
+
+if (!function_exists('getClientIPAddress')) {
+    /**
+     * Get IP address of a visitor.
+     *
+     * @return string
+     */
+    function getClientIPAddress()
+    {
+        $ipAddress = '';
+        if ($_SERVER['HTTP_CLIENT_IP']) {
+            $ipAddress = $_SERVER['HTTP_CLIENT_IP'];
+        } else if ($_SERVER['HTTP_X_FORWARDED_FOR']) {
+            $ipAddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else if ($_SERVER['HTTP_X_FORWARDED']) {
+            $ipAddress = $_SERVER['HTTP_X_FORWARDED'];
+        } else if ($_SERVER['HTTP_FORWARDED_FOR']) {
+            $ipAddress = $_SERVER['HTTP_FORWARDED_FOR'];
+        } else if ($_SERVER['HTTP_FORWARDED']) {
+            $ipAddress = $_SERVER['HTTP_FORWARDED'];
+        } else if ($_SERVER['REMOTE_ADDR']) {
+            $ipAddress = $_SERVER['REMOTE_ADDR'];
+        }
+
+        return $ipAddress;
+    }
+}
