@@ -258,6 +258,11 @@ Route::get('home/menu/getNewMenuItemHtml', [
     'uses'          => 'SiteMetaController@getNewMenuItemHtml',
 ]);
 
+Route::post('comment/store', [
+    'before'        => 'csrf',
+    'uses'          => 'CommentController@store',
+]);
+
 Route::get('feed', 'FeedController@feed');
 
 Route::get('/{slug?}', 'ArticleController@show');
