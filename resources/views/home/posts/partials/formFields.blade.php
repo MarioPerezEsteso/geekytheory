@@ -83,7 +83,7 @@
                             {{ trans('home.move_to_trash') }}
                         </a>
                     @else
-                        <a href="/home/posts/delete/" class="btn btn-danger">
+                        <a href="/home/posts/delete/{{ $post->id }}" class="btn btn-danger">
                             <i class="glyphicon glyphicon-trash"></i>
                             {{ trans('home.move_to_trash') }}
                         </a>
