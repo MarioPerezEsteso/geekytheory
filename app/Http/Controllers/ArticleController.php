@@ -29,6 +29,7 @@ class ArticleController extends PostController
      * @param ArticleRepository $repository
      * @param CategoryRepository $categoryRepository
      * @param UserRepository $userRepository
+     * @param ArticleValidator $articleValidator
      */
     public function __construct(ArticleRepository $repository, CategoryRepository $categoryRepository, UserRepository $userRepository, ArticleValidator $articleValidator)
     {
