@@ -163,22 +163,25 @@ class SiteMetaController extends Controller
             return Redirect::to('home/sitemeta')->withErrors($this->validator->errors());
         } else {
             $siteMeta = self::getSiteMeta();
+            $siteMetaId = $siteMeta->id;
             $imageItems = array('image', 'logo', 'favicon', 'logo_57', 'logo_72', 'logo_114');
-            $siteMeta->update(array_except($data, $imageItems));
             $allowRegister = false;
             if ($request->allow_register && $request->allow_register == 'on') {
                 $allowRegister = true;
             }
-            $siteMeta->allow_register = $allowRegister;
+            $data['allow_register'] = $allowRegister;
             foreach ($imageItems as $item) {
-                if ($data[$item]) {
+                if ($data[$item] !== null) {
                     $fileName = ImageManagerController::getUploadFilename($data[$item]);
                     $data[$item]->move(ImageManagerController::getPathYearMonth(), $fileName);
                     $data[$item] = ImageManagerController::getPathYearMonth() . $fileName;
+                } else {
+                    unset($data[$item]);
                 }
             }
-            $siteMeta->save();
+            $this->repository->update($siteMetaId, $data);
         }
+
         return Redirect::to('home/sitemeta')->withSuccess(trans('home.sitemeta_update_success'));
     }
 
