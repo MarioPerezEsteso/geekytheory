@@ -76,8 +76,9 @@ class PostController extends Controller
      * @param PageRepository|ArticleRepository $repository
      * @param CategoryRepository $categoryRepository
      * @param UserRepository $userRepository
+     * @param PageValidator|ArticleValidator $validator
      */
-    public function __construct($repository = null, CategoryRepository $categoryRepository, UserRepository $userRepository, $validator)
+    public function __construct($repository = null, CategoryRepository $categoryRepository, UserRepository $userRepository, $validator = null)
     {
         if ($repository !== null) {
             $this->repository = $repository;
@@ -230,9 +231,8 @@ class PostController extends Controller
      */
     public function delete($id)
     {
-        $post = $this->repository->findOrFail($id);
-        $post->status = Post::STATUS_DELETED;
-        $post->save();
+        $data['status'] = Post::STATUS_DELETED;
+        $this->repository->update($id, $data);
         return Redirect::back();
     }
 
