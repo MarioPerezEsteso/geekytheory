@@ -3,9 +3,42 @@
 use App\Http\Controllers\CommentController;
 use App\Repositories\CommentRepository;
 use App\Repositories\PostRepository;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class CommentControllerTest extends TestCase
 {
+    use WithoutMiddleware;
+
+    public function testStoreComment()
+    {
+        $commentRepository = new CommentRepository();
+
+        $data = array(
+            'post_id' => 1,
+            'parent' => null,
+            'author_name' => 'Mario',
+            'author_email' => 'mario@domain.com',
+            'author_url' => 'http://geekytheory.com',
+            'body' => 'This is the content of the comment',
+        );
+
+        $commentsBefore = count($commentRepository->all());
+
+        $this->call('POST', 'comment/store', $data);
+
+        $this->assertResponseOk();
+
+        $comments = $commentRepository->all();
+        $this->assertEquals($commentsBefore + 1, count($comments));
+
+        /** @var \App\Comment $comment */
+        $comment = $comments[count($comments) - 1];
+        foreach ($data as $key => $value) {
+            $this->assertEquals($value, $comment->getAttribute($key));
+        }
+
+    }
+
     /**
      * Test sortByParent. This test checks the number of children of each comment and
      * also if all of them are instances of the \App\Comment class.
