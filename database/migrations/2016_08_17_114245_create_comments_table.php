@@ -20,7 +20,7 @@ class CreateCommentsTable extends Migration
             $table->string('author_name')->nullable();
             $table->string('author_email')->nullable();
             $table->string('author_url')->nullable();
-            $table->text('content');
+            $table->text('body');
             $table->integer('upvotes')->default(0);
             $table->integer('downvotes')->default(0);
             $table->boolean('approved');

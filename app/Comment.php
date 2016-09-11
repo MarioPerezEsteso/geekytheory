@@ -25,7 +25,7 @@ class Comment extends Model
         'author_name',
         'author_email',
         'author_url',
-        'content',
+        'body',
         'approved',
         'spam',
         'ip',

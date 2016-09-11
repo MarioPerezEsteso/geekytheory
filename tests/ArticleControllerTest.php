@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
-use Illuminate\Foundation\Testing\HttpException;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class ArticleControllerTest extends TestCase

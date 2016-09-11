@@ -3,13 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Repositories\CommentRepository;
 use Illuminate\Http\Request;
+use Auth;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 class CommentController extends Controller
 {
+    private $commentRepository;
+
+    /**
+     * CommentController constructor.
+     */
+    public function __construct(CommentRepository $commentRepository)
+    {
+        $this->commentRepository = $commentRepository;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,23 +33,47 @@ class CommentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return array
      */
     public function store(Request $request)
     {
+        $data= array(
+            'post_id' => $request->post_id,
+            'parent' => $request->parent,
+            'author_name' => $request->author_name,
+            'author_email' => $request->author_email,
+            'author_url' => $request->author_url,
+            'body' => $request->body,
+        );
+
+        if ($user = Auth::user() !== null) {
+            $data['user_id'] = $user->id;
+        }
+
+        $spam = false;
+        $data['spam'] = $spam;
+
+        $approved = true;
+        $data['approved'] = $approved;
+
+        $data['ip'] = getClientIPAddress();
+
+        $valid = true;
+        if (!$valid) {
+            return array(
+                'error'     => 1,
+                'message'   => trans('public.error_creating_comment'),
+            );
+        } else {
+            $this->commentRepository->create($data);
+            return array(
+                'error'     => 0,
+                'message'   => trans('public.success_creating_comment'),
+            );
+        }
 
     }
 
