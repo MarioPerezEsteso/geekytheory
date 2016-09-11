@@ -158,17 +158,17 @@ if (!function_exists('getClientIPAddress')) {
     function getClientIPAddress()
     {
         $ipAddress = '';
-        if ($_SERVER['HTTP_CLIENT_IP']) {
+        if (isset($_SERVER['HTTP_CLIENT_IP'])) {
             $ipAddress = $_SERVER['HTTP_CLIENT_IP'];
-        } else if ($_SERVER['HTTP_X_FORWARDED_FOR']) {
+        } else if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
             $ipAddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
-        } else if ($_SERVER['HTTP_X_FORWARDED']) {
+        } else if (isset($_SERVER['HTTP_X_FORWARDED'])) {
             $ipAddress = $_SERVER['HTTP_X_FORWARDED'];
-        } else if ($_SERVER['HTTP_FORWARDED_FOR']) {
+        } else if (isset($_SERVER['HTTP_FORWARDED_FOR'])) {
             $ipAddress = $_SERVER['HTTP_FORWARDED_FOR'];
-        } else if ($_SERVER['HTTP_FORWARDED']) {
+        } else if (isset($_SERVER['HTTP_FORWARDED'])) {
             $ipAddress = $_SERVER['HTTP_FORWARDED'];
-        } else if ($_SERVER['REMOTE_ADDR']) {
+        } else if (isset($_SERVER['REMOTE_ADDR'])) {
             $ipAddress = $_SERVER['REMOTE_ADDR'];
         }
 
