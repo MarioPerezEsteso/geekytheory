@@ -90,15 +90,15 @@ class SiteMetaController extends Controller
 
         if (!$this->validator->with($menu)->menuPasses()) {
             return array(
-                'error'     => 1,
-                'message'   => trans('home.menu_not_updated_successfully'),
+                'error' => 1,
+                'message' => trans('home.menu_not_updated_successfully'),
             );
         } else {
             $siteMeta->menu = $request->menu;
             $siteMeta->save();
             return array(
-                'error'     => 0,
-                'message'   => trans('home.menu_updated_successfully'),
+                'error' => 0,
+                'message' => trans('home.menu_updated_successfully'),
             );
         }
 
@@ -113,9 +113,9 @@ class SiteMetaController extends Controller
     public function getNewMenuItemHtml(Request $request)
     {
         $menuItem = array(
-            'text'      => $request->text,
-            'link'      => $request->link,
-            'submenu'   => null,
+            'text' => $request->text,
+            'link' => $request->link,
+            'submenu' => null,
         );
         return view('home.menu.menuitemsingle', compact('menuItem'));
     }
@@ -142,16 +142,19 @@ class SiteMetaController extends Controller
         $siteLogo114 = $request->file('logo_114');
 
         $data = array(
-            'url'           => $request->url,
-            'title'         => $request->title,
-            'subtitle'      => $request->subtitle,
-            'description'   => $request->description,
-            'image'         => $siteImage,
-            'logo'          => $siteLogo,
-            'favicon'       => $siteFavicon,
-            'logo_57'       => $siteLogo57,
-            'logo_72'       => $siteLogo72,
-            'logo_114'      => $siteLogo114,
+            'url' => $request->url,
+            'title' => $request->title,
+            'subtitle' => $request->subtitle,
+            'description' => $request->description,
+            'image' => $siteImage,
+            'logo' => $siteLogo,
+            'favicon' => $siteFavicon,
+            'logo_57' => $siteLogo57,
+            'logo_72' => $siteLogo72,
+            'logo_114' => $siteLogo114,
+            'allow_register' => $request->allow_register && $request->allow_register == 'on',
+            'show_author_post_list' => $request->show_author_post_list && $request->show_author_post_list == 'on',
+            'show_author_post' => $request->show_author_post && $request->show_author_post == 'on',
         );
 
         // Add social networks to $data.
@@ -165,11 +168,7 @@ class SiteMetaController extends Controller
             $siteMeta = self::getSiteMeta();
             $siteMetaId = $siteMeta->id;
             $imageItems = array('image', 'logo', 'favicon', 'logo_57', 'logo_72', 'logo_114');
-            $allowRegister = false;
-            if ($request->allow_register && $request->allow_register == 'on') {
-                $allowRegister = true;
-            }
-            $data['allow_register'] = $allowRegister;
+
             foreach ($imageItems as $item) {
                 if ($data[$item] !== null) {
                     $fileName = ImageManagerController::getUploadFilename($data[$item]);
