@@ -114,6 +114,8 @@ class PostController extends Controller
             'categories' => $request->categories,
             'image' => $image,
             'type' => $type,
+            'show_title' => $request->show_title && $request->show_title == 'on',
+            'show_description' => $request->show_description && $request->show_description == 'on',
         );
 
         if (!$this->validator->with($data)->passes()) {
@@ -123,12 +125,15 @@ class PostController extends Controller
                 'messages'  => $this->validator->errors(),
             );
         } else {
+            // TODO: refactor to use repository pattern
             $post = new Post;
             $post->title = $data['title'];
             $post->body = $data['body'];
             $post->description = $data['description'];
             $post->status = $data['status'];
             $post->type = $data['type'];
+            $post->show_title = $data['show_title'];
+            $post->show_description = $data['show_description'];
 
             if ($request->action == self::POST_ACTION_PUBLISH) {
                 $post->status = self::POST_STATUS_PUBLISHED;
@@ -176,6 +181,8 @@ class PostController extends Controller
             'type'  => $type,
             'tags' => $request->tags,
             'categories' => $request->categories,
+            'show_title' => $request->show_title && $request->show_title == 'on',
+            'show_description' => $request->show_description && $request->show_description == 'on',
         );
 
         if (!$this->validator->update($id)->with($data)) {
@@ -184,19 +191,25 @@ class PostController extends Controller
                 'messages'  => $this->validator->errors(),
             );
         } else {
+            // TODO: refactor to use repository pattern
             $post = $this->repository->findOrFail($id);
             $post->title = $data['title'];
             $post->body = $data['body'];
             $post->description = $data['description'];
+            $post->show_title = $data['show_title'];
+            $post->show_description = $data['show_description'];
+
             $post->status = $data['status'];
             if ($request->action == self::POST_ACTION_PUBLISH) {
                 $post->status = self::POST_STATUS_PUBLISHED;
             }
+
             if ($image) {
                 $fileName = ImageManagerController::getUploadFilename($image);
                 $post->image = ImageManagerController::getPathYearMonth() . $fileName;
                 $image->move(ImageManagerController::getPathYearMonth(), $fileName);
             }
+
             $post->save();
             $categories = Category::whereIn('id', $data['categories'])->get();
             $post->categories()->sync($categories);
