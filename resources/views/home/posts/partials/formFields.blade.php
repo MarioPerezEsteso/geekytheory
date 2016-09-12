@@ -163,4 +163,25 @@
             </div>
         </div>
     </div>
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">{{ trans('home.options') }}</h3>
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="checkbox">
+                        <label>
+                            <input name="show_title" type="checkbox" {{ (empty($post) || !empty($post) && $post->show_title) ? 'checked' : '' }}> {{ trans('home.show_post_title') }}
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input name="show_description" type="checkbox" {{ (empty($post) || !empty($post) && $post->show_description) ? 'checked' : '' }}> {{ trans('home.show_post_description') }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
