@@ -6,9 +6,11 @@
                 <img src="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($post->image) }}" alt="">
             </a>
         </div>
-        <div class="post-meta font-alt">
-            {{ trans('public.by') }} <a href="{{ url('/user/' . $post->user_username) }}">{{ $post->user_name }}</a>
-        </div>
+        @if ($siteMeta->show_author_post_list)
+            <div class="post-meta font-alt">
+                {{ trans('public.by') }} <a href="{{ url('/user/' . $post->user_username) }}">{{ $post->user_name }}</a>
+            </div>
+        @endif
         <div class="post-header">
             <h4 class="post-title font-alt">
                 <a href="{{ url($post->slug) }}">{{ $post->title }}</a>

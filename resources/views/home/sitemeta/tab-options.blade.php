@@ -20,5 +20,19 @@
 </div>
 
 <div class="checkbox">
-    <label><input name="allow_register" type="checkbox" {{ ($siteMeta->allow_register) ? 'checked' : '' }}> {{ trans('home.allow_register') }}</label>
+    <label>
+        <input name="allow_register" type="checkbox" {{ ($siteMeta->allow_register) ? 'checked' : '' }}> {{ trans('home.allow_register') }}
+    </label>
+</div>
+
+<div class="checkbox">
+    <label>
+        <input name="show_author_post_list" type="checkbox" {{ ($siteMeta->show_author_post_list) ? 'checked' : '' }}> {{ trans('home.show_author_post_list') }}
+    </label>
+</div>
+
+<div class="checkbox">
+    <label>
+        <input name="show_author_post" type="checkbox" {{ ($siteMeta->show_author_post) ? 'checked' : '' }}> {{ trans('home.show_author_post') }}
+    </label>
 </div>
