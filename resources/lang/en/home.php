@@ -100,4 +100,6 @@ return [
     'category_update_success' => 'The category has been updated successfully',
     'show_author_post_list' => 'Show the author in a list of posts (your theme must support it)',
     'show_author_post' => 'Show the author in an individual post (your theme must support it)',
+    'show_post_title' => 'Show the title of the post above the image in header (your theme must support it)',
+    'show_post_description' => 'Show the description of the post above the image in header (your theme must support it)',
 ];
