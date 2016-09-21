@@ -98,7 +98,9 @@ return [
     'category_edit' => 'Edit category',
     'category_save' => 'Save category',
     'category_update_success' => 'The category has been updated successfully',
-    'category_delete_success' => 'The category has been deleted successfully',
-    'category_create_success' => 'The category has been created successfully',
+    'show_author_post_list' => 'Show the author in a list of posts (your theme must support it)',
+    'show_author_post' => 'Show the author in an individual post (your theme must support it)',
+    'show_post_title' => 'Show the title of the post above the image in header (your theme must support it)',
+    'show_post_description' => 'Show the description of the post above the image in header (your theme must support it)',
     'allow_comments' => 'Allow comments',
 ];

@@ -76,8 +76,9 @@ class PostController extends Controller
      * @param PageRepository|ArticleRepository $repository
      * @param CategoryRepository $categoryRepository
      * @param UserRepository $userRepository
+     * @param PageValidator|ArticleValidator $validator
      */
-    public function __construct($repository = null, CategoryRepository $categoryRepository, UserRepository $userRepository, $validator)
+    public function __construct($repository = null, CategoryRepository $categoryRepository, UserRepository $userRepository, $validator = null)
     {
         if ($repository !== null) {
             $this->repository = $repository;
@@ -114,6 +115,8 @@ class PostController extends Controller
             'image' => $image,
             'type' => $type,
             'allow_comments' => $request->allow_comments,
+            'show_title' => $request->show_title && $request->show_title == 'on',
+            'show_description' => $request->show_description && $request->show_description == 'on',
         );
 
         if (!$this->validator->with($data)->passes()) {
@@ -123,6 +126,7 @@ class PostController extends Controller
                 'messages'  => $this->validator->errors(),
             );
         } else {
+            // TODO: refactor to use repository pattern
             $post = new Post;
             $post->title = $data['title'];
             $post->body = $data['body'];
@@ -130,6 +134,9 @@ class PostController extends Controller
             $post->status = $data['status'];
             $post->type = $data['type'];
             $post->allow_comments = $data['allow_comments'] == 'on';
+            $post->show_title = $data['show_title'];
+            $post->show_description = $data['show_description'];
+
             if ($request->action == self::POST_ACTION_PUBLISH) {
                 $post->status = self::POST_STATUS_PUBLISHED;
             }
@@ -176,6 +183,8 @@ class PostController extends Controller
             'type'  => $type,
             'tags' => $request->tags,
             'categories' => $request->categories,
+            'show_title' => $request->show_title && $request->show_title == 'on',
+            'show_description' => $request->show_description && $request->show_description == 'on',
             'allow_comments' => $request->allow_comments,
         );
 
@@ -185,20 +194,26 @@ class PostController extends Controller
                 'messages'  => $this->validator->errors(),
             );
         } else {
+            // TODO: refactor to use repository pattern
             $post = $this->repository->findOrFail($id);
             $post->title = $data['title'];
             $post->body = $data['body'];
             $post->description = $data['description'];
+            $post->show_title = $data['show_title'];
+            $post->show_description = $data['show_description'];
+
             $post->status = $data['status'];
             $post->allow_comments = $data['allow_comments'] == 'on';
             if ($request->action == self::POST_ACTION_PUBLISH) {
                 $post->status = self::POST_STATUS_PUBLISHED;
             }
+
             if ($image) {
                 $fileName = ImageManagerController::getUploadFilename($image);
                 $post->image = ImageManagerController::getPathYearMonth() . $fileName;
                 $image->move(ImageManagerController::getPathYearMonth(), $fileName);
             }
+
             $post->save();
             $categories = Category::whereIn('id', $data['categories'])->get();
             $post->categories()->sync($categories);
@@ -233,9 +248,8 @@ class PostController extends Controller
      */
     public function delete($id)
     {
-        $post = $this->repository->findOrFail($id);
-        $post->status = Post::STATUS_DELETED;
-        $post->save();
+        $data['status'] = Post::STATUS_DELETED;
+        $this->repository->update($id, $data);
         return Redirect::back();
     }
 

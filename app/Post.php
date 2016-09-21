@@ -38,6 +38,8 @@ class Post extends Model
         'image',
         'type',
         'allow_comments',
+        'show_title',
+        'show_description',
     );
 
     /**
