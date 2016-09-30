@@ -4,15 +4,15 @@
     </div>
     <div class="comment-content clearfix">
         <h5 class="comment-author font-alt">
-            <a href="#">{{ $comment->name }}</a>
+            <a href="#">{{ $comment->author_name }}</a>
         </h5>
         <div class="comment-body">
             <p>
-                {{ $comment->content }}
+                {{ $comment->body }}
             </p>
         </div>
         <div class="comment-meta font-alt">
-            Today, 14:55 - <a href="#">Reply</a>
+            Today, 14:55 - <a href="#">{{ trans('public.reply') }}</a>
         </div>
     </div>
 </div>

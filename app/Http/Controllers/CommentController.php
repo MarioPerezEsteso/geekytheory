@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Repositories\CommentRepository;
+use App\User;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -41,16 +42,18 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         $data= array(
-            'post_id' => $request->post_id,
+            'post_id' => $request->postId,
             'parent' => $request->parent,
-            'author_name' => $request->author_name,
-            'author_email' => $request->author_email,
-            'author_url' => $request->author_url,
+            'author_name' => $request->authorName,
+            'author_email' => $request->authorEmail,
+            'author_url' => $request->authorUrl,
             'body' => $request->body,
         );
 
-        if ($user = Auth::user() !== null) {
-            $data['user_id'] = $user->id;
+        /** @var User $user */
+        $user = Auth::user();
+        if ($user !== null) {
+            $data['user_id'] = $user->getAttribute('id');
         }
 
         $spam = false;
@@ -63,18 +66,19 @@ class CommentController extends Controller
 
         $valid = true;
         if (!$valid) {
+
             return array(
                 'error'     => 1,
                 'message'   => trans('public.error_creating_comment'),
             );
         } else {
             $this->commentRepository->create($data);
+
             return array(
                 'error'     => 0,
                 'message'   => trans('public.success_creating_comment'),
             );
         }
-
     }
 
     /**
