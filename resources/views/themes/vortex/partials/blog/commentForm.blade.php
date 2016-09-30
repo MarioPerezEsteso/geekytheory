@@ -1,33 +1,35 @@
 <!-- COMMENT FORM -->
 <div class="comment-form">
-    <h4 class="comment-form-title font-alt">Leave a comment</h4>
+    <h4 class="comment-form-title font-alt">{{ trans('public.leave_comment') }}</h4>
     <hr class="divider m-b-30">
     <div class="row">
-        <form>
+        {!! Form::open(['class' => 'form form-new-comment', 'data-postid' => $post->id]) !!}
+        <div class="form-group">
             <div class="col-md-4">
                 <div class="form-group">
-                    <input id="name" type="text" class="form-control" placeholder="Name" name="name">
+                    {!! Form::text('author_name', '', ['class' => 'form-control', 'placeholder' => trans('public.name')]) !!}
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <input id="email" type="email" class="form-control" placeholder="E-mail" name="email">
+                    {!! Form::email('author_email', '', ['class' => 'form-control', 'placeholder' => trans('public.email')]) !!}
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <input id="website" type="text" class="form-control" placeholder="Website" name="website">
+                    {!! Form::text('author_url', '', ['class' => 'form-control', 'placeholder' => trans('public.website')]) !!}
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <textarea id="message" name="message" class="form-control" placeholder="Message" rows="6"></textarea>
+                    {!! Form::textarea('body', null, ['class' => 'form-control', 'rows' => '6', 'id' => 'message']) !!}
                 </div>
             </div>
             <div class="col-md-12">
-                <button class="btn btn-round btn-g">Post Comment</button>
+                {!! Form::submit(trans('public.post_comment') ,['class' => 'btn btn-round btn-g']) !!}
             </div>
-        </form>
+            {!! Form::close() !!}
+        </div>
     </div>
 </div>
 <!-- /COMMENT FORM -->
