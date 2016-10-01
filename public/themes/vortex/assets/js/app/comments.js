@@ -6,6 +6,21 @@ $(document).ready(function () {
         }
     });
 
+    /**
+     * Empty the comment form.
+     *
+     * @param commentForm
+     */
+    var emptyCommentForm = function (commentForm) {
+        commentForm.find("input[name=author_name]").val('');
+        commentForm.find("input[name=author_email]").val('');
+        commentForm.find("input[name=author_url]").val('');
+        commentForm.find("textarea[name=body]").val('');
+    }
+
+    /**
+     * Submit new comment.
+     */
     $(document).on('submit', '.form-new-comment', function (e) {
         e.preventDefault();
 
@@ -32,6 +47,7 @@ $(document).ready(function () {
                     } else {
                         $(".comments-container").append(response.html);
                     }
+                    emptyCommentForm(form);
                 }
             },
             error: function (response) {
@@ -42,6 +58,9 @@ $(document).ready(function () {
         return false;
     });
 
+    /**
+     * Get form to reply a comment.
+     */
     $(document).on('click', '.reply-comment-button', function (e) {
         e.preventDefault();
 
@@ -61,7 +80,6 @@ $(document).ready(function () {
                 }
             }
         });
-
     });
 
 });
