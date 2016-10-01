@@ -21,6 +21,7 @@
         </div>
     </div>
 </div>
+<div class="comment clearfix comment-reply-container" data-comment="{{ $comment->id }}"></div>
 @if (count($comment->children) > 0)
     <div class="comment clearfix">
         {!! \App\Http\Controllers\CommentController::showCommentsOrdered($comment->children) !!}

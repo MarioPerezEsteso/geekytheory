@@ -9,9 +9,6 @@ use App\User;
 use Illuminate\Http\Request;
 use Auth;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-
 class CommentController extends Controller
 {
     private $commentRepository;
@@ -80,10 +77,13 @@ class CommentController extends Controller
             );
         } else {
             $this->commentRepository->create($data);
+            $comment = new Comment();
+            $comment->setRawAttributes($data);
 
             return array(
                 'error' => 0,
                 'message' => trans('public.success_creating_comment'),
+                'html' => view('themes.vortex.partials.blog.singleComment', compact('comment'))->render(),
             );
         }
     }
