@@ -26,8 +26,12 @@ $(document).ready(function () {
             'data': formData,
             success: function (response) {
                 if (response.error == 0) {
-                    $(".comment-reply-container[data-comment='" + formData.parent + "']").append(response.html);
-                    $(".reply-comment-form[data-in-reply-to='" + formData.parent + "']").empty();
+                    if (formData.parent) {
+                        $(".comment-reply-container[data-comment='" + formData.parent + "']").append(response.html);
+                        $(".reply-comment-form[data-in-reply-to='" + formData.parent + "']").empty();
+                    } else {
+                        $(".comments-container").append(response.html);
+                    }
                 }
             },
             error: function (response) {

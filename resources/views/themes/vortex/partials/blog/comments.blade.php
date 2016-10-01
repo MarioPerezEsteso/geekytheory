@@ -1,4 +1,4 @@
-<div class="comments">
+<div class="comments comments-container">
     <h4 class="comment-title font-alt">{{ $commentCount }} {{ trans('public.comments') }}</h4>
     <hr class="divider m-b-30">
 
