@@ -263,6 +263,11 @@ Route::post('comment/store', [
     'uses'          => 'CommentController@store',
 ]);
 
+Route::get('comment/getForm', [
+    'before'        => 'csrf',
+    'uses'          => 'CommentController@getForm',
+]);
+
 Route::get('feed', 'FeedController@feed');
 
 Route::get('/{slug?}', 'ArticleController@show');

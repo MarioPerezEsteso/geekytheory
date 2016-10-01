@@ -6,13 +6,14 @@ $(document).ready(function () {
         }
     });
 
-    $(".form-new-comment").submit(function (e) {
+    $(document).on('submit', '.form-new-comment', function (e) {
         e.preventDefault();
 
         var form = $(this);
 
         var formData = {
             'postId': form.data('postid'),
+            'parent': form.data('parent'),
             'authorName': form.find("input[name=author_name]").val(),
             'authorEmail': form.find("input[name=author_email]").val(),
             'authorUrl': form.find("input[name=author_url]").val(),
@@ -32,6 +33,28 @@ $(document).ready(function () {
         });
 
         return false;
+    });
+
+    $(document).on('click', '.reply-comment-button', function (e) {
+        e.preventDefault();
+
+        var anchor = $(this);
+
+        var formData = {
+            'parent': anchor.data('in-reply-to')
+        };
+
+        $.ajax({
+            'method': 'get',
+            'url': 'comment/getForm',
+            'data': formData,
+            success: function (response) {
+                if (!response.error) {
+                    $(".reply-comment-form[data-in-reply-to='" + formData.parent+ "']").append(response);
+                }
+            }
+        });
+
     });
 
 });

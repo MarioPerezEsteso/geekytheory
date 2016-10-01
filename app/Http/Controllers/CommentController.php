@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Repositories\CommentRepository;
+use App\Repositories\PostRepository;
 use App\User;
 use Illuminate\Http\Request;
 use Auth;
@@ -15,12 +16,15 @@ class CommentController extends Controller
 {
     private $commentRepository;
 
+    private $postRepository;
+
     /**
      * CommentController constructor.
      */
-    public function __construct(CommentRepository $commentRepository)
+    public function __construct(CommentRepository $commentRepository, PostRepository $postRepository)
     {
         $this->commentRepository = $commentRepository;
+        $this->postRepository = $postRepository;
     }
 
     /**
@@ -41,14 +45,17 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        $data= array(
+        $data = array(
             'post_id' => $request->postId,
-            'parent' => $request->parent,
             'author_name' => $request->authorName,
             'author_email' => $request->authorEmail,
             'author_url' => $request->authorUrl,
             'body' => $request->body,
         );
+
+        if (!empty($request->parent)) {
+            $data['parent'] = $request->parent;
+        }
 
         /** @var User $user */
         $user = Auth::user();
@@ -68,17 +75,41 @@ class CommentController extends Controller
         if (!$valid) {
 
             return array(
-                'error'     => 1,
-                'message'   => trans('public.error_creating_comment'),
+                'error' => 1,
+                'message' => trans('public.error_creating_comment'),
             );
         } else {
             $this->commentRepository->create($data);
 
             return array(
-                'error'     => 0,
-                'message'   => trans('public.success_creating_comment'),
+                'error' => 0,
+                'message' => trans('public.success_creating_comment'),
             );
         }
+    }
+
+    /**
+     * Get the form to send a new comment.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return array
+     */
+    public function getForm(Request $request)
+    {
+        $data = array(
+            'parent' => $request->parent,
+        );
+
+        $comment = $this->commentRepository->find($data['parent']);
+
+        if ($comment === null) {
+            return ['error' => 1];
+        }
+
+        $post = $this->postRepository->find($comment->post_id);
+        $commentParent = $data['parent'];
+
+        return view('themes.vortex.partials.blog.commentForm', compact('post', 'commentParent'));
     }
 
     /**

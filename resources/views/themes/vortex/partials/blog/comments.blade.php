@@ -6,4 +6,12 @@
 
 </div>
 
-@include('themes.vortex.partials.blog.commentForm')
+<!-- COMMENT FORM -->
+<div class="comment-form">
+    <h4 class="comment-form-title font-alt">{{ trans('public.leave_comment') }}</h4>
+    <hr class="divider m-b-30">
+    <div class="row">
+        @include('themes.vortex.partials.blog.commentForm')
+    </div>
+</div>
+<!-- /COMMENT FORM -->
