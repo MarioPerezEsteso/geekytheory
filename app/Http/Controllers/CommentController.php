@@ -6,6 +6,7 @@ use App\Comment;
 use App\Repositories\CommentRepository;
 use App\Repositories\PostRepository;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -77,6 +78,7 @@ class CommentController extends Controller
             );
         } else {
             $this->commentRepository->create($data);
+            $data['created_at'] = Carbon::now();
             $comment = new Comment();
             $comment->setRawAttributes($data);
 
@@ -220,5 +222,48 @@ class CommentController extends Controller
             $avatar = getGravatar($comment->author_email);
         }
         return $avatar;
+    }
+
+    /**
+     * Get date string for humans.
+     *
+     * @param Carbon $date
+     * @return string
+     */
+    public static function getDateFormatted($date)
+    {
+        $currentDate = Carbon::now();
+        $commentDate = new Carbon($date);
+        if ($currentDate->diffInYears($commentDate) == $currentDate->year || $date === null) {
+            return '';
+        }
+
+        if ($currentDate->diffInSeconds($commentDate) < 1) {
+            return trans('now');
+        } else if ($currentDate->diffInSeconds($commentDate) == 1) {
+            return trans('public.second_ago');
+        } else if ($currentDate->diffInSeconds($commentDate) < 60) {
+            return trans('public.seconds_ago', ['number' => $currentDate->diffInSeconds($commentDate)]);
+        } else if ($currentDate->diffInMinutes($commentDate) == 1) {
+            return trans('public.minute_ago');
+        } else if ($currentDate->diffInMinutes($commentDate) < 60) {
+            return trans('public.minutes_ago', ['number' => $currentDate->diffInMinutes($commentDate)]);
+        } else if ($currentDate->diffInHours($commentDate) == 1) {
+            return trans('public.hour_ago');
+        } else if ($currentDate->diffInHours($commentDate) < 24) {
+            return trans('public.hours_ago', ['number' => $currentDate->diffInHours($commentDate)]);
+        } else if ($currentDate->diffInDays($commentDate) == 1) {
+            return trans('public.day_ago');
+        } else if ($currentDate->diffInMonths($commentDate) < 1) {
+            return trans('public.days_ago', ['number' => $currentDate->diffInDays($commentDate)]);
+        } else if ($currentDate->diffInMonths($commentDate) == 1) {
+            return trans('public.month_ago');
+        } else if ($currentDate->diffInMonths($commentDate) < 12) {
+            return trans('public.months_ago', ['number' => $currentDate->diffInMonths($commentDate)]);
+        } else if ($currentDate->diffInYears($commentDate) == 1) {
+            return trans('public.year_ago');
+        } else {
+            return trans('public.years_ago', ['number' => $currentDate->diffInYears($commentDate)]);
+        }
     }
 }

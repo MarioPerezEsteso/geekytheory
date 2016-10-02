@@ -4,7 +4,10 @@
     </div>
     <div class="comment-content clearfix">
         <h5 class="comment-author font-alt">
-            <a href="#">{{ $comment->author_name }}</a><span class="comment-date"> · Today, 14:55 </span>
+            <a href="#">{{ $comment->author_name }}</a>
+            <span class="comment-date">
+                · {{ \App\Http\Controllers\CommentController::getDateFormatted($comment->created_at) }}
+            </span>
         </h5>
         <div class="comment-body">
             <p>
