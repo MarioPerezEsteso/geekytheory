@@ -239,7 +239,7 @@ class CommentController extends Controller
         }
 
         if ($currentDate->diffInSeconds($commentDate) < 1) {
-            return trans('now');
+            return trans('public.now');
         } else if ($currentDate->diffInSeconds($commentDate) == 1) {
             return trans('public.second_ago');
         } else if ($currentDate->diffInSeconds($commentDate) < 60) {
