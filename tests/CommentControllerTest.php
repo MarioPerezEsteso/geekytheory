@@ -14,11 +14,10 @@ class CommentControllerTest extends TestCase
         $commentRepository = new CommentRepository();
 
         $data = array(
-            'post_id' => 1,
-            'parent' => null,
-            'author_name' => 'Mario',
-            'author_email' => 'mario@domain.com',
-            'author_url' => 'http://geekytheory.com',
+            'postId' => 1,
+            'authorName' => 'Mario',
+            'authorEmail' => 'mario@domain.com',
+            'authorUrl' => 'http://geekytheory.com',
             'body' => 'This is the content of the comment',
         );
 
@@ -33,10 +32,11 @@ class CommentControllerTest extends TestCase
 
         /** @var \App\Comment $comment */
         $comment = $comments[count($comments) - 1];
-        foreach ($data as $key => $value) {
-            $this->assertEquals($value, $comment->getAttribute($key));
-        }
-
+        $this->assertEquals($data['postId'], $comment->post_id);
+        $this->assertEquals($data['authorName'], $comment->author_name);
+        $this->assertEquals($data['authorEmail'], $comment->author_email);
+        $this->assertEquals($data['authorUrl'], $comment->author_url);
+        $this->assertEquals($data['body'], $comment->body);
     }
 
     /**
