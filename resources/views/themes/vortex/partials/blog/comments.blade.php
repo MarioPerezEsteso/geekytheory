@@ -16,7 +16,7 @@
     </div>
     <div class="alert alert-danger comment-error-alert" style="display: none;">
         <i class="icon fa fa-warning"></i>
-        <span class="comment-error-message">{{ trans('public.success_creating_comment') }}</span>
+        <span class="comment-error-message">{{ trans('public.error_creating_comment') }}</span>
     </div>
     <div class="alert alert-warning comment-spam-alert" style="display: none;">
         <i class="icon fa fa-info"></i>
