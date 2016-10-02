@@ -16,7 +16,41 @@ $(document).ready(function () {
         commentForm.find("input[name=author_email]").val('');
         commentForm.find("input[name=author_url]").val('');
         commentForm.find("textarea[name=body]").val('');
-    }
+    };
+
+    /**
+     * Show feedback messages depending on the result of the comment submit.
+     *
+     * @param alert
+     */
+    var showPostCommentFeedback = function (alert) {
+        var commentSuccessAlert = $('.comment-success-alert');
+        var commentErrorAlert = $('.comment-error-alert');
+        var commentSpamAlert = $('.comment-spam-alert');
+        var timeToFadeOut = 3000;
+        switch (alert) {
+            case 'success':
+                commentSuccessAlert.show();
+                commentErrorAlert.hide();
+                commentSpamAlert.hide();
+                commentSuccessAlert.delay(timeToFadeOut).fadeOut('slow');
+                break;
+            case 'error':
+                commentSuccessAlert.hide();
+                commentErrorAlert.show();
+                commentSpamAlert.hide();
+                commentErrorAlert.delay(timeToFadeOut).fadeOut('slow');
+                break;
+            case 'spam':
+                commentSuccessAlert.hide();
+                commentErrorAlert.hide();
+                commentSpamAlert.show();
+                commentSpamAlert.delay(timeToFadeOut).fadeOut('slow');
+                break;
+            default:
+                break;
+        }
+    };
 
     /**
      * Submit new comment.
@@ -45,13 +79,20 @@ $(document).ready(function () {
                         $(".comment-reply-container[data-comment='" + formData.parent + "']").append(response.html);
                         $(".reply-comment-form[data-in-reply-to='" + formData.parent + "']").empty();
                     } else {
-                        $(".comments-container").append(response.html);
+                        if (response.spam == 0) {
+                            $(".comments-container").append(response.html);
+                            showPostCommentFeedback('success');
+                        } else {
+                            showPostCommentFeedback('spam');
+                        }
                     }
-                    emptyCommentForm(form);
+                } else {
+                    showPostCommentFeedback('error');
                 }
+                emptyCommentForm(form);
             },
             error: function (response) {
-
+                showPostCommentFeedback('error');
             }
         });
 

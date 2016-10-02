@@ -63,7 +63,7 @@ class CommentController extends Controller
         $spam = false;
         $data['spam'] = $spam;
 
-        $approved = true;
+        $approved = !$spam;
         $data['approved'] = $approved;
 
         $data['ip'] = getClientIPAddress();
@@ -82,7 +82,7 @@ class CommentController extends Controller
 
             return array(
                 'error' => 0,
-                'message' => trans('public.success_creating_comment'),
+                'spam' => $data['spam'] ? 1 : 0,
                 'html' => view('themes.vortex.partials.blog.singleComment', compact('comment'))->render(),
             );
         }
