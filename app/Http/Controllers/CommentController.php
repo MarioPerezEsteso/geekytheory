@@ -18,6 +18,9 @@ class CommentController extends Controller
 
     /**
      * CommentController constructor.
+     *
+     * @param CommentRepository $commentRepository
+     * @param PostRepository $postRepository
      */
     public function __construct(CommentRepository $commentRepository, PostRepository $postRepository)
     {
@@ -77,10 +80,7 @@ class CommentController extends Controller
                 'message' => trans('public.error_creating_comment'),
             );
         } else {
-            $this->commentRepository->create($data);
-            $data['created_at'] = Carbon::now();
-            $comment = new Comment();
-            $comment->setRawAttributes($data);
+            $comment = $this->commentRepository->create($data);
 
             return array(
                 'error' => 0,
