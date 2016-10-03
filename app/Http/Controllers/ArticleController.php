@@ -96,7 +96,7 @@ class ArticleController extends PostController
     {
         /** @var Post $post */
         $post = $this->repository->findArticleBySlug($slug);
-        $comments = $post->comments()->get();
+        $comments = $post->hamComments()->get();
         $commentCount = count($comments);
         $comments = CommentController::sortByParent($comments);
 
