@@ -8,29 +8,39 @@ use App\Repositories\CommentRepository;
 use App\Repositories\PostRepository;
 use App\Repositories\SiteMetaRepository;
 use App\User;
+use App\Validators\CommentValidator;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Auth;
 
 class CommentController extends Controller
 {
+    /** @var CommentRepository $commentRepository */
     private $commentRepository;
 
+    /** @var PostRepository $postRepository */
     private $postRepository;
 
+    /** @var SiteMetaRepository $siteMetaRepository */
     private $siteMetaRepository;
+
+    /** @var  CommentValidator $commentValidator */
+    private $commentValidator;
 
     /**
      * CommentController constructor.
      *
      * @param CommentRepository $commentRepository
      * @param PostRepository $postRepository
+     * @param SiteMetaRepository $siteMetaRepository
+     * @param CommentValidator $commentValidator
      */
-    public function __construct(CommentRepository $commentRepository, PostRepository $postRepository, SiteMetaRepository $siteMetaRepository)
+    public function __construct(CommentRepository $commentRepository, PostRepository $postRepository, SiteMetaRepository $siteMetaRepository, CommentValidator $commentValidator)
     {
         $this->commentRepository = $commentRepository;
         $this->postRepository = $postRepository;
         $this->siteMetaRepository = $siteMetaRepository;
+        $this->commentValidator = $commentValidator;
     }
 
     /**
@@ -95,11 +105,11 @@ class CommentController extends Controller
         $approved = !$spam;
         $data['approved'] = $approved;
 
-        $valid = true;
-        if (!$valid) {
+        if (!$this->commentValidator->with($data)->passes()) {
 
             return array(
                 'error' => 1,
+                'message' => $this->commentValidator->errors(),
             );
         } else {
             $comment = $this->commentRepository->create($data);
