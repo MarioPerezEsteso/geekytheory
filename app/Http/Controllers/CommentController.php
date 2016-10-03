@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Post;
 use App\Repositories\CommentRepository;
 use App\Repositories\PostRepository;
+use App\Repositories\SiteMetaRepository;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -16,16 +18,19 @@ class CommentController extends Controller
 
     private $postRepository;
 
+    private $siteMetaRepository;
+
     /**
      * CommentController constructor.
      *
      * @param CommentRepository $commentRepository
      * @param PostRepository $postRepository
      */
-    public function __construct(CommentRepository $commentRepository, PostRepository $postRepository)
+    public function __construct(CommentRepository $commentRepository, PostRepository $postRepository, SiteMetaRepository $siteMetaRepository)
     {
         $this->commentRepository = $commentRepository;
         $this->postRepository = $postRepository;
+        $this->siteMetaRepository = $siteMetaRepository;
     }
 
     /**
@@ -54,6 +59,14 @@ class CommentController extends Controller
             'body' => $request->body,
         );
 
+        /** @var Post $post */
+        $post = $this->postRepository->find($data['post_id']);
+        if ($post === null) {
+            return array(
+                'error' => 1
+            );
+        }
+
         if (!empty($request->parent)) {
             $data['parent'] = $request->parent;
         }
@@ -64,20 +77,29 @@ class CommentController extends Controller
             $data['user_id'] = $user->getAttribute('id');
         }
 
+        $data['ip'] = getClientIPAddress();
+
         $spam = false;
+        if (AkismetController::getInstance()->verifyKey()) {
+            $akismetCheckerData = $data + array(
+                    'userAgent' => $_SERVER['HTTP_USER_AGENT'],
+                    'referrer' => $_SERVER['HTTP_REFERER'],
+                    'commentType' => 'comment',
+                    'permalink' => $this->siteMetaRepository->getSiteMeta()->url . PostController::getPostPublicUrlByType($post),
+                );
+            $spam = AkismetController::getInstance()->commentIsSpam($akismetCheckerData);
+        }
+
         $data['spam'] = $spam;
 
         $approved = !$spam;
         $data['approved'] = $approved;
-
-        $data['ip'] = getClientIPAddress();
 
         $valid = true;
         if (!$valid) {
 
             return array(
                 'error' => 1,
-                'message' => trans('public.error_creating_comment'),
             );
         } else {
             $comment = $this->commentRepository->create($data);
