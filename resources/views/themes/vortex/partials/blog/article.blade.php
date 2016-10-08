@@ -1,12 +1,13 @@
 <article class="post post-single">
     <div class="post-meta font-alt">
+        <?php $categories = $post->categories; ?>
         @if ($siteMeta->show_author_post)
             {{ trans('public.by') }}
             <a href="{{ url('/user/' . $post->user->username) }}">{{ $post->user->name }}</a>
-
-            {{ trans('public.in') }}
+            @if(count($categories) > 0)
+                {{ trans('public.in') }}
+            @endif
         @endif
-        <?php $categories = $post->categories; ?>
         @if(count($categories) > 0)
             <?php $catLinks = []; ?>
             @foreach($categories as $category)
