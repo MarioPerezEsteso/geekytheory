@@ -15,7 +15,12 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <p class="copyright text-center m-b-0">© 2015 <a href="index.html#">Vortex</a>, All Rights Reserved.</p>
+                <p class="copyright text-center m-b-0">{!! trans('public.made_with_love') !!}</p>
+                <p class="copyright text-center m-t-30">
+                    <a href="https://github.com/MarioPerezEsteso/laraweb">
+                        <i class="fa fa-github"></i> {{ trans('public.we_are_open_source') }}
+                    </a>
+                </p>
             </div>
         </div>
     </div>
