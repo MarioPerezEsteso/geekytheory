@@ -158,6 +158,7 @@ class SiteMetaController extends Controller
             'akismet_api_key' => $request->akismet_api_key,
             'analytics_script' => $request->analytics_script,
             'adsense_script' => $request->adsense_script,
+            'adsense_enabled' => $request->adsense_enabled && $request->adsense_enabled == 'on',
         );
 
         // Add social networks to $data.
