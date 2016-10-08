@@ -29,3 +29,8 @@
         @endforeach
     </div>
 </article>
+<div>
+    @if ($siteMeta->adsense_enabled)
+        {!! $siteMeta->adsense_script !!}
+    @endif
+</div>
