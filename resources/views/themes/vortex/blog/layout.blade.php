@@ -31,6 +31,9 @@
 
     <!-- Template core CSS -->
     <link href="/themes/vortex/assets/css/style.css" rel="stylesheet">
+    @if (!empty($siteMeta->analytics_script))
+        {!! $siteMeta->analytics_script !!}
+    @endif
 </head>
 <body>
 
