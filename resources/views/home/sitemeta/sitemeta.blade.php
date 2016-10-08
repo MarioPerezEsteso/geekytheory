@@ -14,7 +14,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-10 col-sm-12 col-lg-6">
             @include('home.posts.partials.formMessages')
             {!! Form::model($siteMeta, ['url' => 'home/sitemeta/update', 'class' => 'form', 'files' => true]) !!}
             <div class="nav-tabs-custom">
@@ -34,6 +34,9 @@
                     <li class="">
                         <a href="#analytics" data-toggle="tab" aria-expanded="false">Analytics</a>
                     </li>
+                    <li class="">
+                        <a href="#adsense-code" data-toggle="tab" aria-expanded="false">Adsense</a>
+                    </li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="options">
@@ -50,6 +53,9 @@
                     </div>
                     <div class="tab-pane" id="analytics">
                         @include('home.sitemeta.tab-analytics')
+                    </div>
+                    <div class="tab-pane" id="adsense-code">
+                        @include('home.sitemeta.tab-adsense')
                     </div>
                 </div>
             </div>

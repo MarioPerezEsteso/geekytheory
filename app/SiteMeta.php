@@ -52,6 +52,8 @@ class SiteMeta extends Model
         'show_author_post',
         'akismet_api_key',
         'analytics_script',
+        'adsense_script',
+        'adsense_enabled',
     );
 
 }

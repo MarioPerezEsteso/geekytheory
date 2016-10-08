@@ -1,4 +1,9 @@
 <section class="module">
+    <div class="container adsense-banner">
+        @if ($siteMeta->adsense_enabled)
+            {!! $siteMeta->adsense_script !!}
+        @endif
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
