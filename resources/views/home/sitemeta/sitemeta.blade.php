@@ -31,6 +31,9 @@
                     <li class="">
                         <a href="#akismet" data-toggle="tab" aria-expanded="false">Akismet</a>
                     </li>
+                    <li class="">
+                        <a href="#analytics" data-toggle="tab" aria-expanded="false">Analytics</a>
+                    </li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="options">
@@ -44,6 +47,9 @@
                     </div>
                     <div class="tab-pane" id="akismet">
                         @include('home.sitemeta.tab-akismet')
+                    </div>
+                    <div class="tab-pane" id="analytics">
+                        @include('home.sitemeta.tab-analytics')
                     </div>
                 </div>
             </div>
