@@ -39,4 +39,6 @@ return [
     'months_ago' => 'Hace :number meses',
     'year_ago' => 'Hace 1 año',
     'years_ago' => 'Hace :number años',
+    'made_with_love' => 'Hecho con <i style="color:#E26A6A;" class="fa fa-heart"></i> por <a href="http://geekytheory.com">Geeky Theory</a>',
+    'we_are_open_source' => 'Somos open source',
 ];

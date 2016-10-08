@@ -39,4 +39,6 @@ return [
     'months_ago' => ':number months ago',
     'year_ago' => '1 year ago',
     'years_ago' => ':number years ago',
+    'made_with_love' => 'Made with <i style="color:#E26A6A;" class="fa fa-heart"></i> by <a href="http://geekytheory.com">Geeky Theory</a>',
+    'we_are_open_source' => 'We are open source',
 ];
