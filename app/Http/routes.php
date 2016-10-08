@@ -11,6 +11,8 @@
 |
 */
 
+App::setLocale('es');
+
 // Patterns
 Route::pattern('id', '\d+');
 Route::pattern('hash', '[a-z0-9]+');
