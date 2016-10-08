@@ -1,6 +1,6 @@
 <div class="form-group">
     {!! Form::label('adsense_script', 'Google Adsense script') !!}
-    {!! Form::text('adsense_script', null, ['class' => 'form-control']) !!}
+    {!! Form::textarea('adsense_script', null, ['class' => 'form-control', 'rows' => '4']) !!}
 </div>
 <div class="checkbox">
     <label>
