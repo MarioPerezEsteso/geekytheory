@@ -3,7 +3,7 @@
     <hr class="divider m-b-30">
     <div class="author-bio">
         <div class="author-avatar">
-            <img src="{{ \App\Http\Controllers\UserController::getGravatar($post->user->email) }}" alt="">
+            <img src="{{ getGravatar($post->user->email) }}" alt="">
         </div>
         <div class="author-content">
             <h5 class="author-name font-alt">{{ $post->user->name }}</h5>

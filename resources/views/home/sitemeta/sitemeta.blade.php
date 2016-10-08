@@ -28,6 +28,9 @@
                     <li class="">
                         <a href="#social-networks" data-toggle="tab" aria-expanded="false">{{ trans('public.social-networks') }}</a>
                     </li>
+                    <li class="">
+                        <a href="#akismet" data-toggle="tab" aria-expanded="false">Akismet</a>
+                    </li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="options">
@@ -38,6 +41,9 @@
                     </div>
                     <div class="tab-pane" id="social-networks">
                         @include('home.sitemeta.tab-socialnetworks')
+                    </div>
+                    <div class="tab-pane" id="akismet">
+                        @include('home.sitemeta.tab-akismet')
                     </div>
                 </div>
             </div>

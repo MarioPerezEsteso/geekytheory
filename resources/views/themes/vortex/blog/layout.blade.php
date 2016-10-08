@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -63,7 +64,6 @@
 
 <!-- SCROLLTOP -->
 <div class="scroll-up">
-    <a href="blog-single.html#totop"><i class="fa fa-angle-double-up"></i></a>
 </div>
 
 <!-- Javascript files -->
@@ -86,5 +86,8 @@
 <script src="/themes/vortex/assets/js/smoothscroll.js"></script>
 <script src="/themes/vortex/assets/js/contact.js"></script>
 <script src="/themes/vortex/assets/js/custom.js"></script>
+
+@yield('custom-javascript')
+
 </body>
 </html>

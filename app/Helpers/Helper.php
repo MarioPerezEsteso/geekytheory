@@ -128,3 +128,50 @@ if (!function_exists('getAvailableSlug')) {
         return $slug;
     }
 }
+
+if (!function_exists('getGravatar')) {
+    /**
+     * Get a Gravatar URL or complete image tag for a specified email address.
+     *
+     * @param string $email The email address
+     * @param string $s Size in pixels, defaults to 80px [ 1 - 2048 ]
+     * @param string $d Default imageset to use [ 404 | mm | identicon | monsterid | wavatar ]
+     * @param string $r Maximum rating (inclusive) [ g | pg | r | x ]
+     * @return String containing Gravatar URL
+     * @source http://gravatar.com/site/implement/images/php/
+     */
+    function getGravatar($email, $s = '100', $d = 'mm', $r = 'g')
+    {
+        $url = '//www.gravatar.com/avatar/';
+        $url .= md5(strtolower(trim($email)));
+        $url .= "?s=$s&d=$d&r=$r";
+        return $url;
+    }
+}
+
+if (!function_exists('getClientIPAddress')) {
+    /**
+     * Get IP address of a visitor.
+     *
+     * @return string
+     */
+    function getClientIPAddress()
+    {
+        $ipAddress = '';
+        if (isset($_SERVER['HTTP_CLIENT_IP'])) {
+            $ipAddress = $_SERVER['HTTP_CLIENT_IP'];
+        } else if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ipAddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } else if (isset($_SERVER['HTTP_X_FORWARDED'])) {
+            $ipAddress = $_SERVER['HTTP_X_FORWARDED'];
+        } else if (isset($_SERVER['HTTP_FORWARDED_FOR'])) {
+            $ipAddress = $_SERVER['HTTP_FORWARDED_FOR'];
+        } else if (isset($_SERVER['HTTP_FORWARDED'])) {
+            $ipAddress = $_SERVER['HTTP_FORWARDED'];
+        } else if (isset($_SERVER['REMOTE_ADDR'])) {
+            $ipAddress = $_SERVER['REMOTE_ADDR'];
+        }
+
+        return $ipAddress;
+    }
+}

@@ -33,7 +33,8 @@
             <div class="row">
                 <div class="col-md-12">
                     @if(empty($post) || (!empty($post) && $post->status == \App\Http\Controllers\PostController::POST_STATUS_DRAFT))
-                        <button type="submit" class="btn btn-primary margin-r-5" name="action" value="{{ \App\Http\Controllers\PostController::POST_ACTION_UPDATE }}">
+                        <button type="submit" class="btn btn-primary margin-r-5" name="action"
+                                value="{{ \App\Http\Controllers\PostController::POST_ACTION_UPDATE }}">
                             <i class="glyphicon glyphicon-floppy-disk"></i>
                             {{ trans('home.save_draft') }}
                         </button>
@@ -42,7 +43,6 @@
                         <?php $viewButtonHref = url(\App\Http\Controllers\PostController::getPostDashboardUrlByType($post) . 'preview/' . $post->slug); ?>
                         <?php $viewButtonText = trans('home.preview'); ?>
                         @if($post->status == \App\Http\Controllers\PostController::POST_STATUS_PUBLISHED)
-                            <?php //$viewButtonHref = $siteMeta->url . '/' . $post->slug; ?>
                             <?php $viewButtonHref = \App\Http\Controllers\PostController::getPostPublicUrlByType($post); ?>
                             <?php $viewButtonText = trans('home.view'); ?>
                         @endif
@@ -71,6 +71,20 @@
                             </option>
                         </select>
                     </div>
+                    <?php $allowCommentsChecked = true; ?>
+                    <?php $showAllowCommentsInput = false; ?>
+                    @if(empty($post) && $type == \App\Http\Controllers\PostController::POST_ARTICLE)
+                        <?php $showAllowCommentsInput = true; ?>
+                    @elseif(!empty($post) && $post->type == \App\Http\Controllers\PostController::POST_ARTICLE)
+                        <?php $showAllowCommentsInput = true; ?>
+                        <?php $allowCommentsChecked = $post->allow_comments; ?>
+                    @endif
+                    @if($showAllowCommentsInput)
+                        <div class="form-group">
+                            <input type="checkbox" name="allow_comments" <?= $allowCommentsChecked ? 'checked' : '' ?>>
+                            {{ trans('home.allow_comments') }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -91,12 +105,14 @@
                 </div>
                 <div class="col-md-5 col-md-offset-2">
                     @if(empty($post) || (!empty($post) && $post->status == \App\Http\Controllers\PostController::POST_STATUS_DRAFT))
-                        <button type="submit" class="btn btn-primary btn-block" name="action" value="{{ \App\Http\Controllers\PostController::POST_ACTION_PUBLISH }}">
+                        <button type="submit" class="btn btn-primary btn-block" name="action"
+                                value="{{ \App\Http\Controllers\PostController::POST_ACTION_PUBLISH }}">
                             <i class="glyphicon glyphicon-bullhorn"></i>
                             {{ trans('home.publish') }}
                         </button>
                     @else
-                        <button type="submit" class="btn btn-primary btn-block" name="action" value="{{ \App\Http\Controllers\PostController::POST_ACTION_UPDATE }}">
+                        <button type="submit" class="btn btn-primary btn-block" name="action"
+                                value="{{ \App\Http\Controllers\PostController::POST_ACTION_UPDATE }}">
                             <i class="glyphicon glyphicon-refresh"></i>
                             {{ trans('home.update') }}
                         </button>
@@ -119,13 +135,15 @@
                             @if(!empty($post))
                                 @foreach($post->categories as $category)
                                     <? /** @var $category \App\Category */?>
-                                    <input type="checkbox" name="categories[]" value="{{ $category->id }}" checked/> {{ $category->category }} <br/>
+                                    <input type="checkbox" name="categories[]" value="{{ $category->id }}"
+                                           checked/> {{ $category->category }} <br/>
                                 @endforeach
                             @endif
                             @foreach($categories as $category)
                                 <? /** @var $category \App\Category */?>
                                 @if(empty($post) || (!empty($post) && !$post->categories->contains($category)))
-                                    <input type="checkbox" name="categories[]" value="{{ $category->id }}"/> {{ $category->category }} <br/>
+                                    <input type="checkbox" name="categories[]"
+                                           value="{{ $category->id }}"/> {{ $category->category }} <br/>
                                 @endif
                             @endforeach
                         </div>
@@ -158,7 +176,8 @@
                             {{ trans('home.browse') }}
                             {!! Form::file('image', array('id' => 'post-image-file-input')) !!}
                         </span>
-                    <button id="delete-post-image" class="btn btn-danger {{ (!empty($imgSrc)) ? '' : ' hidden ' }}"><i class="glyphicon glyphicon-trash"></i></button>
+                    <button id="delete-post-image" class="btn btn-danger {{ (!empty($imgSrc)) ? '' : ' hidden ' }}"><i
+                                class="glyphicon glyphicon-trash"></i></button>
                 </div>
             </div>
         </div>

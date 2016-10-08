@@ -21,6 +21,10 @@ class CategoryRepository extends Repository implements CategoryRepositoryInterfa
      */
     public function findCategoryBySlug($slug)
     {
-        return call_user_func_array("{$this->modelClassName}::where", array('slug', $slug))->firstOrFail();;
+        if ($slug === null) {
+            return null;
+        }
+
+        return call_user_func_array("{$this->modelClassName}::where", array('slug', $slug))->firstOrFail();
     }
 }

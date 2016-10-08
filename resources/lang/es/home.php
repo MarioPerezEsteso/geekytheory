@@ -104,4 +104,5 @@ return [
     'show_author_post' => 'Mostrar el autor en los artículos (su tema debe soportarlo)',
     'show_post_title' => 'Mostrar el título del post en la cabecera sobre la imagen (su tema debe soportarlo)',
     'show_post_description' => 'Mostrar la descripción del post en la cabecera sobre la imagen (su tema debe soportarlo)',
+    'allow_comments' => 'Permitir comentarios',
 ];

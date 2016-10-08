@@ -100,7 +100,7 @@ class User extends Model implements AuthenticatableContract,
             'name' => $this->name,
             'job' => $this->job,
             'email' => $this->email,
-            'avatar' => UserController::getGravatar($this->email, '100', 'mm', 'g'));
+            'avatar' => getGravatar($this->email, '100', 'mm', 'g'));
     }
 
 }
