@@ -156,6 +156,7 @@ class SiteMetaController extends Controller
             'show_author_post_list' => $request->show_author_post_list && $request->show_author_post_list == 'on',
             'show_author_post' => $request->show_author_post && $request->show_author_post == 'on',
             'akismet_api_key' => $request->akismet_api_key,
+            'analytics_script' => $request->analytics_script,
         );
 
         // Add social networks to $data.

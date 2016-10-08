@@ -27,9 +27,12 @@
     <link href="/themes/vortex/assets/css/vertical.css" rel="stylesheet">
     <link href="/themes/vortex/assets/css/animate.css" rel="stylesheet">
     <link href="/themes/vortex/assets/css/custom.css" rel="stylesheet">
-
     <!-- Template core CSS -->
     <link href="/themes/vortex/assets/css/style.css" rel="stylesheet">
+
+    @if (!empty($siteMeta->analytics_script))
+        {!! $siteMeta->analytics_script !!}
+    @endif
 </head>
 <body>
 
