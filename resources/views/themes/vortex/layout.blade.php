@@ -74,16 +74,16 @@
 <script src="/themes/vortex/assets/js/jquery.magnific-popup.min.js"></script>
 <script src="/themes/vortex/assets/js/owl.carousel.min.js"></script>
 <script src="/themes/vortex/assets/js/jquery.simple-text-rotator.min.js"></script>
-<script src="/themes/vortex/assets/js/imagesloaded.pkgd.js"></script>
+<script src="/themes/vortex/assets/js/imagesloaded.pkgd.min.js"></script>
 <script src="/themes/vortex/assets/js/isotope.pkgd.min.js"></script>
 <script src="/themes/vortex/assets/js/packery-mode.pkgd.min.js"></script>
-<script src="/themes/vortex/assets/js/appear.js"></script>
-<script src="/themes/vortex/assets/js/jquery.easing.1.3.js"></script>
+<script src="/themes/vortex/assets/js/appear.min.js"></script>
+<script src="/themes/vortex/assets/js/jquery.easing.1.3.min.js"></script>
 <script src="/themes/vortex/assets/js/wow.min.js"></script>
-<script src="/themes/vortex/assets/js/jqBootstrapValidation.js"></script>
-<script src="/themes/vortex/assets/js/jquery.fitvids.js"></script>
-<script src="/themes/vortex/assets/js/jquery.parallax-1.1.3.js"></script>
-<script src="/themes/vortex/assets/js/smoothscroll.js"></script>
-<script src="/themes/vortex/assets/js/custom.js"></script>
+<script src="/themes/vortex/assets/js/jqBootstrapValidation.min.js"></script>
+<script src="/themes/vortex/assets/js/jquery.fitvids.min.js"></script>
+<script src="/themes/vortex/assets/js/jquery.parallax-1.1.3.min.js"></script>
+<script src="/themes/vortex/assets/js/smoothscroll.min.js"></script>
+<script src="/themes/vortex/assets/js/custom.min.js"></script>
 </body>
 </html>
