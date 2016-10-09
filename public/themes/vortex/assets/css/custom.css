@@ -16,3 +16,12 @@
     padding-bottom: 10px;
     padding-top: 10px;
 }
+
+.comment-date {
+    color: rgba(17, 17, 17, 0.55); !important;
+}
+
+.adsense-banner {
+    margin-top: -80px;
+    margin-bottom: 50px;
+}

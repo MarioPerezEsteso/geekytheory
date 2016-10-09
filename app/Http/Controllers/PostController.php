@@ -114,6 +114,7 @@ class PostController extends Controller
             'categories' => $request->categories,
             'image' => $image,
             'type' => $type,
+            'allow_comments' => $request->allow_comments,
             'show_title' => $request->show_title && $request->show_title == 'on',
             'show_description' => $request->show_description && $request->show_description == 'on',
         );
@@ -132,6 +133,7 @@ class PostController extends Controller
             $post->description = $data['description'];
             $post->status = $data['status'];
             $post->type = $data['type'];
+            $post->allow_comments = $data['allow_comments'] == 'on';
             $post->show_title = $data['show_title'];
             $post->show_description = $data['show_description'];
 
@@ -183,6 +185,7 @@ class PostController extends Controller
             'categories' => $request->categories,
             'show_title' => $request->show_title && $request->show_title == 'on',
             'show_description' => $request->show_description && $request->show_description == 'on',
+            'allow_comments' => $request->allow_comments,
         );
 
         if (!$this->validator->update($id)->with($data)) {
@@ -200,6 +203,7 @@ class PostController extends Controller
             $post->show_description = $data['show_description'];
 
             $post->status = $data['status'];
+            $post->allow_comments = $data['allow_comments'] == 'on';
             if ($request->action == self::POST_ACTION_PUBLISH) {
                 $post->status = self::POST_STATUS_PUBLISHED;
             }

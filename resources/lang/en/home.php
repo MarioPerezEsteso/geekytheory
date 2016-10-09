@@ -102,4 +102,6 @@ return [
     'show_author_post' => 'Show the author in an individual post (your theme must support it)',
     'show_post_title' => 'Show the title of the post above the image in header (your theme must support it)',
     'show_post_description' => 'Show the description of the post above the image in header (your theme must support it)',
+    'allow_comments' => 'Allow comments',
+    'enable_adsense' => 'Enable adsense for this site (your theme must support it)',
 ];

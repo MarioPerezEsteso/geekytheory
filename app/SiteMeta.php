@@ -50,6 +50,10 @@ class SiteMeta extends Model
         'allow_register',
         'show_author_post_list',
         'show_author_post',
+        'akismet_api_key',
+        'analytics_script',
+        'adsense_script',
+        'adsense_enabled',
     );
 
 }

@@ -27,9 +27,12 @@
     <link href="/themes/vortex/assets/css/vertical.css" rel="stylesheet">
     <link href="/themes/vortex/assets/css/animate.css" rel="stylesheet">
     <link href="/themes/vortex/assets/css/custom.css" rel="stylesheet">
-
     <!-- Template core CSS -->
     <link href="/themes/vortex/assets/css/style.css" rel="stylesheet">
+
+    @if (!empty($siteMeta->analytics_script))
+        {!! $siteMeta->analytics_script !!}
+    @endif
 </head>
 <body>
 
@@ -81,7 +84,6 @@
 <script src="/themes/vortex/assets/js/jquery.fitvids.js"></script>
 <script src="/themes/vortex/assets/js/jquery.parallax-1.1.3.js"></script>
 <script src="/themes/vortex/assets/js/smoothscroll.js"></script>
-<script src="/themes/vortex/assets/js/contact.js"></script>
 <script src="/themes/vortex/assets/js/custom.js"></script>
 </body>
 </html>

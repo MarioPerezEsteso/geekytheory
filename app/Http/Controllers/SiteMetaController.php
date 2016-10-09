@@ -155,6 +155,10 @@ class SiteMetaController extends Controller
             'allow_register' => $request->allow_register && $request->allow_register == 'on',
             'show_author_post_list' => $request->show_author_post_list && $request->show_author_post_list == 'on',
             'show_author_post' => $request->show_author_post && $request->show_author_post == 'on',
+            'akismet_api_key' => $request->akismet_api_key,
+            'analytics_script' => $request->analytics_script,
+            'adsense_script' => $request->adsense_script,
+            'adsense_enabled' => $request->adsense_enabled && $request->adsense_enabled == 'on',
         );
 
         // Add social networks to $data.

@@ -197,7 +197,7 @@ Forms
 	border: 2px solid #eee;
 	height: 33px;
 	font-family: "Dosis", sans-serif;
-	text-transform: uppercase;
+	text-transform: none;
 	letter-spacing: 2px;
 	font-size: 11px;
 	-webkit-border-radius: 2px;

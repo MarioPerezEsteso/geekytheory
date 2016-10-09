@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class ArticleControllerTest extends TestCase
@@ -16,6 +17,18 @@ class ArticleControllerTest extends TestCase
 
         $articleRepository = new \App\Repositories\ArticleRepository();
         $article = $articleRepository->find($id);
-        $this->assertEquals(\App\Http\Controllers\ArticleController::POST_STATUS_DELETED, $article->status);
+        $this->assertEquals(ArticleController::POST_STATUS_DELETED, $article->status);
     }
+
+    /**
+     * Test delete post that does not exist.
+     *
+     * @expectedExceptionCode 404
+     */
+    public function testDeleteException()
+    {
+        $id = 123456;
+        $this->call("GET", "home/posts/delete/$id");
+    }
+
 }

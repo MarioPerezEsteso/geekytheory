@@ -11,6 +11,8 @@
 |
 */
 
+App::setLocale('es');
+
 // Patterns
 Route::pattern('id', '\d+');
 Route::pattern('hash', '[a-z0-9]+');
@@ -256,6 +258,16 @@ Route::get('home/menu/getNewMenuItemHtml', [
     'middleware'    => 'auth',
     'before'        => 'csrf',
     'uses'          => 'SiteMetaController@getNewMenuItemHtml',
+]);
+
+Route::post('comment/store', [
+    'before'        => 'csrf',
+    'uses'          => 'CommentController@store',
+]);
+
+Route::get('comment/getForm', [
+    'before'        => 'csrf',
+    'uses'          => 'CommentController@getForm',
 ]);
 
 Route::get('feed', 'FeedController@feed');
