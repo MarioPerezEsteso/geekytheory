@@ -6,4 +6,5 @@ Homestead.json
 .idea/
 public/images/
 public/uploads/
+public/wp-content/
 phpunit.xml
