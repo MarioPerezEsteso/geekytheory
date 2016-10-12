@@ -17,6 +17,10 @@
     padding-top: 10px;
 }
 
+.post-entry a {
+    color: #3498db;
+}
+
 .comment-date {
     color: rgba(17, 17, 17, 0.55); !important;
 }
