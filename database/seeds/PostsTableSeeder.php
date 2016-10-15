@@ -28,6 +28,31 @@ class PostsTableSeeder extends Seeder
             ]);
         }
 
+        // Create 2 articles with known body and title (for testing findArticlesBySearch)
+        DB::table('posts')->insert([
+            'user_id' => 1,
+            'title' => 'Tutorial Arduino',
+            'body' => 'Arduino tutorial in this blog',
+            'description' => $faker->text($maxNbChars = 150),
+            'slug' => 'tutorial-arduino',
+            'status' => 'published',
+            'image' => 'some_image',
+            'type' => 'article',
+            'published_at' => \Carbon\Carbon::now(),
+        ]);
+
+        DB::table('posts')->insert([
+            'user_id' => 1,
+            'title' => 'Tutorial Android',
+            'body' => 'Android tutorial in this blog',
+            'description' => $faker->text($maxNbChars = 150),
+            'slug' => 'tutorial-android',
+            'status' => 'published',
+            'image' => 'some_image',
+            'type' => 'article',
+            'published_at' => \Carbon\Carbon::now(),
+        ]);
+
         for ($i = 0; $i < 3; $i++) {
             DB::table('posts')->insert([
                 'user_id' => 1,
