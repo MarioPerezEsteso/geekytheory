@@ -15,20 +15,20 @@
     <link rel="apple-touch-icon" sizes="114x114" href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo_114) }}">
 
     <!-- Bootstrap core CSS -->
-    <link href="/assets/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ autoVersion("/assets/css/bootstrap/bootstrap.min.css") }}" rel="stylesheet">
 
     <!-- Plugins -->
-    <link href="/themes/vortex/assets/css/font-awesome.min.css" rel="stylesheet">
-    <link href="/themes/vortex/assets/css/ionicons.min.css" rel="stylesheet">
-    <link href="/themes/vortex/assets/css/simpletextrotator.css" rel="stylesheet">
-    <link href="/themes/vortex/assets/css/magnific-popup.css" rel="stylesheet">
-    <link href="/themes/vortex/assets/css/owl.carousel.css" rel="stylesheet">
-    <link href="/themes/vortex/assets/css/superslides.css" rel="stylesheet">
-    <link href="/themes/vortex/assets/css/vertical.css" rel="stylesheet">
-    <link href="/themes/vortex/assets/css/animate.css" rel="stylesheet">
-    <link href="/themes/vortex/assets/css/custom.css?v=1.0" rel="stylesheet">
+    <link href="{{ autoVersion("/themes/vortex/assets/css/font-awesome.min.css") }}" rel="stylesheet">
+    <link href="{{ autoVersion("/themes/vortex/assets/css/ionicons.min.css") }}" rel="stylesheet">
+    <link href="{{ autoVersion("/themes/vortex/assets/css/simpletextrotator.css") }}" rel="stylesheet">
+    <link href="{{ autoVersion("/themes/vortex/assets/css/magnific-popup.css") }}" rel="stylesheet">
+    <link href="{{ autoVersion("/themes/vortex/assets/css/owl.carousel.css") }}" rel="stylesheet">
+    <link href="{{ autoVersion("/themes/vortex/assets/css/superslides.css") }}" rel="stylesheet">
+    <link href="{{ autoVersion("/themes/vortex/assets/css/vertical.css") }}" rel="stylesheet">
+    <link href="{{ autoVersion("/themes/vortex/assets/css/animate.css") }}" rel="stylesheet">
+    <link href="{{ autoVersion("/themes/vortex/assets/css/custom.css") }}" rel="stylesheet">
     <!-- Template core CSS -->
-    <link href="/themes/vortex/assets/css/style.css" rel="stylesheet">
+    <link href="{{ autoVersion("/themes/vortex/assets/css/style.css") }}" rel="stylesheet">
 
     @if (!empty($siteMeta->analytics_script))
         {!! $siteMeta->analytics_script !!}
