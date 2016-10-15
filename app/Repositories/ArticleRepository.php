@@ -80,7 +80,8 @@ class ArticleRepository extends PostRepository implements ArticleRepositoryInter
         }
 
         if ($text !== null) {
-            $query->where('posts.body', 'like', "%$text%");
+            $query->where('posts.body', 'like', "%$text%")
+                ->orWhere('posts.title', 'like', "%$text%");
         }
 
         return $query->paginate($paginate);
