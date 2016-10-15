@@ -14,4 +14,6 @@ interface ArticleRepositoryInterface extends PostRepositoryInterface
 
     public function findArticles(User $author, $onlyPublishedArticles = false, $paginate = Repository::PAGINATION_DEFAULT);
 
+    public function findArticlesBySearch($onlyPublishedArticles = false, $paginate = Repository::PAGINATION_DEFAULT, $text = null);
+
 }

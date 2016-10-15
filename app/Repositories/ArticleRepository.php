@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Http\Controllers\PostController;
+use App\Http\Requests\Request;
 use App\User;
 
 class ArticleRepository extends PostRepository implements ArticleRepositoryInterface
@@ -62,7 +63,7 @@ class ArticleRepository extends PostRepository implements ArticleRepositoryInter
      * @param int $paginate
      * @return mixed
      */
-    public function findArticles(User $author = null, $onlyPublishedArticles = false, $paginate = Repository::PAGINATION_DEFAULT)
+    public function findArticles(User $author = null, $onlyPublishedArticles = false, $paginate = Repository::PAGINATION_DEFAULT, $text = null)
     {
         $columns = User::$mappings;
         array_push($columns, 'posts.*');
@@ -73,9 +74,28 @@ class ArticleRepository extends PostRepository implements ArticleRepositoryInter
         if ($author !== null) {
             $query->where('users.username', $author->username);
         }
+
         if ($onlyPublishedArticles) {
             $query->where('posts.status', PostController::POST_STATUS_PUBLISHED);
         }
+
+        if ($text !== null) {
+            $query->where('posts.body', 'like', "%$text%");
+        }
+
         return $query->paginate($paginate);
+    }
+
+    /**
+     * Find articles by search.
+     *
+     * @param bool $onlyPublishedArticles
+     * @param int $paginate
+     * @param null $text
+     * @return mixed
+     */
+    public function findArticlesBySearch($onlyPublishedArticles = false, $paginate = Repository::PAGINATION_DEFAULT, $text = null)
+    {
+        return self::findArticles(null, $onlyPublishedArticles, $paginate, $text);
     }
 }
