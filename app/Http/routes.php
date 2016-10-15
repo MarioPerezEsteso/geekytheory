@@ -281,4 +281,3 @@ Route::get('user/{username}', 'ArticleController@showByUsername');
 Route::get('category/{slug}', 'CategoryController@showByCategory');
 
 Route::get('tag/{slug}', 'TagController@showByTag');
-
