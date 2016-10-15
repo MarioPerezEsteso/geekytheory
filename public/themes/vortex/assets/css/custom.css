@@ -56,20 +56,24 @@
 
 .search-form .form-group input.form-control::-webkit-input-placeholder {
     display: none;
+    text-transform: lowercase;
 }
 
 .search-form .form-group input.form-control:-moz-placeholder {
     /* Firefox 18- */
     display: none;
+    text-transform: lowercase;
 }
 
 .search-form .form-group input.form-control::-moz-placeholder {
     /* Firefox 19+ */
     display: none;
+    text-transform: lowercase;
 }
 
 .search-form .form-group input.form-control:-ms-input-placeholder {
     display: none;
+    text-transform: lowercase;
 }
 
 .search-form .form-group:hover,
