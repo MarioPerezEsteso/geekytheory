@@ -29,3 +29,66 @@
     margin-top: -80px;
     margin-bottom: 50px;
 }
+
+.search-form-hero {
+    position: relative;
+    top: 50%;
+    transform: translateY(29%);
+}
+
+.search-form .form-group {
+    float: right !important;
+    transition: all 0.35s, border-radius 0s;
+    width: 32px;
+    height: 32px;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.search-form .form-group input.form-control {
+    padding-right: 20px;
+    border: 0 none;
+    background: transparent;
+    box-shadow: none;
+    display:block;
+    font-size: 14px;
+}
+
+.search-form .form-group input.form-control::-webkit-input-placeholder {
+    display: none;
+}
+
+.search-form .form-group input.form-control:-moz-placeholder {
+    /* Firefox 18- */
+    display: none;
+}
+
+.search-form .form-group input.form-control::-moz-placeholder {
+    /* Firefox 19+ */
+    display: none;
+}
+
+.search-form .form-group input.form-control:-ms-input-placeholder {
+    display: none;
+}
+
+.search-form .form-group:hover,
+.search-form .form-group.hover {
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+
+.search-form .form-group span.form-control-feedback {
+    position: absolute;
+    top: -1px;
+    right: -2px;
+    z-index: 2;
+    display: block;
+    width: 34px;
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    color: black;
+    left: initial;
+    font-size: 14px;
+}

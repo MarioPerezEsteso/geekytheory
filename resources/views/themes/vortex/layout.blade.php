@@ -26,7 +26,7 @@
     <link href="/themes/vortex/assets/css/superslides.css" rel="stylesheet">
     <link href="/themes/vortex/assets/css/vertical.css" rel="stylesheet">
     <link href="/themes/vortex/assets/css/animate.css" rel="stylesheet">
-    <link href="/themes/vortex/assets/css/custom.css" rel="stylesheet">
+    <link href="/themes/vortex/assets/css/custom.css?v=1.0" rel="stylesheet">
     <!-- Template core CSS -->
     <link href="/themes/vortex/assets/css/style.css" rel="stylesheet">
 

@@ -9,7 +9,7 @@
         <!-- ICONS NAVBAR -->
         <ul id="icons-navbar" class="nav navbar-nav navbar-right visible-xs">
             <li>
-                <a href="index.html#" id="toggle-menu" class="show-overlay" title="Menu">
+                <a href="#" id="toggle-menu" class="show-overlay" title="Menu">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -31,13 +31,25 @@
                         <ul class="sub-menu">
                             @foreach($menuItem['submenu'] as $submenuItem)
                                 <li>
-                                    <a href="{{ $submenuItem['link'] }}" title="{{ $submenuItem['text'] }}">{{ $submenuItem['text'] }}</a>
+                                    <a href="{{ $submenuItem['link'] }}"
+                                       title="{{ $submenuItem['text'] }}">{{ $submenuItem['text'] }}</a>
                                 </li>
                             @endforeach
                         </ul>
                     @endif
                 </li>
             @endforeach
+        </ul>
+        <ul class="nav navbar-right hidden-xs">
+            <li>
+                <form action="" class="search-form">
+                    <div class="form-group has-feedback search-form-hero">
+                        <label for="search" class="sr-only">Search</label>
+                        <input type="text" class="form-control" name="search" id="search" placeholder="search">
+                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                    </div>
+                </form>
+            </li>
         </ul>
     </div>
 </nav>
