@@ -175,3 +175,24 @@ if (!function_exists('getClientIPAddress')) {
         return $ipAddress;
     }
 }
+if (!function_exists('autoVersion')) {
+    /**
+     * Add version to assets automatically in order to refresh browser cache
+     * when they have been modified.
+     *
+     * @param string $file
+     * @return string
+     */
+    function autoVersion($file = '')
+    {
+        $absoluteFilePath = $_SERVER['DOCUMENT_ROOT'] . $file;
+        if (!file_exists($absoluteFilePath)) {
+            return $file;
+        }
+
+        $modifiedTime = filemtime($absoluteFilePath);
+
+        return $file . '?version=' . $modifiedTime;
+    }
+}
+
