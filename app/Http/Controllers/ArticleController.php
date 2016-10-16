@@ -12,6 +12,7 @@ use App\Repositories\CategoryRepository;
 use App\User;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Cache;
 
 class ArticleController extends PostController
 {
@@ -94,13 +95,35 @@ class ArticleController extends PostController
      */
     public function show($slug)
     {
-        /** @var Post $post */
-        $post = $this->repository->findArticleBySlug($slug);
-        $comments = $post->hamComments()->get();
-        $commentCount = count($comments);
-        $comments = CommentController::sortByParent($comments);
+        if (Cache::has('post_' . $slug) && Cache::has('tags_' . $slug) && Cache::has('categories_' . $slug)) {
+            /** @var Post $post */
+            $post = Cache::get('post_' . $slug);
+            $tags = Cache::get('tags_' . $slug);
+            $categories = Cache::get('categories_' . $slug);
+        } else {
+            $post = $this->repository->findArticleBySlug($slug);
+            $tags = $post->tags;
+            $categories = $post->categories;
+            Cache::put('post_' . $slug, $post, 10);
+            Cache::put('tags_' . $slug, $tags, 10);
+            Cache::put('categories_' . $slug, $categories, 10);
+        }
 
-        return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'comments', 'commentCount'));
+        /*
+         * The comments are cached apart from the post, tags and categories
+         * because they are going to be modified frequently.
+         */
+        if (Cache::has('comments_' . $slug)) {
+            $comments = Cache::get('comments_' . $slug);
+        } else {
+            $comments = $post->hamComments()->get();
+            $comments = CommentController::sortByParent($comments);
+            Cache::put('comments_' . $slug, $comments, 10);
+        }
+
+        $commentCount = count($comments);
+
+        return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'tags', 'categories', 'comments', 'commentCount'));
     }
 
     /**

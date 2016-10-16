@@ -1,6 +1,5 @@
 <article class="post post-single">
     <div class="post-meta font-alt">
-        <?php $categories = $post->categories; ?>
         @if ($siteMeta->show_author_post)
             {{ trans('public.by') }}
             <a href="{{ url('/user/' . $post->user->username) }}">{{ $post->user->name }}</a>
@@ -25,7 +24,7 @@
         {!! $post->body !!}
     </div>
     <div class="tags">
-        @foreach($post->tags as $tag)
+        @foreach($tags as $tag)
             @include('themes.vortex.partials.blog.tags')
         @endforeach
     </div>
