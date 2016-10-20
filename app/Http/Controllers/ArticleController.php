@@ -22,6 +22,11 @@ class ArticleController extends PostController
     const TYPE = PostController::POST_ARTICLE;
 
     /**
+     * Cache expires in 120 minutes.
+     */
+    const CACHE_EXPIRATION_TIME = 120;
+
+    /**
      * @var ArticleValidator
      */
     protected $validator;
@@ -104,9 +109,9 @@ class ArticleController extends PostController
             $post = $this->repository->findArticleBySlug($slug);
             $tags = $post->tags;
             $categories = $post->categories;
-            Cache::put('post_' . $slug, $post, 10);
-            Cache::put('tags_' . $slug, $tags, 10);
-            Cache::put('categories_' . $slug, $categories, 10);
+            Cache::put('post_' . $slug, $post, self::CACHE_EXPIRATION_TIME);
+            Cache::put('tags_' . $slug, $tags, self::CACHE_EXPIRATION_TIME);
+            Cache::put('categories_' . $slug, $categories, self::CACHE_EXPIRATION_TIME);
         }
 
         /*
@@ -118,7 +123,7 @@ class ArticleController extends PostController
         } else {
             $comments = $post->hamComments()->get();
             $comments = CommentController::sortByParent($comments);
-            Cache::put('comments_' . $slug, $comments, 10);
+            Cache::put('comments_' . $slug, $comments, self::CACHE_EXPIRATION_TIME);
         }
 
         $commentCount = count($comments);
