@@ -1,7 +1,11 @@
 @extends('themes.vortex.blog.layout')
 
 @section('postTitle')
-    {{ $post->title }}
+{{ $post->title }}
+@endsection
+
+@section('postDescriptionMeta')
+{{ $post->description }}
 @endsection
 
 @section('content')
