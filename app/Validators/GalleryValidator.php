@@ -12,6 +12,7 @@ class GalleryValidator extends LaravelValidator implements ValidableInterface
      * Validation rules for creating a new Gallery.
      */
     protected $rules = [
+        'user_id' => 'required',
         'title' => 'required',
     ];
 

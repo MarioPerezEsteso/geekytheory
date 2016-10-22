@@ -30,7 +30,10 @@ class GalleryValidatorTest extends TestCase
      */
     private function getValidCreateData()
     {
-        return ['title' => 'Gallery title'];
+        return [
+            'user_id' => 1,
+            'title' => 'Gallery title',
+        ];
     }
 
     /**
@@ -40,6 +43,9 @@ class GalleryValidatorTest extends TestCase
      */
     private function getInvalidCreateData()
     {
-        return ['title' => ''];
+        return [
+            'user_id' => 1,
+            'title' => '',
+        ];
     }
 }
