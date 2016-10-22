@@ -12,6 +12,7 @@ use App\Validators\CommentValidator;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Auth;
+use Illuminate\Support\Facades\Cache;
 
 class CommentController extends Controller
 {
@@ -113,6 +114,13 @@ class CommentController extends Controller
             );
         } else {
             $comment = $this->commentRepository->create($data);
+
+            /*
+             * Clear the comments cache of a single post.
+             */
+            if (Cache::has('comments_' . $post->slug)) {
+                Cache::forget('comments_' . $post->slug);
+            }
 
             return array(
                 'error' => 0,

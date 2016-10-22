@@ -14,6 +14,7 @@ use App\Http\Requests;
 use Auth;
 use App\Post;
 use App\Repositories\PageRepository;
+use Illuminate\Support\Facades\Cache;
 use Validator;
 use Illuminate\Support\Facades\Redirect;
 
@@ -212,6 +213,13 @@ class PostController extends Controller
                 $fileName = ImageManagerController::getUploadFilename($image);
                 $post->image = ImageManagerController::getPathYearMonth() . $fileName;
                 $image->move(ImageManagerController::getPathYearMonth(), $fileName);
+            }
+
+            /*
+             * Remove post cache on update
+             */
+            if (Cache::has('post_' . $post->slug)) {
+                Cache::forget('post_' . $post->slug);
             }
 
             $post->save();
