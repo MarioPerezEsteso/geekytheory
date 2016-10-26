@@ -1,8 +1,13 @@
 @extends('themes.vortex.layout')
 
 @section('title')
-    {{ $siteMeta->title }}
+{{ $siteMeta->title }}
 @endsection
+
+@section('siteDescriptionMeta')
+{{ $siteMeta->description }}
+@endsection
+
 
 @section('content')
     @include('themes.vortex.partials.hero')

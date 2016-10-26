@@ -140,9 +140,11 @@ class ArticleController extends PostController
     public function preview($slug)
     {
         $post = $this->repository->findArticleBySlug($slug, true);
+        $tags = $post->tags;
+        $categories = $post->categories;
         $comments = $post->hamComments()->get();
         $commentCount = count($comments);
-        return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'comments', 'commentCount'));
+        return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'tags', 'categories', 'comments', 'commentCount'));
     }
 
     /**
