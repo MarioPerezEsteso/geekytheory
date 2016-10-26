@@ -195,6 +195,17 @@ Route::post('home/categories/delete-image', [
     'uses'          => 'CategoryController@deleteImage',
 ]);
 
+Route::post('home/gallery/store', [
+    'middleware'    => 'auth',
+    'before'        => 'csrf',
+    'uses'          => 'GalleryController@store',
+]);
+
+Route::get('home/gallery/edit/{id}', [
+    'middleware'    => 'auth',
+    'uses'          => 'GalleryController@edit',
+]);
+
 Route::get('home/articles/imagemanager/upload', [
     'middleware'    => 'auth',
     'uses'          => 'ImageManagerController@create'
