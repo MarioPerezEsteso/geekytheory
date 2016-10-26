@@ -201,6 +201,11 @@ Route::post('home/gallery/store', [
     'uses'          => 'GalleryController@store',
 ]);
 
+Route::get('home/gallery/create', [
+    'middleware'    => 'auth',
+    'uses'          => 'GalleryController@create',
+]);
+
 Route::get('home/gallery/edit/{id}', [
     'middleware'    => 'auth',
     'uses'          => 'GalleryController@edit',

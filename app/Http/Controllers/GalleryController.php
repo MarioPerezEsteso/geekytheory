@@ -53,7 +53,7 @@ class GalleryController extends Controller
      */
     public function create()
     {
-        //
+        return view('home.galleries.gallery');
     }
 
     /**
