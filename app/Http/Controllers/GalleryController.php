@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Gallery;
+use App\Image;
 use App\Repositories\GalleryRepository;
 use App\User;
 use App\Validators\GalleryValidator;
@@ -67,9 +69,10 @@ class GalleryController extends Controller
         $data = [
             'user_id' => null,
             'title' => $request->title,
+            'images' => $request->file('images'),
         ];
 
-        /** @var User */
+        /** @var User $user */
         $user = Auth::user();
         if ($user !== null) {
             $data['user_id'] = $user->getAttribute('id');
@@ -78,7 +81,10 @@ class GalleryController extends Controller
         if (!$this->galleryValidator->with($data)->passes()) {
             return Redirect::to('home/gallery/create')->withErrors($this->galleryValidator->errors());
         } else {
+            /** @var Gallery $gallery */
             $gallery = $this->galleryRepository->create($data);
+            $imageController = new ImageController();
+            $imageController->storeGalleryImages($gallery, $user, $data['images']);
 
             return Redirect::to('home/gallery/edit/' . $gallery->id)->withSuccess(trans('home.gallery_create_success'));
         }
