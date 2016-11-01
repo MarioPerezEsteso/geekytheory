@@ -30,15 +30,25 @@ class CreateGalleriesAndImagesTable extends Migration
 
         Schema::create('images', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('parent')->unsigned()->nullable()->default(null);
             $table->integer('user_id')->unsigned();
-            $table->integer('post_id')->unsigned();
-            $table->integer('gallery_id')->unsigned();
+            $table->integer('post_id')->unsigned()->nullable()->default(null);
+            $table->integer('gallery_id')->unsigned()->nullable()->default(null);
             $table->string('title');
             $table->string('image');
             $table->enum('size', ['original', 'thumbnail', 'featured', 'featured_thumbnail']);
             $table->integer('order');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');
+
+            /**
+             * Foreign key to table images to know the parent.
+             */
+            $table->foreign('parent')
+                ->references('id')
+                ->on('images')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
 
             /*
              * Foreign key to table users to know who has uploaded the image.

@@ -19,6 +19,16 @@ class Image extends Model
     const SIZE_FEATURED_THUMBNAIL = 'featured_thumbnail';
 
     /**
+     * Image sizes for a gallery.
+     */
+    const SIZES_GALLERY = [
+        self::SIZE_ORIGINAL,
+        self::SIZE_THUMBNAIL,
+    ];
+
+    const SIZE_GALLERY_THUMBNAIL_WIDTH = 400;
+
+    /**
      * The database table used by the model.
      *
      * @var string
@@ -31,6 +41,7 @@ class Image extends Model
      * @var array
      */
     protected $fillable = [
+        'parent',
         'user_id',
         'post_id',
         'gallery_id',
@@ -69,6 +80,5 @@ class Image extends Model
     {
         return $this->belongsTo('App\Gallery');
     }
-
 
 }
