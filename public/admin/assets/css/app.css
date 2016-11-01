@@ -53,3 +53,21 @@
 .gallery-img:hover .close {
     opacity: 1;
 }
+
+@media only screen and (min-width: 768px) {
+    .gallery-img {
+        min-height: 230px;
+    }
+}
+
+@media only screen and (min-width: 921px) {
+    .gallery-img {
+        min-height: 180px;
+    }
+}
+
+@media only screen and (min-width: 1368px) {
+    .gallery-img {
+        min-height: 230px;
+    }
+}

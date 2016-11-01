@@ -20,14 +20,35 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">{{ trans('home.create_your_gallery') }}</h3>
                 </div>
-                {!! Form::model($siteMeta, ['url' => 'home/gallery/create', 'class' => 'form', 'files' => true]) !!}
+                {!! Form::open(['url' => 'home/gallery/store', 'class' => 'form', 'files' => true]) !!}
                 <div class="box-body">
                     <div class="form-group">
                         <label for="title">{{ trans('home.title') }}</label>
-                        <input type="text" class="form-control" id="title"
-                               placeholder="{{ trans('home.gallery_title') }}">
+                        <input type="text" class="form-control" id="title" name="title"
+                               placeholder="{{ trans('home.gallery_title') }}"
+                               value="{{ !empty($gallery) ? $gallery->title : '' }}">
                     </div>
+                    @if (!empty($gallery))
+                        <div class="row top15">
+                            <div class="col-lg-12">
+                                <span><strong>Shortcode</strong></span>
+                            </div>
+                            <div class="col-lg-12">
+                                Insert this code where you want to show this gallery in your post:
+                                <strong>[gallery id='{{ $gallery->id }}']</strong>
+                            </div>
+                        </div>
+                    @endif
                     <div class="row top15" id="gallery-images-container">
+                        @if (!empty($images))
+                            @foreach($images as $image)
+                                <div class="gallery-img col-sm-6 col-md-4 col-lg-3">
+                                    <span class="close">×</span>
+                                    <img class="img-responsive"
+                                         src="{{ \App\Http\Controllers\ImageController::getPublicImageUrl($image->image, true) }}">
+                                </div>
+                            @endforeach
+                        @endif
                     </div>
                 </div>
                 <div class="box-footer">

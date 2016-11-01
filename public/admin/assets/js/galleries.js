@@ -13,8 +13,7 @@ $(document).ready(function () {
             var reader = new FileReader();
             reader.onload = function (e) {
                 var div = $("<div>", {
-                    id: "foo",
-                    class: "gallery-img col-md-3"
+                    class: "gallery-img col-sm-6 col-md-4 col-lg-3"
                 });
                 var span = $("<span>", {
                     class: "close",

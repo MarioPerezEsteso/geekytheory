@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Gallery;
 use App\Image;
 use App\Repositories\GalleryRepository;
+use App\Repositories\ImageRepository;
 use App\User;
 use App\Validators\GalleryValidator;
 use Illuminate\Http\Request;
@@ -27,15 +28,22 @@ class GalleryController extends Controller
     protected $galleryValidator;
 
     /**
+     * @var  ImageRepository
+     */
+    protected $imageRepository;
+
+    /**
      * GalleryController constructor.
      *
      * @param GalleryRepository $galleryRepository
      * @param GalleryValidator $galleryValidator
+     * @param ImageRepository $imageRepository
      */
-    public function __construct(GalleryRepository $galleryRepository, GalleryValidator $galleryValidator)
+    public function __construct(GalleryRepository $galleryRepository, GalleryValidator $galleryValidator, ImageRepository $imageRepository)
     {
         $this->galleryRepository = $galleryRepository;
         $this->galleryValidator = $galleryValidator;
+        $this->imageRepository = $imageRepository;
     }
 
     /**
@@ -109,7 +117,9 @@ class GalleryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $gallery = $this->galleryRepository->findOrFail($id);
+        $images = $this->imageRepository->findImagesByGallery($gallery, Image::SIZE_ORIGINAL);
+        return view('home.galleries.gallery', compact('gallery', 'images'));
     }
 
     /**

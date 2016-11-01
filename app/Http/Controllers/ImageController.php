@@ -193,8 +193,8 @@ class ImageController extends Controller
         if ($checkIfExists) {
             if (File::exists($publicImageUrl)) {
                 return '/' . $publicImageUrl;
-            } else if (File::exists(self::getPathYearMonth() . $publicImageUrl)) {
-                return '/' . self::getPathYearMonth() . $publicImageUrl;
+            } else if (File::exists(self::getPathYearMonth($publicImageUrl))) {
+                return '/' . self::getPathYearMonth($publicImageUrl);
             } else {
                 return self::PATH_IMAGE_NOT_FOUND;
             }
