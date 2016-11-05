@@ -6,6 +6,7 @@ use App\Gallery;
 use App\Image;
 use App\Repositories\GalleryRepository;
 use App\Repositories\ImageRepository;
+use App\Repositories\UserRepository;
 use App\User;
 use App\Validators\GalleryValidator;
 use Illuminate\Http\Request;
@@ -49,11 +50,20 @@ class GalleryController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param null $username
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexHome($username = null)
     {
-        //
+        if (!empty($username)) {
+            /*  Get galleries of a concrete user */
+            $author = (new UserRepository())->findUserByUsername($username);
+            $galleries = $this->galleryRepository->findGalleries($author);
+        } else {
+            /* Get all galleries */
+            $galleries = $this->galleryRepository->findGalleries();
+        }
+        return view('home.galleries.all', compact('galleries'));
     }
 
     /**

@@ -107,7 +107,7 @@
                     <div class="row">
                         <div class="col-sm-5">
                             <div class="dataTables_info" id="example1_info" role="status" aria-live="polite">
-                                {{ getPaginationText($posts) }}
+                                {{ getPaginationText($posts, trans('home.posts_min')) }}
                             </div>
                         </div>
                         <div class="col-sm-7">

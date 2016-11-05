@@ -30,9 +30,15 @@ if (!function_exists('classActiveRoute')) {
  * @return string
  */
 if (!function_exists('getPaginationText')) {
-    function getPaginationText($paginator)
+    function getPaginationText($paginator, $item = '')
     {
-        return trans('home.showing') . ' ' . (($paginator->currentPage() - 1) * $paginator->perPage() + 1) . ' ' . trans('home.to') . ' ' . min($paginator->total(), $paginator->currentPage() * $paginator->perPage()) . ' ' . trans('home.of') . ' ' . $paginator->total() . ' ' . trans('home.posts_min');
+        return trans('home.showing') . ' '
+        . (($paginator->currentPage() - 1) * $paginator->perPage() + 1) . ' '
+        . trans('home.to') . ' '
+        . min($paginator->total(), $paginator->currentPage() * $paginator->perPage()) . ' '
+        . trans('home.of') . ' '
+        . $paginator->total() . ' '
+        . $item;
     }
 }
 
