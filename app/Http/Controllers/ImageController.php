@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Gallery;
 use App\Image;
+use App\Repositories\ImageRepository;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -19,6 +20,21 @@ class ImageController extends Controller
      */
     const PATH_UPLOADS = 'uploads';
     const PATH_IMAGE_NOT_FOUND = '/assets/img/imagenotfound.jpg';
+
+    /**
+     * @var ImageRepository
+     */
+    private $imageRepository;
+
+    /**
+     * ImageController constructor.
+     *
+     * @param ImageRepository $imageRepository
+     */
+    public function __construct(ImageRepository $imageRepository)
+    {
+        $this->imageRepository = $imageRepository;
+    }
 
     /**
      * Display a listing of the resource.
@@ -103,31 +119,39 @@ class ImageController extends Controller
      */
     public function storeGalleryImages($gallery, $user, $images = array())
     {
+        $data = [
+            'user_id' => $user->id,
+            'gallery_id' => $gallery->id,
+        ];
+
         $imageOriginalFilename = '';
         foreach ($images as $galleryImage) {
             foreach (Image::SIZES_GALLERY as $size) {
-                $image = new Image();
-                $image->user()->associate($user);
-                $image->gallery()->associate($gallery);
-                $image->setAttribute('image', self::getUploadFilename($galleryImage, null, $size));
-                $image->setAttribute('size', $size);
+                $data['image'] = self::getUploadFilename($galleryImage, null, $size);
+                $data['size'] = $size;
                 if ($size == Image::SIZE_ORIGINAL) {
                     /**
                      * Store the original filename in this variable in order to resize the original file and
                      * find it by its name in the server.
                      */
-                    $imageOriginalFilename = $image->getAttribute('image');
-                    $galleryImage->move(ImageManagerController::getPathYearMonth(), $image->getAttribute('image'));
+                    $imageOriginalFilename = $data['image'];
+                    $galleryImage->move(ImageManagerController::getPathYearMonth(), $data['image']);
+                    $originalImage = $this->imageRepository->create($data);
                 } else if ($size == Image::SIZE_THUMBNAIL) {
                     self::resizeImage(
                         self::getPathYearMonth($imageOriginalFilename),
                         Image::SIZE_GALLERY_THUMBNAIL_WIDTH,
                         0,
-                        self::getPathYearMonth($image->getAttribute('image')),
+                        self::getPathYearMonth($data['image']),
                         100);
+
+                    if ($originalImage !== null) {
+                        $data['parent'] = $originalImage->id;
+                    }
+
+                    $this->imageRepository->create($data);
                 }
 
-                $image->save();
             }
         }
     }

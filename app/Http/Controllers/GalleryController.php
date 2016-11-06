@@ -101,7 +101,7 @@ class GalleryController extends Controller
         } else {
             /** @var Gallery $gallery */
             $gallery = $this->galleryRepository->create($data);
-            $imageController = new ImageController();
+            $imageController = new ImageController(new ImageRepository());
             $imageController->storeGalleryImages($gallery, $user, $data['images']);
 
             return Redirect::to('home/gallery/edit/' . $gallery->id)->withSuccess(trans('home.gallery_create_success'));
