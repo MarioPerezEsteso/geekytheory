@@ -148,6 +148,7 @@ class ImageController extends Controller
                          */
                         $imageOriginalFilename = $data['image'];
                         $galleryImage->move(ImageManagerController::getPathYearMonth(), $data['image']);
+                        $data['parent'] = null;
                         $originalImage = $this->imageRepository->create($data);
                     } else if ($size == Image::SIZE_THUMBNAIL) {
                         self::resizeImage(
@@ -164,7 +165,6 @@ class ImageController extends Controller
                         $this->imageRepository->create($data);
                     }
                 }
-
             }
         }
     }
