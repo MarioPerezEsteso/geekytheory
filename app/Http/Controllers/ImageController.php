@@ -137,30 +137,32 @@ class ImageController extends Controller
 
         $imageOriginalFilename = '';
         foreach ($images as $galleryImage) {
-            foreach (Image::SIZES_GALLERY as $size) {
-                $data['image'] = self::getUploadFilename($galleryImage, null, $size);
-                $data['size'] = $size;
-                if ($size == Image::SIZE_ORIGINAL) {
-                    /**
-                     * Store the original filename in this variable in order to resize the original file and
-                     * find it by its name in the server.
-                     */
-                    $imageOriginalFilename = $data['image'];
-                    $galleryImage->move(ImageManagerController::getPathYearMonth(), $data['image']);
-                    $originalImage = $this->imageRepository->create($data);
-                } else if ($size == Image::SIZE_THUMBNAIL) {
-                    self::resizeImage(
-                        self::getPathYearMonth($imageOriginalFilename),
-                        Image::SIZE_GALLERY_THUMBNAIL_WIDTH,
-                        0,
-                        self::getPathYearMonth($data['image']),
-                        100);
+            if ($galleryImage !== null) {
+                foreach (Image::SIZES_GALLERY as $size) {
+                    $data['image'] = self::getUploadFilename($galleryImage, null, $size);
+                    $data['size'] = $size;
+                    if ($size == Image::SIZE_ORIGINAL) {
+                        /**
+                         * Store the original filename in this variable in order to resize the original file and
+                         * find it by its name in the server.
+                         */
+                        $imageOriginalFilename = $data['image'];
+                        $galleryImage->move(ImageManagerController::getPathYearMonth(), $data['image']);
+                        $originalImage = $this->imageRepository->create($data);
+                    } else if ($size == Image::SIZE_THUMBNAIL) {
+                        self::resizeImage(
+                            self::getPathYearMonth($imageOriginalFilename),
+                            Image::SIZE_GALLERY_THUMBNAIL_WIDTH,
+                            0,
+                            self::getPathYearMonth($data['image']),
+                            100);
 
-                    if ($originalImage !== null) {
-                        $data['parent'] = $originalImage->id;
+                        if ($originalImage !== null) {
+                            $data['parent'] = $originalImage->id;
+                        }
+
+                        $this->imageRepository->create($data);
                     }
-
-                    $this->imageRepository->create($data);
                 }
 
             }
