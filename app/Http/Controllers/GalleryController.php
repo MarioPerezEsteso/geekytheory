@@ -141,7 +141,29 @@ class GalleryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = [
+            'user_id' => null,
+            'title' => $request->title,
+            'images' => $request->file('images'),
+        ];
+
+        /** @var User $user */
+        $user = Auth::user();
+        if ($user !== null) {
+            $data['user_id'] = $user->getAttribute('id');
+        }
+
+        if (!$this->galleryValidator->with($data)->passes()) {
+            return Redirect::to('home/gallery/edit/' . $id)->withErrors($this->galleryValidator->errors());
+        } else {
+            $this->galleryRepository->update($id, $data);
+            /** @var Gallery $gallery */
+            $gallery = $this->galleryRepository->find($id);
+            $imageController = new ImageController(new ImageRepository());
+            $imageController->storeGalleryImages($gallery, $user, $data['images']);
+
+            return Redirect::to('home/gallery/edit/' . $gallery->id)->withSuccess(trans('home.gallery_update_success'));
+        }
     }
 
     /**

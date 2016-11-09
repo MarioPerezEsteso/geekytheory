@@ -216,6 +216,11 @@ Route::get('home/gallery/edit/{id}', [
     'uses'          => 'GalleryController@edit',
 ]);
 
+Route::post('home/gallery/update/{id}', [
+    'middleware'    => 'auth',
+    'uses'          => 'GalleryController@update',
+]);
+
 Route::post('home/gallery/image/delete', [
     'middleware'    => 'auth',
     'before'        => 'csrf',

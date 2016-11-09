@@ -20,7 +20,11 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">{{ trans('home.create_your_gallery') }}</h3>
                 </div>
-                {!! Form::open(['url' => 'home/gallery/store', 'class' => 'form', 'files' => true]) !!}
+                <?php $url = 'home/gallery/store'; ?>
+                @if (!empty($gallery))
+                    <?php $url = 'home/gallery/update/' . $gallery->id; ?>
+                @endif
+                {!! Form::open(['url' => $url, 'class' => 'form', 'files' => true]) !!}
                 <div class="box-body">
                     <div class="form-group">
                         <label for="title">{{ trans('home.title') }}</label>
@@ -35,7 +39,7 @@
                             </div>
                             <div class="col-lg-12">
                                 Insert this code where you want to show this gallery in your post:
-                                <strong>[gallery id='{{ $gallery->id }}']</strong>
+                                <code>[gallery id='{{ $gallery->id }}']</code>
                             </div>
                         </div>
                     @endif
@@ -43,7 +47,7 @@
                         @if (!empty($images))
                             @foreach($images as $image)
                                 <div class="gallery-img col-sm-6 col-md-4 col-lg-3">
-                                    <span class="close">×</span>
+                                    <span data-image-id="{{ $image->id }}" class="close js-delete-image">×</span>
                                     <img class="img-responsive"
                                          src="{{ \App\Http\Controllers\ImageController::getPublicImageUrl($image->image, true) }}">
                                 </div>
