@@ -216,6 +216,12 @@ Route::get('home/gallery/edit/{id}', [
     'uses'          => 'GalleryController@edit',
 ]);
 
+Route::post('home/gallery/image/delete', [
+    'middleware'    => 'auth',
+    'before'        => 'csrf',
+    'uses'          => 'ImageController@deleteImageFromGallery',
+]);
+
 Route::get('home/articles/imagemanager/upload', [
     'middleware'    => 'auth',
     'uses'          => 'ImageManagerController@create'

@@ -35,7 +35,7 @@ class ImageControllerTest extends TestCase
     }
 
     /**
-     * Test the creation of a new gallery.
+     * Test delete image from a gallery.
      */
     public function testDeleteImageFromGallery()
     {
