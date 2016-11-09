@@ -74,6 +74,82 @@ class GalleryControllerTest extends TestCase
     }
 
     /**
+     * Test the creation of a new gallery.
+     */
+    public function testUpdateGallery()
+    {
+        $data = [
+            'title' => 'This gallery has been edited',
+        ];
+
+        $uploadedFiles = [
+            $this->createNewTestImage('image1.png'),
+            $this->createNewTestImage('image2.png'),
+            $this->createNewTestImage('image3.png'),
+        ];
+
+        Auth::login($this->user, true);
+
+        /**
+         * This gallery has already 5 images.
+         * @see ImagesTableSeeder
+         */
+        $galleryId = 1;
+
+        $this->actingAs($this->user)->call('POST', 'home/gallery/update/' . $galleryId, $data, [], ['images' => $uploadedFiles]);
+        $this->assertRedirectedTo('home/gallery/edit/' . $galleryId);
+
+        /** @var Gallery $gallery */
+        $gallery = $this->galleryRepository->find($galleryId);
+        $this->assertEquals($data['title'], $gallery->title);
+
+        $galleryImages = $this->imageRepository->findImagesByGallery($gallery);
+        $this->assertEquals(8 * count(Image::SIZES_GALLERY), count($galleryImages));
+
+        $galleryImagesOriginal = $this->imageRepository->findImagesByGallery($gallery, Image::SIZE_ORIGINAL);
+        $this->assertEquals(8, count($galleryImagesOriginal));
+
+        $galleryImagesThumbnail = $this->imageRepository->findImagesByGallery($gallery, Image::SIZE_THUMBNAIL);
+        $this->assertEquals(8, count($galleryImagesThumbnail));
+    }
+
+    /**
+     * Test the creation of a new gallery.
+     */
+    public function testUpdateGalleryWithoutImages()
+    {
+        $data = [
+            'title' => 'This gallery has been edited',
+        ];
+
+        $uploadedFiles = [];
+
+        Auth::login($this->user, true);
+
+        /**
+         * This gallery has already 5 images.
+         * @see ImagesTableSeeder
+         */
+        $galleryId = 1;
+
+        $this->actingAs($this->user)->call('POST', 'home/gallery/update/' . $galleryId, $data, [], ['images' => $uploadedFiles]);
+        $this->assertRedirectedTo('home/gallery/edit/' . $galleryId);
+
+        /** @var Gallery $gallery */
+        $gallery = $this->galleryRepository->find($galleryId);
+        $this->assertEquals($data['title'], $gallery->title);
+
+        $galleryImages = $this->imageRepository->findImagesByGallery($gallery);
+        $this->assertEquals(5 * count(Image::SIZES_GALLERY), count($galleryImages));
+
+        $galleryImagesOriginal = $this->imageRepository->findImagesByGallery($gallery, Image::SIZE_ORIGINAL);
+        $this->assertEquals(5, count($galleryImagesOriginal));
+
+        $galleryImagesThumbnail = $this->imageRepository->findImagesByGallery($gallery, Image::SIZE_THUMBNAIL);
+        $this->assertEquals(5, count($galleryImagesThumbnail));
+    }
+
+    /**
      * Create a test file in order to pass it as parameter to create a new gallery of images.
      *
      * @param string $name
