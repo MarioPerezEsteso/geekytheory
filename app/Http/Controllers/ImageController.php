@@ -104,12 +104,23 @@ class ImageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return array
+     * @internal param int $id
      */
-    public function destroy($id)
+    public function deleteImageFromGallery(Request $request)
     {
-        //
+        $imageId = $request->imageId;
+        /**
+         * I use orderBy 'desc' because I have to delete the parent image in the last position in order to avoid
+         */
+        $images = $this->imageRepository->findImageAllSizes($imageId, 'desc');
+        foreach ($images as $image) {
+            /** @var Image $image */
+            $image->delete();
+        }
+
+        return ['error' => 0];
     }
 
     /**

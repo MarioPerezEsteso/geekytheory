@@ -35,14 +35,18 @@ class ImageRepository extends Repository implements ImageRepositoryInterface
      * Find an image in all of the available sizes by searching by its identifier and the parent of the other images.
      *
      * @param $id
+     * @param string $orderBy
      * @return null
      */
-    public function findImageAllSizes($id = null)
+    public function findImageAllSizes($id = null, $orderBy = 'asc')
     {
         if ($id === null) {
             return null;
         }
 
-        return call_user_func_array("{$this->modelClassName}::where", array('id', $id))->orWhere('parent', $id)->get();
+        return call_user_func_array("{$this->modelClassName}::where", array('id', $id))
+            ->orWhere('parent', $id)
+            ->orderBy('parent', $orderBy)
+            ->get();
     }
 }
