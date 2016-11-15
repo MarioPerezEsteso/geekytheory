@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
 
 class GalleryController extends Controller
@@ -162,6 +163,10 @@ class GalleryController extends Controller
             $imageController = new ImageController(new ImageRepository());
             $imageController->storeGalleryImages($gallery, $user, $data['images']);
 
+            if (Cache::has('gallery_rendered_' . $gallery->id)) {
+                Cache::forget('gallery_rendered_' . $id);
+            }
+
             return Redirect::to('home/gallery/edit/' . $gallery->id)->withSuccess(trans('home.gallery_update_success'));
         }
     }
@@ -175,5 +180,17 @@ class GalleryController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Render a gallery.
+     *
+     * @param Gallery $gallery
+     * @return string Gallery rendered.
+     */
+    public static function render(Gallery $gallery)
+    {
+        $images = (new ImageRepository)->findImagesByGallery($gallery, Image::SIZE_ORIGINAL);
+        return view('themes.vortex.blog.partials.gallery', compact('gallery', 'images'))->render();
     }
 }
