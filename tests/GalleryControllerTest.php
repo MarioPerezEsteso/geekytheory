@@ -104,7 +104,7 @@ class GalleryControllerTest extends TestCase
         $this->assertEquals($data['title'], $gallery->title);
 
         $galleryImages = $this->imageRepository->findImagesByGallery($gallery);
-        $this->assertEquals(8 * count(Image::SIZES_GALLERY), count($galleryImages));
+        $this->assertEquals(8 * count(Image::$SIZES_GALLERY), count($galleryImages));
 
         $galleryImagesOriginal = $this->imageRepository->findImagesByGallery($gallery, Image::SIZE_ORIGINAL);
         $this->assertEquals(8, count($galleryImagesOriginal));
@@ -140,7 +140,7 @@ class GalleryControllerTest extends TestCase
         $this->assertEquals($data['title'], $gallery->title);
 
         $galleryImages = $this->imageRepository->findImagesByGallery($gallery);
-        $this->assertEquals(5 * count(Image::SIZES_GALLERY), count($galleryImages));
+        $this->assertEquals(5 * count(Image::$SIZES_GALLERY), count($galleryImages));
 
         $galleryImagesOriginal = $this->imageRepository->findImagesByGallery($gallery, Image::SIZE_ORIGINAL);
         $this->assertEquals(5, count($galleryImagesOriginal));
