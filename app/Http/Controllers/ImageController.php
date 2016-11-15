@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Support\Facades\File;
 
@@ -116,6 +117,10 @@ class ImageController extends Controller
          */
         $images = $this->imageRepository->findImageAllSizes($imageId, 'desc');
         foreach ($images as $image) {
+            if (Cache::has('gallery_rendered_' . $image->gallery_id)) {
+                Cache::forget('gallery_rendered_' . $image->gallery_id);
+            }
+
             /** @var Image $image */
             $image->delete();
         }
