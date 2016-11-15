@@ -143,6 +143,7 @@ class ArticleController extends PostController
     public function preview($slug)
     {
         $post = $this->repository->findArticleBySlug($slug, true);
+        $post = $this->processGalleryShortcodes($post);
         $tags = $post->tags;
         $categories = $post->categories;
         $comments = $post->hamComments()->get();
