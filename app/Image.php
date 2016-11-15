@@ -20,11 +20,10 @@ class Image extends Model
 
     /**
      * Image sizes for a gallery.
-	 * TODO: Use self constants as array
      */
-    const SIZES_GALLERY = [
-        'original',
-        'thumbnail',
+    public static $SIZES_GALLERY = [
+        self::SIZE_ORIGINAL,
+        self::SIZE_THUMBNAIL,
     ];
 
     const SIZE_GALLERY_THUMBNAIL_WIDTH = 400;

@@ -54,6 +54,6 @@ class ImageControllerTest extends TestCase
         $this->assertEquals(json_decode($result)['error'], 0);
 
         $images = $this->imageRepository->findImagesByGallery($gallery);
-        $this->assertEquals($imagesBefore - count(Image::SIZES_GALLERY), count($images));
+        $this->assertEquals($imagesBefore - count(Image::$SIZES_GALLERY), count($images));
     }
 }

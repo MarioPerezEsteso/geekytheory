@@ -15,7 +15,7 @@ class ImagesTableSeeder extends Seeder
 
         // Create 5 images with different sizes assigned to a gallery
         for ($i = 1; $i <= 5; $i++) {
-            foreach (\App\Image::SIZES_GALLERY as $size) {
+            foreach (\App\Image::$SIZES_GALLERY as $size) {
                 DB::table('images')->insert([
                     'parent' => $size == \App\Image::SIZE_ORIGINAL ? null : $i * 2 - 1,
                     'user_id' => 1,
