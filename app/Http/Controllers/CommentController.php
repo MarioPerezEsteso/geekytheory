@@ -122,11 +122,11 @@ class CommentController extends Controller
                 Cache::forget('comments_' . $post->slug);
             }
 
-            return array(
+            return [
                 'error' => 0,
                 'spam' => $data['spam'] ? 1 : 0,
                 'html' => view('themes.vortex.partials.blog.singleComment', compact('comment'))->render(),
-            );
+            ];
         }
     }
 

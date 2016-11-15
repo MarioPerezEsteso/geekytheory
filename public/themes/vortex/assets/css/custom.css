@@ -3,19 +3,18 @@
         width: 110% !important;
         margin-left: -5%;
     }
+}
 
-    .post-entry img {
-        max-width: 110% !important;
-        margin-left: -5%;
-        padding-bottom: 20px;
-        padding-top: 20px;
-    }
+.carousel-control-post {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .post-entry img {
     padding-bottom: 10px;
     padding-top: 10px;
 }
+
 
 .post-entry a {
     color: #3498db;

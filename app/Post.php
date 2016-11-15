@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-
     /**
      * Statuses of a post
      */
@@ -28,7 +27,7 @@ class Post extends Model
      *
      * @var array
      */
-    protected $fillable = array(
+    protected $fillable = [
         'user_id',
         'slug',
         'title',
@@ -40,7 +39,7 @@ class Post extends Model
         'allow_comments',
         'show_title',
         'show_description',
-    );
+    ];
 
     /**
      * Get the user that owns the post.

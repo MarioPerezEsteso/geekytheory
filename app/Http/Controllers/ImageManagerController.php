@@ -89,6 +89,7 @@ class ImageManagerController extends Controller
         if (filter_var($imageName, FILTER_VALIDATE_URL)) {
             return $imageName;
         }
+
         $publicImageUrl = $imageName;
         if ($checkIfExists) {
             if (File::exists($publicImageUrl)) {
