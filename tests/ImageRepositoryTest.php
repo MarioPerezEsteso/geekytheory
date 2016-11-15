@@ -49,7 +49,7 @@ class ImageRepositoryTest extends TestCase
     public function testFindImageAllSizes()
     {
         $images = $this->imageRepository->findImageAllSizes(1);
-        $this->assertEquals(count(Image::SIZES_GALLERY), count($images));
+        $this->assertEquals(count(Image::$SIZES_GALLERY), count($images));
         $this->assertEquals($images[0]->id, $images[1]->parent);
     }
 }

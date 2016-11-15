@@ -143,7 +143,7 @@ class ImageController extends Controller
         $imageOriginalFilename = '';
         foreach ($images as $galleryImage) {
             if ($galleryImage !== null) {
-                foreach (Image::SIZES_GALLERY as $size) {
+                foreach (Image::$SIZES_GALLERY as $size) {
                     $data['image'] = self::getUploadFilename($galleryImage, null, $size);
                     $data['size'] = $size;
                     if ($size == Image::SIZE_ORIGINAL) {
