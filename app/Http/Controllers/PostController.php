@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
+use App\Repositories\GalleryRepository;
 use App\Repositories\PostRepository;
 use App\Repositories\UserRepository;
 use App\Validators\ArticleValidator;
@@ -21,24 +22,9 @@ use Illuminate\Support\Facades\Redirect;
 class PostController extends Controller
 {
     /**
-     * @var PageRepository|ArticleRepository
+     * Set cache expiration time to 240 minutes.
      */
-    protected $repository;
-
-    /**
-     * @var CategoryRepository
-     */
-    protected $categoryRepository;
-
-    /**
-     * @var UserRepository
-     */
-    protected $userRepository;
-
-    /**
-     * @var PageValidator|ArticleValidator
-     */
-    protected $validator;
+    const CACHE_EXPIRATION_TIME = 240;
 
     /**
      * Number of posts to show with pagination in admin panel
@@ -70,6 +56,26 @@ class PostController extends Controller
      */
     const POST_ACTION_PUBLISH   = 'publish';
     const POST_ACTION_UPDATE    = 'update';
+
+    /**
+     * @var PageRepository|ArticleRepository
+     */
+    protected $repository;
+
+    /**
+     * @var CategoryRepository
+     */
+    protected $categoryRepository;
+
+    /**
+     * @var UserRepository
+     */
+    protected $userRepository;
+
+    /**
+     * @var PageValidator|ArticleValidator
+     */
+    protected $validator;
 
     /**
      * PostController constructor.
@@ -314,4 +320,27 @@ class PostController extends Controller
         return $url;
     }
 
+    /**
+     * Process gallery shortcodes.
+     *
+     * @param Article|Page $post
+     * @return mixed
+     */
+    public function processGalleryShortcodes($post)
+    {
+        $galleryRepository = new GalleryRepository();
+        preg_match_all("/\[gallery.*id=[\"|\'](.*?)?[\"|\'].*\]/", $post->body, $matches);
+        for ($index = 0; $index < count($matches[0]); $index++) {
+            $id = $matches[1][$index];
+            if (Cache::has('gallery_rendered_' . $id)) {
+                $galleryHtml = Cache::get('gallery_rendered_' . $id);
+            } else {
+                $galleryHtml = GalleryController::render($galleryRepository->find($id));
+                Cache::put('gallery_rendered_' . $id, $galleryHtml, self::CACHE_EXPIRATION_TIME);
+            }
+            $post->body = str_replace($matches[0][$index], $galleryHtml, $post->body);
+        }
+
+        return $post;
+    }
 }

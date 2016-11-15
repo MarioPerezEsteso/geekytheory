@@ -29,3 +29,45 @@
     cursor: inherit;
     display: block;
 }
+
+.gallery-img {
+    position: relative;
+    margin-top: 15px;
+}
+
+.gallery-img .close {
+    position: absolute;
+    top: 2px;
+    right: 18px;
+    z-index: 100;
+    padding: 5px 2px 2px;
+    color: #ff0000;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: .5;
+    text-align: center;
+    font-size: 22px;
+    line-height: 10px;
+}
+
+.gallery-img:hover .close {
+    opacity: 1;
+}
+
+@media only screen and (min-width: 768px) {
+    .gallery-img {
+        min-height: 230px;
+    }
+}
+
+@media only screen and (min-width: 921px) {
+    .gallery-img {
+        min-height: 180px;
+    }
+}
+
+@media only screen and (min-width: 1368px) {
+    .gallery-img {
+        min-height: 230px;
+    }
+}

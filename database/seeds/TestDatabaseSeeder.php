@@ -20,6 +20,8 @@ class TestDatabaseSeeder extends Seeder
         $this->call(CategoriesTableSeeder::class);
         $this->call(TagsTableSeeder::class);
         $this->call(CommentsTableSeeder::class);
+        $this->call(GalleriesTableSeeder::class);
+        $this->call(ImagesTableSeeder::class);
 
         Model::reguard();
     }

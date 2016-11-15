@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\Post;
 use App\Repositories\ArticleRepository;
+use App\Repositories\GalleryRepository;
 use App\Repositories\UserRepository;
 use App\Validators\ArticleValidator;
 use Illuminate\Http\Request;
@@ -22,9 +23,9 @@ class ArticleController extends PostController
     const TYPE = PostController::POST_ARTICLE;
 
     /**
-     * Cache expires in 120 minutes.
+     * Cache expires in 240 minutes.
      */
-    const CACHE_EXPIRATION_TIME = 120;
+    const CACHE_EXPIRATION_TIME = 240;
 
     /**
      * @var ArticleValidator
@@ -114,6 +115,8 @@ class ArticleController extends PostController
             Cache::put('categories_' . $slug, $categories, self::CACHE_EXPIRATION_TIME);
         }
 
+        $post = $this->processGalleryShortcodes($post);
+
         /*
          * The comments are cached apart from the post, tags and categories
          * because they are going to be modified frequently.
@@ -140,6 +143,7 @@ class ArticleController extends PostController
     public function preview($slug)
     {
         $post = $this->repository->findArticleBySlug($slug, true);
+        $post = $this->processGalleryShortcodes($post);
         $tags = $post->tags;
         $categories = $post->categories;
         $comments = $post->hamComments()->get();
