@@ -39,7 +39,7 @@
                             </div>
                             <div class="col-lg-12">
                                 Insert this code where you want to show this gallery in your post:
-                                <code>[gallery id='{{ $gallery->id }}']</code>
+                                [gallery id='{{ $gallery->id }}']
                             </div>
                         </div>
                     @endif
