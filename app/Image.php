@@ -48,6 +48,8 @@ class Image extends Model
         'title',
         'image',
         'size',
+		'width',
+		'height',
         'order',
     ];
 

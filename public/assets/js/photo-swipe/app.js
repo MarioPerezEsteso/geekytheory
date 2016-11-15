@@ -3,7 +3,7 @@ var image = [];
 
 /**
  * Get the items of a gallery.
- * 
+ *
  * @param  gallery
  * @return array
  */
@@ -29,7 +29,7 @@ var image = [];
 
 /**
  * Get the default options for the photo swiper.
- * 
+ *
  * @param  index Index of the picture.
  * @return array	Array with the default options.
  */

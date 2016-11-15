@@ -37,6 +37,8 @@ class CreateGalleriesAndImagesTable extends Migration
             $table->string('title');
             $table->string('image');
             $table->enum('size', ['original', 'thumbnail', 'featured', 'featured_thumbnail']);
+			$table->integer('width')->unsigned()->nullable()->default(null);
+			$table->integer('height')->unsigned()->nullable()->default(null);
             $table->integer('order');
             $table->timestamp('created_at');
             $table->timestamp('updated_at');

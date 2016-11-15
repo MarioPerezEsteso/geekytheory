@@ -152,7 +152,10 @@ class ImageController extends Controller
                          * find it by its name in the server.
                          */
                         $imageOriginalFilename = $data['image'];
-                        $galleryImage->move(ImageManagerController::getPathYearMonth(), $data['image']);
+                        $galleryImage->move(self::getPathYearMonth(), $data['image']);
+						list($width, $height) = getimagesize(self::getPathYearMonth($data['image']));
+						$data['width'] = $width;
+						$data['height'] = $height;
                         $data['parent'] = null;
                         $originalImage = $this->imageRepository->create($data);
                     } else if ($size == Image::SIZE_THUMBNAIL) {
@@ -162,6 +165,10 @@ class ImageController extends Controller
                             0,
                             self::getPathYearMonth($data['image']),
                             100);
+
+						list($width, $height) = getimagesize(self::getPathYearMonth($data['image']));
+						$data['width'] = $width;
+						$data['height'] = $height;
 
                         if ($originalImage !== null) {
                             $data['parent'] = $originalImage->id;

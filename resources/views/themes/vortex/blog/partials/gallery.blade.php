@@ -9,9 +9,9 @@
 						<?php $firstImage = false; ?>
 					@endif
 					<figure itemprop="associatedMedia" itemscope="" itemtype="http://schema.org/ImageObject">
-						<a href="{{ App\Http\Controllers\ImageController::getPublicImageUrl($image->image, true) }}" itemprop="contentUrl" data-size="1000x667">
+						<a href="{{ App\Http\Controllers\ImageController::getPublicImageUrl($image->image, true) }}" itemprop="contentUrl" data-size="{{ $image->width }}x{{ $image->height }}">
 							<img src="{{ App\Http\Controllers\ImageController::getPublicImageUrl($image->image, true) }}" 
-							itemprop="thumbnail" alt="" style="{{ $firstImage ? '' : 'display:none' }}"">
+							itemprop="thumbnail" alt="" style="{{ $firstImage ? '' : 'display:none' }}">
 						</a>
 					</figure>
 					<?php $item++; ?>
