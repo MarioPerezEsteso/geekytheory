@@ -6,8 +6,20 @@
     </div>
     <div class="container">
         <div class="row multi-columns-row">
+            <?php $counter = 0; ?>
+            <?php $adsensePosition = rand(1, count($posts) - 2); ?>
             @foreach($posts as $post)
+                @if ($counter == $adsensePosition) 
+                    <div class="col-sm-6 col-md-4 col-lg-4 m-b-60">
+                        <div class="post">
+                            @if ($siteMeta->adsense_postlist_enabled)
+                                {!! $siteMeta->adsense_postlist_script !!}
+                            @endif
+                        </div>
+                    </div>
+                @endif
                 @include('themes.vortex.partials.index.postitem')
+                <?php $counter++; ?>
             @endforeach
         </div>
         <div class="adsense-banner">

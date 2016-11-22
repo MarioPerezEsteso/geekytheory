@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\ArticleRepository;
+use App\Repositories\SiteMetaRepository;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -18,13 +19,24 @@ class IndexController extends Controller
     const THEME = 'vortex';
 
     /**
+     * Number of posts to show in the homepage.
+     */
+    const SHOW_NUMBER_POSTS = 9;
+
+    /**
      * @var ArticleRepository
      */
     protected $articleRepository;
 
-    public function __construct(ArticleRepository $articleRepository)
+    /**
+     * @var SiteMetaRepository
+     */
+    protected $siteMetaRepository;
+
+    public function __construct(ArticleRepository $articleRepository, SiteMetaRepository $siteMetaRepository)
     {
         $this->articleRepository = $articleRepository;
+        $this->siteMetaRepository = $siteMetaRepository;
     }
 
     /**
@@ -35,12 +47,16 @@ class IndexController extends Controller
      */
     public function index(Request $request)
     {
+        $adsensePostlistEnabled = $this->siteMetaRepository->getSiteMeta()->adsense_postlist_enabled;
+        $postsToShow = $adsensePostlistEnabled ? self::SHOW_NUMBER_POSTS - 1 : self::SHOW_NUMBER_POSTS;
+
         if (!empty($request->search)) {
-            $posts = $this->articleRepository->findArticlesBySearch(true, 6, $request->search);
+            $posts = $this->articleRepository->findArticlesBySearch(true, $postsToShow, $request->search);
             $posts->appends(Input::except('page'));
         } else {
-            $posts = $this->articleRepository->findArticles(null, true, 6);
+            $posts = $this->articleRepository->findArticles(null, true, $postsToShow);
         }
+
         return view('themes.' . self::THEME . '.index', compact('posts'));
     }
 
