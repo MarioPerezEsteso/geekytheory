@@ -13,7 +13,8 @@ class AddAdsenseToPostList extends Migration
     public function up()
     {
         Schema::table('site_meta', function (Blueprint $table) {
-            $table->text('adsense_postlist')->default('');
+            $table->text('adsense_postlist_script')->default('');
+            $table->boolean('adsense_postlist_enabled')->default(false);
         });
     }
 
@@ -25,7 +26,8 @@ class AddAdsenseToPostList extends Migration
     public function down()
     {
         Schema::table('site_meta', function (Blueprint $table) {
-            $table->dropColumn('adsense_postlist');
+            $table->dropColumn('adsense_postlist_script');
+            $table->dropColumn('adsense_postlist_enabled');
         });
     }
 }
