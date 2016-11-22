@@ -9,12 +9,10 @@
             <?php $counter = 0; ?>
             <?php $adsensePosition = rand(1, count($posts) - 2); ?>
             @foreach($posts as $post)
-                @if ($counter == $adsensePosition) 
+                @if ($counter == $adsensePosition && $siteMeta->adsense_postlist_enabled) 
                     <div class="col-sm-6 col-md-4 col-lg-4 m-b-60">
                         <div class="post">
-                            @if ($siteMeta->adsense_postlist_enabled)
-                                {!! $siteMeta->adsense_postlist_script !!}
-                            @endif
+                            {!! $siteMeta->adsense_postlist_script !!}
                         </div>
                     </div>
                 @endif
