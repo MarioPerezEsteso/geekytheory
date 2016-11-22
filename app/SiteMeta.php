@@ -54,6 +54,8 @@ class SiteMeta extends Model
         'analytics_script',
         'adsense_script',
         'adsense_enabled',
+        'adsense_postlist_script',
+        'adsense_postlist_enabled',
     );
 
 }

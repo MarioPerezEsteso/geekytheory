@@ -63,6 +63,7 @@ class SiteMetaController extends Controller
                 'file-input-id' => 'site-logo_114-file-input',
             ),
         );
+
         return view('home.sitemeta.sitemeta', compact('siteMeta', 'fileUploaders'));
     }
 
@@ -78,7 +79,7 @@ class SiteMetaController extends Controller
     }
 
     /**
-     * Update the site menu
+     * Update the site menu.
      *
      * @param Request $request
      * @return array
@@ -101,11 +102,10 @@ class SiteMetaController extends Controller
                 'message' => trans('home.menu_updated_successfully'),
             );
         }
-
     }
 
     /**
-     * Return HTML for a new menu item in editor
+     * Return HTML for a new menu item in editor.
      *
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -159,6 +159,8 @@ class SiteMetaController extends Controller
             'analytics_script' => $request->analytics_script,
             'adsense_script' => $request->adsense_script,
             'adsense_enabled' => $request->adsense_enabled && $request->adsense_enabled == 'on',
+            'adsense_postlist_script' => $request->adsense_postlist_script,
+            'adsense_postlist_enabled' => $request->adsense_postlist_enabled && $request->adsense_postlist_enabled == 'on',
         );
 
         // Add social networks to $data.
