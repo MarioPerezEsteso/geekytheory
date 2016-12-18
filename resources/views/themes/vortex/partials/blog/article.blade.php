@@ -23,12 +23,17 @@
     <div class="post-entry">
         {!! $post->body !!}
     </div>
-    <div class="tags">
-        @foreach($tags as $tag)
-            @include('themes.vortex.partials.blog.tags')
-        @endforeach
-    </div>
 </article>
+<div class="tags">
+    @foreach($tags as $tag)
+        @include('themes.vortex.partials.blog.tags')
+    @endforeach
+</div>
+<div class="row">
+    <div class="col-sm-12 text-center">
+        @include('themes.vortex.partials.blog.social-share')
+    </div>
+</div>
 <div>
     @if ($siteMeta->adsense_enabled)
         {!! $siteMeta->adsense_script !!}

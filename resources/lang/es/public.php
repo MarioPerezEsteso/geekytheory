@@ -42,4 +42,10 @@ return [
     'made_with_love' => 'Hecho con <i style="color:#E26A6A;" class="fa fa-heart"></i> por <a href="http://geekytheory.com">Geeky Theory</a>',
     'we_are_open_source' => 'Somos open source',
     'search' => 'Buscar',
+	'share_with_whatsapp' => 'Enviar por WhatsApp',
+	'share_with_twitter' => 'Compartir en Twitter',
+	'share_with_facebook' => 'Compartir en Facebook',
+	'share_with_google-plus' => 'Compartir en Google Plus',
+	'share_with_telegram' => 'Enviar por Telegram',
+	'share_with_mail' => 'Enviar por email',
 ];
