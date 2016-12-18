@@ -12,6 +12,11 @@
                     <h5 class="mh-line-size-4 font-alt">{{ $post->description }}</h5>
                 @endif
             </div>
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    @include('themes.vortex.partials.blog.social-share')
+                </div>
+            </div>
         </div>
     </div>
     <!-- /HERO TEXT -->

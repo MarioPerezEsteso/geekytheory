@@ -18,7 +18,8 @@
 @endsection
 
 @section('custom-javascript')
-    {!! Html::script('themes/vortex/assets/js/app/comments.js') !!}
+    {!! Html::script('themes/vortex/assets/js/app/comments.min.js') !!}
+    {!! Html::script('themes/vortex/assets/js/app/social-share.min.js') !!}
     {!! Html::script('assets/js/photo-swipe/photoswipe.min.js') !!}
     {!! Html::script('assets/js/photo-swipe/photoswipe-ui-default.min.js') !!}
     {!! Html::script('assets/js/photo-swipe/app.js') !!}

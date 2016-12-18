@@ -634,6 +634,14 @@ Social links
 	margin: 0;
 }
 
+.social-icon-links-container {
+	clear: both;
+	margin-bottom: 30px;
+	margin-top: 30px;
+	overflow: hidden;
+	text-align: center;
+}
+
 .socicon-round > li > a {
 	-webkit-border-radius: 2px;
 	   -moz-border-radius: 2px;
@@ -671,6 +679,60 @@ Social links
 
 .social-icon-links > li > a:hover {
 	background: #f0f0f0;
+}
+
+.social-icon-link.twitter {
+	background: #55acee;
+	color: #fff;
+}
+
+.social-icon-link.twitter:hover {
+	background: #5492d3;
+}
+
+.social-icon-link.facebook {
+	background: #3b5998;
+	color: #fff;
+}
+
+.social-icon-link.facebook:hover {
+	background: #393f7c;
+}
+
+.social-icon-link.google-plus {
+	background: #db4437;
+	color: #fff;
+}
+
+.social-icon-link.google-plus:hover {
+	background: #b03e30;
+}
+
+.social-icon-link.whatsapp {
+	background: #25d366;
+	color: #fff;
+}
+
+.social-icon-link.whatsapp:hover {
+	background: #24c060;
+}
+
+.social-icon-link.telegram {
+	background: #0088cc;
+	color: #fff;
+}
+
+.social-icon-link.telegram:hover {
+	background: #0073ae;
+}
+
+.social-icon-link.mail {
+	background: #729e54;
+	color: #fff;
+}
+
+.social-icon-link.mail:hover {
+	background: #517b3d;
 }
 
 /* ------------------------------------------------------------------

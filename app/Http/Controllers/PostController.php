@@ -7,6 +7,7 @@ use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\GalleryRepository;
 use App\Repositories\PostRepository;
+use App\Repositories\SiteMetaRepository;
 use App\Repositories\UserRepository;
 use App\Validators\ArticleValidator;
 use App\Validators\PageValidator;
@@ -305,18 +306,25 @@ class PostController extends Controller
         return $url;
     }
 
-    /**
-     * Gets the public URL of a post depending of its type
-     *
-     * @param Post $post
-     * @return string
-     */
-    public static function getPostPublicUrlByType(Post $post)
+	/**
+	 * Gets the public URL of a post depending of its type
+	 *
+	 * @param Post $post
+	 * @param bool $relative
+	 * @return string
+	 */
+    public static function getPostPublicUrlByType(Post $post, $relative = true)
     {
         $url = '/' . $post->slug;
         if ($post->type == self::POST_PAGE) {
             $url = '/p' . $url;
         }
+
+        if (!$relative) {
+        	$siteUrl = (new SiteMetaRepository())->getSiteMeta()['url'];
+			$url = $siteUrl . $url;
+		}
+
         return $url;
     }
 

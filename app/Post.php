@@ -39,6 +39,12 @@ class Post extends Model
         'allow_comments',
         'show_title',
         'show_description',
+		'shares_whatsapp',
+		'shares_twitter',
+		'shares_facebook',
+		'shares_google-plus',
+		'shares_telegram',
+		'shares_mail',
     ];
 
     /**
