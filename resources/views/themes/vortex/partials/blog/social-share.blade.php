@@ -4,7 +4,7 @@
             <li>
                 <?php $onlyVisibleMobile = !$socialShareButton['visibleDesktop'] && $socialShareButton['visibleMobile']; ?>
                 <a href="{{ $socialShareButton['url'] }}" title="{{ $socialShareButton['title'] }}"
-                   data-post-id="{{ $post->id }}" data-social-network="{{ $socialShareButton['socialNetwork'] }}"
+                   data-postid="{{ $post->id }}" data-socialnetwork="{{ $socialShareButton['socialNetwork'] }}"
                    class="social-icon-link {{ $socialShareButton['socialNetwork'] }} {{ $onlyVisibleMobile ? 'visible-xs' : '' }}" target="_blank">
                     <i class="fa {{ $socialShareButton['icon'] }}"></i>
                 </a>
