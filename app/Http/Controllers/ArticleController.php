@@ -199,6 +199,38 @@ class ArticleController extends PostController
 	}
 
 	/**
+	 * Updates the share counter of a post.
+	 *
+	 * @param Request $request
+	 * @return array
+	 */
+	public function updateShares(Request $request)
+	{
+		$postId = $request->postId;
+		$socialNetwork = $request->socialNetwork;
+
+		if (!$this->validator->updateShares()->with(['socialNetwork' => $socialNetwork])->passes()) {
+			return [
+				'error' => 1,
+				'message' => 'Undefined social network',
+			];
+		}
+
+		/** @var Post $post */
+		$post = $this->repository->findOrFail($postId);
+		$key = 'shares_' . $socialNetwork;
+		$data = [
+			$key => $post->getAttribute($key) + 1,
+		];
+
+		$this->repository->update($postId, $data);
+
+		return [
+			'error' => 0,
+		];
+	}
+
+	/**
 	 * @param $post
 	 * @return array
 	 */

@@ -306,6 +306,11 @@ Route::get('feed', 'FeedController@feed');
 
 Route::get('/{slug?}', 'ArticleController@show');
 
+Route::post('share-article', [
+	'before'        => 'csrf',
+	'uses'			=> 'ArticleController@updateShares'
+]);
+
 Route::get('/p/{slug?}', 'PageController@show');
 
 Route::get('user/{username}', 'ArticleController@showByUsername');
