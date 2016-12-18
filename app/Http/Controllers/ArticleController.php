@@ -212,7 +212,7 @@ class ArticleController extends PostController
 			$socialNetworks = [
 				[
 					'socialNetwork' => 'whatsapp',
-					'title' => trans('share_with_whatsapp'),
+					'title' => trans('public.share_with_whatsapp'),
 					'url' => 'whatsapp://send?text=' . $linkContent,
 					'icon' => 'fa-whatsapp',
 					'visibleDesktop' => false,
@@ -220,7 +220,7 @@ class ArticleController extends PostController
 				],
 				[
 					'socialNetwork' => 'twitter',
-					'title' => trans('share_with_twitter'),
+					'title' => trans('public.share_with_twitter'),
 					'url' => 'https://twitter.com/intent/tweet?text=' . $linkContent,
 					'icon' => 'fa-twitter',
 					'visibleDesktop' => true,
@@ -228,7 +228,7 @@ class ArticleController extends PostController
 				],
 				[
 					'socialNetwork' => 'facebook',
-					'title' => trans('share_with_facebook'),
+					'title' => trans('public.share_with_facebook'),
 					'url' => 'https://www.facebook.com/sharer/sharer.php?u=' . $postUrl,
 					'icon' => 'fa-facebook',
 					'visibleDesktop' => true,
@@ -236,7 +236,7 @@ class ArticleController extends PostController
 				],
 				[
 					'socialNetwork' => 'google-plus',
-					'title' => trans('share_with_google-plus'),
+					'title' => trans('public.share_with_google-plus'),
 					'url' => 'https://plus.google.com/share?url=' . $postUrl,
 					'icon' => 'fa-google-plus',
 					'visibleDesktop' => true,
@@ -244,7 +244,7 @@ class ArticleController extends PostController
 				],
 				[
 					'socialNetwork' => 'telegram',
-					'title' => trans('share_with_telegram'),
+					'title' => trans('public.share_with_telegram'),
 					'url' => 'https://telegram.me/share/url?url=' . $linkContent,
 					'icon' => 'fa-send',
 					'visibleDesktop' => true,
@@ -252,7 +252,7 @@ class ArticleController extends PostController
 				],
 				[
 					'socialNetwork' => 'mail',
-					'title' => trans('share_with_mail'),
+					'title' => trans('public.share_with_mail'),
 					'url' => 'mailto:?subject=' . $post->title . '&body=' . $postUrl,
 					'icon' => 'fa-envelope',
 					'visibleDesktop' => true,
