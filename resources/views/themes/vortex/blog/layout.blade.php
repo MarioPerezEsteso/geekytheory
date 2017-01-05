@@ -42,12 +42,6 @@
 </head>
 <body>
 
-<!-- PRELOADER -->
-<div class="page-loader">
-    <div class="loader">Loading...</div>
-</div>
-<!-- /PRELOADER -->
-
 <!-- OVERLAY MENU -->
 @include('themes.vortex.partials.overlay-menu')
 <!-- /OVERLAY MENU -->
