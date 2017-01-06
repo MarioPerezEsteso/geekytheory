@@ -4,7 +4,7 @@
     </div>
     <div class="comment-content clearfix">
         <h5 class="comment-author font-alt">
-            <a href="#">{{ $comment->author_name }}</a>
+            <a href="#{{ trans('public.comment') . '-' . $comment->id }}" name="{{ trans('public.comment') . '-' . $comment->id }}">{{ $comment->author_name }}</a>
             <span class="comment-date">
                 · {{ \App\Http\Controllers\CommentController::getDateFormatted($comment->created_at) }}
             </span>
