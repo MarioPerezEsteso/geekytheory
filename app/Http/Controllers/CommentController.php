@@ -36,7 +36,10 @@ class CommentController extends Controller
      * @param SiteMetaRepository $siteMetaRepository
      * @param CommentValidator $commentValidator
      */
-    public function __construct(CommentRepository $commentRepository, PostRepository $postRepository, SiteMetaRepository $siteMetaRepository, CommentValidator $commentValidator)
+    public function __construct(CommentRepository $commentRepository,
+								PostRepository $postRepository,
+								SiteMetaRepository $siteMetaRepository,
+								CommentValidator $commentValidator)
     {
         $this->commentRepository = $commentRepository;
         $this->postRepository = $postRepository;
@@ -122,6 +125,18 @@ class CommentController extends Controller
                 Cache::forget('comments_' . $post->slug);
             }
 
+            /**
+			 * If the new comment is an answer to another comment. Send a notification to the parent comment.
+			 */
+            if (!empty($data['parent'])) {
+            	$commentParent = $this->commentRepository->find($data['parent']);
+				try {
+					CommentEmailController::notifyResponse($post, $commentParent);
+				} catch (\Exception $e) {
+					// Just do not send the email.
+				}
+			}
+
             return [
                 'error' => 0,
                 'spam' => $data['spam'] ? 1 : 0,
@@ -152,51 +167,6 @@ class CommentController extends Controller
         $commentParent = $data['parent'];
 
         return view('themes.vortex.partials.blog.commentForm', compact('post', 'commentParent'));
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     /**

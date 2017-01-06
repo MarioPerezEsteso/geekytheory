@@ -22,6 +22,7 @@ return [
     'website' => 'Website',
     'post_comment' => 'Post comment',
     'leave_comment' => 'Leave a comment',
+    'comment' => 'comment',
     'comments' => 'comments',
     'success_creating_comment' => 'Your comment has been sent successfully.',
     'error_creating_comment' => 'There has been an error sending your comment. Please, try again.',

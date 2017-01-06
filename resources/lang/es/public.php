@@ -22,6 +22,7 @@ return [
     'website' => 'Sitio web',
     'post_comment' => 'Publicar comentario',
     'leave_comment' => 'Deja un comentario',
+    'comment' => 'comentario',
     'comments' => 'comentarios',
     'success_creating_comment' => 'Su comentario se ha enviado con éxito.',
     'error_creating_comment' => 'Ha ocurrido un error al enviar su comentario. Por favor, inténtelo de nuevo.',
