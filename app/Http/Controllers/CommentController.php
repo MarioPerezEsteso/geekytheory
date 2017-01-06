@@ -131,7 +131,7 @@ class CommentController extends Controller
             if (!empty($data['parent'])) {
             	$commentParent = $this->commentRepository->find($data['parent']);
 				try {
-					CommentEmailController::notifyResponse($post, $commentParent);
+					// CommentEmailController::notifyResponse($post, $commentParent);
 				} catch (\Exception $e) {
 					// Just do not send the email.
 				}
