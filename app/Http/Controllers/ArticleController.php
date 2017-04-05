@@ -115,6 +115,8 @@ class ArticleController extends PostController
 			Cache::put('categories_' . $slug, $categories, self::CACHE_EXPIRATION_TIME);
 		}
 
+		$authorUser = $post->user()->with('userMeta')->first();
+
 		$post = $this->processGalleryShortcodes($post);
 
 		$socialShareButtons = $this->getSocialShareButtonsData($post);
@@ -133,7 +135,7 @@ class ArticleController extends PostController
 
 		$commentCount = count($comments);
 
-		return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'tags', 'categories', 'comments', 'commentCount', 'socialShareButtons'));
+		return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'authorUser', 'tags', 'categories', 'comments', 'commentCount', 'socialShareButtons'));
 	}
 
 	/**
