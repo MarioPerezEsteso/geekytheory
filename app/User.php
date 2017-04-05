@@ -80,13 +80,25 @@ class User extends Model implements AuthenticatableContract,
         'users.bitbucket as user_bitbucket',
     );
 
-    /**
-     * Get the posts of the user.
-     */
+	/**
+	 * Get the posts of the user.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
+	 */
     public function posts()
     {
         return $this->hasMany('App\Post');
     }
+
+	/**
+	 * Get the user meta.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
+	 */
+    public function userMeta()
+	{
+		return $this->hasOne('App\UserMeta');
+	}
 
     /**
      * Returns the basic user data for the admin panel view
