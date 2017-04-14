@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use App\Validators\PageValidator;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -15,7 +16,7 @@ class PageController extends PostController
     /**
      * Type of the post
      */
-    const TYPE = PostController::POST_PAGE;
+    const TYPE = Post::POST_PAGE;
 
     /**
      * PageController constructor.

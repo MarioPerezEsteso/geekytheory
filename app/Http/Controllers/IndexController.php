@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\ArticleRepository;
 use App\Repositories\SiteMetaRepository;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
+use App\Article;
 use App\Post;
 use Illuminate\Support\Facades\Input;
 
@@ -24,18 +23,12 @@ class IndexController extends Controller
     const SHOW_NUMBER_POSTS = 9;
 
     /**
-     * @var ArticleRepository
-     */
-    protected $articleRepository;
-
-    /**
      * @var SiteMetaRepository
      */
     protected $siteMetaRepository;
 
-    public function __construct(ArticleRepository $articleRepository, SiteMetaRepository $siteMetaRepository)
+    public function __construct(SiteMetaRepository $siteMetaRepository)
     {
-        $this->articleRepository = $articleRepository;
         $this->siteMetaRepository = $siteMetaRepository;
     }
 
@@ -51,10 +44,10 @@ class IndexController extends Controller
         $postsToShow = $adsensePostlistEnabled ? self::SHOW_NUMBER_POSTS - 1 : self::SHOW_NUMBER_POSTS;
 
         if (!empty($request->search)) {
-            $posts = $this->articleRepository->findArticlesBySearch(true, $postsToShow, $request->search);
+            $posts = Article::findArticlesBySearch(true, $postsToShow, $request->search);
             $posts->appends(Input::except('page'));
         } else {
-            $posts = $this->articleRepository->findArticles(null, true, $postsToShow);
+            $posts = Article::findArticles(null, true, $postsToShow);
         }
 
         return view('themes.' . self::THEME . '.index', compact('posts'));

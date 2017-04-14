@@ -3,13 +3,13 @@
         @if ($siteMeta->show_author_post)
             {{ trans('public.by') }}
             <a href="{{ url('/user/' . $post->user->username) }}">{{ $post->user->name }}</a>
-            @if(count($categories) > 0)
+            @if(count($post->categories) > 0)
                 {{ trans('public.in') }}
             @endif
         @endif
-        @if(count($categories) > 0)
+        @if(count($post->categories) > 0)
             <?php $catLinks = []; ?>
-            @foreach($categories as $category)
+            @foreach($post->categories as $category)
                 <?php $catLinks[] = "<a href='/category/" . $category->slug . "'>" . $category->category . "</a>"; ?>
             @endforeach
             {!! implode(', ', $catLinks) !!}
@@ -25,7 +25,7 @@
     </div>
 </article>
 <div class="tags">
-    @foreach($tags as $tag)
+    @foreach($post->tags as $tag)
         @include('themes.vortex.partials.blog.tags')
     @endforeach
 </div>

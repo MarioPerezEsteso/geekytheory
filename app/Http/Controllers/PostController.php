@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\GalleryRepository;
 use App\Repositories\PostRepository;
@@ -38,30 +37,10 @@ class PostController extends Controller
     const POSTS_PUBLIC_PAGINATION_NUMBER = 6;
 
     /**
-     * Possible statuses of a post
-     */
-    const POST_STATUS_PENDING   = 'pending';
-    const POST_STATUS_DRAFT     = 'draft';
-    const POST_STATUS_DELETED   = 'deleted';
-    const POST_STATUS_PUBLISHED = 'published';
-    const POST_STATUS_SCHEDULED = 'scheduled';
-
-    /**
-     * Possible types of a post
-     */
-    const POST_ARTICLE      = 'article';
-    const POST_PAGE         = 'page';
-
-    /**
      * Actions when editing a post
      */
     const POST_ACTION_PUBLISH   = 'publish';
     const POST_ACTION_UPDATE    = 'update';
-
-    /**
-     * @var PageRepository|ArticleRepository
-     */
-    protected $repository;
 
     /**
      * @var CategoryRepository
@@ -146,7 +125,7 @@ class PostController extends Controller
             $post->show_description = $data['show_description'];
 
             if ($request->action == self::POST_ACTION_PUBLISH) {
-                $post->status = self::POST_STATUS_PUBLISHED;
+                $post->status = Post::STATUS_PUBLISHED;
             }
 
             $post->slug = $slug;
@@ -213,7 +192,7 @@ class PostController extends Controller
             $post->status = $data['status'];
             $post->allow_comments = $data['allow_comments'] == 'on';
             if ($request->action == self::POST_ACTION_PUBLISH) {
-                $post->status = self::POST_STATUS_PUBLISHED;
+                $post->status = Post::STATUS_PUBLISHED;
             }
 
             if ($image) {
@@ -296,10 +275,10 @@ class PostController extends Controller
     {
         $url = '';
         switch ($post->type) {
-            case self::POST_ARTICLE:
+            case Post::POST_ARTICLE:
                 $url = 'home/articles/';
                 break;
-            case self::POST_PAGE:
+            case Post::POST_PAGE:
                 $url = 'home/pages/';
                 break;
         }
@@ -316,7 +295,7 @@ class PostController extends Controller
     public static function getPostPublicUrlByType(Post $post, $relative = true)
     {
         $url = '/' . $post->slug;
-        if ($post->type == self::POST_PAGE) {
+        if ($post->type == Post::POST_PAGE) {
             $url = '/p' . $url;
         }
 

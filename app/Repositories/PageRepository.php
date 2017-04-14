@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Http\Controllers\PostController;
+use App\Post;
 use App\User;
 
 class PageRepository extends PostRepository implements PageRepositoryInterface
@@ -36,9 +37,9 @@ class PageRepository extends PostRepository implements PageRepositoryInterface
     public function findPageBySlug($slug, $isPreview = false)
     {
         $query = call_user_func_array("{$this->modelClassName}::where", array('slug', $slug))
-            ->where('type', PostController::POST_PAGE);
+            ->where('type', Post::POST_PAGE);
         if (!$isPreview) {
-            $query->where('status', PostController::POST_STATUS_PUBLISHED);
+            $query->where('status', Post::STATUS_PUBLISHED);
         }
         return $query->firstOrFail();
     }
@@ -57,7 +58,7 @@ class PageRepository extends PostRepository implements PageRepositoryInterface
         $query = call_user_func_array("{$this->modelClassName}::join", array('users', 'users.id', '=', 'posts.user_id'))
             ->select($columns)
             ->orderBy('posts.created_at', 'DESC')
-            ->where('posts.type', PostController::POST_PAGE);
+            ->where('posts.type', Post::POST_PAGE);
         if ($author !== null) {
             $query->where('users.username', $author->username);
         }

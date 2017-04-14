@@ -39,7 +39,7 @@ class PostRepository extends Repository implements PostRepositoryInterface
     {
         return call_user_func_array("{$this->modelClassName}::join", array('users', 'users.id', '=', 'posts.user_id'))
             ->orderBy('posts.published_at', 'DESC')
-            ->where('posts.status', PostController::POST_STATUS_PUBLISHED)
+            ->where('posts.status', Post::STATUS_PUBLISHED)
             ->where('users.username', $author->username)
             ->paginate($paginate);
     }
@@ -58,8 +58,8 @@ class PostRepository extends Repository implements PostRepositoryInterface
         $query = $category->posts()
             ->join('users', 'users.id', '=', 'posts.user_id')
             ->orderBy('posts.published_at', 'DESC')
-            ->where('posts.type', PostController::POST_ARTICLE)
-            ->where('posts.status', PostController::POST_STATUS_PUBLISHED)
+            ->where('posts.type', Post::POST_ARTICLE)
+            ->where('posts.status', Post::STATUS_PUBLISHED)
             ->select($columns);
         return $query->paginate($paginate);
     }
@@ -77,8 +77,8 @@ class PostRepository extends Repository implements PostRepositoryInterface
         $query = $tag->posts()
             ->join('users', 'users.id', '=', 'posts.user_id')
             ->orderBy('posts.published_at', 'DESC')
-            ->where('posts.type', PostController::POST_ARTICLE)
-            ->where('posts.status', PostController::POST_STATUS_PUBLISHED)
+            ->where('posts.type', Post::POST_ARTICLE)
+            ->where('posts.status', Post::STATUS_PUBLISHED)
             ->select($columns);
         return $query->paginate($paginate);
     }

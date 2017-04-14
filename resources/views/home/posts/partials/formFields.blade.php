@@ -32,17 +32,17 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    @if(empty($post) || (!empty($post) && $post->status == \App\Http\Controllers\PostController::POST_STATUS_DRAFT))
+                    @if(empty($post) || (!empty($post) && $post->status == \App\Post::STATUS_DRAFT))
                         <button type="submit" class="btn btn-primary margin-r-5" name="action"
                                 value="{{ \App\Http\Controllers\PostController::POST_ACTION_UPDATE }}">
                             <i class="glyphicon glyphicon-floppy-disk"></i>
                             {{ trans('home.save_draft') }}
                         </button>
                     @endif
-                    @if(!empty($post) && $post->status != \App\Http\Controllers\PostController::POST_STATUS_DELETED)
+                    @if(!empty($post) && $post->status != \App\Post::STATUS_DELETED)
                         <?php $viewButtonHref = url(\App\Http\Controllers\PostController::getPostDashboardUrlByType($post) . 'preview/' . $post->slug); ?>
                         <?php $viewButtonText = trans('home.preview'); ?>
-                        @if($post->status == \App\Http\Controllers\PostController::POST_STATUS_PUBLISHED)
+                        @if($post->status == \App\Post::STATUS_PUBLISHED)
                             <?php $viewButtonHref = \App\Http\Controllers\PostController::getPostPublicUrlByType($post); ?>
                             <?php $viewButtonText = trans('home.view'); ?>
                         @endif
@@ -58,24 +58,24 @@
                     <div class="form-group">
                         <label>{{ trans('home.status') }}</label>
                         <select name='status' class="form-control">
-                            @if(!empty($post) && $post->status == \App\Http\Controllers\PostController::POST_STATUS_PUBLISHED)
-                                <option value="{{ \App\Http\Controllers\PostController::POST_STATUS_PUBLISHED }}">
+                            @if(!empty($post) && $post->status == \App\Post::STATUS_PUBLISHED)
+                                <option value="{{ \App\Post::STATUS_PUBLISHED }}">
                                     {{ trans('home.status_published') }}
                                 </option>
                             @endif
-                            <option value="{{ \App\Http\Controllers\PostController::POST_STATUS_DRAFT }}">
+                            <option value="{{ \App\Post::STATUS_DRAFT }}">
                                 {{ trans('home.status_draft') }}
                             </option>
-                            <option value="{{ \App\Http\Controllers\PostController::POST_STATUS_PENDING }}">
+                            <option value="{{ \App\Post::STATUS_PENDING }}">
                                 {{ trans('home.status_pending') }}
                             </option>
                         </select>
                     </div>
                     <?php $allowCommentsChecked = true; ?>
                     <?php $showAllowCommentsInput = false; ?>
-                    @if(empty($post) && $type == \App\Http\Controllers\PostController::POST_ARTICLE)
+                    @if(empty($post) && $type == \App\Post::POST_ARTICLE)
                         <?php $showAllowCommentsInput = true; ?>
-                    @elseif(!empty($post) && $post->type == \App\Http\Controllers\PostController::POST_ARTICLE)
+                    @elseif(!empty($post) && $post->type == \App\Post::POST_ARTICLE)
                         <?php $showAllowCommentsInput = true; ?>
                         <?php $allowCommentsChecked = $post->allow_comments; ?>
                     @endif
@@ -104,7 +104,7 @@
                     @endif
                 </div>
                 <div class="col-md-5 col-md-offset-2">
-                    @if(empty($post) || (!empty($post) && $post->status == \App\Http\Controllers\PostController::POST_STATUS_DRAFT))
+                    @if(empty($post) || (!empty($post) && $post->status == \App\Post::STATUS_DRAFT))
                         <button type="submit" class="btn btn-primary btn-block" name="action"
                                 value="{{ \App\Http\Controllers\PostController::POST_ACTION_PUBLISH }}">
                             <i class="glyphicon glyphicon-bullhorn"></i>

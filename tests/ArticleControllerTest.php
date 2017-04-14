@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use App\Post;
 
 class ArticleControllerTest extends TestCase
 {
@@ -17,7 +18,7 @@ class ArticleControllerTest extends TestCase
 
         $articleRepository = new \App\Repositories\ArticleRepository();
         $article = $articleRepository->find($id);
-        $this->assertEquals(ArticleController::POST_STATUS_DELETED, $article->status);
+        $this->assertEquals(Post::STATUS_DELETED, $article->status);
     }
 
     /**
