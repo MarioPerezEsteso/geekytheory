@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
 use App\Post;
-use App\Repositories\PageRepository;
 use Illuminate\Support\Facades\Cache;
 use Validator;
 use Illuminate\Support\Facades\Redirect;
@@ -60,18 +59,12 @@ class PostController extends Controller
     /**
      * PostController constructor.
      *
-     * @param PageRepository|ArticleRepository $repository
      * @param CategoryRepository $categoryRepository
      * @param UserRepository $userRepository
      * @param PageValidator|ArticleValidator $validator
      */
-    public function __construct($repository = null, CategoryRepository $categoryRepository, UserRepository $userRepository, $validator = null)
+    public function __construct(CategoryRepository $categoryRepository, UserRepository $userRepository, $validator = null)
     {
-        if ($repository !== null) {
-            $this->repository = $repository;
-        } else {
-            $this->repository = new PostRepository();
-        }
         $this->categoryRepository = $categoryRepository;
         $this->userRepository = $userRepository;
         $this->validator = $validator;
@@ -109,12 +102,11 @@ class PostController extends Controller
         if (!$this->validator->with($data)->passes()) {
 
             return array(
-                'error'     => true,
-                'messages'  => $this->validator->errors(),
+                'error' => true,
+                'messages' => $this->validator->errors(),
             );
         } else {
-            // TODO: refactor to use repository pattern
-            $post = new Post;
+            $post = new Post();
             $post->title = $data['title'];
             $post->body = $data['body'];
             $post->description = $data['description'];
@@ -138,14 +130,15 @@ class PostController extends Controller
             }
 
             $post->save();
+            // TODO: validate categories
             $categories = Category::whereIn('id', $data['categories'])->get();
             $post->categories()->sync($categories);
         }
 
         return array(
-            'id'        => $post->id,
-            'error'     => false,
-            'messages'  => trans('home.post_create_success'),
+            'id' => $post->id,
+            'error' => false,
+            'messages' => trans('home.post_create_success'),
         );
     }
 
@@ -167,7 +160,7 @@ class PostController extends Controller
             'description' => $request->description,
             'status' => $request->status,
             'image' => $image,
-            'type'  => $type,
+            'type' => $type,
             'tags' => $request->tags,
             'categories' => $request->categories,
             'show_title' => $request->show_title && $request->show_title == 'on',
@@ -181,8 +174,7 @@ class PostController extends Controller
                 'messages'  => $this->validator->errors(),
             );
         } else {
-            // TODO: refactor to use repository pattern
-            $post = $this->repository->findOrFail($id);
+            $post = Post::findOrFail($id);
             $post->title = $data['title'];
             $post->body = $data['body'];
             $post->description = $data['description'];
@@ -228,9 +220,10 @@ class PostController extends Controller
      */
     public function restore($id)
     {
-        $post = $this->repository->findOrFail($id);
+        $post = Post::findOrFail($id);
         $post->status = Post::STATUS_DRAFT;
         $post->save();
+
         return Redirect::back();
     }
 
@@ -243,7 +236,8 @@ class PostController extends Controller
     public function delete($id)
     {
         $data['status'] = Post::STATUS_DELETED;
-        $this->repository->update($id, $data);
+        Post::update($id, $data);
+
         return Redirect::back();
     }
 
@@ -256,9 +250,10 @@ class PostController extends Controller
     public function deletePostImage(Request $request)
     {
         if (!empty($request->id)) {
-            $post = $this->repository->findOrFail($request->id);
+            $post = Post::findOrFail($request->id);
             $post->image = NULL;
             $post->save();
+
             return response()->json(['error' => 0]);
         } else {
             return response()->json(['error' => 1]);
@@ -282,6 +277,7 @@ class PostController extends Controller
                 $url = 'home/pages/';
                 break;
         }
+
         return $url;
     }
 

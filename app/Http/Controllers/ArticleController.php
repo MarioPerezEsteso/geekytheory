@@ -41,7 +41,7 @@ class ArticleController extends PostController
 	 */
 	public function __construct(CategoryRepository $categoryRepository, UserRepository $userRepository, ArticleValidator $articleValidator)
 	{
-		parent::__construct(null, $categoryRepository, $userRepository, $articleValidator);
+		parent::__construct($categoryRepository, $userRepository, $articleValidator);
 	}
 
 	/**

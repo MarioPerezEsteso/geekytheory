@@ -1,20 +1,11 @@
 <?php
 
-namespace App\Repositories;
+namespace App;
 
-use App\Http\Controllers\PostController;
-use App\Post;
-use App\User;
+use Illuminate\Database\Eloquent\Model;
 
-class PageRepository extends PostRepository implements PageRepositoryInterface
+class Page extends Post
 {
-    /**
-     * Model class name
-     *
-     * @var string
-     */
-    protected $modelClassName = 'App\Post';
-
     /**
      * Find all pages.
      *
@@ -22,9 +13,9 @@ class PageRepository extends PostRepository implements PageRepositoryInterface
      * @param int $paginate
      * @return mixed
      */
-    public function findPagesByAuthor(User $author, $paginate = Repository::PAGINATION_DEFAULT)
+    public static function findPagesByAuthor(User $author, $paginate = Repository::PAGINATION_DEFAULT)
     {
-        return $this->findPages($paginate, $author);
+        return self::findPages($paginate, $author);
     }
 
     /**
@@ -34,13 +25,14 @@ class PageRepository extends PostRepository implements PageRepositoryInterface
      * @param bool $isPreview
      * @return mixed
      */
-    public function findPageBySlug($slug, $isPreview = false)
+    public static function findPageBySlug($slug, $isPreview = false)
     {
-        $query = call_user_func_array("{$this->modelClassName}::where", array('slug', $slug))
+        $query = self::where('slug', $slug)
             ->where('type', Post::POST_PAGE);
         if (!$isPreview) {
             $query->where('status', Post::STATUS_PUBLISHED);
         }
+
         return $query->firstOrFail();
     }
 
@@ -51,17 +43,18 @@ class PageRepository extends PostRepository implements PageRepositoryInterface
      * @param int $paginate
      * @return mixed
      */
-    public function findPages($paginate = Repository::PAGINATION_DEFAULT, User $author = null)
+    public static function findPages($paginate = Repository::PAGINATION_DEFAULT, User $author = null)
     {
         $columns = User::$mappings;
         array_push($columns, 'posts.*');
-        $query = call_user_func_array("{$this->modelClassName}::join", array('users', 'users.id', '=', 'posts.user_id'))
+        $query = self::join('users', 'users.id', '=', 'posts.user_id')
             ->select($columns)
             ->orderBy('posts.created_at', 'DESC')
             ->where('posts.type', Post::POST_PAGE);
         if ($author !== null) {
             $query->where('users.username', $author->username);
         }
+
         return $query->paginate($paginate);
     }
 }
