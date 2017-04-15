@@ -34,25 +34,14 @@ class User extends Model implements AuthenticatableContract,
         'username',
         'email',
         'password',
-        'biography',
-        'job',
-        'twitter',
-        'instagram',
-        'facebook',
-        'github',
-        'youtube',
-        'dribbble',
-        'google-plus',
-        'stack-overflow',
-        'flickr',
-        'bitbucket');
+    );    
 
     /**
      * The attributes excluded from the model's JSON form.
      *
      * @var array
      */
-    protected $hidden = ['password', 'remember_token'];
+    protected $hidden = ['password', 'remember_token', 'can_login'];
 
     /**
      * This array is used when a query joins with this table
@@ -66,18 +55,6 @@ class User extends Model implements AuthenticatableContract,
         'users.username as user_username',
         'users.email as user_email',
         'users.password as user_password',
-        'users.biography as user_biography',
-        'users.job as user_job',
-        'users.twitter as user_twitter',
-        'users.instagram as user_instagram',
-        'users.facebook as user_facebook',
-        'users.github as user_github',
-        'users.youtube as user_youtube',
-        'users.dribbble as user_dribbble',
-        'users.google-plus as user_google-plus',
-        'users.stack-overflow as user_stack-overflow',
-        'users.flickr as user_flickr',
-        'users.bitbucket as user_bitbucket',
     );
 
 	/**

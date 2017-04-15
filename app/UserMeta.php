@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Validators\UserMetaValidator;
 
 class UserMeta extends Model
 {

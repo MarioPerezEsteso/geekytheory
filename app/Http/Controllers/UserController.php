@@ -37,10 +37,11 @@ class UserController extends Controller
     {
         $user = null;
         if (!$id) {
-            $user = $this->repository->getCurrentUser();
+            $user = User::with('userMeta')->findOrFail(Auth::id());
         } else {
-            $user = $this->repository->findOrFail($id);
+            $user = User::with('userMeta')->findOrFail($id);
         }
+
         return view('home.profile.profile', ['userProfile' => $user]);
     }
 
@@ -53,7 +54,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = $this->repository->findOrFail($id);
+        $user = User::findOrFail($id);
 
         $rules = array(
             'name' => 'required',

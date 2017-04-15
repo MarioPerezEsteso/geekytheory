@@ -21,6 +21,7 @@ Route::pattern('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]
 Route::pattern('base', '[a-zA-Z0-9]+');
 Route::pattern('slug', '[a-z0-9-]+');
 Route::pattern('username', '[a-z0-9_-]{3,20}');
+Route::pattern('nicename', '[a-zA-Z0-9_.-]{3,20}');
 
 Route::get('/', 'IndexController@index');
 
@@ -77,7 +78,7 @@ Route::post('home/articles/update/{id?}', [
     'uses'          => 'ArticleController@update'
 ]);
 
-Route::get('home/articles/{username?}', [
+Route::get('home/articles/{nicename?}', [
     'middleware'    => 'auth',
     'uses'          => 'ArticleController@indexHome'
 ]);
@@ -109,7 +110,7 @@ Route::post('home/pages/update/{id}', [
     'uses'          => 'PageController@update'
 ]);
 
-Route::get('home/pages/{username?}', [
+Route::get('home/pages/{nicename?}', [
     'middleware'    => 'auth',
     'uses'          => 'PageController@indexHome'
 ]);
