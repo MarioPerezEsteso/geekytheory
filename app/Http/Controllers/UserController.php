@@ -35,13 +35,14 @@ class UserController extends Controller
      */
     public function edit($id = null)
     {
-        $user = null;
         if (!$id) {
             $user = User::with('userMeta')->findOrFail(Auth::id());
         } else {
             $user = User::with('userMeta')->findOrFail($id);
         }
 
+        // The $user variable cant be sent as 'user' because there is already a 'user' 
+        // variable shared to all the views.
         return view('home.profile.profile', ['userProfile' => $user]);
     }
 

@@ -15,42 +15,41 @@
 @section('content')
     <div class="row">
         <div class="col-md-4">
-
             @include('home.posts.partials.formMessages')
-
-            {!! Form::model($userProfile, ['url' => 'home/profile/update/' . $userProfile->id, 'class' => 'form']) !!}
+            
+            {!! Form::open(['url' => 'home/profile/update/' . $userProfile->id, 'class' => 'form']) !!}
 
             <div class="form-group">
                 {!! Form::label('name', trans('auth.name')) !!}
-                {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                {!! Form::text('name', $userProfile->name, ['class' => 'form-control', 'required' => 'required']) !!}
             </div>
 
             <div class="form-group">
                 {!! Form::label('email', trans('auth.email')) !!}
-                {!! Form::email('email', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                {!! Form::email('email', $userProfile->email, ['class' => 'form-control', 'required' => 'required']) !!}
             </div>
 
             <div class="form-group">
                 {!! Form::label('username', trans('auth.username')) !!}
-                {!! Form::text('username', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                {!! Form::text('username', $userProfile->username, ['class' => 'form-control', 'required' => 'required']) !!}
             </div>
 
             <div class="form-group">
                 {!! Form::label('biography', trans('auth.biography')) !!}
-                {!! Form::textarea('biography', null, ['class' => 'form-control', 'rows' => '4']) !!}
+                {!! Form::textarea('biography', $userProfile->userMeta->biography, ['class' => 'form-control', 'rows' => '4']) !!}
             </div>
 
             <div class="form-group">
                 {!! Form::label('job', trans('auth.job_position')) !!}
-                {!! Form::text('job', null, ['class' => 'form-control']) !!}
+                {!! Form::text('job', $userProfile->userMeta->job, ['class' => 'form-control']) !!}
             </div>
 
             <h3>{{ trans('public.social-networks') }}</h3>
 
-            @foreach(\App\Http\Controllers\Controller::$socialNetworks as $socialNetwork)
+            @foreach(\App\UserMeta::$socialNetworks as $socialNetwork)
                 <div class="form-group">
                     {!! Form::label($socialNetwork, trans('public.' . $socialNetwork)) !!}
-                    {!! Form::text($socialNetwork, null, ['class' => 'form-control']) !!}
+                    {!! Form::text($socialNetwork, $userProfile->userMeta->$socialNetwork, ['class' => 'form-control', 'placeholder' => trans('public.' . $socialNetwork . '.placeholder')]) !!}
                 </div>
             @endforeach
 
