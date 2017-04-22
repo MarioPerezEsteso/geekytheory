@@ -25,10 +25,12 @@ class UserValidator extends LaravelValidator implements ValidableInterface
      */
     public function update($id = null)
     {
-        return [
+        $this->rules = [
 			'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
             'username' => 'required|unique:users,username,' . $id,
 		];
+
+        return $this;
     }
 }
