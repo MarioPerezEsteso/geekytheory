@@ -30,7 +30,6 @@ class RemoveMetaColumnsUsersTable extends Migration
 		});
 	}
 	
-	
 	/**
 	* Reverse the migrations.
     *
@@ -38,18 +37,20 @@ class RemoveMetaColumnsUsersTable extends Migration
 	*/
 	public function down()
 	{
-        $table->text('biography')->nullable()->default(null);
-        $table->string('job')->nullable()->default(null);
-		$table->string('twitter')->nullable()->default(null);
-        $table->string('instagram')->nullable()->default(null);
-        $table->string('facebook')->nullable()->default(null);
-        $table->string('github')->nullable()->default(null);
-        $table->string('youtube')->nullable()->default(null);
-        $table->string('dribbble')->nullable()->default(null);
-        $table->string('google-plus')->nullable()->default(null);
-        $table->string('stack-overflow')->nullable()->default(null);
-        $table->string('flickr')->nullable()->default(null);
-        $table->string('bitbucket')->nullable()->default(null);
-        $table->string('linkedin')->nullable()->default(null);
+        Schema::table('users', function (Blueprint $table) {
+            $table->text('biography')->nullable()->default(null);
+            $table->string('job')->nullable()->default(null);
+            $table->string('twitter')->nullable()->default(null);
+            $table->string('instagram')->nullable()->default(null);
+            $table->string('facebook')->nullable()->default(null);
+            $table->string('github')->nullable()->default(null);
+            $table->string('youtube')->nullable()->default(null);
+            $table->string('dribbble')->nullable()->default(null);
+            $table->string('google-plus')->nullable()->default(null);
+            $table->string('stack-overflow')->nullable()->default(null);
+            $table->string('flickr')->nullable()->default(null);
+            $table->string('bitbucket')->nullable()->default(null);
+            $table->string('linkedin')->nullable()->default(null);
+        });
 	}
 }
