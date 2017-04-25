@@ -17,8 +17,6 @@ class ArticleControllerTest extends TestCase
         $id = 1;
         $this->call("GET", "home/posts/delete/$id");
 		
-		\Illuminate\Support\Facades\Log::info("ARTICLE1");
-		\Illuminate\Support\Facades\Log::info(json_encode(Article::find(1)));
 		$this->seeInDatabase('posts', [
 			'id' => $id,
 			'status' => Post::STATUS_DELETED,
@@ -49,7 +47,7 @@ class ArticleControllerTest extends TestCase
 		$this->call('POST', 'share-article', $data);
 
 		$this->assertResponseOk();
-		
+
 		$this->seeInDatabase('posts', [
 			'id' => $postId,
 			'shares_whatsapp' => 1,

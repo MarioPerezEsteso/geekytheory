@@ -214,7 +214,8 @@ class ArticleController extends PostController
 			$key => $post->getAttribute($key) + 1,
 		];
 
-		Article::update($postId, $data);
+		$article = Article::findOrFail($postId);
+		$article->update($data);
 
 		return [
 			'error' => 0,

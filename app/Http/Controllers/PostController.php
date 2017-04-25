@@ -235,9 +235,9 @@ class PostController extends Controller
      */
     public function delete($id)
     {
-        $data['status'] = Post::STATUS_DELETED;
-        Post::update($id, $data);
-
+        $post = Post::findOrFail($id);
+        $post->update(['status' => Post::STATUS_DELETED]);
+        
         return Redirect::back();
     }
 
