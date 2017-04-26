@@ -6,15 +6,14 @@ use App\Validators\Base\LaravelValidator;
 use App\Validators\Base\ValidableInterface;
 
 class UserValidator extends LaravelValidator implements ValidableInterface
-{
+{   
     /**
      * Validation rules for creating a User.
      */
     protected $rules = [
 		'name' => 'required',
 		'email' => 'required|email|unique:users,email',
-		'username' => 'required|unique:users,username',
-		'nicename' => 'required|unique:users,nicename',
+		'username' => 'required|alpha_num|min:3|max:20|unique:users,username',
 	];
 
     /**
@@ -28,7 +27,7 @@ class UserValidator extends LaravelValidator implements ValidableInterface
         $this->rules = [
 			'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
-            'username' => 'required|unique:users,username,' . $id,
+            'username' => 'required|alpha_num|min:3|max:20|unique:users,username,' . $id,
 		];
 
         return $this;
