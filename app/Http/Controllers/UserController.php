@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Validator;
 use App\Validators\UserValidator;
 use App\Validators\UserMetaValidator;
-
+use Illuminate\Support\MessageBag;
 class UserController extends Controller
 {
     /**
@@ -69,9 +69,15 @@ class UserController extends Controller
     {
         $user = User::with('userMeta')->findOrFail($id);
 
-        if (!$this->userValidator->update($id)->with($request->user)->passes()
-            || !$this->userMetaValidator->update($id)->with($request->usermeta)->passes()) {
-            return Redirect::to('home/profile/' . $user->id)->withErrors($validator->messages());
+        $userValidatorPasses = $this->userValidator->update($id)->with($request->user)->passes();
+        $userMetaValidatorPasses = $this->userMetaValidator->update($id)->with($request->usermeta)->passes();
+        if (!$userValidatorPasses || !$userMetaValidatorPasses) {
+            $errors = new MessageBag();
+            $errors->merge($this->userValidator->errors());
+            $errors->merge($this->userMetaValidator->errors());
+
+            return Redirect::to('home/profile/' . $user->id)
+                ->withErrors($errors);
         } else {
             $user->update($request->user);
             $user->userMeta()->update($request->usermeta);
