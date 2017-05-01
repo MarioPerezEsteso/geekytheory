@@ -6,15 +6,15 @@ use Illuminate\Database\Migrations\Migration;
 class RemoveMetaColumnsUsersTable extends Migration
 {
 	
-	/**
-	* Run the migrations.
-    *
-    * @return void
-    */
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
 	public function up()
     {
-		Schema::table('users', function (Blueprint $table) {
-			$table->dropColumn('biography');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('biography');
             $table->dropColumn('job');
             $table->dropColumn('twitter');
             $table->dropColumn('instagram');
@@ -27,14 +27,14 @@ class RemoveMetaColumnsUsersTable extends Migration
             $table->dropColumn('flickr');
             $table->dropColumn('bitbucket');
             $table->dropColumn('linkedin');
-		});
+        });
 	}
 	
-	/**
-	* Reverse the migrations.
-    *
-	* @return void
-	*/
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
 	public function down()
 	{
         Schema::table('users', function (Blueprint $table) {

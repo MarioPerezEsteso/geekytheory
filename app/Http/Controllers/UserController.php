@@ -76,8 +76,7 @@ class UserController extends Controller
             $errors->merge($this->userValidator->errors());
             $errors->merge($this->userMetaValidator->errors());
 
-            return Redirect::to('home/profile/' . $user->id)
-                ->withErrors($errors);
+            return Redirect::to('home/profile/' . $user->id)->withErrors($errors);
         } else {
             $user->update($request->user);
             $user->userMeta()->update($request->usermeta);

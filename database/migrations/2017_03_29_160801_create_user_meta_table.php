@@ -13,7 +13,7 @@ class CreateUserMetaTable extends Migration
     public function up()
     {
         Schema::create('user_meta', function (Blueprint $table) {
-        	$table->integer('user_id')->unsigned()->unique();
+			$table->integer('user_id')->unsigned()->unique();
 			$table->string('biography')->nullable();
 			$table->string('job')->nullable();
 			$table->string('twitter')->nullable();

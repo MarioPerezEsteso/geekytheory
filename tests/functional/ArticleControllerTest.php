@@ -14,8 +14,8 @@ class ArticleControllerTest extends TestCase
      */
     public function testDeleteSuccess()
     {
-        $id = 1;
-        $this->call("GET", "home/posts/delete/$id");
+		$id = 1;
+		$this->call("GET", "home/posts/delete/$id");
 		
 		$this->seeInDatabase('posts', [
 			'id' => $id,
