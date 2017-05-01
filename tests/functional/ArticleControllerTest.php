@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ArticleController;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use App\Post;
+use App\Article;
 
 class ArticleControllerTest extends TestCase
 {
@@ -12,12 +14,13 @@ class ArticleControllerTest extends TestCase
      */
     public function testDeleteSuccess()
     {
-        $id = 1;
-        $this->call("GET", "home/posts/delete/$id");
-
-        $articleRepository = new \App\Repositories\ArticleRepository();
-        $article = $articleRepository->find($id);
-        $this->assertEquals(ArticleController::POST_STATUS_DELETED, $article->status);
+		$id = 1;
+		$this->call("GET", "home/posts/delete/$id");
+		
+		$this->seeInDatabase('posts', [
+			'id' => $id,
+			'status' => Post::STATUS_DELETED,
+		]);
     }
 
     /**
@@ -45,8 +48,10 @@ class ArticleControllerTest extends TestCase
 
 		$this->assertResponseOk();
 
-		$post = (new \App\Repositories\ArticleRepository())->find($postId);
-		$this->assertEquals(1, $post->shares_whatsapp);
+		$this->seeInDatabase('posts', [
+			'id' => $postId,
+			'shares_whatsapp' => 1,
+		]);
 	}
 
 	/**

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use App\Post;
-use App\Repositories\ArticleRepository;
+use App\Article;
 use App\Repositories\GalleryRepository;
 use App\Repositories\UserRepository;
 use App\Validators\ArticleValidator;
@@ -20,7 +20,7 @@ class ArticleController extends PostController
 	/**
 	 * Type of the post
 	 */
-	const TYPE = PostController::POST_ARTICLE;
+	const TYPE = Post::POST_ARTICLE;
 
 	/**
 	 * Cache expires in 240 minutes.
@@ -35,14 +35,13 @@ class ArticleController extends PostController
 	/**
 	 * ArticleController constructor.
 	 *
-	 * @param ArticleRepository $repository
 	 * @param CategoryRepository $categoryRepository
 	 * @param UserRepository $userRepository
 	 * @param ArticleValidator $articleValidator
 	 */
-	public function __construct(ArticleRepository $repository, CategoryRepository $categoryRepository, UserRepository $userRepository, ArticleValidator $articleValidator)
+	public function __construct(CategoryRepository $categoryRepository, UserRepository $userRepository, ArticleValidator $articleValidator)
 	{
-		parent::__construct($repository, $categoryRepository, $userRepository, $articleValidator);
+		parent::__construct($categoryRepository, $userRepository, $articleValidator);
 	}
 
 	/**
@@ -56,11 +55,12 @@ class ArticleController extends PostController
 		if (!empty($username)) {
 			/*  Get articles of a concrete user */
 			$author = $this->userRepository->findUserByUsername($username);
-			$posts = $this->repository->findArticles($author);
+			$posts = Article::findArticles($author);
 		} else {
 			/* Get all articles */
-			$posts = $this->repository->findAllArticles(self::POSTS_PAGINATION_NUMBER);
+			$posts = Article::findAllArticles(self::POSTS_PAGINATION_NUMBER);
 		}
+
 		return view('home.posts.index', compact('posts'));
 	}
 
@@ -101,19 +101,11 @@ class ArticleController extends PostController
 	 */
 	public function show($slug)
 	{
-		if (Cache::has('post_' . $slug) && Cache::has('tags_' . $slug) && Cache::has('categories_' . $slug)) {
-			/** @var Post $post */
-			$post = Cache::get('post_' . $slug);
-			$tags = Cache::get('tags_' . $slug);
-			$categories = Cache::get('categories_' . $slug);
-		} else {
-			$post = $this->repository->findArticleBySlug($slug);
-			$tags = $post->tags;
-			$categories = $post->categories;
-			Cache::put('post_' . $slug, $post, self::CACHE_EXPIRATION_TIME);
-			Cache::put('tags_' . $slug, $tags, self::CACHE_EXPIRATION_TIME);
-			Cache::put('categories_' . $slug, $categories, self::CACHE_EXPIRATION_TIME);
-		}
+		$post = Cache::remember('post_' . $slug, self::CACHE_EXPIRATION_TIME, function () use ($slug) {
+			return Article::findArticleBySlug($slug)->with('tags', 'categories')->firstOrFail();
+		});
+
+		$authorUser = $post->user()->with('userMeta')->first();
 
 		$post = $this->processGalleryShortcodes($post);
 
@@ -133,7 +125,7 @@ class ArticleController extends PostController
 
 		$commentCount = count($comments);
 
-		return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'tags', 'categories', 'comments', 'commentCount', 'socialShareButtons'));
+		return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'authorUser', 'comments', 'commentCount', 'socialShareButtons'));
 	}
 
 	/**
@@ -144,14 +136,13 @@ class ArticleController extends PostController
 	 */
 	public function preview($slug)
 	{
-		$post = $this->repository->findArticleBySlug($slug, true);
+		$post = Article::findArticleBySlug($slug, true)->with('tags', 'categories')->firstOrFail();
 		$post = $this->processGalleryShortcodes($post);
-		$tags = $post->tags;
-		$categories = $post->categories;
+		$authorUser = $post->user()->with('userMeta')->first();
 		$comments = $post->hamComments()->get();
 		$commentCount = count($comments);
 		$socialShareButtons = $this->getSocialShareButtonsData($post);
-		return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'tags', 'categories', 'comments', 'commentCount', 'socialShareButtons'));
+		return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'authorUser', 'comments', 'commentCount', 'socialShareButtons'));
 	}
 
 	/**
@@ -163,7 +154,7 @@ class ArticleController extends PostController
 	public function showByUsername($username)
 	{
 		$author = $this->userRepository->findUserByUsername($username);
-		$posts = $this->repository->findPublishedArticlesByAuthor($author, self::POSTS_PUBLIC_PAGINATION_NUMBER);
+		$posts = Article::findPublishedArticlesByAuthor($author, self::POSTS_PUBLIC_PAGINATION_NUMBER);
 		return view('themes.' . IndexController::THEME . '.userposts', compact('posts', 'author'));
 	}
 
@@ -175,7 +166,7 @@ class ArticleController extends PostController
 	 */
 	public function edit($id)
 	{
-		$post = $this->repository->findOrFail($id);
+		$post = Article::findOrFail($id);
 		$categories = $this->categoryRepository->all();
 		return view('home.posts.article', compact('categories', 'post'));
 	}
@@ -217,13 +208,14 @@ class ArticleController extends PostController
 		}
 
 		/** @var Post $post */
-		$post = $this->repository->findOrFail($postId);
+		$post = Article::findOrFail($postId);
 		$key = 'shares_' . $socialNetwork;
 		$data = [
 			$key => $post->getAttribute($key) + 1,
 		];
 
-		$this->repository->update($postId, $data);
+		$article = Article::findOrFail($postId);
+		$article->update($data);
 
 		return [
 			'error' => 0,

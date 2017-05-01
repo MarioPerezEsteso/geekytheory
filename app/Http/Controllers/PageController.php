@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Page;
+use App\Post;
 use App\Validators\PageValidator;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Repositories\PageRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Redirect;
@@ -15,18 +16,17 @@ class PageController extends PostController
     /**
      * Type of the post
      */
-    const TYPE = PostController::POST_PAGE;
+    const TYPE = Post::POST_PAGE;
 
     /**
      * PageController constructor.
      *
-     * @param PageRepository $repository
      * @param CategoryRepository $categoryRepository
      * @param UserRepository $userRepository
      */
-    public function __construct(PageRepository $repository, CategoryRepository $categoryRepository, UserRepository $userRepository, PageValidator $pageValidator)
+    public function __construct(CategoryRepository $categoryRepository, UserRepository $userRepository, PageValidator $pageValidator)
     {
-        parent::__construct($repository, $categoryRepository, $userRepository, $pageValidator);
+        parent::__construct($categoryRepository, $userRepository, $pageValidator);
     }
 
     /**
@@ -40,10 +40,10 @@ class PageController extends PostController
         if (!empty($username)) {
             /*  Get pages of a concrete user */
             $author = $this->userRepository->findUserByUsername($username);
-            $posts = $this->repository->findPagesByAuthor($author, self::POSTS_PAGINATION_NUMBER);
+            $posts = Page::findPagesByAuthor($author, self::POSTS_PAGINATION_NUMBER);
         } else {
             /* Get all pages */
-            $posts = $this->repository->findPages(self::POSTS_PAGINATION_NUMBER);
+            $posts = Page::findPages(self::POSTS_PAGINATION_NUMBER);
         }
         return view('home.posts.index', compact('posts'));
     }
@@ -85,7 +85,8 @@ class PageController extends PostController
      */
     public function show($slug)
     {
-        $post = $this->repository->findPageBySlug($slug);
+        $post = Page::findPageBySlug($slug);
+        
         return view('themes.' . IndexController::THEME . '.blog.singlepage', compact('post'));
     }
 
@@ -97,7 +98,8 @@ class PageController extends PostController
      */
     public function preview($slug)
     {
-        $post = $this->repository->findPageBySlug($slug, true);
+        $post = Page::findPageBySlug($slug, true);
+
         return view('themes.' . IndexController::THEME . '.blog.singlepage', compact('post'));
     }
 
@@ -109,8 +111,9 @@ class PageController extends PostController
      */
     public function edit($id)
     {
-        $post = $this->repository->findOrFail($id);
+        $post = Page::findOrFail($id);
         $categories = $this->categoryRepository->all();
+
         return view('home.posts.page', compact('categories', 'post'));
     }
 
@@ -131,5 +134,4 @@ class PageController extends PostController
             return Redirect::to('home/pages/edit/' . $id)->withErrors($result['messages']);
         }
     }
-
 }

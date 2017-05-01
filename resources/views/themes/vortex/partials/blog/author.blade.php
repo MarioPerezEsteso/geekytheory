@@ -3,20 +3,29 @@
     <hr class="divider m-b-30">
     <div class="author-bio">
         <div class="author-avatar">
-            <img src="{{ getGravatar($post->user->email) }}" alt="">
+            <img src="{{ getGravatar($authorUser->email) }}" alt="">
         </div>
         <div class="author-content">
-            <h5 class="author-name font-alt">{{ $post->user->name }}</h5>
-            <p>{{ $post->user->biography }}</p>
-            <ul class="social-icon-links socicon-round">
-                @foreach(\App\Http\Controllers\Controller::$socialNetworks as $socialNetwork)
-                    @if(!empty($post->user->$socialNetwork))
-                        <li>
-                            <a href="{{ $post->user->$socialNetwork }}" target="_blank"><i class="fa fa-{{ $socialNetwork }}"></i></a>
-                        </li>
-                    @endif
-                @endforeach
-            </ul>
+            <h5 class="author-name font-alt">{{ $authorUser->name }}</h5>
+            @if(!empty($authorUser->userMeta))
+                <p>{{ $authorUser->userMeta->biography }}</p>
+                <ul class="social-icon-links socicon-round">
+                    @foreach(\App\UserMeta::$socialNetworks as $socialNetwork)
+                        @if(!empty($authorUser->userMeta->$socialNetwork))
+                            <li>
+                                <?php $faIcon = $socialNetwork; ?>
+                                @if($socialNetwork == 'googleplus')
+                                    <?php $faIcon = 'google-plus'; ?>
+                                @elseif($socialNetwork == 'stackoverflow')
+                                    <?php $faIcon = 'stack-overflow'; ?>
+                                @endif
+                                <a href="{{ $authorUser->userMeta->$socialNetwork }}" target="_blank"><i
+                                            class="fa fa-{{ $faIcon }}"></i></a>
+                            </li>
+                        @endif
+                    @endforeach
+                </ul>
+            @endif
         </div>
     </div>
 </div>

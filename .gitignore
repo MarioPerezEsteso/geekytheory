@@ -4,7 +4,9 @@ Homestead.yaml
 Homestead.json
 .env
 .idea/
+.vscode/
 public/images/
 public/uploads/
 public/wp-content/
 phpunit.xml
+uploads/
