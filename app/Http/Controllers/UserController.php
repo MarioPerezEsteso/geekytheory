@@ -84,4 +84,16 @@ class UserController extends Controller
 
         return Redirect::to('home/profile/' . $user->id)->withSuccess(trans('auth.user_update_success'));
     }
+
+    /**
+     * Format username to be alphanumeric
+     *
+     * @param string $username
+     * @return string
+     */
+    public static function formatUsername($username)
+    {
+        $username = normalizeChars($username);
+        return preg_replace("/[^a-zA-Z0-9]+/", "", $username);
+    }
 }
