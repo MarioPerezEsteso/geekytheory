@@ -57,21 +57,21 @@ class User extends Model implements AuthenticatableContract,
         'users.password as user_password',
     );
 
-	/**
-	 * Get the posts of the user.
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\HasMany
-	 */
+    /**
+     * Get the posts of the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function posts()
     {
         return $this->hasMany('App\Post');
     }
 
-	/**
-	 * Get the user meta.
-	 *
-	 * @return \Illuminate\Database\Eloquent\Relations\HasOne
-	 */
+    /**
+     * Get the user meta.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
     public function userMeta()
 	{
 		return $this->hasOne('App\UserMeta');

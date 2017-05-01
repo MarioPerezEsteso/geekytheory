@@ -11,10 +11,10 @@ class UserValidator extends LaravelValidator implements ValidableInterface
      * Validation rules for creating a User.
      */
     protected $rules = [
-		'name' => 'required',
-		'email' => 'required|email|unique:users,email',
-		'username' => 'required|alpha_num|min:3|max:20|unique:users,username',
-	];
+        'name' => 'required',
+        'email' => 'required|email|unique:users,email',
+        'username' => 'required|alpha_num|min:3|max:20|unique:users,username',
+    ];
 
     /**
      * Modify the rules for updating a User.
@@ -25,10 +25,10 @@ class UserValidator extends LaravelValidator implements ValidableInterface
     public function update($id = null)
     {
         $this->rules = [
-			'name' => 'required',
+            'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $id,
             'username' => 'required|alpha_num|min:3|max:20|unique:users,username,' . $id,
-		];
+        ];
 
         return $this;
     }
