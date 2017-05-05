@@ -10,4 +10,31 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+
+    /**
+     * Available social networks
+     *
+     * @var array
+     */
+    public static $socialNetworks = array(
+        'twitter',
+        'instagram',
+        'facebook',
+        'linkedin',
+        'github',
+        'youtube',
+        'dribbble',
+        'google-plus',
+        'stack-overflow',
+        'flickr',
+        'bitbucket'
+    );
+
+    /**
+     * URL regex validator
+     *
+     * @var string
+     */
+    public static $urlRegexValidator = 'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
+
 }
