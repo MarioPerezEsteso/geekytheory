@@ -25,9 +25,9 @@ Route::get('/', 'IndexController@index');
 /*
  * Authentication routes
  */
-Route::get('login', ['as' =>'auth/login', 'uses' => 'Auth\AuthController@getLogin']);
-Route::post('login', ['as' =>'auth/login', 'uses' => 'Auth\AuthController@postLogin']);
-Route::get('logout', ['as' => 'auth/logout', 'uses' => 'Auth\AuthController@getLogout']);
+Route::get('login', ['as' =>'auth/login', 'uses' => 'Auth\LoginController@showLoginForm']);
+Route::post('login', ['as' =>'auth/login', 'uses' => 'Auth\LoginController@login']);
+Route::get('logout', ['as' => 'auth/logout', 'uses' => 'Auth\LoginController@logout']);
 
 /*
  * Registration routes
