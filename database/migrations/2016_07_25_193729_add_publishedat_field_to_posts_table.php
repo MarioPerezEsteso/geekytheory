@@ -13,7 +13,7 @@ class AddPublishedatFieldToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dateTime('published_at')->default('0000-00-00 00:00:00');
+            $table->dateTime('published_at')->default(null);
         });
     }
 

@@ -13,7 +13,7 @@ class AddAdsenseCodeToSiteMeta extends Migration
     public function up()
     {
         Schema::table('site_meta', function (Blueprint $table) {
-            $table->text('adsense_script')->default('');
+            $table->text('adsense_script')->nullable();
         });
     }
 

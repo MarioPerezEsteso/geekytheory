@@ -13,7 +13,7 @@ class AddDescriptionFieldToCategoriesTable extends Migration
     public function up()
     {
         Schema::table('categories', function (Blueprint $table) {
-            $table->text('description')->default('')->after('slug');
+            $table->text('description')->nullable()->after('slug');
         });
     }
 

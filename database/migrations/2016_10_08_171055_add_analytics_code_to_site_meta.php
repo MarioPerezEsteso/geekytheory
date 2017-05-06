@@ -13,7 +13,7 @@ class AddAnalyticsCodeToSiteMeta extends Migration
     public function up()
     {
         Schema::table('site_meta', function (Blueprint $table) {
-            $table->text('analytics_script')->default('');
+            $table->text('analytics_script')->nullable();
         });
     }
 

@@ -16,8 +16,7 @@ class CreateGalleriesAndImagesTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('title');
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
+            $table->timestamps();
 
             /*
              * Foreign key to table users to know the author of the gallery.
@@ -40,8 +39,7 @@ class CreateGalleriesAndImagesTable extends Migration
 			$table->integer('width')->unsigned()->nullable()->default(null);
 			$table->integer('height')->unsigned()->nullable()->default(null);
             $table->integer('order');
-            $table->timestamp('created_at');
-            $table->timestamp('updated_at');
+            $table->timestamps();
 
             /**
              * Foreign key to table images to know the parent.
