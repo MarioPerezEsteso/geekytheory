@@ -13,7 +13,7 @@ class AddMenuToSiteMetaTable extends Migration
     public function up()
     {
         Schema::table('site_meta', function (Blueprint $table) {
-            $table->json('menu')->default(null);
+            $table->json('menu')->nullable();
         });
     }
 
