@@ -14,7 +14,7 @@ class CommentValidator extends LaravelValidator implements ValidableInterface
         'post_id' => 'required',
         'author_name' => 'required|max:255',
         'author_email' => 'required|max:255',
-        'author_url' => 'url',
+        'author_url' => 'url|nullable',
         'body' => 'required',
         'approved' => 'required|boolean',
         'spam' => 'required|boolean',
