@@ -26,12 +26,12 @@ Route::get('/', 'IndexController@index');
  * Authentication routes
  */
 Route::get('login', [
-    'as' =>'auth/login',
+    'as' =>'login',
     'uses' => 'Auth\LoginController@showLoginForm',
 ]);
 
 Route::post('login', [
-    'as' =>'auth/login',
+    'as' =>'login',
     'uses' => 'Auth\LoginController@login'
 ]);
 
