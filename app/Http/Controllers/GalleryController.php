@@ -10,9 +10,6 @@ use App\Repositories\UserRepository;
 use App\User;
 use App\Validators\GalleryValidator;
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Redirect;
@@ -102,22 +99,14 @@ class GalleryController extends Controller
         } else {
             /** @var Gallery $gallery */
             $gallery = $this->galleryRepository->create($data);
-            $imageController = new ImageController(new ImageRepository());
-            $imageController->storeGalleryImages($gallery, $user, $data['images']);
+
+            if (!empty($data['images'])) {
+                $imageController = new ImageController(new ImageRepository());
+                $imageController->storeGalleryImages($gallery, $user, $data['images']);
+            }
 
             return Redirect::to('home/gallery/edit/' . $gallery->id)->withSuccess(trans('home.gallery_create_success'));
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -160,8 +149,10 @@ class GalleryController extends Controller
             $this->galleryRepository->update($id, $data);
             /** @var Gallery $gallery */
             $gallery = $this->galleryRepository->find($id);
-            $imageController = new ImageController(new ImageRepository());
-            $imageController->storeGalleryImages($gallery, $user, $data['images']);
+            if (!empty($data['images'])) {
+                $imageController = new ImageController(new ImageRepository());
+                $imageController->storeGalleryImages($gallery, $user, $data['images']);
+            }
 
             if (Cache::has('gallery_rendered_' . $gallery->id)) {
                 Cache::forget('gallery_rendered_' . $id);

@@ -6,8 +6,8 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*",
-        "laravelcollective/html": "5.1.*",
+        "laravel/framework": "5.4.*",
+        "laravelcollective/html": "5.4.*",
         "barryvdh/laravel-debugbar": "^2.2",
         "doctrine/dbal": "^2.5",
         "guzzlehttp/guzzle": "~4.0"
@@ -15,7 +15,7 @@
     "require-dev": {
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~4.0",
+        "phpunit/phpunit": "~5.7",
         "phpspec/phpspec": "~2.1"
     },
     "autoload": {

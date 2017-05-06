@@ -17,7 +17,7 @@ class ArticleControllerTest extends TestCase
 		$id = 1;
 		$this->call("GET", "home/posts/delete/$id");
 		
-		$this->seeInDatabase('posts', [
+		$this->assertDatabaseHas('posts', [
 			'id' => $id,
 			'status' => Post::STATUS_DELETED,
 		]);
@@ -44,11 +44,11 @@ class ArticleControllerTest extends TestCase
 			'postId' => $postId,
 			'socialNetwork' => 'whatsapp',
 		];
-		$this->call('POST', 'share-article', $data);
+		$response = $this->call('POST', 'share-article', $data);
 
-		$this->assertResponseOk();
+		$response->assertStatus(200);
 
-		$this->seeInDatabase('posts', [
+		$this->assertDatabaseHas('posts', [
 			'id' => $postId,
 			'shares_whatsapp' => 1,
 		]);

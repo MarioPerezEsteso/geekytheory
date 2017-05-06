@@ -48,10 +48,11 @@ class ImageControllerTest extends TestCase
         $gallery = $this->galleryRepository->find(1);
         $imagesBefore = count($this->imageRepository->findImagesByGallery($gallery));
 
-        $result = $this->actingAs($this->user)->call('POST', 'home/gallery/image/delete', $data);
+        $response = $this->actingAs($this->user)->call('POST', 'home/gallery/image/delete', $data);
 
-        $this->assertResponseOk();
-        $this->assertEquals(json_decode($result)['error'], 0);
+        $response->assertStatus(200);
+
+        $this->assertEquals($response->decodeResponseJson()['error'], 0);
 
         $images = $this->imageRepository->findImagesByGallery($gallery);
         $this->assertEquals($imagesBefore - count(Image::$SIZES_GALLERY), count($images));

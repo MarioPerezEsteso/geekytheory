@@ -2,16 +2,14 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 */
-
-App::setLocale('es');
 
 // Patterns
 Route::pattern('id', '\d+');
@@ -27,9 +25,17 @@ Route::get('/', 'IndexController@index');
 /*
  * Authentication routes
  */
-Route::get('login', ['as' =>'auth/login', 'uses' => 'Auth\AuthController@getLogin']);
-Route::post('login', ['as' =>'auth/login', 'uses' => 'Auth\AuthController@postLogin']);
-Route::get('logout', ['as' => 'auth/logout', 'uses' => 'Auth\AuthController@getLogout']);
+Route::get('login', [
+    'as' =>'login',
+    'uses' => 'Auth\LoginController@showLoginForm',
+]);
+
+Route::post('login', [
+    'as' =>'login',
+    'uses' => 'Auth\LoginController@login'
+]);
+
+Route::get('logout', ['as' => 'auth/logout', 'uses' => 'Auth\LoginController@logout']);
 
 /*
  * Registration routes
@@ -39,6 +45,7 @@ Route::get('register', [
     'middleware'    => 'allow_user_registration',
     'uses'          => 'Auth\AuthController@getRegister'
 ]);
+
 Route::post('register', [
     'as'            => 'auth/register',
     'middleware'    => 'allow_user_registration',
@@ -307,8 +314,8 @@ Route::get('feed', 'FeedController@feed');
 Route::get('/{slug?}', 'ArticleController@show');
 
 Route::post('share-article', [
-	'before'        => 'csrf',
-	'uses'			=> 'ArticleController@updateShares'
+    'before'        => 'csrf',
+    'uses'			=> 'ArticleController@updateShares'
 ]);
 
 Route::get('/p/{slug?}', 'PageController@show');
@@ -318,3 +325,4 @@ Route::get('user/{username}', 'ArticleController@showByUsername');
 Route::get('category/{slug}', 'CategoryController@showByCategory');
 
 Route::get('tag/{slug}', 'TagController@showByTag');
+

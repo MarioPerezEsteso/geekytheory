@@ -24,9 +24,9 @@ class CommentControllerTest extends TestCase
 
         $commentsBefore = count($commentRepository->all());
 
-        $this->call('POST', 'comment/store', $data);
+        $response = $this->call('POST', 'comment/store', $data);
 
-        $this->assertResponseOk();
+        $response->assertStatus(200);
 
         $comments = $commentRepository->all();
         $this->assertEquals($commentsBefore + 1, count($comments));

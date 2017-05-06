@@ -7,7 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">{{ trans('auth.login') }}</div>
                     <div class="panel-body">
-                        {!! Form::open(['route' => 'auth/login', 'class' => 'form']) !!}
+                        {!! Form::open(['route' => 'login', 'class' => 'form']) !!}
 
                         <div class="form-group">
                             <label>{{ trans('auth.email') }}</label>

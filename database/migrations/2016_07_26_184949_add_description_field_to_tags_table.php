@@ -13,7 +13,7 @@ class AddDescriptionFieldToTagsTable extends Migration
     public function up()
     {
         Schema::table('tags', function (Blueprint $table) {
-            $table->text('description')->default('')->after('slug');
+            $table->text('description')->nullable()->after('slug');
         });
     }
 

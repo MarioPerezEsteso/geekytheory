@@ -6,6 +6,7 @@ use App\Repositories\ImageRepository;
 use App\User;
 use \App\Repositories\GalleryRepository;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Http\UploadedFile;
 
 class GalleryControllerTest extends TestCase
 {
@@ -53,12 +54,12 @@ class GalleryControllerTest extends TestCase
 
         $galleriesBefore = count($this->galleryRepository->all());
 
-        $this->actingAs($this->user)->call('POST', 'home/gallery/store', $data, [], ['images' => $uploadedFiles]);
+        $response = $this->actingAs($this->user)->call('POST', 'home/gallery/store', $data, [], ['images' => $uploadedFiles]);
 
         /*
          * There are five galleries in the database so this would be the sixth.
          */
-        $this->assertRedirectedTo('home/gallery/edit/6');
+        $response->assertRedirect('home/gallery/edit/6');
 
         $galleries = $this->galleryRepository->all();
         $this->assertEquals($galleriesBefore + 1, count($galleries));
@@ -96,8 +97,8 @@ class GalleryControllerTest extends TestCase
          */
         $galleryId = 1;
 
-        $this->actingAs($this->user)->call('POST', 'home/gallery/update/' . $galleryId, $data, [], ['images' => $uploadedFiles]);
-        $this->assertRedirectedTo('home/gallery/edit/' . $galleryId);
+        $response = $this->actingAs($this->user)->call('POST', 'home/gallery/update/' . $galleryId, $data, [], ['images' => $uploadedFiles]);
+        $response->assertRedirect('home/gallery/edit/' . $galleryId);
 
         /** @var Gallery $gallery */
         $gallery = $this->galleryRepository->find($galleryId);
@@ -132,8 +133,8 @@ class GalleryControllerTest extends TestCase
          */
         $galleryId = 1;
 
-        $this->actingAs($this->user)->call('POST', 'home/gallery/update/' . $galleryId, $data, [], ['images' => $uploadedFiles]);
-        $this->assertRedirectedTo('home/gallery/edit/' . $galleryId);
+        $response = $this->actingAs($this->user)->call('POST', 'home/gallery/update/' . $galleryId, $data, [], ['images' => $uploadedFiles]);
+        $response->assertRedirect('home/gallery/edit/' . $galleryId);
 
         /** @var Gallery $gallery */
         $gallery = $this->galleryRepository->find($galleryId);
@@ -153,21 +154,11 @@ class GalleryControllerTest extends TestCase
      * Create a test file in order to pass it as parameter to create a new gallery of images.
      *
      * @param string $name
-     * @return \Symfony\Component\HttpFoundation\File\UploadedFile
+     * @return UploadedFile
      */
     public function createNewTestImage($name = 'image.png')
     {
-        $file = tempnam(sys_get_temp_dir(), 'upl'); // create file
-        imagepng(imagecreatetruecolor(500, 500), $file); // create and write image/png to it
-        $image = new \Symfony\Component\HttpFoundation\File\UploadedFile(
-            $file,
-            $name,
-            'image/png',
-            null,
-            null,
-            true
-        );
-
+        $image = UploadedFile::fake()->image($name);
         return $image;
     }
 }

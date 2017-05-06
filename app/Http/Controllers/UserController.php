@@ -11,6 +11,7 @@ use Validator;
 use App\Validators\UserValidator;
 use App\Validators\UserMetaValidator;
 use Illuminate\Support\MessageBag;
+
 class UserController extends Controller
 {
     /**
