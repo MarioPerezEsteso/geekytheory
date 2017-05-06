@@ -30,11 +30,4 @@ class Controller extends BaseController
         'bitbucket'
     );
 
-    /**
-     * URL regex validator
-     *
-     * @var string
-     */
-    public static $urlRegexValidator = 'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
-
 }

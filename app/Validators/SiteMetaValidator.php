@@ -26,17 +26,17 @@ class SiteMetaValidator extends LaravelValidator implements ValidableInterface
             'title' => 'required|max:255',
             'subtitle' => 'required|max:255',
             'description' => 'required|max:170',
-            'url' => SiteMetaController::$urlRegexValidator,
-            'image' => 'mimes:jpeg,gif,png',
-            'logo' => 'mimes:jpeg,gif,png',
-            'favicon' => 'mimes:jpeg,gif,png',
-            'logo_57' => 'mimes:jpeg,gif,png',
-            'logo_72' => 'mimes:jpeg,gif,png',
-            'logo_114' => 'mimes:jpeg,gif,png',
+            'url' => 'required|url',
+            'image' => 'nullable|mimes:jpeg,gif,png',
+            'logo' => 'nullable|mimes:jpeg,gif,png',
+            'favicon' => 'nullable|mimes:jpeg,gif,png',
+            'logo_57' => 'nullable|mimes:jpeg,gif,png',
+            'logo_72' => 'nullable|mimes:jpeg,gif,png',
+            'logo_114' => 'nullable|mimes:jpeg,gif,png',
         );
         // Add social networks to rules
         foreach (SiteMetaController::$socialNetworks as $socialNetwork) {
-            $this->rules[$socialNetwork] = SiteMetaController::$urlRegexValidator;
+            $this->rules[$socialNetwork] = 'url|nullable';
         }
         return $this;
     }
@@ -48,7 +48,7 @@ class SiteMetaValidator extends LaravelValidator implements ValidableInterface
     {
         $this->rules = array(
             'text' => 'required',
-            'link' => SiteMetaController::$urlRegexValidator,
+            'link' => 'url|required',
         );
         $valid = true;
         foreach ($this->data as $menuItem) {

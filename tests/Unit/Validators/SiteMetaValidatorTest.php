@@ -2,46 +2,39 @@
 
 use App\Validators\SiteMetaValidator;
 use App\Http\Controllers\SiteMetaController;
+use Illuminate\Http\UploadedFile;
 
 class SiteMetaValidatorTest extends TestCase
 {
     /**
      * Test successful update with valid data.
+     *
+     * @dataProvider getValidData
+     * @param array $data
      */
-    public function testUpdateSuccess()
+    public function testUpdateSuccess($data)
     {
         $validator = new SiteMetaValidator(App::make('validator'));
-        $this->assertTrue($validator->update(SiteMetaController::getSiteMeta()->getAttributes('id'))->with($this->getValidData())->passes());
+        $passes = $validator->update(SiteMetaController::getSiteMeta()->getAttributes('id'))->with($data)->passes();
+        $this->assertTrue($passes);
     }
 
     /**
      * Test unsuccessful update with invalid data.
+     *
+     * @dataProvider getInvalidData
+     * @param array $data
+     * @param array $validationErrorKeys
      */
-    public function testUpdateFailure()
+    public function testUpdateFailure($data, $validationErrorKeys)
     {
         $validator = new SiteMetaValidator(App::make('validator'));
-        $this->assertFalse($validator->update(SiteMetaController::getSiteMeta()->getAttributes('id'))->with($this->getInvalidData())->passes());
-        $this->assertEquals(1, count($validator->errors()));
-    }
-
-    /**
-     * Test image update with valid extension.
-     */
-    public function testSuccessfulImageUpload()
-    {
-        $validator = new SiteMetaValidator(App::make('validator'));
-        $this->assertTrue($validator->update(SiteMetaController::getSiteMeta()->getAttributes('id'))->with($this->getValidImage())->passes());
-        $this->assertEquals(0, count($validator->errors()));
-    }
-
-    /**
-     * Test image update failure on upload invalid file.
-     */
-    public function testErrorOnInvalidImageFormat()
-    {
-        $validator = new SiteMetaValidator(App::make('validator'));
-        $this->assertFalse($validator->update(SiteMetaController::getSiteMeta()->getAttributes('id'))->with($this->getInvalidFile())->passes());
-        $this->assertEquals(1, count($validator->errors()));
+        $passes = $validator->update(SiteMetaController::getSiteMeta()->getAttributes('id'))->with($data)->passes();
+        $this->assertFalse($passes);
+        $this->assertEquals(count($validationErrorKeys), count($validator->errors()));
+        foreach ($validationErrorKeys as $validationErrorKey) {
+            $this->assertArrayHasKey($validationErrorKey, $validator->errors()->toArray());
+        }
     }
 
     /**
@@ -113,13 +106,39 @@ class SiteMetaValidatorTest extends TestCase
      *
      * @return array
      */
-    private function getValidData()
+    public static function getValidData()
     {
-        return array(
-            'title' => 'Site title updated',
-            'subtitle' => 'Site subtitle',
-            'description' => 'Site description',
-        );
+        return [
+            [
+                [
+                    'title' => 'Site title',
+                    'subtitle' => 'new subtitle',
+                    'description' => 'new description',
+                    'url' => 'http://validurl.com',
+                    'image' => UploadedFile::fake()->image('image.png'),
+                    'logo' => UploadedFile::fake()->image('validextension.png'),
+                    'favicon' => UploadedFile::fake()->image('valid.gif'),
+                    'logo_57' => UploadedFile::fake()->image('image57.png'),
+                    'logo_72' => UploadedFile::fake()->image('file.jpeg'),
+                    'logo_114' => UploadedFile::fake()->image('image114.png'),
+                    'twitter' => 'http://validurl.com',
+                    'instagram' => 'http://insta.es',
+                ]
+            ],
+            [
+                [
+                    'title' => 'Site title updated',
+                    'subtitle' => 'new subtitle updated',
+                    'description' => 'new wawa description',
+                    'url' => 'https://geekytheory.com',
+                    'image' => UploadedFile::fake()->image('image.png'),
+                    'logo' => UploadedFile::fake()->image('validextension.jpg'),
+                    'favicon' => UploadedFile::fake()->image('valid.gif'),
+                    'twitter' => 'http://validurl.com',
+                    'instagram' => 'http://insta.es',
+                ]
+            ],
+        ];
     }
 
     /**
@@ -127,13 +146,45 @@ class SiteMetaValidatorTest extends TestCase
      *
      * @return array
      */
-    private function getInvalidData()
+    public static function getInvalidData()
     {
-        return array(
-            'title' => 'Site title updated',
-            'subtitle' => null,
-            'description' => 'Site description',
-        );
+        return [
+            [
+                [
+                    'title' => 'Site title updated',
+                    'subtitle' => null,
+                    'description' => 'Site description',
+                    'url' => null,
+                ],
+                'validationErrorKeys' => ['subtitle', 'url'],
+            ],
+            [
+                [
+                    'title' => 'Site title updated',
+                    'subtitle' => 'Random subtitle',
+                    'description' => 'Site description',
+                    'url' => null,
+                ],
+                'validationErrorKeys' => ['url'],
+            ],
+            [
+                [
+                    'title' => 'Site title',
+                    'subtitle' => 'new subtitle',
+                    'description' => 'new description',
+                    'url' => 'invalid url',
+                    'image' => UploadedFile::fake()->image('image.png'),
+                    'logo' => UploadedFile::fake()->image('invalidextension.csv'),
+                    'favicon' => UploadedFile::fake()->image('valid.jpg'),
+                    'logo_57' => UploadedFile::fake()->image('image57.png'),
+                    'logo_72' => UploadedFile::fake()->image('file.txt'),
+                    'logo_114' => UploadedFile::fake()->image('image114.png'),
+                    'twitter' => 'http://validurl.com',
+                    'instagram' => 'this is not a valid url',
+                ],
+                'validationErrorKeys' => ['url', 'logo', 'logo_72', 'instagram'],
+            ],
+        ];
     }
 
     /**

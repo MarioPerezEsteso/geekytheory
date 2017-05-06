@@ -10,6 +10,7 @@ use App\Repositories\SiteMetaRepository;
 use App\Repositories\UserRepository;
 use App\Validators\ArticleValidator;
 use App\Validators\PageValidator;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
@@ -38,8 +39,8 @@ class PostController extends Controller
     /**
      * Actions when editing a post
      */
-    const POST_ACTION_PUBLISH   = 'publish';
-    const POST_ACTION_UPDATE    = 'update';
+    const POST_ACTION_PUBLISH = 'publish';
+    const POST_ACTION_UPDATE = 'update';
 
     /**
      * @var CategoryRepository
@@ -115,9 +116,11 @@ class PostController extends Controller
             $post->allow_comments = $data['allow_comments'] == 'on';
             $post->show_title = $data['show_title'];
             $post->show_description = $data['show_description'];
+            $post->published_at = null;
 
             if ($request->action == self::POST_ACTION_PUBLISH) {
                 $post->status = Post::STATUS_PUBLISHED;
+                $post->published_at = Carbon::now();
             }
 
             $post->slug = $slug;
@@ -130,9 +133,11 @@ class PostController extends Controller
             }
 
             $post->save();
-            // TODO: validate categories
-            $categories = Category::whereIn('id', $data['categories'])->get();
-            $post->categories()->sync($categories);
+            if (!empty($data['categories'])) {
+                // TODO: validate categories
+                $categories = Category::whereIn('id', $data['categories'])->get();
+                $post->categories()->sync($categories);
+            }
         }
 
         return array(
@@ -170,8 +175,8 @@ class PostController extends Controller
 
         if (!$this->validator->update($id)->with($data)) {
             return array(
-                'error'     => true,
-                'messages'  => $this->validator->errors(),
+                'error' => true,
+                'messages' => $this->validator->errors(),
             );
         } else {
             $post = Post::findOrFail($id);
@@ -185,6 +190,7 @@ class PostController extends Controller
             $post->allow_comments = $data['allow_comments'] == 'on';
             if ($request->action == self::POST_ACTION_PUBLISH) {
                 $post->status = Post::STATUS_PUBLISHED;
+                $post->published_at = Carbon::now();
             }
 
             if ($image) {
@@ -201,14 +207,16 @@ class PostController extends Controller
             }
 
             $post->save();
-            $categories = Category::whereIn('id', $data['categories'])->get();
-            $post->categories()->sync($categories);
+            if (!empty($data['categories'])) {
+                $categories = Category::whereIn('id', $data['categories'])->get();
+                $post->categories()->sync($categories);
+            }
         }
 
         return array(
-            'id'        => $post->id,
-            'error'     => false,
-            'messages'  => trans('home.post_update_success'),
+            'id' => $post->id,
+            'error' => false,
+            'messages' => trans('home.post_update_success'),
         );
     }
 
@@ -237,7 +245,7 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $post->update(['status' => Post::STATUS_DELETED]);
-        
+
         return Redirect::back();
     }
 
@@ -281,13 +289,13 @@ class PostController extends Controller
         return $url;
     }
 
-	/**
-	 * Gets the public URL of a post depending of its type
-	 *
-	 * @param Post $post
-	 * @param bool $relative
-	 * @return string
-	 */
+    /**
+     * Gets the public URL of a post depending of its type
+     *
+     * @param Post $post
+     * @param bool $relative
+     * @return string
+     */
     public static function getPostPublicUrlByType(Post $post, $relative = true)
     {
         $url = '/' . $post->slug;
@@ -296,9 +304,9 @@ class PostController extends Controller
         }
 
         if (!$relative) {
-        	$siteUrl = (new SiteMetaRepository())->getSiteMeta()['url'];
-			$url = $siteUrl . $url;
-		}
+            $siteUrl = (new SiteMetaRepository())->getSiteMeta()['url'];
+            $url = $siteUrl . $url;
+        }
 
         return $url;
     }

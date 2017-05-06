@@ -10,34 +10,63 @@ class CommentControllerTest extends TestCase
 {
     use WithoutMiddleware;
 
-    public function testStoreComment()
+    /**
+     * Test store comments
+     *
+     * @dataProvider getCommentsToStore
+     * @param array $data
+     */
+    public function testStoreCommentOk($data)
     {
-        $commentRepository = new CommentRepository();
-
-        $data = array(
-            'postId' => 1,
-            'authorName' => 'Mario',
-            'authorEmail' => 'mario@domain.com',
-            'authorUrl' => 'http://geekytheory.com',
-            'body' => 'This is the content of the comment',
-        );
-
-        $commentsBefore = count($commentRepository->all());
-
         $response = $this->call('POST', 'comment/store', $data);
 
         $response->assertStatus(200);
 
-        $comments = $commentRepository->all();
-        $this->assertEquals($commentsBefore + 1, count($comments));
+        $this->assertDatabaseHas('comments', [
+            'post_id' => $data['postId'],
+            'author_name' => $data['authorName'],
+            'author_email' => $data['authorEmail'],
+            'author_url' => $data['authorUrl'],
+            'body' => $data['body'],
+        ]);
+    }
 
-        /** @var \App\Comment $comment */
-        $comment = $comments[count($comments) - 1];
-        $this->assertEquals($data['postId'], $comment->post_id);
-        $this->assertEquals($data['authorName'], $comment->author_name);
-        $this->assertEquals($data['authorEmail'], $comment->author_email);
-        $this->assertEquals($data['authorUrl'], $comment->author_url);
-        $this->assertEquals($data['body'], $comment->body);
+    /**
+     * Get the valid comments to be stored
+     *
+     * @return array
+     */
+    public static function getCommentsToStore()
+    {
+        return [
+            [
+                [
+                    'postId' => 1,
+                    'authorName' => 'Mario',
+                    'authorEmail' => 'mario@domain.com',
+                    'authorUrl' => 'http://geekytheory.com',
+                    'body' => 'This is the content of the comment',
+                ],
+            ],
+            [
+                [
+                    'postId' => 1,
+                    'authorName' => 'Mario',
+                    'authorEmail' => 'mario@domain.com',
+                    'authorUrl' => '',
+                    'body' => 'This is the content of the second test',
+                ],
+            ],
+            [
+                [
+                    'postId' => 1,
+                    'authorName' => 'Alice',
+                    'authorEmail' => 'alice.3@domain.com',
+                    'authorUrl' => '',
+                    'body' => 'This is the third test',
+                ],
+            ],
+        ];
     }
 
     /**

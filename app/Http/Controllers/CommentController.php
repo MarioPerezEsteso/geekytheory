@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 class CommentController extends Controller
 {
@@ -37,9 +38,9 @@ class CommentController extends Controller
      * @param CommentValidator $commentValidator
      */
     public function __construct(CommentRepository $commentRepository,
-								PostRepository $postRepository,
-								SiteMetaRepository $siteMetaRepository,
-								CommentValidator $commentValidator)
+                                PostRepository $postRepository,
+                                SiteMetaRepository $siteMetaRepository,
+                                CommentValidator $commentValidator)
     {
         $this->commentRepository = $commentRepository;
         $this->postRepository = $postRepository;
@@ -126,16 +127,17 @@ class CommentController extends Controller
             }
 
             /**
-			 * If the new comment is an answer to another comment. Send a notification to the parent comment.
-			 */
+             * If the new comment is an answer to another comment. Send a notification to the parent comment.
+             */
             if (!empty($data['parent'])) {
-            	$commentParent = $this->commentRepository->find($data['parent']);
-				try {
-					// CommentEmailController::notifyResponse($post, $commentParent);
-				} catch (\Exception $e) {
-					// Just do not send the email.
-				}
-			}
+                $commentParent = $this->commentRepository->find($data['parent']);
+                try {
+                    CommentEmailController::notifyResponse($post, $commentParent);
+                } catch (\Exception $e) {
+                    // Just do not send the email.
+                    Log::error($e);
+                }
+            }
 
             return [
                 'error' => 0,
