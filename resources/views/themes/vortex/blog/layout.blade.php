@@ -64,10 +64,6 @@
 </div>
 <!-- /WRAPPER -->
 
-<!-- SCROLLTOP -->
-<div class="scroll-up">
-</div>
-
 <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="pswp__bg"></div>
     <div class="pswp__scroll-wrap">

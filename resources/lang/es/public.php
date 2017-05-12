@@ -64,4 +64,9 @@ return [
 	'share_with_google-plus' => 'Compartir en Google Plus',
 	'share_with_telegram' => 'Enviar por Telegram',
 	'share_with_mail' => 'Enviar por email',
+    'we_are_creating' => 'Estamos creando cosas',
+    'cool_things' => 'geniales',
+    'do_you_want_to_know_more' => '¿Quieres saber más?',
+    'join_our_newsletter' => 'Apúntate a nuestra lista de correo',
+    'with_more_than_number_people' => 'junto a más de :number personas',
 ];

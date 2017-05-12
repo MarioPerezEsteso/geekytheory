@@ -210,7 +210,7 @@ class SiteMetaController extends Controller
     {
         if (!empty($request->imageToDelete) && Schema::hasColumn('site_meta', $request->imageToDelete)) {
             $siteMeta = self::getSiteMeta();
-            $siteMeta->setAttribute($request->imageToDelete, NULL);
+            $siteMeta->setAttribute($request->imageToDelete, '');
             $siteMeta->save();
             return response()->json(['error' => 0]);
         } else {

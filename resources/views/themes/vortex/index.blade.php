@@ -10,6 +10,6 @@
 
 
 @section('content')
-    @include('themes.vortex.partials.hero')
+    @include('themes.vortex.partials.hero-newsletter')
     @include('themes.vortex.partials.index.postlist')
 @endsection

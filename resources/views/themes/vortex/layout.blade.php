@@ -28,6 +28,8 @@
     <link href="{{ autoVersion("/themes/vortex/assets/css/custom.css") }}" rel="stylesheet">
     <!-- Template core CSS -->
     <link href="{{ autoVersion("/themes/vortex/assets/css/style.css") }}" rel="stylesheet">
+    <!-- Hero newsletter CSS -->
+    <link href="{{ autoVersion("/themes/vortex/assets/css/hero-newsletter.css") }}" rel="stylesheet">
 
     @if (!empty($siteMeta->analytics_script))
         {!! $siteMeta->analytics_script !!}
@@ -54,11 +56,6 @@
 </div>
 <!-- /WRAPPER -->
 
-<!-- SCROLLTOP -->
-<div class="scroll-up">
-    <a href="index.html#totop"><i class="fa fa-angle-double-up"></i></a>
-</div>
-
 <!-- Javascript files -->
 <script src="/themes/vortex/assets/js/jquery-2.1.3.min.js"></script>
 <script src="/assets/js/bootstrap/bootstrap.min.js"></script>
@@ -77,6 +74,6 @@
 <script src="/themes/vortex/assets/js/jquery.fitvids.min.js"></script>
 <script src="/themes/vortex/assets/js/jquery.parallax-1.1.3.min.js"></script>
 <script src="/themes/vortex/assets/js/smoothscroll.min.js"></script>
-<script src="/themes/vortex/assets/js/custom.min.js"></script>
+<script src="/themes/vortex/assets/js/custom.js"></script>
 </body>
 </html>

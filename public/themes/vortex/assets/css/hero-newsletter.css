@@ -1,0 +1,61 @@
+/* --- Menu color --- */
+
+ul.menu li a {
+    color: white;
+}
+
+/* --- Hero section for newsletter and courses --- */
+
+.hero-section {
+    height: 100%;
+    background: #FFFFFF;
+    padding: 150px 0 0 0;
+    text-align: center;
+}
+
+.hero-content {
+    padding: 100px 0 100px 0;
+    overflow: hidden;
+}
+
+.hero-content h1 {
+    color: white;
+    font-size: 42px;
+    font-weight: 400;
+    letter-spacing: -1px;
+    line-height: 1.2;
+    margin: 0 0 20px 0;
+    text-transform: uppercase;
+}
+
+.text-hero-geeky {
+    font-weight: bold;
+    color: #399e8f;
+}
+
+.hero-content p {
+    font-size: 18px;
+    color: white;
+    font-weight: 400;
+    line-height: 1.5;
+    margin: 0 0 25px 0;
+}
+
+/* --- Form --- */
+
+.form-control-hero {
+    border: 1px solid #fff;
+    height: 39px;
+    font-size: 15px;
+}
+
+.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
+    font-size: 15px;
+}
+
+@media only screen and (min-width: 767px) {
+    .hero-section {
+        padding: 150px 0 100px 0;
+    }
+
+}
