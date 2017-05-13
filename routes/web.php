@@ -53,6 +53,15 @@ Route::post('register', [
 ]);
 
 /*
+ * Newsletter subscription routes
+ */
+Route::group(['prefix' => 'newsletter'], function () {
+    Route::post('subscribe', 'SubscriberController@subscribe');
+    Route::get('unsubscribe/{hash}', 'SubscriberController@unsubscribe');
+    Route::get('confirm/{hash}', 'SubscriberController@confirm');
+});
+
+/*
  * Home routes
  */
 Route::get('home', 'Home\HomeController@index');
