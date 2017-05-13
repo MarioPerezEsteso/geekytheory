@@ -70,16 +70,22 @@ class SubscriberValidatorTest extends TestCase
             [ // Test input 1
                 [
                     'email' => 'alice@domain.com',
+                    'token' => hash_hmac('sha256', str_random(40), 'someRandomString'),
+                    'activated' => false,
                 ],
             ],
             [ // Test input 2
                 [
                     'email' => 'mario@geekytheory.com',
+                    'token' => hash_hmac('sha256', str_random(40), 'someRandomString'),
+                    'activated' => false,
                 ],
             ],
             [ // Test input 3
                 [
                     'email' => 'alice2@geekytheory.com',
+                    'token' => hash_hmac('sha256', str_random(40), 'someRandomString'),
+                    'activated' => true,
                 ],
             ],
         ];
@@ -96,14 +102,16 @@ class SubscriberValidatorTest extends TestCase
             [ // Test input 1
                 [
                     'email' => 'alice@geekytheory.com',
+                    'token' => false,
+                    'activated' => 'true',
                 ],
-                'validationErrorKeys' => ['email'],
+                'validationErrorKeys' => ['email', 'token', 'activated'],
             ],
             [ // Test input 2
                 [
                     'email' => 'bob@geekytheory.com',
                 ],
-                'validationErrorKeys' => ['email'],
+                'validationErrorKeys' => ['email', 'token'],
             ],
         ];
     }

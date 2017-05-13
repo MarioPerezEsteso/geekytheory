@@ -12,6 +12,8 @@ class SubscriberValidator extends LaravelValidator implements ValidableInterface
      */
     protected $rules = [
         'email' => 'required|email|unique:subscribers,email',
+        'token' => 'required|string',
+        'activated' => 'boolean',
     ];
 
     /**
