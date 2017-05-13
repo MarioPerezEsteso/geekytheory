@@ -18,5 +18,22 @@ class Subscriber extends Model
      *
      * @var array
      */
-    protected $fillable = ['email'];
+    protected $fillable = [
+        'email',
+        'token',
+        'active',
+        'token_expires_at',
+        'activated_at',
+        'unsubscribed_at'
+    ];
+
+    /**
+     * Find subscriber by email.
+     *
+     * @param string $email
+     */
+    public static function findByEmail($email)
+    {
+        return Subscriber::where('email', $email)->first();
+    }
 }
