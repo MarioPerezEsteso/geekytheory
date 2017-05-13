@@ -69,4 +69,6 @@ return [
     'do_you_want_to_know_more' => '¿Quieres saber más?',
     'join_our_newsletter' => 'Apúntate a nuestra lista de correo',
     'with_more_than_number_people' => 'junto a más de :number personas',
+    'email_subscription_email_confirmation_sent' => '¡Genial! Te hemos enviado un email para que confirmes tu dirección. Comprueba la carpeta de spam si no lo ves.',
+    'subscription_email_not_valid' => 'El email introducido ya está en uso o tiene un formato incorrecto',
 ];
