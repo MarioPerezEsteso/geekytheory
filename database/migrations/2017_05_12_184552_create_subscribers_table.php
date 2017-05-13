@@ -17,7 +17,10 @@ class CreateSubscribersTable extends Migration
             $table->increments('id');
             $table->string('email')->unique();
             $table->string('token');
-            $table->boolean('activated')->default(false);
+            $table->boolean('active')->default(false);
+            $table->timestamp('activated_at')->nullable();
+            $table->timestamp('unsubscribed_at')->nullable();
+            $table->timestamp('token_expires_at')->nullable();
             $table->timestamps();
         });
     }
