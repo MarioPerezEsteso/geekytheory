@@ -16,6 +16,7 @@ class SubscriberValidator extends LaravelValidator implements ValidableInterface
         'active' => 'boolean',
         'activated_at' => 'date',
         'unsubscribed_at' => 'date',
+        'token_expires_at' => 'required|date',
     ];
 
     /**
@@ -26,6 +27,14 @@ class SubscriberValidator extends LaravelValidator implements ValidableInterface
      */
     public function update($id = null)
     {
+        $this->rules = [
+            'email' => 'required|email|unique:subscribers,email,' . $id,
+            'token' => 'required|string',
+            'active' => 'boolean',
+            'activated_at' => 'date',
+            'unsubscribed_at' => 'date',
+            'token_expires_at' => 'required|date',
+        ];
         return $this;
     }
 }

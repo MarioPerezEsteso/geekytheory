@@ -60,7 +60,38 @@ class SubscriberValidatorTest extends TestCase
     }
 
     /**
-     * Returns invalid data.
+     * Test update with valid data.
+     *
+     * @dataProvider getValidUpdateData
+     * @param array $data
+     */
+    public function testValidationUpdateOk($data)
+    {
+        $validator = new SubscriberValidator(App::make('validator'));
+        $passes = $validator->with($data)->update($this->subscribers[0]->id)->passes();
+        $this->assertTrue($passes);
+    }
+
+    /**
+     * Test update with invalid data.
+     *
+     * @dataProvider getInvalidUpdateData
+     * @param array $data
+     * @param $validationErrorKeys
+     */
+    public function testValidationUpdateError($data, $validationErrorKeys)
+    {
+        $validator = new SubscriberValidator(App::make('validator'));
+        $passes = $validator->with($data)->update($this->subscribers[0]->id)->passes();
+        $this->assertFalse($passes);
+        $this->assertEquals(count($validationErrorKeys), count($validator->errors()));
+        foreach ($validationErrorKeys as $validationErrorKey) {
+            $this->assertArrayHasKey($validationErrorKey, $validator->errors()->toArray());
+        }
+    }
+
+    /**
+     * Returns valid data.
      * 
      * @return array
      */
@@ -71,21 +102,24 @@ class SubscriberValidatorTest extends TestCase
                 [
                     'email' => 'alice@domain.com',
                     'token' => hash_hmac('sha256', str_random(40), 'someRandomString'),
-                    'activated' => false,
+                    'active' => false,
+                    'token_expires_at' => \Carbon\Carbon::now()->addHours(24),
                 ],
             ],
             [ // Test input 2
                 [
                     'email' => 'mario@geekytheory.com',
                     'token' => hash_hmac('sha256', str_random(40), 'someRandomString'),
-                    'activated' => false,
+                    'active' => false,
+                    'token_expires_at' => \Carbon\Carbon::now()->addHours(24),
                 ],
             ],
             [ // Test input 3
                 [
-                    'email' => 'alice2@geekytheory.com',
+                    'email' => 'alice.mail.updated@geekytheory.com',
                     'token' => hash_hmac('sha256', str_random(40), 'someRandomString'),
-                    'activated' => true,
+                    'active' => true,
+                    'token_expires_at' => \Carbon\Carbon::now()->addHours(24),
                 ],
             ],
         ];
@@ -103,15 +137,93 @@ class SubscriberValidatorTest extends TestCase
                 [
                     'email' => 'alice@geekytheory.com',
                     'token' => false,
-                    'activated' => 'true',
+                    'active' => 'true',
+                    'token_expires_at' => \Carbon\Carbon::now()->addHours(24),
                 ],
-                'validationErrorKeys' => ['email', 'token', 'activated'],
+                'validationErrorKeys' => ['email', 'token', 'active'],
             ],
             [ // Test input 2
                 [
                     'email' => 'bob@geekytheory.com',
                 ],
-                'validationErrorKeys' => ['email', 'token'],
+                'validationErrorKeys' => ['email', 'token', 'token_expires_at'],
+            ],
+        ];
+    }
+
+    /**
+     * Returns valid update data.
+     *
+     * @return array
+     */
+    public static function getValidUpdateData()
+    {
+        return [
+            [ // Test input 1
+                [
+                    'email' => 'alice@domain.com',
+                    'token' => hash_hmac('sha256', str_random(40), 'someRandomString'),
+                    'active' => false,
+                    'token_expires_at' => \Carbon\Carbon::now()->addHours(24),
+                ],
+            ],
+            [ // Test input 2
+                [
+                    'email' => 'mario@geekytheory.com',
+                    'token' => hash_hmac('sha256', str_random(40), 'someRandomString'),
+                    'active' => true,
+                    'token_expires_at' => \Carbon\Carbon::now()->addHours(24),
+                ],
+            ],
+            [ // Test input 3
+                [
+                    'email' => 'alice2@geekytheory.com',
+                    'token' => hash_hmac('sha256', str_random(40), 'someRandomString'),
+                    'active' => true,
+                    'token_expires_at' => \Carbon\Carbon::now()->addHours(24),
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Returns invalid data.
+     *
+     * @return array
+     */
+    public static function getInvalidUpdateData()
+    {
+        return [
+            [ // Test input 1
+                [
+                    'email' => 'bob@geekytheory.com',
+                    'token' => false,
+                    'active' => 'true',
+                ],
+                'validationErrorKeys' => ['email', 'token', 'active', 'token_expires_at'],
+            ],
+            [ // Test input 2
+                [
+                    'email' => 'alice@geekytheory.com',
+                    'token_expires_at' => 'monday'
+                ],
+                'validationErrorKeys' => ['token', 'token_expires_at'],
+            ],
+            [ // Test input 3
+                [
+                    'email' => 'bob@geekytheory.com',
+                    'token_expires_at' => 'monday'
+                ],
+                'validationErrorKeys' => ['email', 'token', 'token_expires_at'],
+            ],
+            [ // Test input 4
+                [
+                    'email' => 'alice_updated@geekytheory.com',
+                    'token' => 'abdagsgsg121212',
+                    'token_expires_at' => null,
+                    'active' => 'no'
+                ],
+                'validationErrorKeys' => ['active', 'token_expires_at'],
             ],
         ];
     }
