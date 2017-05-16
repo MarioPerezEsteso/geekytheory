@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @property integer id
  * @property boolean active
+ * @property string token
+ * @property Carbon activated_at
  * @property Carbon token_expires_at
  * @property Carbon unsubscribed_at
  */
@@ -38,10 +40,22 @@ class Subscriber extends Model
      * Find subscriber by email.
      *
      * @param string $email
+     * @return Subscriber
      */
     public static function findByEmail($email)
     {
         return Subscriber::where('email', $email)->first();
+    }
+
+    /**
+     * Find subscriber by token.
+     *
+     * @param $token
+     * @return Subscriber
+     */
+    public static function findByToken($token)
+    {
+        return Subscriber::where('token', $token)->first();
     }
 
     /**

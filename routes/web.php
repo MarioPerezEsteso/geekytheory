@@ -13,7 +13,7 @@
 
 // Patterns
 Route::pattern('id', '\d+');
-Route::pattern('hash', '[a-z0-9]+');
+Route::pattern('token', '[a-z0-9]+');
 Route::pattern('hex', '[a-f0-9]+');
 Route::pattern('uuid', '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}');
 Route::pattern('base', '[a-zA-Z0-9]+');
@@ -57,8 +57,8 @@ Route::post('register', [
  */
 Route::group(['prefix' => 'newsletter'], function () {
     Route::post('subscribe', 'SubscriberController@subscribe');
-    Route::get('unsubscribe/{hash}', 'SubscriberController@unsubscribe');
-    Route::get('confirm/{hash}', 'SubscriberController@confirm');
+    Route::get('confirm/{token}', 'SubscriberController@confirmSubscription');
+    Route::get('unsubscribe/{token}', 'SubscriberController@unsubscribe');
 });
 
 /*

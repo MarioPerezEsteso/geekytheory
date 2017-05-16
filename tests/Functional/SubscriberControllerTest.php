@@ -142,7 +142,7 @@ class SubscriberControllerTest extends TestCase
             'email' => $subscriber->email,
             'token' => $subscriber->token,
             'active' => true,
-            'token_expires_at' => $subscriber->token_expires_at,
+            'token_expires_at' => \Carbon\Carbon::now(),
             'activated_at' => \Carbon\Carbon::now(),
             'unsubscribed_at' => null,
         ]);
@@ -167,7 +167,7 @@ class SubscriberControllerTest extends TestCase
 
         $response->assertRedirect('/');
 
-        $this->assertDatabaseHas('subscribers', $subscriber);
+        $this->assertDatabaseHas('subscribers', $subscriber->getAttributes());
     }
 
     /**
@@ -189,7 +189,7 @@ class SubscriberControllerTest extends TestCase
 
         $response->assertRedirect('/');
 
-        $this->assertDatabaseHas('subscribers', $subscriber);
+        $this->assertDatabaseHas('subscribers', $subscriber->getAttributes());
     }
 
     /**

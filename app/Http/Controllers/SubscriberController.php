@@ -52,8 +52,7 @@ class SubscriberController extends Controller
                 $subscriptionSuccess = false;
             } else if ((!$subscriber->active && $subscriber->tokenHasExpired()) || $subscriber->isUnsubscribed()) {
                 if ($this->validator->update($subscriber->id)->with($data)->passes()) {
-                    $subscriber->setRawAttributes($data);
-                    $subscriber->save();
+                    $subscriber->update($data);
                 } else {
                     $subscriptionSuccess = false;
                 }
@@ -74,21 +73,36 @@ class SubscriberController extends Controller
     }
 
     /**
+     * Confirm the subscription of an email.
+     *
+     * @param string $token
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function confirmSubscription(string $token)
+    {
+        $subscriber = Subscriber::findByToken($token);
+
+        if ($subscriber->isPendingConfirmation()) {
+            $attributes = [
+                'active' => true,
+                'token_expires_at' => Carbon::now(),
+                'activated_at' => Carbon::now(),
+            ];
+            $subscriber->update($attributes);
+
+            // Send email confirming the subscription
+
+        }
+
+        return redirect('/');
+    }
+
+    /**
      * Unsubscribe an email.
      *
      * @param string $token
      */
     public function unsubscribe(string $token)
-    {
-
-    }
-
-    /**
-     * Confirm the subscription of an email.
-     *
-     * @param string $token
-     */
-    public function confirmSubscription(string $token)
     {
 
     }
