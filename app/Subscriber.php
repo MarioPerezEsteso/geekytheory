@@ -2,8 +2,15 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property integer id
+ * @property boolean active
+ * @property Carbon token_expires_at
+ * @property Carbon unsubscribed_at
+ */
 class Subscriber extends Model
 {
     /**
@@ -35,5 +42,37 @@ class Subscriber extends Model
     public static function findByEmail($email)
     {
         return Subscriber::where('email', $email)->first();
+    }
+
+    /**
+     * Check if a subscriber is pending confirmation.
+     *
+     * @return bool
+     */
+    public function isPendingConfirmation()
+    {
+        return !$this->active && !$this->tokenHasExpired();
+    }
+
+    /**
+     * Check if the token of a user has expired.
+     *
+     * @return bool
+     */
+    public function tokenHasExpired()
+    {
+        $now = Carbon::now();
+        return $now->greaterThanOrEqualTo(new Carbon($this->token_expires_at));
+    }
+
+    /**
+     * Check if the user is unsubscribed.
+     *
+     * @return bool
+     */
+    public function isUnsubscribed()
+    {
+        $now = Carbon::now();
+        return !$this->active && $now->gt(new Carbon($this->unsubscribed_at));
     }
 }

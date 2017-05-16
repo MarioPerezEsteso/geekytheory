@@ -35,6 +35,7 @@ class SubscriberValidator extends LaravelValidator implements ValidableInterface
             'unsubscribed_at' => 'date',
             'token_expires_at' => 'required|date',
         ];
+
         return $this;
     }
 }
