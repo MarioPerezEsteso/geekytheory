@@ -227,7 +227,7 @@ class SubscriberControllerTest extends TestCase
             'active' => false,
             'token_expires_at' => $subscriber->token_expires_at,
             'activated_at' => $subscriber->activated_at,
-            'unsubscribed_at' => $subscriber->unsubscribed_at,
+            'unsubscribed_at' => \Carbon\Carbon::now(),
         ]);
     }
 
@@ -260,6 +260,6 @@ class SubscriberControllerTest extends TestCase
 
         $response->assertRedirect('/');
 
-        $this->assertDatabaseHas('subscribers', $subscriber);
+        $this->assertDatabaseHas('subscribers', $subscriber->getAttributes());
     }
 }

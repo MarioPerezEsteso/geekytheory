@@ -82,7 +82,7 @@ class SubscriberController extends Controller
     {
         $subscriber = Subscriber::findByToken($token);
 
-        if ($subscriber->isPendingConfirmation()) {
+        if ($subscriber && $subscriber->isPendingConfirmation()) {
             $attributes = [
                 'active' => true,
                 'token_expires_at' => Carbon::now(),
@@ -104,6 +104,16 @@ class SubscriberController extends Controller
      */
     public function unsubscribe(string $token)
     {
+        $subscriber = Subscriber::findByToken($token);
 
+        if ($subscriber && $subscriber->active) {
+            $attributes = [
+                'active' => false,
+                'unsubscribed_at' => Carbon::now(),
+            ];
+            $subscriber->update($attributes);
+        }
+
+        return redirect('/');
     }
 }
