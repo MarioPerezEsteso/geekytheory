@@ -40,7 +40,7 @@
                 </li>
             @endforeach
         </ul>
-        <ul class="nav navbar-right hidden-xs">
+        {{--<ul class="nav navbar-right hidden-xs">
             <li>
                 <form action="" class="search-form">
                     <div class="form-group has-feedback search-form-hero">
@@ -49,6 +49,6 @@
                     </div>
                 </form>
             </li>
-        </ul>
+        </ul>--}}
     </div>
 </nav>

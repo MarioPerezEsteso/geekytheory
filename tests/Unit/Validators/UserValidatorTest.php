@@ -48,10 +48,11 @@ class UserValidatorTest extends TestCase
     }
 
     /**
-     * Test create with valid data.
-     * 
+     * Test create with invalid data.
+     *
      * @dataProvider getInvalidCreateData
      * @param array $data
+     * @param $validationErrorKeys
      */
     public function testValidationError($data, $validationErrorKeys)
     {

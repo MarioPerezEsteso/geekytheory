@@ -64,4 +64,11 @@ return [
 	'share_with_google-plus' => 'Share via Google Plus',
 	'share_with_telegram' => 'Share via Telegram',
 	'share_with_mail' => 'Share via mail',
+    'we_are_creating' => 'We are creating',
+    'cool_things' => 'cool things',
+    'do_you_want_to_know_more' => 'Do you want to know more?',
+    'join_our_newsletter' => 'Join our newsletter',
+    'with_more_than_number_people' => 'with more than :number people',
+    'email_subscription_email_confirmation_sent' => 'Great! We have sent you an email to confirm your address. Check out your spam if you do not see it',
+    'subscription_email_not_valid' => 'The email is already in use or it has an incorrect format',
 ];

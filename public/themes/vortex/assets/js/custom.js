@@ -81,7 +81,9 @@
 			if (moduleHero.length > 0) {
 				if (moduleHero.hasClass('module-full-height')) {
 					moduleHero.height($(window).height());
-				} else {
+				} else if (moduleHero.hasClass('module-medium-height')) {
+                    moduleHero.height($(window).height() * 0.7);
+                } else {
 					moduleHero.height($(window).height() * 0.85);
 				}
 			}

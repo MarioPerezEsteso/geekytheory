@@ -1,4 +1,4 @@
-<footer class="module bg-light">
+<footer class="module bg-dark">
     <div class="container">
         <div class="row">
             <div class="col-sm-12">
@@ -17,7 +17,7 @@
             <div class="col-sm-12">
                 <p class="copyright text-center m-b-0">{!! trans('public.made_with_love') !!}</p>
                 <p class="copyright text-center m-t-30">
-                    <a href="https://github.com/MarioPerezEsteso/laraweb">
+                    <a href="https://goo.gl/OpjL44">
                         <i class="fa fa-github"></i> {{ trans('public.we_are_open_source') }}
                     </a>
                 </p>
