@@ -4,6 +4,10 @@ ul.menu li a {
     color: white;
 }
 
+.color-darkblue {
+    color: rgb(44, 62, 80) !important;
+}
+
 /* --- Hero section for newsletter and courses --- */
 
 .hero-section {

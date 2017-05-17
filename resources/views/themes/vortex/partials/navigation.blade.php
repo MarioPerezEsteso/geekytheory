@@ -1,4 +1,4 @@
-<nav class="navbar navbar-custom navbar-transparent navbar-light navbar-fixed-top">
+<nav class="navbar navbar-custom navbar-transparent navbar-custom navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <a class="navbar-brand" href="/">
@@ -32,7 +32,7 @@
                             @foreach($menuItem['submenu'] as $submenuItem)
                                 <li>
                                     <a href="{{ $submenuItem['link'] }}"
-                                       title="{{ $submenuItem['text'] }}">{{ $submenuItem['text'] }}</a>
+                                       title="{{ $submenuItem['text'] }}" class="color-darkblue">{{ $submenuItem['text'] }}</a>
                                 </li>
                             @endforeach
                         </ul>

@@ -613,7 +613,7 @@ Pagination
 .pagination > .active > span:hover,
 .pagination > .active > a:focus,
 .pagination > .active > span:focus {
-	background: #111;
+	background: #399e8f;
 }
 
 .pagination > li > a:hover,
@@ -621,7 +621,7 @@ Pagination
 .pagination > li > a:focus,
 .pagination > li > span:focus {
 	background: #f0f0f0;
-	color: #111;
+	color: #399e8f;
 }
 
 /* ------------------------------------------------------------------
@@ -1139,7 +1139,7 @@ Navigation
 }
 
 .navbar-custom {
-	background: rgba(10, 10, 10, 0.9);
+	background: rgb(44, 62, 80);
 	border: 0;
 	padding-top: 5px;
 	padding-bottom: 5px;
