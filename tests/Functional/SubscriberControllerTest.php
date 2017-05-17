@@ -225,7 +225,7 @@ class SubscriberControllerTest extends TestCase
             'email' => $subscriber->email,
             'token' => $subscriber->token,
             'active' => false,
-            'token_expires_at' => $subscriber->token_expires_at,
+            'token_expires_at' => \Carbon\Carbon::now(),
             'activated_at' => $subscriber->activated_at,
             'unsubscribed_at' => \Carbon\Carbon::now(),
         ]);

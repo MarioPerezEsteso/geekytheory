@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Email\SubscriberEmailController;
 use App\Subscriber;
 use App\Validators\SubscriberValidator;
 use Carbon\Carbon;
@@ -64,6 +65,7 @@ class SubscriberController extends Controller
         }
 
         if ($subscriptionSuccess) {
+            SubscriberEmailController::sendConfirmationEmail($subscriber);
             return [
                 'error' => 0,
                 'message' => trans('public.email_subscription_email_confirmation_sent'),
@@ -93,9 +95,7 @@ class SubscriberController extends Controller
                 'activated_at' => Carbon::now(),
             ];
             $subscriber->update($attributes);
-
-            // Send email confirming the subscription
-
+            SubscriberEmailController::sendSubscriptionConfirmedEmail($subscriber);
         }
 
         return redirect('/');
@@ -113,6 +113,7 @@ class SubscriberController extends Controller
         if ($subscriber && $subscriber->active) {
             $attributes = [
                 'active' => false,
+                'token_expires_at' => Carbon::now(),
                 'unsubscribed_at' => Carbon::now(),
             ];
             $subscriber->update($attributes);
