@@ -6,6 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="@yield('siteDescriptionMeta')">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Favicons -->
     <link rel="shortcut icon" href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->favicon) }}">
@@ -75,5 +76,6 @@
 <script src="/themes/vortex/assets/js/jquery.parallax-1.1.3.min.js"></script>
 <script src="/themes/vortex/assets/js/smoothscroll.min.js"></script>
 <script src="/themes/vortex/assets/js/custom.js"></script>
+<script src="/themes/vortex/assets/js/app/newsletter-subscription.js"></script>
 </body>
 </html>

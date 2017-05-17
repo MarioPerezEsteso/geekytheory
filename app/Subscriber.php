@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @property integer id
+ * @property string email
  * @property boolean active
  * @property string token
  * @property Carbon activated_at

@@ -30,7 +30,7 @@ class SubscriberController extends Controller
     {
         $data = [
             'email' => $request->email,
-            'token' => Hash::make($request->email),
+            'token' => md5(uniqid($request->email, true)),
             'active' => false,
             'token_expires_at' => Carbon::now()->addHours(24),
         ];
@@ -43,10 +43,14 @@ class SubscriberController extends Controller
         /** @var Subscriber $subscriber */
         $subscriber = Subscriber::findByEmail($data['email']);
 
-        if (!$subscriber && $this->validator->with($data)->passes()) {
-            $subscriber = new Subscriber();
-            $subscriber->fill($data);
-            $subscriber->save();
+        if (!$subscriber) {
+            if ($this->validator->with($data)->passes()) {
+                $subscriber = new Subscriber();
+                $subscriber->fill($data);
+                $subscriber->save();
+            } else {
+                $subscriptionSuccess = false;
+            }
         } else {
             if ($subscriber->active || $subscriber->isPendingConfirmation()) {
                 $subscriptionSuccess = false;

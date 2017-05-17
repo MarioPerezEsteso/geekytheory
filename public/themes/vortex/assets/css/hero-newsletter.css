@@ -49,8 +49,16 @@ ul.menu li a {
     font-size: 15px;
 }
 
-.input-group-btn:last-child>.btn, .input-group-btn:last-child>.btn-group {
+.input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group {
     font-size: 15px;
+}
+
+/* --- Alert --- */
+.alert-newsletter {
+    margin-top: 20px;
+    padding: 5px;
+    position: absolute;
+    width: 100%;
 }
 
 @media only screen and (min-width: 767px) {

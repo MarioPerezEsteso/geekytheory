@@ -17,10 +17,15 @@
                     <div class="row">
                         <div class="col-sm-offset-2 col-sm-8">
                             <div class="input-group wow fadeInUp">
-                                <input type="text" class="form-control form-control-hero" placeholder="Email">
+                                <input type="email" class="form-control form-control-hero js-newsletter-email-input"
+                                       placeholder="Email" required>
                                 <span class="input-group-btn">
-                                <button class="btn btn-g btn-action-form-control" type="button">¡Únete!</button>
+                                <button class="btn btn-g btn-action-form-control js-newsletter-subscribe" type="button">¡Únete!</button>
                               </span>
+                            </div>
+                            <div style="background-color: red;  position: relative;">
+                                <div class="alert alert-success alert-newsletter js-alert-subscription-success hidden"></div>
+                                <div class="alert alert-danger alert-newsletter js-alert-subscription-error hidden"></div>
                             </div>
                         </div>
                     </div>
