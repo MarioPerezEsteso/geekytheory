@@ -1,5 +1,5 @@
 <!-- HERO -->
-<section class="module module-parallax bg-light-30"
+<section class="module module-parallax bg-dark-80"
          style="background-image: url('{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($post->image) }}');">
     <!-- HERO TEXT -->
     <div class="container">

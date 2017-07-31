@@ -105,6 +105,10 @@ a {
 	color: rgba(17, 17, 17, 0.55);
 }
 
+.color-darkblue {
+    color: rgb(44, 62, 80) !important;
+}
+
 a:hover, a:focus {
 	text-decoration: none;
 	color: #111;
@@ -1056,10 +1060,14 @@ Overlays
 .bg-dark,
 .bg-dark-30,
 .bg-dark-60,
+.bg-dark-70,
+.bg-dark-80,
 .bg-dark-90,
 .bg-dark h1, .bg-dark h2, .bg-dark h3, .bg-dark h4, .bg-dark h5, .bg-dark h6,
 .bg-dark-30 h1, .bg-dark-30 h2, .bg-dark-30 h3, .bg-dark-30 h4, .bg-dark-30 h5, .bg-dark-30 h6,
 .bg-dark-60 h1, .bg-dark-60 h2, .bg-dark-60 h3, .bg-dark-60 h4, .bg-dark-60 h5, .bg-dark-60 h6,
+.bg-dark-70 h1, .bg-dark-70 h2, .bg-dark-70 h3, .bg-dark-70 h4, .bg-dark-70 h5, .bg-dark-70 h6,
+.bg-dark-80 h1, .bg-dark-80 h2, .bg-dark-80 h3, .bg-dark-80 h4, .bg-dark-80 h5, .bg-dark-80 h6,
 .bg-dark-90 h1, .bg-dark-90 h2, .bg-dark-90 h3, .bg-dark-90 h4, .bg-dark-90 h5, .bg-dark-90 h6 {
 	color: #fff;
 }
@@ -1067,6 +1075,8 @@ Overlays
 .bg-film:before,
 .bg-dark-30:before,
 .bg-dark-60:before,
+.bg-dark-70:before,
+.bg-dark-80:before,
 .bg-dark-90:before,
 .bg-light-30:before,
 .bg-light-60:before,
@@ -1086,6 +1096,20 @@ Overlays
 
 .bg-dark-60:before {
 	background: rgba(34, 34, 34, 0.6);
+	content: "";
+	left: 0;
+	top: 0;
+}
+
+.bg-dark-70:before {
+	background: rgba(34, 34, 34, 0.7);
+	content: "";
+	left: 0;
+	top: 0;
+}
+
+.bg-dark-80:before {
+	background: rgba(34, 34, 34, 0.8);
 	content: "";
 	left: 0;
 	top: 0;
@@ -1168,7 +1192,7 @@ Navigation
 .navbar-custom .dropdown-menu > li > a:focus,
 .navbar-custom .dropdown-menu > li > a:hover {
 	background: none;
-	color: #333
+	color: #FFF
 }
 
 .show-overlay .icon-bar {
@@ -1204,7 +1228,11 @@ Navigation
 
 .navbar-transparent a,
 .navbar-transparent .navbar-brand {
-	color: #333;
+	color: #FFF;
+}
+
+ul.menu li a {
+	color: white;
 }
 
 .navbar-transparent.nav > li > a:focus,
@@ -1410,13 +1438,13 @@ Hero
 }
 
 .mh-line-size-3 {
-	letter-spacing: 24px;
-	font-size: 26px;
+	letter-spacing: 10px;
+	font-size: 30px;
 	opacity: 0.8;
 }
 
 .mh-line-size-4 {
-	letter-spacing: 10px;
+	letter-spacing: 3px;
 	font-size: 16px;
 	opacity: 0.6;
 }
