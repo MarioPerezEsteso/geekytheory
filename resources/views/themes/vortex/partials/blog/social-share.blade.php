@@ -1,4 +1,4 @@
-@if(!empty($socialShareButton))
+@if(!empty($socialShareButtons))
     <div class="social-icon-links-container">
         <ul class="social-icon-links socicon-round">
             @foreach($socialShareButtons as $socialShareButton)
