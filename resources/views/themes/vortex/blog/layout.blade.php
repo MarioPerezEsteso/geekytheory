@@ -8,6 +8,11 @@
     <meta name="description" content="@yield('postDescriptionMeta')">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $post->title }}">
+    <meta name="twitter:description" content="{{ $post->description ?? $post->title }}">
+    <meta name="twitter:image" content="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($post->image, false, true) }}">
+
     <!-- Favicons -->
     <link rel="shortcut icon"
           href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->favicon) }}">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\SiteMetaRepository;
 use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Illuminate\Http\Request;
@@ -84,20 +85,24 @@ class ImageManagerController extends Controller
      * @param bool $checkIfExists
      * @return string
      */
-    public static function getPublicImageUrl($imageName, $checkIfExists = false)
+    public static function getPublicImageUrl($imageName, $checkIfExists = false, $withUrl = false)
     {
         if (filter_var($imageName, FILTER_VALIDATE_URL)) {
             return $imageName;
         }
 
         $publicImageUrl = $imageName;
-        if ($checkIfExists) {
-            if (File::exists($publicImageUrl)) {
-                return '/' . $publicImageUrl;
-            } else {
-                return self::PATH_IMAGE_NOT_FOUND;
-            }
+        if ($checkIfExists && !File::exists($publicImageUrl)) {
+            return self::PATH_IMAGE_NOT_FOUND;
         }
-        return '/' . $publicImageUrl;
+
+        $publicImageUrl = '/' . $publicImageUrl;
+
+        if ($withUrl) {
+            $url = (new SiteMetaRepository())->getSiteMeta()->url ?? '';
+            return $url . $publicImageUrl;
+        }
+
+        return $publicImageUrl;
     }
 }
