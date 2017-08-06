@@ -40,7 +40,7 @@ Route::get('logout', ['as' => 'auth/logout', 'uses' => 'Auth\LoginController@log
 /*
  * Registration routes
  */
-Route::get('register', [
+/*Route::get('register', [
     'as'            => 'auth/register',
     'middleware'    => 'allow_user_registration',
     'uses'          => 'Auth\AuthController@getRegister'
@@ -50,7 +50,7 @@ Route::post('register', [
     'as'            => 'auth/register',
     'middleware'    => 'allow_user_registration',
     'uses'          => 'Auth\AuthController@postRegister'
-]);
+]);*/
 
 /*
  * Newsletter subscription routes
