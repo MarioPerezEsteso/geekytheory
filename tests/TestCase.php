@@ -1,5 +1,7 @@
 <?php
 
+use App\User;
+
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
     /**
@@ -8,6 +10,13 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
      * @var string
      */
     protected $baseUrl = 'http://localhost';
+
+    /**
+     * HTTP headers.
+     *
+     * @var array
+     */
+    protected $server = [];
 
     /**
      * Creates the application.
@@ -36,5 +45,34 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     {
         Artisan::call('migrate:reset');
         parent::tearDown();
+    }
+
+    /**
+     * Set HTTP header with authorization to log a user in.
+     *
+     * @param User $user
+     */
+    public function loginWithTokenAs(User $user)
+    {
+        $token = $user->createToken('AccessToken', [])->accessToken;
+        $this->server = ['HTTP_Authorization' => 'Bearer ' . $token];
+    }
+
+    /**
+     * Call the given URI and return the Response.
+     *
+     * @param  string  $method
+     * @param  string  $uri
+     * @param  array  $parameters
+     * @param  array  $cookies
+     * @param  array  $files
+     * @param  array  $server
+     * @param  string  $content
+     * @return \Illuminate\Foundation\Testing\TestResponse
+     */
+    public function call($method, $uri, $parameters = [], $cookies = [], $files = [], $server = [], $content = null)
+    {
+        $server = array_merge($this->server, $server);
+        return parent::call($method, $uri, $parameters, $cookies, $files, $server, $content);
     }
 }

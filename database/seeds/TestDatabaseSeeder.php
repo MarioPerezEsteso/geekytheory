@@ -14,6 +14,7 @@ class TestDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
+        $this->call(OauthTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(SiteMetaTableSeeder::class);
         $this->call(PostsTableSeeder::class);
