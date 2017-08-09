@@ -1,5 +1,7 @@
 <?php
 
+use Tests\TestCase;
+
 class HelperTest extends TestCase
 {
     /**
@@ -50,6 +52,10 @@ class HelperTest extends TestCase
             [
                 'text' => '#DdaysArena 2015',
                 'expected' => 'ddaysarena-2015',
+            ],
+            [
+                'text' => 'Guión_bajo',
+                'expected' => 'guion-bajo',
             ],
         ];
     }

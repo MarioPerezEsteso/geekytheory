@@ -1,6 +1,11 @@
 <?php
 
+namespace Tests\Unit\Validators;
+
+use App\Subscriber;
 use App\Validators\SubscriberValidator;
+use Illuminate\Support\Facades\App;
+use Tests\TestCase;
 
 class SubscriberValidatorTest extends TestCase
 {
@@ -19,11 +24,11 @@ class SubscriberValidatorTest extends TestCase
         parent::setUp();
 
         // Create two subscribers
-        $this->subscribers[0] = factory(App\Subscriber::class)->create([
+        $this->subscribers[0] = factory(Subscriber::class)->create([
             'email' => 'alice@geekytheory.com',
         ]);
 
-        $this->subscribers[1] = factory(App\Subscriber::class)->create([
+        $this->subscribers[1] = factory(Subscriber::class)->create([
             'email' => 'bob@geekytheory.com',
         ]);
     }

@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ArticleController;
+namespace Tests\Functional;
+
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use App\Post;
-use App\Article;
+use Tests\TestCase;
 
 class ArticleControllerTest extends TestCase
 {

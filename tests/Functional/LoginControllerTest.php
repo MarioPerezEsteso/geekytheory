@@ -1,5 +1,10 @@
 <?php
 
+namespace Tests\Functional;
+
+use App\User;
+use Tests\TestCase;
+
 class LoginControllerTest extends TestCase
 {
     /**
@@ -16,7 +21,7 @@ class LoginControllerTest extends TestCase
      */
     public function testUserLoginOk()
     {
-        $user = factory(App\User::class)->create([
+        $user = factory(User::class)->create([
             'name' => 'Alice',
             'email' => 'alice@geekytheory.com',
             'password' => bcrypt('123456'),
@@ -37,7 +42,7 @@ class LoginControllerTest extends TestCase
      */
     public function testUserCanNotLoginError()
     {
-        $user = factory(App\User::class)->create([
+        $user = factory(User::class)->create([
             'name' => 'Alice',
             'email' => 'alice@geekytheory.com',
             'password' => bcrypt('123456'),
@@ -61,7 +66,7 @@ class LoginControllerTest extends TestCase
      */
     public function testUserCanNotLoginWrongCredentialsError()
     {
-        $user = factory(App\User::class)->create([
+        $user = factory(User::class)->create([
             'name' => 'Alice',
             'email' => 'alice@geekytheory.com',
             'password' => bcrypt('123456'),
@@ -85,7 +90,7 @@ class LoginControllerTest extends TestCase
      */
     public function testUserLogoutRedirectToHomePage()
     {
-        $user = factory(App\User::class)->create([
+        $user = factory(User::class)->create([
             'name' => 'Alice',
             'email' => 'alice@geekytheory.com',
             'password' => bcrypt('123456'),

@@ -1,7 +1,10 @@
 <?php
 
+namespace Tests\Unit\Validators;
 
 use App\Validators\CommentValidator;
+use Illuminate\Support\Facades\App;
+use Tests\TestCase;
 
 class CommentValidatorTest extends TestCase
 {

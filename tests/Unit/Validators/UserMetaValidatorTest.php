@@ -1,6 +1,10 @@
 <?php
 
+namespace Tests\Unit\Validators;
+
 use \App\Validators\UserMetaValidator;
+use Illuminate\Support\Facades\App;
+use Tests\TestCase;
 
 class UserMetaValidatorTest extends TestCase
 {

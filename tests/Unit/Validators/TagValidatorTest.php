@@ -1,5 +1,12 @@
 <?php
 
+namespace Tests\Unit\Validators;
+
+use App\Repositories\TagRepository;
+use App\Validators\TagValidator;
+use Illuminate\Support\Facades\App;
+use Tests\TestCase;
+
 class TagValidatorTest extends TestCase
 {
     /**
@@ -7,7 +14,7 @@ class TagValidatorTest extends TestCase
      */
     public function testCreateSuccess()
     {
-        $validator = new \App\Validators\TagValidator(App::make('validator'));
+        $validator = new TagValidator(App::make('validator'));
         $this->assertTrue($validator->with($this->getValidCreateData())->passes());
     }
 
@@ -16,7 +23,7 @@ class TagValidatorTest extends TestCase
      */
     public function testCreateFailure()
     {
-        $validator = new \App\Validators\TagValidator(App::make('validator'));
+        $validator = new TagValidator(App::make('validator'));
         $this->assertFalse($validator->with($this->getInvalidCreateData())->passes());
         $this->assertEquals(1, count($validator->errors()));
         $this->assertInstanceOf('Illuminate\Support\MessageBag', $validator->errors());
@@ -27,7 +34,7 @@ class TagValidatorTest extends TestCase
      */
     public function testUpdateSuccess()
     {
-        $validator = new \App\Validators\TagValidator(App::make('validator'));
+        $validator = new TagValidator(App::make('validator'));
         $this->assertTrue($validator->update(1)->with($this->getValidCreateData())->passes());
     }
 
@@ -37,8 +44,8 @@ class TagValidatorTest extends TestCase
     public function testUpdateFailure()
     {
         /** @var \App\Tag $tag */
-        $tag = (new \App\Repositories\TagRepository())->find(1);
-        $validator = new \App\Validators\TagValidator(App::make('validator'));
+        $tag = (new TagRepository())->find(1);
+        $validator = new TagValidator(App::make('validator'));
         $this->assertFalse($validator->update(2)->with($tag->getAttributes())->passes());
     }
 
@@ -64,20 +71,6 @@ class TagValidatorTest extends TestCase
     {
         return array(
             'tag'   => 'This is a tag without slug',
-        );
-    }
-
-    /**
-     * Returns an array with data that already
-     * exists in the database.
-     *
-     * @return array
-     */
-    private function getExistentData()
-    {
-        return array(
-            'tag'   => 'This is a tag',
-            'slug'  => 'this-is-a-tag',
         );
     }
 }

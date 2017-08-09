@@ -1,5 +1,12 @@
 <?php
 
+namespace Tests\Unit\Validators;
+
+use App\Validators\CategoryValidator;
+use Illuminate\Support\Facades\App;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Tests\TestCase;
+
 class CategoryValidatorTest extends TestCase
 {
     /**
@@ -7,7 +14,7 @@ class CategoryValidatorTest extends TestCase
      */
     public function testCreateSuccess()
     {
-        $validator = new \App\Validators\CategoryValidator(App::make('validator'));
+        $validator = new CategoryValidator(App::make('validator'));
         $this->assertTrue($validator->with($this->getValidCreateData())->passes());
     }
 
@@ -16,7 +23,7 @@ class CategoryValidatorTest extends TestCase
      */
     public function testCreateFailure()
     {
-        $validator = new \App\Validators\CategoryValidator(App::make('validator'));
+        $validator = new CategoryValidator(App::make('validator'));
         $this->assertFalse($validator->with($this->getInvalidCreateData())->passes());
         $this->assertEquals(2, count($validator->errors()));
         $this->assertInstanceOf('Illuminate\Support\MessageBag', $validator->errors());
@@ -31,7 +38,7 @@ class CategoryValidatorTest extends TestCase
     {
         $file = tempnam(sys_get_temp_dir(), 'upl'); // create file
         imagepng(imagecreatetruecolor(10, 10), $file); // create and write image/png to it
-        $image = new \Symfony\Component\HttpFoundation\File\UploadedFile(
+        $image = new UploadedFile(
             $file,
             'image.png',
             'image/png',
@@ -53,7 +60,7 @@ class CategoryValidatorTest extends TestCase
      */
     public function getInvalidCreateData()
     {
-        $image = new \Symfony\Component\HttpFoundation\File\UploadedFile(
+        $image = new UploadedFile(
             $file = tempnam(sys_get_temp_dir(), 'upl'),
             'test-file.csv',
             'text/plain',

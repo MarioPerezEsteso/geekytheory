@@ -1,6 +1,11 @@
 <?php
 
+namespace Tests\Unit\Validators;
+
+use App\User;
 use \App\Validators\UserValidator;
+use Illuminate\Support\Facades\App;
+use Tests\TestCase;
 
 class UserValidatorTest extends TestCase
 {
@@ -19,14 +24,14 @@ class UserValidatorTest extends TestCase
         parent::setUp();
 
         // Create two users
-        $this->users[0] = factory(App\User::class)->create([
+        $this->users[0] = factory(User::class)->create([
             'name' => 'Alice',
             'email' => 'alice@geekytheory.com',
             'password' => bcrypt('123456'),
             'username' => 'alice',
         ]);
 
-        $this->users[1] = factory(App\User::class)->create([
+        $this->users[1] = factory(User::class)->create([
             'name' => 'Bob',
             'email' => 'bob@geekytheory.com',
             'password' => bcrypt('123456'),

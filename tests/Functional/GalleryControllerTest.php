@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Functional;
+
 use App\Gallery;
 use App\Image;
 use App\Repositories\ImageRepository;
@@ -7,6 +9,8 @@ use App\User;
 use \App\Repositories\GalleryRepository;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Auth;
+use Tests\TestCase;
 
 class GalleryControllerTest extends TestCase
 {

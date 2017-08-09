@@ -1,10 +1,13 @@
 <?php
 
+namespace Tests\Functional;
+
 use App\Http\Controllers\CommentController;
 use App\Repositories\CommentRepository;
 use App\Repositories\PostRepository;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Tests\TestCase;
 
 class CommentControllerTest extends TestCase
 {

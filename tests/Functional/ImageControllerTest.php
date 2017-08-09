@@ -1,11 +1,15 @@
 <?php
 
-use App\Gallery;
+namespace Tests\Functional;
+
 use App\Image;
 use App\Repositories\ImageRepository;
+use App\Repositories\UserRepository;
 use App\User;
-use \App\Repositories\GalleryRepository;
+use App\Repositories\GalleryRepository;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
+use Illuminate\Support\Facades\Auth;
+use Tests\TestCase;
 
 class ImageControllerTest extends TestCase
 {
@@ -29,7 +33,7 @@ class ImageControllerTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->user = (new \App\Repositories\UserRepository())->find(1);
+        $this->user = (new UserRepository())->find(1);
         $this->galleryRepository = new GalleryRepository();
         $this->imageRepository = new ImageRepository();
     }

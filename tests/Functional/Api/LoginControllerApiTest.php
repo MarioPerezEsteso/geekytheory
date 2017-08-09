@@ -1,6 +1,9 @@
 <?php
 
-use Laravel\Passport\ClientRepository;
+namespace Tests\Functional\Api;
+
+use App\User;
+use Tests\TestCase;
 
 class LoginControllerApiTest extends TestCase
 {
@@ -16,7 +19,7 @@ class LoginControllerApiTest extends TestCase
      */
     public function testUserLoginOk()
     {
-        $user = factory(App\User::class)->create([
+        $user = factory(User::class)->create([
             'name' => 'Alice',
             'email' => 'alice@geekytheory.com',
             'password' => bcrypt('123456'),
@@ -41,7 +44,7 @@ class LoginControllerApiTest extends TestCase
      */
     public function testLoginErrorWrongCredentials()
     {
-        $user = factory(App\User::class)->create([
+        $user = factory(User::class)->create([
             'name' => 'Alice',
             'email' => 'alice@geekytheory.com',
             'password' => bcrypt('123456'),
@@ -66,7 +69,7 @@ class LoginControllerApiTest extends TestCase
      */
     public function testUserCanNotLoginWrongCredentialsError()
     {
-        $user = factory(App\User::class)->create([
+        $user = factory(User::class)->create([
             'name' => 'Alice',
             'email' => 'alice@geekytheory.com',
             'password' => bcrypt('123456'),

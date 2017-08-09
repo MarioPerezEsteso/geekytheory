@@ -1,5 +1,10 @@
 <?php
 
+namespace Tests\Functional;
+
+use App\Subscriber;
+use Tests\TestCase;
+
 class SubscriberControllerTest extends TestCase
 {
     /**
@@ -31,7 +36,7 @@ class SubscriberControllerTest extends TestCase
      */
     public function testSubscribeEmailNotConfirmedAndTokenHasNotExpiredError()
     {
-        $subscriber = factory(App\Subscriber::class)->create([
+        $subscriber = factory(Subscriber::class)->create([
             'email' => 'alice@geekytheory.com',
             'active' => false,
             'token' => 'abcdef',
@@ -55,7 +60,7 @@ class SubscriberControllerTest extends TestCase
      */
     public function testSubscribeEmailNotConfirmedAndTokenExpiredOk()
     {
-        $subscriber = factory(App\Subscriber::class)->create([
+        $subscriber = factory(Subscriber::class)->create([
             'email' => 'alice@geekytheory.com',
             'active' => false,
             'token' => 'abcdef',
@@ -92,7 +97,7 @@ class SubscriberControllerTest extends TestCase
      */
     public function testIsUnsubscribedAndSubscribesAgain()
     {
-        $subscriber = factory(App\Subscriber::class)->create([
+        $subscriber = factory(Subscriber::class)->create([
             'email' => 'alice@geekytheory.com',
             'token' => 'abcdef123456',
             'active' => false,
@@ -127,7 +132,7 @@ class SubscriberControllerTest extends TestCase
      */
     public function testSubscriptionConfirmationOk()
     {
-        $subscriber = factory(App\Subscriber::class)->create([
+        $subscriber = factory(Subscriber::class)->create([
             'email' => 'alice@geekytheory.com',
             'token' => 'abcdef123456',
             'active' => false,
@@ -154,7 +159,7 @@ class SubscriberControllerTest extends TestCase
      */
     public function testRedirectToHomePageOnSubscriptionConfirmationIfUserHasBeenPreviouslyActivatedAndTokenIsStillValid()
     {
-        $subscriber = factory(App\Subscriber::class)->create([
+        $subscriber = factory(Subscriber::class)->create([
             'email' => 'alice@geekytheory.com',
             'token' => 'abcdef123456',
             'active' => true,
@@ -176,7 +181,7 @@ class SubscriberControllerTest extends TestCase
      */
     public function testRedirectToHomePageOnSubscriptionConfirmationIfUserHasBeenPreviouslyActivatedAndTokenHasExpired()
     {
-        $subscriber = factory(App\Subscriber::class)->create([
+        $subscriber = factory(Subscriber::class)->create([
             'email' => 'alice@geekytheory.com',
             'token' => 'abcdef123456',
             'active' => true,
@@ -208,7 +213,7 @@ class SubscriberControllerTest extends TestCase
      */
     public function testUnsubscribeUser()
     {
-        $subscriber = factory(App\Subscriber::class)->create([
+        $subscriber = factory(Subscriber::class)->create([
             'email' => 'alice@geekytheory.com',
             'token' => 'abcdef123456',
             'active' => true,
@@ -247,7 +252,7 @@ class SubscriberControllerTest extends TestCase
      */
     public function testRedirectToHomePageIfUserHasBeenPreviouslyUnsubscribed()
     {
-        $subscriber = factory(App\Subscriber::class)->create([
+        $subscriber = factory(Subscriber::class)->create([
             'email' => 'alice@geekytheory.com',
             'token' => 'abcdef123456',
             'active' => false,

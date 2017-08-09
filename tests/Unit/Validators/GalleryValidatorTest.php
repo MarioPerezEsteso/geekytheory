@@ -1,7 +1,10 @@
 <?php
 
+namespace Tests\Unit\Validators;
+
 use App\Validators\GalleryValidator;
 use Illuminate\Support\Facades\App;
+use Tests\TestCase;
 
 class GalleryValidatorTest extends TestCase
 {

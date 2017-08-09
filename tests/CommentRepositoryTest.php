@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests;
+
 use App\Repositories\CommentRepository;
 use App\Repositories\PostRepository;
 

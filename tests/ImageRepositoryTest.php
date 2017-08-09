@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests;
+
 use App\Image;
 use App\Repositories\GalleryRepository;
 use App\Repositories\ImageRepository;
