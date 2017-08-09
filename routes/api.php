@@ -16,9 +16,10 @@ $api = app('Dingo\Api\Routing\Router');
 $api->version('v1', function ($api) {
     $api->post('academia/login', 'App\Http\Controllers\Auth\LoginController@apiLogin');
 
+    // Courses
+    $api->get('courses', 'App\Http\Controllers\Api\CourseController@index');
+
     $api->group(['middleware' => ['api.auth']], function ($api) {
-        $api->get('courses', function () {
-            return \App\User::all();
-        });
+
     });
 });
