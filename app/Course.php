@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Course extends Model
 {
     /**
+     * Resource type for API responses.
+     */
+    const RESOURCE_TYPE = 'Course';
+
+    /**
      * Course difficulties.
      */
     const DIFFICULTY_BEGGINER = 'beginner';
@@ -35,6 +40,7 @@ class Course extends Model
      * @var array
      */
     public $visible = [
+        'id',
         'slug',
         'title',
         'description',
@@ -55,4 +61,12 @@ class Course extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    /**
+     * Get published courses.
+     */
+    public static function getPublished()
+    {
+        return Course::where('status', self::STATUS_PUBLISHED);
+    }
 }
