@@ -25,3 +25,17 @@ $factory->define(App\Subscriber::class, function (Faker\Generator $faker) {
         'email' => $faker->email,
     ];
 });
+
+$factory->define(App\Course::class, function (Faker\Generator $faker) {
+    return [
+        'slug' => $faker->slug,
+        'title' => $faker->text,
+        'description' => $faker->text,
+        'image' => $faker->url,
+        'difficulty' => 'easy',
+        'duration' => 100,
+        'students' => 50,
+        'free' => false,
+        'status' => 'published',
+    ];
+});
