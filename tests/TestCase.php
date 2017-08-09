@@ -4,6 +4,7 @@ namespace Tests;
 
 use App\User;
 use Illuminate\Support\Facades\Artisan;
+use Tests\Helpers\Response;
 
 class TestCase extends \Illuminate\Foundation\Testing\TestCase
 {
@@ -71,11 +72,14 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
      * @param  array  $files
      * @param  array  $server
      * @param  string  $content
-     * @return \Illuminate\Foundation\Testing\TestResponse
+     *
+     * @return Response
      */
     public function call($method, $uri, $parameters = [], $cookies = [], $files = [], $server = [], $content = null)
     {
         $server = array_merge($this->server, $server);
-        return parent::call($method, $uri, $parameters, $cookies, $files, $server, $content);
+        $response = parent::call($method, $uri, $parameters, $cookies, $files, $server, $content);
+
+        return Response::fromTestResponse($response);
     }
 }
