@@ -69,4 +69,15 @@ class Course extends Model
     {
         return Course::where('status', self::STATUS_PUBLISHED);
     }
+
+    /**
+     * Get published by id.
+     *
+     * @param integer $id
+     * @return $this
+     */
+    public static function getPublishedById($id)
+    {
+        return self::getPublished()->where('id', $id);
+    }
 }
