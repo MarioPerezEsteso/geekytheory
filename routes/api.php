@@ -18,6 +18,7 @@ $api->version('v1', function ($api) {
 
     // Courses
     $api->get('courses', 'App\Http\Controllers\Api\CourseController@index');
+    $api->get('courses/{id}', 'App\Http\Controllers\Api\CourseController@show');
 
     $api->group(['middleware' => ['api.auth']], function ($api) {
 
