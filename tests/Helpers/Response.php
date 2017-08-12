@@ -53,21 +53,27 @@ class Response extends TestResponse
     }
 
     /**
-     * Assert that the response has the given resource type and the given JSON structure.
+     * Assert that the response has the given resource type and the given JSON structure. If the array data is a
+     * collection, the keys 'id', 'key' and 'attributes' will be in different elements. On the other hand, if the
+     * array data is a single item, the keys 'id', 'key' and 'attributes' will be directly under the key 'data'.
      *
      * @param string $resourceType
      * @param array $resourceStructure
      */
     public function assertApiResponseResourceStructureIs($resourceType, $resourceStructure)
     {
-        $firstElement = $this->getFirstDataElement();
-        $actual = $firstElement['type'];
+        $item = isset($this->arrayData['data']['attributes']) ? $this->arrayData['data'] : $this->getFirstDataElement();
+
+        $actual = $item['type'];
+
+        PHPUnit::assertArrayHasKey('id', $item, 'Item must have key id');
+
         PHPUnit::assertTrue(
             $actual === $resourceType,
             "Expected resource type {$resourceType} but received {$actual}."
         );
 
-        $attributes = $firstElement['attributes'];
+        $attributes = $item['attributes'];
         $this->assertJsonStructure($resourceStructure, $attributes);
     }
 
@@ -80,26 +86,4 @@ class Response extends TestResponse
     {
         return $this->arrayData['data'][0] ?? null;
     }
-
-    private function calculateFirstDataElementJsonPath()
-    {
-        $arrResponse = json_decode($this->api->grabResponse());
-        $data = $arrResponse->data;
-        if (is_array($data) && count($data) > 0) {
-            // data is a array of elements
-            $jsonPath = '$.data[0]';
-        } else if (is_object($data)) {
-            // data is an object
-            $jsonPath = '$.data';
-        }
-        return $jsonPath;
-    }
-
-    private function assertEqualsDataFromResponseByJsonPath($expectedValue, $jsonPath)
-    {
-        $valueToMatch = $this->api->grabDataFromResponseByJsonPath($jsonPath)[0];
-        $this->assertEquals($expectedValue, $valueToMatch, "Equal condition doesn't match (JSONPath: $jsonPath)");
-    }
-
-
 }
