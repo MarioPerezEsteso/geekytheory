@@ -4,8 +4,10 @@ namespace Tests\Functional\Api;
 
 use App\Course;
 use App\User;
+use Illuminate\Database\Eloquent\Collection;
 use Tests\Helpers\Functional;
 use Tests\Helpers\TestConstants;
+use Tests\Helpers\TestUtils;
 use Tests\TestCase;
 
 class CourseControllerTest extends TestCase
@@ -16,6 +18,11 @@ class CourseControllerTest extends TestCase
      * @var string
      */
     protected $coursesEndpoint = 'api/courses';
+
+    /**
+     * Single course endpoint.
+     */
+    protected $singleCourseEndpoint = 'api/courses/{courseId}';
 
     /**
      * Course resource structure.
@@ -34,7 +41,7 @@ class CourseControllerTest extends TestCase
     ];
 
     /**
-     * Test user login ok and redirect to /home
+     * Test get courses ok.
      */
     public function testGetCoursesOk()
     {
@@ -59,6 +66,36 @@ class CourseControllerTest extends TestCase
     }
 
     /**
+     * Test get single course ok.
+     */
+    public function testGetSingleCourseOk()
+    {
+        // Prepare
+        $teacher = factory(User::class)->create();
+        $courses = $this->createCoursesWithChaptersAndLessons($teacher);
+        $course = $courses->first();
+
+        // Request
+        $response = $this->call('GET', TestUtils::createEndpoint($this->singleCourseEndpoint, ['courseId' => $course->id]));
+
+        // Asserts
+        $response->assertStatus(200);
+        $response->assertApiResponseResourceStructureIs(TestConstants::RESOURCE_TYPE_COURSE, $this->courseResourceStructure);
+    }
+
+    /**
+     * Test get single course that does not exist throws a not found error.
+     */
+    public function testGetSingleCourseErrorNotFound()
+    {
+        // Request
+        $response = $this->call('GET', TestUtils::createEndpoint($this->singleCourseEndpoint, ['courseId' => '123123']));
+
+        // Asserts
+        $response->assertResponseIsErrorApiResponse(404, 1);
+    }
+
+    /**
      * Populate the database with courses, chapters and lessons.
      *
      * @param User $teacher
@@ -66,11 +103,14 @@ class CourseControllerTest extends TestCase
      * @param integer $numberOfChapters
      * @param integer $numberOfLessons
      * @param array $courseAttributes
+     *
+     * @return Collection
      */
     private function createCoursesWithChaptersAndLessons(User $teacher, $numberOfCourses = 1, $numberOfChapters = 1, $numberOfLessons = 1, $courseAttributes = [])
     {
         $courseAttributes = array_merge(['difficulty' => 'beginner' , 'status' => 'published'], $courseAttributes);
         $faker = \Faker\Factory::create();
+        $courses = new Collection();
         for ($i = 1; $i <= $numberOfCourses; $i++) {
             $course = factory(Course::class)->create([
                 'teacher_id' => $teacher->id,
@@ -90,6 +130,9 @@ class CourseControllerTest extends TestCase
                     $lesson = factory(Lesson::class)->create([]);
                 }
             }*/
+            $courses->add($course);
         }
+
+        return $courses;
     }
 }

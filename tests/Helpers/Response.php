@@ -78,6 +78,28 @@ class Response extends TestResponse
     }
 
     /**
+     * Assert that the API has thrown an error with a given status and a given code.
+     *
+     * @param integer $status
+     * @param integer $code
+     */
+    public function assertResponseIsErrorApiResponse($status, $code)
+    {
+        $actualStatus = $this->arrayData['status_code'];
+        $actualCode = $this->arrayData['code'];
+
+        PHPUnit::assertTrue(
+            $actualStatus === $status,
+            "Expected status {$status} but received {$actualStatus}."
+        );
+
+        PHPUnit::assertTrue(
+            $actualCode === $code,
+            "Expected error code {$code} but received {$actualCode}."
+        );
+    }
+
+    /**
      * Get the first data element of the response.
      *
      * @return array|null
