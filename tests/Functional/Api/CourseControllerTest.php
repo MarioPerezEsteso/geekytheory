@@ -96,6 +96,36 @@ class CourseControllerTest extends TestCase
     }
 
     /**
+     * Test get single course that exists but is not published throws a not found error.
+     *
+     * @dataProvider getCourseStatuses
+     * @param string $status
+     */
+    public function testGetSingleCourseNotPublishedErrorNotFound($status)
+    {
+        // Prepare
+        $teacher = factory(User::class)->create();
+        $courses = $this->createCoursesWithChaptersAndLessons($teacher, 1, 1, 1, ['status' => $status]);
+        $course = $courses->first();
+
+        // Request
+        $response = $this->call('GET', TestUtils::createEndpoint($this->singleCourseEndpoint, ['courseId' => $course->id]));
+
+        // Asserts
+        $response->assertResponseIsErrorApiResponse(404, 1);
+    }
+
+    /**
+     * Get an array of course statuses.
+     *
+     * @return array
+     */
+    public static function getCourseStatuses()
+    {
+        return [['draft'], ['pending'], ['scheduled'], ['deleted']];
+    }
+
+    /**
      * Populate the database with courses, chapters and lessons.
      *
      * @param User $teacher
