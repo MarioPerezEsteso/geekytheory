@@ -24,6 +24,7 @@ class Chapter extends Model
      * @var array
      */
     public $visible = [
+        'id',
         'title',
         'order',
     ];
