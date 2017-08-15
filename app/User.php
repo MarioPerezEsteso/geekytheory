@@ -11,6 +11,11 @@ class User extends Authenticatable
     use HasApiTokens, Notifiable;
 
     /**
+     * Resource type for API responses.
+     */
+    const RESOURCE_TYPE = 'User';
+
+    /**
      * The database table used by the model.
      *
      * @var string

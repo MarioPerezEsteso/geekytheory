@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use App\Course;
 use App\Transformers\CourseTransformer;
+use app\Transformers\UserTransformer;
+use App\User;
 use Dingo\Api\Transformer\Adapter\Fractal;
 use Illuminate\Support\ServiceProvider;
 use League\Fractal\Manager;
@@ -37,6 +39,11 @@ class JsonApiDingoServiceProvider extends ServiceProvider
             Course::class,
             CourseTransformer::class,
             ['key' => Course::RESOURCE_TYPE,]
+        );
+        $this->app['Dingo\Api\Transformer\Factory']->register(
+            User::class,
+            UserTransformer::class,
+            ['key' => User::RESOURCE_TYPE,]
         );
     }
 }
