@@ -3,14 +3,10 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Query\Builder;
 
 class Course extends Model
 {
-    /**
-     * Resource type for API responses.
-     */
-    const RESOURCE_TYPE = 'Course';
-
     /**
      * Course difficulties.
      */
@@ -63,21 +59,28 @@ class Course extends Model
     ];
 
     /**
-     * Get published courses.
+     * Get the teacher of a course.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public static function getPublished()
+    public function teacher()
     {
-        return Course::where('status', self::STATUS_PUBLISHED);
+        return $this->belongsTo('App\User', 'teacher_id', 'id');
     }
 
     /**
-     * Get published by id.
+     * Get published courses.
      *
-     * @param integer $id
-     * @return $this
+     * @param array $andWhere
+     * @return Builder
      */
-    public static function getPublishedById($id)
+    public static function getPublished($andWhere = [])
     {
-        return self::getPublished()->where('id', $id);
+        $query = Course::where('status', self::STATUS_PUBLISHED);
+        foreach ($andWhere as $key => $value) {
+            $query = $query->where($key, '=', $value);
+        }
+
+        return $query;
     }
 }

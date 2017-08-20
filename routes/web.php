@@ -335,3 +335,7 @@ Route::get('category/{slug}', 'CategoryController@showByCategory');
 
 Route::get('tag/{slug}', 'TagController@showByTag');
 
+Route::get('cursos', 'CourseController@index');
+Route::get('cursos/{slug}', 'CourseController@show');
+
+

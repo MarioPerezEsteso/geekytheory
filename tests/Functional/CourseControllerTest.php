@@ -1,8 +1,10 @@
 <?php
 
-namespace Tests\Functional\Api;
+namespace Tests\Functional;
 
+use App\Chapter;
 use App\Course;
+use App\Lesson;
 use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Tests\Helpers\Functional;
@@ -17,58 +19,17 @@ class CourseControllerTest extends TestCase
      *
      * @var string
      */
-    protected $coursesEndpoint = 'api/courses';
+    protected $coursesEndpoint = 'cursos';
 
     /**
      * Single course endpoint.
      */
-    protected $singleCourseEndpoint = 'api/courses/{courseId}';
+    protected $singleCourseEndpoint = 'cursos/{slug}';
 
     /**
-     * Course resource structure.
-     *
-     * @var array
+     * Test page single course ok.
      */
-    protected $courseResourceStructure = [
-        'slug',
-        'title',
-        'description',
-        'image',
-        'difficulty',
-        'duration',
-        'students',
-        'free',
-    ];
-
-    /**
-     * Test get courses ok.
-     */
-    public function testGetCoursesOk()
-    {
-        // Config
-        $numberOfCoursesPublished = 7;
-        $numberOfCoursesDraft = 4;
-        $numberOfChapters = 5;
-        $numberOfLessons = 7;
-
-        // Prepare
-        $teacher = factory(User::class)->create();
-        $this->createCoursesWithChaptersAndLessons($teacher, $numberOfCoursesPublished, $numberOfChapters, $numberOfLessons);
-        $this->createCoursesWithChaptersAndLessons($teacher, $numberOfCoursesDraft, $numberOfChapters, $numberOfLessons, ['status' => 'draft']);
-
-        // Request
-        $response = $this->call('get', $this->coursesEndpoint);
-
-        // Asserts
-        $response->assertStatus(200);
-        $response->assertApiResponseResourceCountIs($numberOfCoursesPublished);
-        $response->assertApiResponseResourceStructureIs(TestConstants::RESOURCE_TYPE_COURSE, $this->courseResourceStructure);
-    }
-
-    /**
-     * Test get single course ok.
-     */
-    public function testGetSingleCourseOk()
+    public function testVisitPageGetSingleCourseOk()
     {
         // Prepare
         $teacher = factory(User::class)->create();
@@ -76,11 +37,12 @@ class CourseControllerTest extends TestCase
         $course = $courses->first();
 
         // Request
-        $response = $this->call('GET', TestUtils::createEndpoint($this->singleCourseEndpoint, ['courseId' => $course->id]));
+        $response = $this->call('GET', TestUtils::createEndpoint($this->singleCourseEndpoint, ['slug' => $course->slug]));
 
         // Asserts
         $response->assertStatus(200);
-        $response->assertApiResponseResourceStructureIs(TestConstants::RESOURCE_TYPE_COURSE, $this->courseResourceStructure);
+        $response->assertResponseIsView('courses.course');
+        $response->assertResponseHasData('course');
     }
 
     /**
@@ -89,10 +51,10 @@ class CourseControllerTest extends TestCase
     public function testGetSingleCourseErrorNotFound()
     {
         // Request
-        $response = $this->call('GET', TestUtils::createEndpoint($this->singleCourseEndpoint, ['courseId' => '123123']));
+        $response = $this->call('GET', TestUtils::createEndpoint($this->singleCourseEndpoint, ['slug' => 'course-that-does-not-exist']));
 
         // Asserts
-        $response->assertResponseIsErrorApiResponse(404, 1);
+        $response->assertStatus(404);
     }
 
     /**
@@ -109,10 +71,9 @@ class CourseControllerTest extends TestCase
         $course = $courses->first();
 
         // Request
-        $response = $this->call('GET', TestUtils::createEndpoint($this->singleCourseEndpoint, ['courseId' => $course->id]));
+        $response = $this->call('GET', TestUtils::createEndpoint($this->singleCourseEndpoint, ['slug' => $course->slug]));
 
-        // Asserts
-        $response->assertResponseIsErrorApiResponse(404, 1);
+        $response->assertStatus(404);
     }
 
     /**
@@ -154,12 +115,12 @@ class CourseControllerTest extends TestCase
                 'free' => false,
                 'status' => $courseAttributes['status'],
             ]);
-            /*for ($numChapters = 1; $numChapters <= $numberOfChapters; $numChapters++) {
-                $chapter = factory(Chapter::class)->create([]);
-                for ($numLessons = 1; $numLessons <= $numberOfLessons; $numLessons++) {
+            for ($numChapters = 1; $numChapters <= $numberOfChapters; $numChapters++) {
+                $chapter = factory(Chapter::class)->create(['course_id' => $course->id]);
+                /*for ($numLessons = 1; $numLessons <= $numberOfLessons; $numLessons++) {
                     $lesson = factory(Lesson::class)->create([]);
-                }
-            }*/
+                }*/
+            }
             $courses->add($course);
         }
 

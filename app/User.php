@@ -8,12 +8,7 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
-
-    /**
-     * Resource type for API responses.
-     */
-    const RESOURCE_TYPE = 'User';
+    use Notifiable;
 
     /**
      * The database table used by the model.

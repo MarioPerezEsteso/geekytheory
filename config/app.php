@@ -167,8 +167,6 @@ return [
          * Package Service Providers...
          */
 //        Laravel\Tinker\TinkerServiceProvider::class,
-        Dingo\Api\Provider\LaravelServiceProvider::class,
-        Laravel\Passport\PassportServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -178,7 +176,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\JsonApiDingoServiceProvider::class,
 
         /*
          * Third party service providers

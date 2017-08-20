@@ -10,9 +10,7 @@
         "laravelcollective/html": "5.4.*",
         "barryvdh/laravel-debugbar": "^2.2",
         "doctrine/dbal": "^2.5",
-        "guzzlehttp/guzzle": "~5.3|~6.0",
-        "laravel/passport": "^3.0",
-        "dingo/api": "v1.0.0-beta8"
+        "guzzlehttp/guzzle": "~5.3|~6.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

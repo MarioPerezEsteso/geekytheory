@@ -12,15 +12,4 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-$api = app('Dingo\Api\Routing\Router');
-$api->version('v1', function ($api) {
-    $api->post('academia/login', 'App\Http\Controllers\Auth\LoginController@apiLogin');
-
-    // Courses
-    $api->get('courses', 'App\Http\Controllers\Api\CourseController@index');
-    $api->get('courses/{id}', 'App\Http\Controllers\Api\CourseController@show');
-
-    $api->group(['middleware' => ['api.auth']], function ($api) {
-
-    });
-});
+Route::post('academia/login', 'App\Http\Controllers\Auth\LoginController@apiLogin');
