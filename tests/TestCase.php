@@ -52,17 +52,6 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
     }
 
     /**
-     * Set HTTP header with authorization to log a user in.
-     *
-     * @param User $user
-     */
-    public function loginWithTokenAs(User $user)
-    {
-        $token = $user->createToken('AccessToken', [])->accessToken;
-        $this->server = ['HTTP_Authorization' => 'Bearer ' . $token];
-    }
-
-    /**
      * Call the given URI and return the Response.
      *
      * @param  string  $method
@@ -77,7 +66,6 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
      */
     public function call($method, $uri, $parameters = [], $cookies = [], $files = [], $server = [], $content = null)
     {
-        $server = array_merge($this->server, $server);
         $response = parent::call($method, $uri, $parameters, $cookies, $files, $server, $content);
 
         return Response::fromTestResponse($response);

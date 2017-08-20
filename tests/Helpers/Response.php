@@ -3,6 +3,7 @@
 namespace Tests\Helpers;
 
 use Illuminate\Foundation\Testing\TestResponse;
+use Illuminate\View\View;
 use PHPUnit\Framework\Assert as PHPUnit;
 
 class Response extends TestResponse
@@ -15,7 +16,11 @@ class Response extends TestResponse
     public $baseResponse;
 
     /**
-     * JSON response as array.
+     * @var View
+     */
+    private $view;
+    /**
+     * Array of data passed to view.
      *
      * @var array
      */
@@ -24,7 +29,8 @@ class Response extends TestResponse
     public function __construct(\Illuminate\Http\Response $response)
     {
         parent::__construct($response);
-        $this->arrayData = $this->json();
+        $this->view = $response->getOriginalContent();
+        $this->arrayData = $this->view->getData();
     }
 
     /**
@@ -43,7 +49,7 @@ class Response extends TestResponse
      *
      * @param $count
      */
-    public function assertApiResponseResourceCountIs($count)
+    public function assertResponseResourceCountIs($count)
     {
         $actual = count($this->arrayData['data']);
         PHPUnit::assertTrue(
@@ -53,59 +59,26 @@ class Response extends TestResponse
     }
 
     /**
-     * Assert that the response has the given resource type and the given JSON structure. If the array data is a
-     * collection, the keys 'id', 'key' and 'attributes' will be in different elements. On the other hand, if the
-     * array data is a single item, the keys 'id', 'key' and 'attributes' will be directly under the key 'data'.
+     * Assert that the response data has the given attribute.
      *
-     * @param string $resourceType
-     * @param array $resourceStructure
+     * @param $data
      */
-    public function assertApiResponseResourceStructureIs($resourceType, $resourceStructure)
+    public function assertResponseHasData($data)
     {
-        $item = isset($this->arrayData['data']['attributes']) ? $this->arrayData['data'] : $this->getFirstDataElement();
-
-        $actual = $item['type'];
-
-        PHPUnit::assertArrayHasKey('id', $item, 'Item must have key id');
-
-        PHPUnit::assertTrue(
-            $actual === $resourceType,
-            "Expected resource type {$resourceType} but received {$actual}."
-        );
-
-        $attributes = $item['attributes'];
-        $this->assertJsonStructure($resourceStructure, $attributes);
+        PHPUnit::assertArrayHasKey($data, $this->arrayData, "Response data has not any attribute $data");
     }
 
     /**
-     * Assert that the API has thrown an error with a given status and a given code.
+     * Assert that the response has the given view.
      *
-     * @param integer $status
-     * @param integer $code
+     * @param $view
      */
-    public function assertResponseIsErrorApiResponse($status, $code)
+    public function assertResponseIsView($view)
     {
-        $actualStatus = $this->arrayData['status_code'];
-        $actualCode = $this->arrayData['code'];
-
+        $actual = $this->view->getName();
         PHPUnit::assertTrue(
-            $actualStatus === $status,
-            "Expected status {$status} but received {$actualStatus}."
+            $actual === $view,
+            "Expected view {$view} but received {$actual}."
         );
-
-        PHPUnit::assertTrue(
-            $actualCode === $code,
-            "Expected error code {$code} but received {$actualCode}."
-        );
-    }
-
-    /**
-     * Get the first data element of the response.
-     *
-     * @return array|null
-     */
-    private function getFirstDataElement()
-    {
-        return $this->arrayData['data'][0] ?? null;
     }
 }
