@@ -42,6 +42,7 @@ class CourseControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertResponseIsView('courses.course');
         $response->assertResponseHasData('course');
+        $response->assertResponseDataHasRelation('course', 'teacher');
     }
 
     /**

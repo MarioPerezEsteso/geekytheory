@@ -2,6 +2,7 @@
 
 namespace Tests\Helpers;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\View\View;
 use PHPUnit\Framework\Assert as PHPUnit;
@@ -87,5 +88,20 @@ class Response extends TestResponse
             $actual === $view,
             "Expected view {$view} but received {$actual}."
         );
+    }
+
+    /**
+     * Assert that a response data object has a relation.
+     *
+     * @param string $object
+     * @param string $relation
+     */
+    public function assertResponseDataHasRelation($object, $relation)
+    {
+        /** @var Model $object */
+        $object = $this->viewData[$object];
+
+        PHPUnit::assertTrue($object->relationLoaded($relation), "Relation {$relation} has not been loaded in {$object}");
+
     }
 }
