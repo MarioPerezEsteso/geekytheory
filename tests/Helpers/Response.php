@@ -19,18 +19,25 @@ class Response extends TestResponse
      * @var View
      */
     private $view;
+
     /**
      * Array of data passed to view.
      *
      * @var array
      */
-    private $arrayData = [];
+    private $viewData = [];
 
+    /**
+     * Response constructor.
+     * @param \Illuminate\Http\Response $response
+     */
     public function __construct(\Illuminate\Http\Response $response)
     {
         parent::__construct($response);
         $this->view = $response->getOriginalContent();
-        $this->arrayData = $this->view->getData();
+        if ($this->view instanceof View) {
+            $this->viewData = $this->view->getData();
+        }
     }
 
     /**
@@ -51,7 +58,7 @@ class Response extends TestResponse
      */
     public function assertResponseResourceCountIs($count)
     {
-        $actual = count($this->arrayData['data']);
+        $actual = count($this->viewData['data']);
         PHPUnit::assertTrue(
             $actual === $count,
             "Expected resource count {$count} but received {$actual}."
@@ -65,7 +72,7 @@ class Response extends TestResponse
      */
     public function assertResponseHasData($data)
     {
-        PHPUnit::assertArrayHasKey($data, $this->arrayData, "Response data has not any attribute $data");
+        PHPUnit::assertArrayHasKey($data, $this->viewData, "Response data has not any attribute $data");
     }
 
     /**

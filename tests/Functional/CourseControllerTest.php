@@ -8,7 +8,6 @@ use App\Lesson;
 use App\User;
 use Illuminate\Database\Eloquent\Collection;
 use Tests\Helpers\Functional;
-use Tests\Helpers\TestConstants;
 use Tests\Helpers\TestUtils;
 use Tests\TestCase;
 
@@ -115,12 +114,12 @@ class CourseControllerTest extends TestCase
                 'free' => false,
                 'status' => $courseAttributes['status'],
             ]);
-            for ($numChapters = 1; $numChapters <= $numberOfChapters; $numChapters++) {
-                $chapter = factory(Chapter::class)->create(['course_id' => $course->id]);
+//            for ($numChapters = 1; $numChapters <= $numberOfChapters; $numChapters++) {
+//                $chapter = factory(Chapter::class)->create(['course_id' => $course->id]);
                 /*for ($numLessons = 1; $numLessons <= $numberOfLessons; $numLessons++) {
                     $lesson = factory(Lesson::class)->create([]);
                 }*/
-            }
+//            }
             $courses->add($course);
         }
 
