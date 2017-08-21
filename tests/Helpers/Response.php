@@ -2,6 +2,7 @@
 
 namespace Tests\Helpers;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\TestResponse;
 use Illuminate\View\View;
@@ -93,24 +94,46 @@ class Response extends TestResponse
     /**
      * Assert that a response data object has a relation.
      *
-     * @param string $object
+     * @param string $objects
      * @param string $relation
      * @param int $relationsLoaded
      */
-    public function assertResponseDataHasRelationLoaded($object, $relation, $relationsLoaded = 1)
+    public function assertResponseDataHasRelationLoaded($objects, $relation, $relationsLoaded = 1)
     {
+        $objectsExploded = explode('.', $objects);
         /** @var Model $object */
-        $object = $this->viewData[$object];
+        $object = $this->viewData[$objectsExploded[0]];
+        for ($index = 1; $index < count($objectsExploded); $index++) {
+            $object = $object->getRelationValue($objectsExploded[$index]);
+        }
 
+        if ($object instanceof Collection) {
+            foreach ($object as $item) {
+                $this->assertRelationsLoaded($item, $relation, $relationsLoaded);
+            }
+        } else {
+            $this->assertRelationsLoaded($object, $relation, $relationsLoaded);
+        }
+    }
+
+    /**
+     * Assert relations of an item.
+     *
+     * @param Model $item
+     * @param string $relation
+     * @param integer $relationsLoaded
+     */
+    private function assertRelationsLoaded($item, $relation, $relationsLoaded)
+    {
         PHPUnit::assertTrue(
-            $object->relationLoaded($relation),
-            "Relation {$relation} has not been loaded in {$object}"
+            $item->relationLoaded($relation),
+            "Relation {$relation} has not been loaded"
         );
-        $actualCountRelationsLoaded = count($object->getRelationValue($relation));
+        $actualCountRelationsLoaded = count($item->getRelationValue($relation));
         PHPUnit::assertEquals(
             $relationsLoaded,
             $actualCountRelationsLoaded,
-            "Expected {$relationsLoaded} {$relation} in {$object} but got {$actualCountRelationsLoaded}"
+            "Expected {$relationsLoaded} {$relation} but got {$actualCountRelationsLoaded}"
         );
     }
 }

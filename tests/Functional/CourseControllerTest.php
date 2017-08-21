@@ -43,7 +43,7 @@ class CourseControllerTest extends TestCase
         $response->assertResponseHasData('course');
         $response->assertResponseDataHasRelationLoaded('course', 'teacher');
         $response->assertResponseDataHasRelationLoaded('course', 'chapters', 3);
-        // TODO assert response data has Lessons in relations with chapters.
+        $response->assertResponseDataHasRelationLoaded('course.chapters', 'lessons', 5);
     }
 
     /**
