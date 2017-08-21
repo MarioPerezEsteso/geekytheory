@@ -49,4 +49,14 @@ class Chapter extends Model
     {
         return $this->belongsTo('App\Course');
     }
+
+    /**
+     * Get the lessons of a chapter.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function lessons()
+    {
+        return $this->hasMany('App\Lesson');
+    }
 }

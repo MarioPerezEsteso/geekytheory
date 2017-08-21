@@ -44,4 +44,14 @@ class Lesson extends Model
         'updated_at',
         'deleted_at',
     ];
+
+    /**
+     * Get the chapter this lesson belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function chapter()
+    {
+        return $this->belongsTo('App\Chapter');
+    }
 }
