@@ -40,4 +40,13 @@ class Chapter extends Model
         'deleted_at',
     ];
 
+    /**
+     * Get the course this chapter belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function course()
+    {
+        return $this->belongsTo('App\Course');
+    }
 }

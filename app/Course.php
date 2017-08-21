@@ -69,6 +69,16 @@ class Course extends Model
     }
 
     /**
+     * Get the chapters of a course.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function chapters()
+    {
+        return $this->hasMany('App\Chapter');
+    }
+
+    /**
      * Get published courses.
      *
      * @param array $andWhere
