@@ -39,3 +39,7 @@ $factory->define(App\Course::class, function (Faker\Generator $faker) {
         'status' => 'published',
     ];
 });
+
+$factory->define(App\Chapter::class, function () {
+    return [];
+});
