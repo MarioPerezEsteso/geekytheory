@@ -32,7 +32,7 @@ class CourseControllerTest extends TestCase
     {
         // Prepare
         $teacher = factory(User::class)->create();
-        $courses = $this->createCoursesWithChaptersAndLessons($teacher);
+        $courses = $this->createCoursesWithChaptersAndLessons($teacher, 1);
         $course = $courses->first();
 
         // Request
@@ -42,7 +42,8 @@ class CourseControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertResponseIsView('courses.course');
         $response->assertResponseHasData('course');
-        $response->assertResponseDataHasRelation('course', 'teacher');
+        $response->assertResponseDataHasRelationLoaded('course', 'teacher');
+        $response->assertResponseDataHasRelationLoaded('course', 'chapters');
     }
 
     /**
@@ -115,12 +116,15 @@ class CourseControllerTest extends TestCase
                 'free' => false,
                 'status' => $courseAttributes['status'],
             ]);
-//            for ($numChapters = 1; $numChapters <= $numberOfChapters; $numChapters++) {
-//                $chapter = factory(Chapter::class)->create(['course_id' => $course->id]);
+            for ($numChapters = 1; $numChapters <= $numberOfChapters; $numChapters++) {
+                $chapter = factory(Chapter::class)->create([
+                    'course_id' => $course->id,
+                    'order' => $numChapters,
+                ]);
                 /*for ($numLessons = 1; $numLessons <= $numberOfLessons; $numLessons++) {
                     $lesson = factory(Lesson::class)->create([]);
                 }*/
-//            }
+            }
             $courses->add($course);
         }
 

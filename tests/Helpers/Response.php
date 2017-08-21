@@ -96,7 +96,7 @@ class Response extends TestResponse
      * @param string $object
      * @param string $relation
      */
-    public function assertResponseDataHasRelation($object, $relation)
+    public function assertResponseDataHasRelationLoaded($object, $relation)
     {
         /** @var Model $object */
         $object = $this->viewData[$object];
