@@ -15,7 +15,7 @@ class CourseController extends Controller
      */
     public function show($slug)
     {
-        $course = Course::getPublished(['slug' => $slug])->with('teacher')->with('chapters')->firstOrFail();
+        $course = Course::getPublished(['slug' => $slug])->with('teacher')->with('chapters.lessons')->firstOrFail();
 
         return view('courses.course', compact('course'));
     }

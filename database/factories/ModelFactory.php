@@ -43,3 +43,7 @@ $factory->define(App\Course::class, function (Faker\Generator $faker) {
 $factory->define(App\Chapter::class, function () {
     return [];
 });
+
+$factory->define(App\Lesson::class, function () {
+    return [];
+});

@@ -7,7 +7,6 @@ use App\Course;
 use App\Lesson;
 use App\User;
 use Illuminate\Database\Eloquent\Collection;
-use Tests\Helpers\Functional;
 use Tests\Helpers\TestUtils;
 use Tests\TestCase;
 
@@ -32,7 +31,7 @@ class CourseControllerTest extends TestCase
     {
         // Prepare
         $teacher = factory(User::class)->create();
-        $courses = $this->createCoursesWithChaptersAndLessons($teacher, 1);
+        $courses = $this->createCoursesWithChaptersAndLessons($teacher, 1, 3, 5);
         $course = $courses->first();
 
         // Request
@@ -43,7 +42,8 @@ class CourseControllerTest extends TestCase
         $response->assertResponseIsView('courses.course');
         $response->assertResponseHasData('course');
         $response->assertResponseDataHasRelationLoaded('course', 'teacher');
-        $response->assertResponseDataHasRelationLoaded('course', 'chapters');
+        $response->assertResponseDataHasRelationLoaded('course', 'chapters', 3);
+        // TODO assert response data has Lessons in relations with chapters.
     }
 
     /**
@@ -121,9 +121,18 @@ class CourseControllerTest extends TestCase
                     'course_id' => $course->id,
                     'order' => $numChapters,
                 ]);
-                /*for ($numLessons = 1; $numLessons <= $numberOfLessons; $numLessons++) {
-                    $lesson = factory(Lesson::class)->create([]);
-                }*/
+                for ($numLessons = 1; $numLessons <= $numberOfLessons; $numLessons++) {
+                    $lesson = factory(Lesson::class)->create([
+                        'chapter_id' => $chapter->id,
+                        'slug' => 'course-' . $i . '-chapter-' . $numChapters. '-lesson-' . $numLessons,
+                        'title' => $faker->title,
+                        'content' => $faker->text,
+                        'video' => 'https://youtube.com/whatever',
+                        'order' => $numLessons,
+                        'duration' => $faker->numberBetween(10, 50),
+                        'free' => false,
+                    ]);
+                }
             }
             $courses->add($course);
         }

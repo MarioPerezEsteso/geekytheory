@@ -95,13 +95,22 @@ class Response extends TestResponse
      *
      * @param string $object
      * @param string $relation
+     * @param int $relationsLoaded
      */
-    public function assertResponseDataHasRelationLoaded($object, $relation)
+    public function assertResponseDataHasRelationLoaded($object, $relation, $relationsLoaded = 1)
     {
         /** @var Model $object */
         $object = $this->viewData[$object];
 
-        PHPUnit::assertTrue($object->relationLoaded($relation), "Relation {$relation} has not been loaded in {$object}");
-
+        PHPUnit::assertTrue(
+            $object->relationLoaded($relation),
+            "Relation {$relation} has not been loaded in {$object}"
+        );
+        $actualCountRelationsLoaded = count($object->getRelationValue($relation));
+        PHPUnit::assertEquals(
+            $relationsLoaded,
+            $actualCountRelationsLoaded,
+            "Expected {$relationsLoaded} {$relation} in {$object} but got {$actualCountRelationsLoaded}"
+        );
     }
 }
