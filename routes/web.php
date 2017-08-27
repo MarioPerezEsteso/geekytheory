@@ -52,6 +52,12 @@ Route::post('register', [
     'uses'          => 'Auth\AuthController@postRegister'
 ]);*/
 
+/**
+ * Routes for courses
+ */
+Route::get('cursos', ['as' => 'courses', 'uses' => 'CourseController@index']);
+Route::get('curso/{slug}', ['as' => 'course', 'uses' => 'CourseController@show']);
+
 /*
  * Newsletter subscription routes
  */
@@ -334,8 +340,3 @@ Route::get('user/{username}', 'ArticleController@showByUsername');
 Route::get('category/{slug}', 'CategoryController@showByCategory');
 
 Route::get('tag/{slug}', 'TagController@showByTag');
-
-Route::get('cursos', 'CourseController@index');
-Route::get('cursos/{slug}', 'CourseController@show');
-
-
