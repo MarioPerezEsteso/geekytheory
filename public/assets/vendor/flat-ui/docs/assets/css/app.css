@@ -1,0 +1,25 @@
+.navbar-brand {
+    padding: 0px;
+}
+.navbar-brand>img {
+    height: 100%;
+    padding: 9px;
+    width: auto;
+}
+
+.center-flex {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.jumbotron-home {
+    height: 800px;
+    background: url('https://images.unsplash.com/photo-1478180142614-26cabe747dbc?dpr=1&auto=format&fit=crop&w=1500&h=1000&q=80&cs=tinysrgb&crop=');
+}
+
+@media screen and (min-width: 768px) {
+    .jumbotron h1, .jumbotron .h1 {
+        font-size: 50px;
+    }
+}
