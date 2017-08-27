@@ -1,12 +1,19 @@
+/**
+ * Navbar
+ */
 .navbar-brand {
     padding: 0px;
 }
-.navbar-brand>img {
+
+.navbar-brand > img {
     height: 100%;
     padding: 9px;
     width: auto;
 }
 
+/**
+ * Jumbotron for homepage
+ */
 .center-flex {
     display: flex;
     align-items: center;
@@ -16,6 +23,25 @@
 .jumbotron-home {
     height: 800px;
     background: url('https://images.unsplash.com/photo-1478180142614-26cabe747dbc?dpr=1&auto=format&fit=crop&w=1500&h=1000&q=80&cs=tinysrgb&crop=');
+}
+
+.login-jumbotron-trial-banner {
+    background-color: #637a91;
+    border-radius: 6px 6px 0 0;
+    text-align: center;
+    font-weight: 500;
+    padding: 20px;
+    color: #fff;
+}
+
+.login-jumbotron-trial-banner > p {
+    margin-bottom: 0px;
+}
+
+.login-jumbotron .login-form {
+    -webkit-border-radius: 0 0 6px 6px;
+    -moz-border-radius: 0 0 6px 6px;
+    border-radius: 0 0 6px 6px;
 }
 
 @media screen and (min-width: 768px) {

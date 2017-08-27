@@ -5,7 +5,7 @@
     <title>Geeky Theory Cursos</title>
     <meta name="description" content="Geeky Theory Cursos"/>
 
-    <meta name="viewport" content="width=1000, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Loading Bootstrap -->
     <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -31,10 +31,13 @@
         <div class="row">
             <div class="col-lg-6">
                 <h1 class="jumbotron-title">Aprende programación, desarrollo web y mucho más</h1>
-                <p>...</p>
+                <p>Geeky Theory ofrece un período de prueba de 7 días para que puedas probar todos los cursos del catálogo. Desde Javascript a Laravel, pasando por SQL y muchas tecnologías más. ¿Quieres convertirte en un desarrollador experto? ¡Apúntate!</p>
             </div>
             <div class="col-lg-5 col-lg-push-1">
                 <div class="login-jumbotron">
+                    <div class="login-jumbotron-trial-banner">
+                        <p>Pruébalo gratis durante 7 días</p>
+                    </div>
                     <div class="login-form">
                         <div class="form-group">
                             <input type="text" class="form-control login-field" value=""
