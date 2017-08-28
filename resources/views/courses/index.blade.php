@@ -12,7 +12,7 @@
 
     <!-- Loading Flat UI -->
     <link href="assets/vendor/flat-ui/dist/css/flat-ui.css" rel="stylesheet">
-    <link href="assets/vendor/flat-ui/docs/assets/css/app.css" rel="stylesheet">
+    <link href="{{ autoVersion('assets/courses/css/app.css') }}" rel="stylesheet">
 
     <link rel="shortcut icon" href="assets/vendor/flat-ui/img/favicon.ico">
 
@@ -21,6 +21,9 @@
     <script src="assets/vendor/flat-ui/dist/js/vendor/html5shiv.js"></script>
     <script src="assets/vendor/flat-ui/dist/js/vendor/respond.min.js"></script>
     <![endif]-->
+
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
@@ -31,7 +34,9 @@
         <div class="row">
             <div class="col-lg-6">
                 <h1 class="jumbotron-title">Aprende programación, desarrollo web y mucho más</h1>
-                <p>Geeky Theory ofrece un período de prueba de 7 días para que puedas probar todos los cursos del catálogo. Desde Javascript a Laravel, pasando por SQL y muchas tecnologías más. ¿Quieres convertirte en un desarrollador experto? ¡Apúntate!</p>
+                <p>Geeky Theory ofrece un período de prueba de 7 días para que puedas probar todos los cursos del
+                    catálogo. Desde Javascript a Laravel, pasando por SQL y muchas tecnologías más. ¿Quieres convertirte
+                    en un desarrollador experto? ¡Apúntate!</p>
             </div>
             <div class="col-lg-5 col-lg-push-1">
                 <div class="login-jumbotron">
@@ -67,10 +72,9 @@
     </div>
 </div>
 
-<div class="container">
-
-</div> <!-- /container -->
-
+<section class="container-fluid section-gray">
+    @include('courses.partials.courses')
+</section>
 <footer>
     <div class="container">
         <div class="row">

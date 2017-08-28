@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
 use App\Repositories\SiteMetaRepository;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -50,7 +51,9 @@ class IndexController extends Controller
             $posts = Article::findArticles(null, true, $postsToShow);
         }
 
-        return view('themes.' . self::THEME . '.index', compact('posts'));
+        $courses = Course::getPublished()->with('teacher')->get();
+
+        return view('courses.index', compact('posts', 'courses'));
     }
 
 }
