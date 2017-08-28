@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-sm-8 col-sm-offset-2">
+    <div class="col-sm-8 col-sm-offset-2 col-xs-12">
         <h2>Cursos</h2>
         <br>
         <div class="row">

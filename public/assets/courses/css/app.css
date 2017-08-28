@@ -76,6 +76,17 @@ a {
     background-color: #edeff1;
 }
 
+.section-pricing {
+    background-image: url('https://cdn-images-1.medium.com/max/2000/1*FrxmXLx5IomOZzYh4bI2OA.png');
+    height: 740px;
+}
+
+@media (max-width: 576px) {
+    .section-pricing {
+        height: 1150px;
+    }
+}
+
 /**
  * Cards
  */
@@ -335,4 +346,78 @@ a {
 
 .card.hovercard .bottom .subscription.subscription-pro {
     color: #34495e;
+}
+
+/**
+ * Pricing
+ */
+.pricing .plan {
+    background: #fff;
+    border: 1px solid #34495e;
+    border-radius: 6px;
+    list-style: none;
+    margin: 0 0 15px;
+    padding: 0 0 20px;
+    text-align: center;
+    width: 115%;
+}
+
+.pricing .plan li {
+    border-top: 1px solid #f5f5f5;
+    color: #ccc;
+    padding: 10px 15px;
+    transition: 300ms;
+    -webkit-transition: 300ms;
+}
+
+.pricing .plan li.plan-price {
+    border-top: 0;
+}
+
+.pricing .plan li.plan-name {
+    background: #34495e;
+    border-radius: 6px 6px 0 0;
+    border-top: 0;
+    color: #fff;
+    font-size: 24px;
+    line-height: 24px;
+    margin-bottom: 30px;
+    padding: 15px;
+}
+
+.pricing .plan li > strong {
+    color: #34495e;
+}
+
+.pricing .plan li.plan-action {
+    border-top: 0;
+    margin-top: 10px;
+}
+
+.pricing .plan.featured {
+    border: 1px solid #1abc9c;
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.pricing .plan.featured li.plan-name {
+    background: #1abc9c;
+}
+
+#footer {
+    margin-top: 100px;
+    padding-bottom: 30px;
+}
+
+@media (max-width: 576px) {
+    .pricing .plan {
+        width: 100%;
+    }
+
+    .pricing .plan.featured {
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+    }
 }
