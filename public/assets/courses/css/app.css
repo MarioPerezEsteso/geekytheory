@@ -26,7 +26,7 @@ a {
 }
 
 /**
- * Jumbotron for homepage
+ * Jumbotron
  */
 .center-flex {
     display: flex;
@@ -38,6 +38,31 @@ a {
     background: url('https://images.unsplash.com/photo-1478180142614-26cabe747dbc?dpr=1&auto=format&fit=crop&w=1500&h=1000&q=80&cs=tinysrgb&crop=');
     height: 800px;
     margin-bottom: 0px;
+}
+
+.jumbotron-post {
+    background: #1abc9c; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(left top, #2a3d53, #1abc9c); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom right, #2a3d53, #1abc9c); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom right, #2a3d53, #1abc9c); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom right, #2a3d53, #1abc9c); /* Standard syntax */
+    color: #fff;
+    height: 700px;
+    margin-bottom: 0px;
+}
+
+.jumbotron-post .jumbotron-title {
+    font-size: 60px;
+}
+
+.jumbotron-post .btn-join-course {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.jumbotron-post p {
+    font-size: 18px;
 }
 
 .login-jumbotron-trial-banner {
@@ -295,9 +320,9 @@ a {
 }
 
 .card.hovercard .avatar img {
-    width: 50 pxpx;
-    height: 50 pxpx;
-    max-width: 50 pxpx;
+    width: 50px;
+    height: 50px;
+    max-width: 50px;
     max-height: 50px;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
