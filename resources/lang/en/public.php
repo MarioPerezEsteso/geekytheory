@@ -71,4 +71,7 @@ return [
     'with_more_than_number_people' => 'with more than :number people',
     'email_subscription_email_confirmation_sent' => 'Great! We have sent you an email to confirm your address. Check out your spam if you do not see it',
     'subscription_email_not_valid' => 'The email is already in use or it has an incorrect format',
+    'beginner' => 'Beginner',
+    'intermediate' => 'Intermediate',
+    'advanced' => 'Advanced',
 ];
