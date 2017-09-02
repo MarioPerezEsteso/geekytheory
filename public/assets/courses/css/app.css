@@ -5,6 +5,13 @@ body {
     font-family: Raleway;
 }
 
+.title-img-header {
+    height: 40px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    padding-right: 20px;
+}
+
 /**
  * Links
  */
@@ -42,10 +49,10 @@ a {
 
 .jumbotron-post {
     background: #1abc9c; /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(left top, #2a3d53, #1abc9c); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(bottom right, #2a3d53, #1abc9c); /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(bottom right, #2a3d53, #1abc9c); /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to bottom right, #2a3d53, #1abc9c); /* Standard syntax */
+    background: -webkit-linear-gradient(left top, #2C3E50, #1abc9c); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom right, #2C3E50, #1abc9c); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom right, #2C3E50, #1abc9c); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom right, #2C3E50, #1abc9c); /* Standard syntax */
     color: #fff;
     height: 700px;
     margin-bottom: 0px;
@@ -445,4 +452,67 @@ a {
         -ms-transform: scale(1);
         transform: scale(1);
     }
+}
+
+/* COURSE CONTENT */
+.course-content {
+    margin-top: 20px;
+    padding-bottom: 40px;
+}
+
+.course-content .panel {
+    border: 1px solid #2C3E50;
+    border-radius: 0px;
+    margin-bottom: 0px;
+}
+
+.course-content .panel-heading {
+    background: #1abc9c; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(left top, #2C3E50, #4f6a82); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom right, #2C3E50, #4f6a82); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom right, #2C3E50, #4f6a82); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom right, #2C3E50, #4f6a82); /* Standard syntax */
+    border-radius: 0px;
+    color: #fff;
+}
+
+.course-content .panel-title {
+    font-size: 23px;
+}
+
+.course-content .list-group {
+    font-size: 16px;
+}
+
+.course-content .list-group li {
+    border-top: 1px solid #f0f0f0;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+}
+
+.course-content .list-group li:first-child {
+    border-top: none;
+}
+
+.course-content .list-group li:last-child {
+    border-bottom: none;
+}
+
+.course-content .lesson-info-item {
+    border-radius: 5px;
+    display: inline-block;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.course-content .lesson-info-item.lesson-info-free {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+.course-content .lesson-info-item.lesson-info-time {
+    background-color: #e0e0e0;
+    text-align: center;
+    width: 60px;
 }
