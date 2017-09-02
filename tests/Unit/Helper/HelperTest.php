@@ -18,6 +18,35 @@ class HelperTest extends TestCase
     }
 
     /**
+     * Test method that formats seconds to hh:mm:ss.
+     *
+     * @dataProvider getSecondsToFormat
+     * @param $seconds
+     * @param $expectedFormat
+     */
+    public function testFormatSeconds($seconds, $expectedFormat)
+    {
+        $secondsFormatted = formatSeconds($seconds);
+        $this->assertEquals($expectedFormat, $secondsFormatted);
+    }
+
+    /**
+     * Get seconds to format and their expected values.
+     *
+     * @return array
+     */
+    public static function getSecondsToFormat()
+    {
+        return [
+            ['seconds' => 5, 'expectedFormat' => '00:05',],
+            ['seconds' => 0, 'expectedFormat' => '00:00',],
+            ['seconds' => 65, 'expectedFormat' => '01:05',],
+            ['seconds' => 320, 'expectedFormat' => '05:20',],
+            ['seconds' => 3920, 'expectedFormat' => '01:05:20',],
+        ];
+    }
+
+    /**
      * Get texts to slugify and their expected values
      *
      * @return array
