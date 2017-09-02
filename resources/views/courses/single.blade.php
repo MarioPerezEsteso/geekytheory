@@ -45,7 +45,54 @@
     </div>
 </div>
 
-
+<section class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-sm-12">
+            <div class="clearfix content-heading">
+                <img class="pull-left title-img-header" src="/assets/vendor/flat-ui/img/icons/svg/book.svg"/>
+                <h3>Contenido</h3>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-sm-12">
+            <div class="course-content">
+                @foreach($course->chapters as $chapter)
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                {{ $chapter->order }}. {{ $chapter->title }}
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                @foreach($chapter->lessons as $lesson)
+                                    <li class="list-group-item">
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                {{ $chapter->order }}.{{ $lesson->order }}. {{ $lesson->title }}
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="pull-right">
+                                                    <div class="lesson-info-item lesson-info-free">
+                                                        Gratis
+                                                    </div>
+                                                    <div class="lesson-info-item lesson-info-time">
+                                                        {{ formatSeconds($lesson->duration) }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</section>
 
 <section class="container-fluid section-pricing">
     @include('courses.partials.pricing')
