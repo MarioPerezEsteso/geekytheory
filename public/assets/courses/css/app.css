@@ -516,3 +516,10 @@ a {
     text-align: center;
     width: 60px;
 }
+
+/**
+ * Lesson content
+ */
+.lesson-content {
+    padding-top: 20px;
+}
