@@ -136,4 +136,19 @@ class Response extends TestResponse
             "Expected {$relationsLoaded} {$relation} but got {$actualCountRelationsLoaded}"
         );
     }
+
+    /**
+     * Assert that response data values are the expected ones.
+     *
+     * @param string item
+     * @param array $values
+     */
+    public function assertResponseDataHasValues($item, $values)
+    {
+        /** @var Model $object */
+        $object = $this->viewData[$item];
+        $actual = $object->attributesToArray();
+
+        PHPUnit::assertEquals($values, $actual);
+    }
 }
