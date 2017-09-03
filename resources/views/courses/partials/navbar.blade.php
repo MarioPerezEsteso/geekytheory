@@ -13,30 +13,32 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                @foreach(json_decode($siteMeta->menu, true) as $menuItem)
-                    <?php $hasSubmenu = ($menuItem['submenu'] !== null); ?>
-                    @if (!$hasSubmenu)
-                        <li>
-                            <a href="{{ $menuItem['link'] }}"
-                               title="{{ $menuItem['text'] }}">{{ $menuItem['text'] }}</a>
-                        </li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                               aria-expanded="false">
-                                {{ $menuItem['text'] }}<span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                @foreach($menuItem['submenu'] as $submenuItem)
-                                    <li>
-                                        <a href="{{ $submenuItem['link'] }}"
-                                           title="{{ $submenuItem['text'] }}">{{ $submenuItem['text'] }}</a>
-                                    </li>
-                                @endforeach
-                            </ul>
-                        </li>
-                    @endif
-                @endforeach
+                @if(!empty($siteMeta) && !empty($siteMeta->menu))
+                    @foreach(json_decode($siteMeta->menu, true) as $menuItem)
+                        <?php $hasSubmenu = ($menuItem['submenu'] !== null); ?>
+                        @if (!$hasSubmenu)
+                            <li>
+                                <a href="{{ $menuItem['link'] }}"
+                                   title="{{ $menuItem['text'] }}">{{ $menuItem['text'] }}</a>
+                            </li>
+                        @else
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                                   aria-expanded="false">
+                                    {{ $menuItem['text'] }}<span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    @foreach($menuItem['submenu'] as $submenuItem)
+                                        <li>
+                                            <a href="{{ $submenuItem['link'] }}"
+                                               title="{{ $submenuItem['text'] }}">{{ $submenuItem['text'] }}</a>
+                                        </li>
+                                    @endforeach
+                                </ul>
+                            </li>
+                        @endif
+                    @endforeach
+                @endif
             </ul>
         </div>
         <!--/.nav-collapse -->

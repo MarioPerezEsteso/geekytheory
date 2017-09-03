@@ -16,9 +16,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $siteMeta = null;
         if (!App::runningInConsole()) {
-            view()->share('siteMeta', SiteMetaController::getSiteMeta());
+            $siteMeta = SiteMetaController::getSiteMeta();
         }
+        view()->share('siteMeta', $siteMeta);
         view()->composer('*', function ($view) {
             $user = Auth::user();
             if ($user != null) {
