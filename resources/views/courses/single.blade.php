@@ -70,7 +70,9 @@
                                     <li class="list-group-item">
                                         <div class="row">
                                             <div class="col-lg-8">
-                                                {{ $chapter->order }}.{{ $lesson->order }}. {{ $lesson->title }}
+                                                <a href="{{ route('course.lesson', ['courseSlug' => $course->slug, 'lessonSlug' => $lesson->slug]) }}">
+                                                    {{ $chapter->order }}.{{ $lesson->order }}. {{ $lesson->title }}
+                                                </a>
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="pull-right">
