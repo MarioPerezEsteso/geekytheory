@@ -22,7 +22,7 @@ class CourseControllerTest extends TestCase
     /**
      * Single course endpoint.
      */
-    protected $singleCourseEndpoint = 'cursos/{slug}';
+    protected $singleCourseEndpoint = 'curso/{slug}';
 
     /**
      * Test page single course ok.
@@ -31,7 +31,7 @@ class CourseControllerTest extends TestCase
     {
         // Prepare
         $teacher = factory(User::class)->create();
-        $courses = $this->createCoursesWithChaptersAndLessons($teacher, 1, 3, 5);
+        $courses = TestUtils::createCoursesWithChaptersAndLessons($teacher, 1, 3, 5);
         $course = $courses->first();
 
         // Request
@@ -68,7 +68,7 @@ class CourseControllerTest extends TestCase
     {
         // Prepare
         $teacher = factory(User::class)->create();
-        $courses = $this->createCoursesWithChaptersAndLessons($teacher, 1, 1, 1, ['status' => $status]);
+        $courses = TestUtils::createCoursesWithChaptersAndLessons($teacher, 1, 1, 1, ['status' => $status]);
         $course = $courses->first();
 
         // Request
@@ -85,58 +85,5 @@ class CourseControllerTest extends TestCase
     public static function getCourseStatuses()
     {
         return [['draft'], ['pending'], ['scheduled'], ['deleted']];
-    }
-
-    /**
-     * Populate the database with courses, chapters and lessons.
-     *
-     * @param User $teacher
-     * @param integer $numberOfCourses
-     * @param integer $numberOfChapters
-     * @param integer $numberOfLessons
-     * @param array $courseAttributes
-     *
-     * @return Collection
-     */
-    private function createCoursesWithChaptersAndLessons(User $teacher, $numberOfCourses = 1, $numberOfChapters = 1, $numberOfLessons = 1, $courseAttributes = [])
-    {
-        $courseAttributes = array_merge(['difficulty' => 'beginner' , 'status' => 'published'], $courseAttributes);
-        $faker = \Faker\Factory::create();
-        $courses = new Collection();
-        for ($i = 1; $i <= $numberOfCourses; $i++) {
-            $course = factory(Course::class)->create([
-                'teacher_id' => $teacher->id,
-                'slug' => $faker->slug,
-                'title' => $faker->text,
-                'description' => $faker->text,
-                'image' => $faker->url,
-                'difficulty' => $courseAttributes['difficulty'],
-                'duration' => 100,
-                'students' => 50,
-                'free' => false,
-                'status' => $courseAttributes['status'],
-            ]);
-            for ($numChapters = 1; $numChapters <= $numberOfChapters; $numChapters++) {
-                $chapter = factory(Chapter::class)->create([
-                    'course_id' => $course->id,
-                    'order' => $numChapters,
-                ]);
-                for ($numLessons = 1; $numLessons <= $numberOfLessons; $numLessons++) {
-                    $lesson = factory(Lesson::class)->create([
-                        'chapter_id' => $chapter->id,
-                        'slug' => 'course-' . $i . '-chapter-' . $numChapters. '-lesson-' . $numLessons,
-                        'title' => $faker->title,
-                        'content' => $faker->text,
-                        'video' => 'https://youtube.com/whatever',
-                        'order' => $numLessons,
-                        'duration' => $faker->numberBetween(10, 50),
-                        'free' => false,
-                    ]);
-                }
-            }
-            $courses->add($course);
-        }
-
-        return $courses;
     }
 }
