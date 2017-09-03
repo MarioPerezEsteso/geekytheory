@@ -37,10 +37,15 @@ class TestUtils
      *
      * @return Collection
      */
-    public static function createCoursesWithChaptersAndLessons(User $teacher, $numberOfCourses = 1, $numberOfChapters = 1, $numberOfLessons = 1, $courseAttributes = [])
+    public static function createCoursesWithChaptersAndLessons(User $teacher = null, $numberOfCourses = 1, $numberOfChapters = 1, $numberOfLessons = 1, $courseAttributes = [])
     {
         $courseAttributes = array_merge(['difficulty' => 'beginner' , 'status' => 'published'], $courseAttributes);
         $faker = \Faker\Factory::create();
+
+        if (!$teacher) {
+            $teacher = factory(User::class)->create();
+        }
+
         $courses = new Collection();
         for ($i = 1; $i <= $numberOfCourses; $i++) {
             $course = factory(Course::class)->create([
