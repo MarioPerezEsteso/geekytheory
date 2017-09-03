@@ -3,6 +3,7 @@
 namespace Tests\Functional;
 
 use App\User;
+use Tests\Helpers\TestConstants;
 use Tests\Helpers\TestUtils;
 use Tests\TestCase;
 
@@ -21,8 +22,7 @@ class LessonControllerTest extends TestCase
     public function testVisitPageLessonOk()
     {
         // Prepare
-        $teacher = factory(User::class)->create();
-        $courses = TestUtils::createCoursesWithChaptersAndLessons($teacher, 3, 3, 3);
+        $courses = TestUtils::createCoursesWithChaptersAndLessons(null, 3, 3, 3);
         $course = $courses->first();
         $chapter = $course->chapters->first();
         $lesson = $chapter->lessons->first();
@@ -42,6 +42,45 @@ class LessonControllerTest extends TestCase
         $response->assertResponseDataHasValues('lesson', $lesson->attributesToArray());
         $response->assertResponseDataHasRelationLoaded('course', 'chapters', 3);
         $response->assertResponseDataHasRelationLoaded('course.chapters', 'lessons', 3);
+    }
+
+    /**
+     * Test visit page of a course lesson throws 404 not found error when course slug does not exist.
+     */
+    public function testVisitPageLessonCourseIsNotFound()
+    {
+        // Prepare
+        $courses = TestUtils::createCoursesWithChaptersAndLessons();
+        $course = $courses->first();
+        $chapter = $course->chapters->first();
+        $lesson = $chapter->lessons->first();
+
+        // Request
+        $response = $this->call('GET', TestUtils::createEndpoint($this->lessonEndpoint, [
+            'courseSlug' => 'this-course-slug-does-not-exist',
+            'lessonSlug' => $lesson->slug,
+        ]));
+
+        // Asserts
+        $response->assertStatus(404);
+    }
+
+    /**
+     * Test visit page of a course lesson throws 404 not found error when lesson slug does not exist in that course.
+     */
+    public function testVisitPageLessonIsNotFound()
+    {
+        $courses = TestUtils::createCoursesWithChaptersAndLessons();
+        $course = $courses->first();
+
+        // Request
+        $response = $this->call('GET', TestUtils::createEndpoint($this->lessonEndpoint, [
+            'courseSlug' => $course->slug,
+            'lessonSlug' => 'this-lesson-does-not-exist',
+        ]));
+
+        // Asserts
+        $response->assertStatus(404);
     }
 
 }
