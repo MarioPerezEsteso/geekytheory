@@ -18,9 +18,11 @@
                                 </div>
                                 <div class="col-sm-5">
                                     <div class="pull-right">
-                                        <div class="lesson-info-item lesson-info-free">
-                                            Gratis
-                                        </div>
+                                        @if($course->free || $lesson->free)
+                                            <div class="lesson-info-item lesson-info-free">
+                                                Gratis
+                                            </div>
+                                        @endif
                                         <div class="lesson-info-item lesson-info-time">
                                             {{ formatSeconds($lesson->duration) }}
                                         </div>
