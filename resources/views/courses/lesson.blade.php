@@ -29,15 +29,13 @@
 
 @include('courses.partials.navbar')
 
-<div class="jumbotron jumbotron-post center-flex">
-    <div class="container">
+<div class="jumbotron jumbotron-post">
+    <div class="container container-post">
         <div class="row">
-            <div class="col-lg-12">
-                <video class="video-js" preload="auto" poster="/assets/vendor/flat-ui/docs/assets/img/video/poster.jpg"
-                       data-setup="{}">
-                    <source src="http://techslides.com/demos/sample-videos/small.mp4" type="video/mp4">
-                    <source src="http://iurevych.github.com/Flat-UI-videos/big_buck_bunny.webm" type="video/webm">
-                </video>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="embed-responsive embed-responsive-16by9">
+                    {!! $lesson->video !!}
+                </div>
             </div>
         </div>
     </div>

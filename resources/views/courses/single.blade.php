@@ -29,7 +29,7 @@
 
 @include('courses.partials.navbar')
 
-<div class="jumbotron jumbotron-post center-flex">
+<div class="jumbotron jumbotron-course center-flex">
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
