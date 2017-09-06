@@ -2,8 +2,9 @@
 
 namespace Tests;
 
-use App\User;
+use Illuminate\Contracts\Auth\Authenticatable as UserContract;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Tests\Helpers\Response;
 
 class TestCase extends \Illuminate\Foundation\Testing\TestCase
@@ -69,5 +70,18 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
         $response = parent::call($method, $uri, $parameters, $cookies, $files, $server, $content);
 
         return Response::fromTestResponse($response);
+    }
+
+    /**
+     * Login as user for tests.
+     *
+     * Note: it is done this way because the method actingAs or be are not working.
+     *
+     * @param UserContract $user
+     * @param null $driver
+     */
+    public function be(UserContract $user, $driver = null)
+    {
+        Auth::login($user);
     }
 }
