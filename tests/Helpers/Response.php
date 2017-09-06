@@ -138,17 +138,30 @@ class Response extends TestResponse
     }
 
     /**
-     * Assert that response data values are the expected ones.
+     * Assert that response data model values are the expected ones.
      *
      * @param string item
      * @param array $values
      */
-    public function assertResponseDataHasValues($item, $values)
+    public function assertResponseDataModelHasValues($item, $values)
     {
         /** @var Model $object */
         $object = $this->viewData[$item];
         $actual = $object->attributesToArray();
 
         PHPUnit::assertEquals($values, $actual);
+    }
+
+    /**
+     * Assert that response data item has value.
+     *
+     * @param $item
+     * @param $value
+     */
+    public function assertResponseDataItemHasValue($item, $value)
+    {
+        $actual = $this->viewData[$item];
+
+        PHPUnit::assertEquals($value, $actual);
     }
 }

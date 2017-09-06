@@ -3,10 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Course;
-use Illuminate\Http\Request;
+use App\User;
+use Auth;
 
 class LessonController extends Controller
 {
+    /**
+     * Template header name to show video in course lesson.
+     */
+    const TEMPLATE_HEADER_VIDEO = 'video';
+
+    /**
+     * Template header name to show register form.
+     */
+    const TEMPLATE_HEADER_REGISTER = 'headerRegister';
+
+    /**
+     * Template header name to show go pro message.
+     */
+    const TEMPLATE_HEADER_GOPREMIUM = 'headerGopremium';
+
     /**
      * Show a lesson of a course.
      *
@@ -32,6 +48,17 @@ class LessonController extends Controller
             abort(404);
         }
 
-        return view('courses.lesson', compact('course', 'lesson'));
+        /** @var User $user */
+        $user = Auth::user();
+
+        if ($user) {
+            if ($course->free) {
+                $showHeaderTemplate = self::TEMPLATE_HEADER_VIDEO;
+            }
+        } else {
+            $showHeaderTemplate = self::TEMPLATE_HEADER_REGISTER;
+        }
+
+        return view('courses.lesson', compact('course', 'lesson', 'user', 'showHeaderTemplate'));
     }
 }

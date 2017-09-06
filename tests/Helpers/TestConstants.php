@@ -18,4 +18,11 @@ class TestConstants
     const MODEL_COURSE_DIFFICULTY_BEGINNER = 'beginner';
     const MODEL_COURSE_DIFFICULTY_INTERMEDIATE = 'intermediate';
     const MODEL_COURSE_DIFFICULTY_ADVANCED = 'advanced';
+
+    /**
+     * Lesson.php
+     */
+    const MODEL_LESSON_TEMPLATE_HEADER_VIDEO = 'video';
+    const MODEL_LESSON_TEMPLATE_HEADER_REGISTER = 'headerRegister';
+    const MODEL_LESSON_TEMPLATE_HEADER_GOPREMIUM = 'headerGopremium';
 }

@@ -6,6 +6,7 @@ use App\Chapter;
 use App\Course;
 use App\Lesson;
 use App\User;
+use Faker\Factory;
 use Illuminate\Database\Eloquent\Collection;
 
 class TestUtils
@@ -39,7 +40,7 @@ class TestUtils
      */
     public static function createCoursesWithChaptersAndLessons(User $teacher = null, $numberOfCourses = 1, $numberOfChapters = 1, $numberOfLessons = 1, $courseAttributes = [])
     {
-        $courseAttributes = array_merge(['difficulty' => 'beginner' , 'status' => 'published'], $courseAttributes);
+        $courseAttributes = array_merge(['difficulty' => 'beginner', 'status' => 'published', 'free' => false,], $courseAttributes);
         $faker = \Faker\Factory::create();
 
         if (!$teacher) {
@@ -57,7 +58,7 @@ class TestUtils
                 'difficulty' => $courseAttributes['difficulty'],
                 'duration' => 100,
                 'students' => 50,
-                'free' => false,
+                'free' => $courseAttributes['free'],
                 'status' => $courseAttributes['status'],
             ]);
             for ($numChapters = 1; $numChapters <= $numberOfChapters; $numChapters++) {
@@ -68,7 +69,7 @@ class TestUtils
                 for ($numLessons = 1; $numLessons <= $numberOfLessons; $numLessons++) {
                     $lesson = factory(Lesson::class)->create([
                         'chapter_id' => $chapter->id,
-                        'slug' => 'course-' . $i . '-chapter-' . $numChapters. '-lesson-' . $numLessons,
+                        'slug' => 'course-' . $i . '-chapter-' . $numChapters . '-lesson-' . $numLessons,
                         'title' => $faker->title,
                         'content' => $faker->text,
                         'video' => 'https://youtube.com/whatever',
@@ -82,5 +83,29 @@ class TestUtils
         }
 
         return $courses;
+    }
+
+    /**
+     * Add lesson to course chapter.
+     *
+     * @param Chapter $chapter
+     * @param array $lessonAttributes
+     * @return Lesson
+     */
+    public static function addLessonToCourseChapter(Chapter $chapter, $lessonAttributes)
+    {
+        $faker = Factory::create();
+        $attributes = array_merge([
+            'chapter_id' => $chapter->id,
+            'slug' => $faker->slug,
+            'title' => $faker->title,
+            'content' => $faker->text,
+            'video' => 'https://youtube.com/whatever',
+            'order' => $faker->numberBetween(20, 50),
+            'duration' => $faker->numberBetween(100, 500),
+            'free' => false,
+        ], $lessonAttributes);
+
+        return factory(Lesson::class)->create($attributes);
     }
 }
