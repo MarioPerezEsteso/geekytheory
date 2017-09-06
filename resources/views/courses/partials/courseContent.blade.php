@@ -18,10 +18,16 @@
                                 </div>
                                 <div class="col-sm-5">
                                     <div class="pull-right">
-                                        @if($course->free || $lesson->free)
-                                            <div class="lesson-info-item lesson-info-free">
-                                                Gratis
-                                            </div>
+                                        @if(!Auth::user())
+                                            @if($course->free || $lesson->free)
+                                                <div class="lesson-info-item lesson-info-free">
+                                                    Gratis
+                                                </div>
+                                            @else
+                                                <div class="lesson-info-item">
+                                                    <span class="fui-lock"></span>
+                                                </div>
+                                            @endif
                                         @endif
                                         <div class="lesson-info-item lesson-info-time">
                                             {{ formatSeconds($lesson->duration) }}
