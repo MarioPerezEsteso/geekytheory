@@ -71,6 +71,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if user has subscription active.
+     *
+     * @return bool
+     */
+    public function hasSubscriptionActive()
+    {
+        return false;
+    }
+
+    /**
      * Returns the basic user data for the admin panel view
      *
      * @return array
