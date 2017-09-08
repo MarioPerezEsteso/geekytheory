@@ -52,8 +52,14 @@ class LessonController extends Controller
         $user = Auth::user();
 
         if ($user) {
-            if ($course->free) {
+            if ($course->free || $lesson->free) {
                 $showHeaderTemplate = self::TEMPLATE_HEADER_VIDEO;
+            } else {
+                if ($user->hasSubscriptionActive()) {
+                    $showHeaderTemplate = self::TEMPLATE_HEADER_VIDEO;
+                } else {
+                    $showHeaderTemplate = self::TEMPLATE_HEADER_GOPREMIUM;
+                }
             }
         } else {
             $showHeaderTemplate = self::TEMPLATE_HEADER_REGISTER;
