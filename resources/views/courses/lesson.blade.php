@@ -29,7 +29,13 @@
 
 @include('courses.partials.navbar')
 
-@include('courses.partials.lesson.video')
+@if($showHeaderTemplate == \App\Http\Controllers\LessonController::TEMPLATE_HEADER_VIDEO)
+    @include('courses.partials.lesson.video')
+@elseif($showHeaderTemplate == \App\Http\Controllers\LessonController::TEMPLATE_HEADER_REGISTER)
+    @include('courses.partials.lesson.headerRegister')
+@else
+    @include('courses.partials.lesson.headerGoPremium')
+@endif
 
 <section class="container">
     <div class="row">
