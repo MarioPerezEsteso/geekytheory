@@ -40,17 +40,17 @@ Route::get('logout', ['as' => 'auth/logout', 'uses' => 'Auth\LoginController@log
 /*
  * Registration routes
  */
-/*Route::get('register', [
+Route::get('registro', [
     'as'            => 'auth/register',
     'middleware'    => 'allow_user_registration',
-    'uses'          => 'Auth\AuthController@getRegister'
+    'uses'          => 'Auth\RegisterController@showRegistrationForm'
 ]);
 
 Route::post('register', [
     'as'            => 'auth/register',
     'middleware'    => 'allow_user_registration',
-    'uses'          => 'Auth\AuthController@postRegister'
-]);*/
+    'uses'          => 'Auth\RegisterController@register'
+]);
 
 /**
  * Routes for courses
