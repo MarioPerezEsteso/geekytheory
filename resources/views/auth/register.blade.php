@@ -25,10 +25,10 @@
                             {!! Form::password('password', ['class'=> 'form-control']) !!}
                         </div>
 
-                        <div class="form-group">
+                        {{--<div class="form-group">
                             <label>{{ trans('auth.password-confirmation') }}</label>
                             {!! Form::password('password_confirmation', ['class'=> 'form-control']) !!}
-                        </div>
+                        </div>--}}
 
                         <div>
                             {!! Form::submit(trans('auth.send'),['class' => 'btn btn-primary']) !!}
