@@ -2,18 +2,28 @@
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Geeky Theory Cursos</title>
+    <meta name="description" content="Geeky Theory Cursos"/>
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Laravel</title>
-    {!! Html::style('assets/css/bootstrap/bootstrap.css') !!}
-            <!-- Fonts -->
-    <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+
+    <!-- Loading Bootstrap -->
+    <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+
+    <!-- Loading Flat UI -->
+    <link href="assets/vendor/flat-ui/dist/css/flat-ui.css" rel="stylesheet">
+    <link href="{{ autoVersion('assets/courses/css/app.css') }}" rel="stylesheet">
+
+    <link rel="shortcut icon" href="assets/vendor/flat-ui/img/favicon.ico">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="assets/vendor/flat-ui/dist/js/vendor/html5shiv.js"></script>
+    <script src="assets/vendor/flat-ui/dist/js/vendor/respond.min.js"></script>
     <![endif]-->
+
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
 </head>
 <body>
 <nav class="navbar navbar-default">
@@ -46,25 +56,6 @@
         </div>
     </div>
 </nav>
-
-@if (Session::has('errors'))
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-
-                <div class="alert alert-warning" role="alert">
-                    <ul>
-                        <strong>{{ trans('auth.something-went-wrong') }}: </strong>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-    </div>
-@endif
 
 @yield('content')
             <!-- Scripts -->
