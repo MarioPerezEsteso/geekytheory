@@ -34,7 +34,7 @@
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="/home" class="logo">
+        <a href="/cuenta" class="logo">
             <span class="logo-mini">
                 <i class="fa fa-tachometer" aria-hidden="true"></i>
             </span>

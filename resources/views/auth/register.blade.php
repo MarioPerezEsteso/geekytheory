@@ -8,7 +8,7 @@
                     <div class="panel-heading">{{ trans('auth.register') }}</div>
 
                     <div class="panel-body">
-                        {!! Form::open(['route' => 'auth/register', 'class' => 'form']) !!}
+                        {!! Form::open(['route' => 'auth.register.post', 'class' => 'form']) !!}
 
                         <div class="form-group">
                             <label>{{ trans('auth.name') }}</label>

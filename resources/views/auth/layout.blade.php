@@ -33,7 +33,7 @@
                 @if (Auth::guest())
                     <li><a href="{{route('login')}}">{{ trans('auth.login') }}</a></li>
                     @if ($siteMeta->allow_register)
-                        <li><a href="{{route('auth/register')}}">{{ trans('auth.register') }}</a></li>
+                        <li><a href="{{route('auth.register.get')}}">{{ trans('auth.register') }}</a></li>
                     @endif
                 @else
                     <li>
