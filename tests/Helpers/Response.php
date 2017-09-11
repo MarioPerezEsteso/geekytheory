@@ -31,12 +31,15 @@ class Response extends TestResponse
 
     /**
      * Response constructor.
-     * @param \Illuminate\Http\Response $response
+     *
+     * @param $response
      */
-    public function __construct(\Illuminate\Http\Response $response)
+    public function __construct($response)
     {
         parent::__construct($response);
+
         $this->view = $response->getOriginalContent();
+
         if ($this->view instanceof View) {
             $this->viewData = $this->view->getData();
         }

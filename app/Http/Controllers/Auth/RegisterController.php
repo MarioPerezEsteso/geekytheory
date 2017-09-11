@@ -27,7 +27,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/cuenta';
 
     /**
      * Create a new controller instance.
@@ -42,7 +42,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -57,7 +57,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
@@ -65,7 +65,33 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'username' => $this->createUsername($data['name']),
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    /**
+     * Create username from name.
+     *
+     * @param string $name
+     * @return string
+     */
+    protected function createUsername($name)
+    {
+        $usernameAvailable = false;
+        $nameSuffix = $username = '';
+        $counter = 1;
+
+        while (!$usernameAvailable) {
+            $username = formatNameToUsername($name . $nameSuffix);
+
+            if (User::where('username', $username)->first() == null) {
+                $usernameAvailable = true;
+            }
+
+            $nameSuffix = ' ' . $counter++;
+        }
+
+        return $username;
     }
 }
