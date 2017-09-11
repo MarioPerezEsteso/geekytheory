@@ -131,9 +131,62 @@ class RegisterControllerTest extends TestCase
 
     /**
      * Test user registration with form validation errors.
+     *
+     * @dataProvider getInvalidRegistrationData
+     * @param array $registrationData
+     * @param array $sessionErrorKeys
      */
-    public function testRegisterUserWithFormValidationErrors()
+    public function testRegisterUserWithFormValidationErrors($registrationData, $sessionErrorKeys)
     {
+        // Request
+        $response = $this->call('POST', $this->registerUrlPost, $registrationData);
 
+        // Asserts
+        $response->assertStatus(302);
+
+        $response->assertSessionHasErrors($sessionErrorKeys);
+
+        $response->assertHeader('location', $this->getUrlWithBase($this->registerUrlGet));
+    }
+
+    /**
+     * Returns an array with an example of invalid data.
+     */
+    public static function getInvalidRegistrationData()
+    {
+        return [
+            [
+                [   // Registration data
+                    'name' => '',
+                    'email' => 'mario@domain.com',
+                    'password' => '123456',
+                ],
+                [   // Validation error keys
+                    'name',
+                ],
+            ],
+            [
+                [   // Registration data
+                    'name' => 'John',
+                    'email' => 'aliasdomain.com',
+                    'password' => '123',
+                ],
+                [   // Validation error keys
+                    'email',
+                    'password',
+                ],
+            ],
+            [
+                [   // Registration data
+                    'name' => '            ',
+                    'email' => '',
+                    'password' => '123456',
+                ],
+                [   // Validation error keys
+                    'name',
+                    'email',
+                ],
+            ],
+        ];
     }
 }
