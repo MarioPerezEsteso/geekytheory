@@ -12,14 +12,21 @@ class RegisterControllerTest extends TestCase
      *
      * @var string
      */
-    protected $registerUrl = 'register';
+    protected $registerUrlPost = 'register';
+
+    /**
+     * Register GET url.
+     *
+     * @var string
+     */
+    protected $registerUrlGet = '/registro';
 
     /**
      * URL to redirect on register.
      *
      * @var string
      */
-    protected $urlToRedirectOnRegister = 'http://localhost/cuenta';
+    protected $urlToRedirectOnRegister = '/cuenta';
 
     /**
      * Test redirect to login if user is not authenticated
@@ -37,12 +44,12 @@ class RegisterControllerTest extends TestCase
         ];
 
         // Request
-        $response = $this->call('POST', $this->registerUrl, $registrationData);
+        $response = $this->call('POST', $this->registerUrlPost, $registrationData);
 
         // Asserts
         $response->assertStatus(302);
 
-        $response->assertHeader('location', $this->urlToRedirectOnRegister);
+        $response->assertHeader('location', $this->getUrlWithBase($this->urlToRedirectOnRegister));
 
         $this->assertDatabaseHas('users', [
             'name' => $registrationData['name'],
@@ -77,12 +84,12 @@ class RegisterControllerTest extends TestCase
         ];
 
         // Request
-        $response = $this->call('POST', $this->registerUrl, $registrationData);
+        $response = $this->call('POST', $this->registerUrlPost, $registrationData);
 
         // Asserts
         $response->assertStatus(302);
 
-        $response->assertHeader('location', $this->urlToRedirectOnRegister);
+        $response->assertHeader('location', $this->getUrlWithBase($this->urlToRedirectOnRegister));
 
         // We append a suffix to username because it was already in the database
         $this->assertDatabaseHas('users', [
@@ -97,7 +104,29 @@ class RegisterControllerTest extends TestCase
      */
     public function testRegisterAlreadyExistentError()
     {
+        // Config
+        $faker = \Faker\Factory::create();
+        $userData = [
+            'name' => $faker->name,
+            'email' => $faker->email,
+            'password' => $faker->password(6),
+        ];
 
+        // Prepare
+        factory(User::class)->create($userData);
+
+        // Register user with the same name.
+        $registrationData = $userData;
+
+        // Request
+        $response = $this->call('POST', $this->registerUrlPost, $registrationData);
+
+        // Asserts
+        $response->assertStatus(302);
+
+        $response->assertSessionHasErrors('email');
+
+        $response->assertHeader('location', $this->getUrlWithBase($this->registerUrlGet));
     }
 
     /**

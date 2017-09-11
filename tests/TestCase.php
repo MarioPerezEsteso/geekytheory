@@ -72,4 +72,15 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
     {
         Auth::login($user);
     }
+
+    /**
+     * Get URL with base URL.
+     *
+     * @param string $url
+     * @return string
+     */
+    public function getUrlWithBase($url)
+    {
+        return $this->baseUrl . $url;
+    }
 }
