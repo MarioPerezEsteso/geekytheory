@@ -31,6 +31,35 @@ class HelperTest extends TestCase
     }
 
     /**
+     * Test helper method that formats a name to a username.
+     *
+     * @dataProvider getNamesToFormat
+     * @param string $name
+     * @param string $expectedUsername
+     */
+    public function testFormatNameToUsername($name, $expectedUsername)
+    {
+        $actualUsername = formatNameToUsername($name);
+        $this->assertEquals($expectedUsername, $actualUsername);
+    }
+
+    /**
+     * Get names to format and their expected username.
+     *
+     * @return array
+     */
+    public static function getNamesToFormat()
+    {
+        return [
+            ['name' => 'Mario Pérez', 'expectedUsername' => 'marioperez',],
+            ['name' => 'Mario_Pér-ez', 'expectedUsername' => 'marioperez',],
+            ['name' => 'Mario Pérez 01', 'expectedUsername' => 'marioperez01',],
+            ['name' => 'Mario ÑÑÑ', 'expectedUsername' => 'marionnn',],
+            ['name' => '¿Real~name?', 'expectedUsername' => 'realname',],
+        ];
+    }
+
+    /**
      * Get seconds to format and their expected values.
      *
      * @return array

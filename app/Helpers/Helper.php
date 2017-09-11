@@ -73,15 +73,15 @@ if (!function_exists('getStatusLabelClass')) {
     }
 }
 
-/**
- * Returns slug from a text
- *
- * @see http://stackoverflow.com/a/2955878
- *
- * @param string $text
- * @return string
- */
 if (!function_exists('slugify')) {
+    /**
+     * Returns slug from a text
+     *
+     * @see http://stackoverflow.com/a/2955878
+     *
+     * @param string $text
+     * @return string
+     */
     function slugify($text)
     {
         // Normalize chars
@@ -137,15 +137,15 @@ if (!function_exists('normalizeChars')) {
     }
 }
 
-/**
- * Returns slug from a text
- *
- * @see http://stackoverflow.com/a/2955878
- *
- * @param string $text
- * @return string
- */
 if (!function_exists('getAvailableSlug')) {
+    /**
+     * Returns slug from a text
+     *
+     * @see http://stackoverflow.com/a/2955878
+     *
+     * @param string $text
+     * @return string
+     */
     function getAvailableSlug($text, $table, $column = 'slug')
     {
         $slugAvailable = false;
@@ -158,6 +158,7 @@ if (!function_exists('getAvailableSlug')) {
             }
             $slugSuffix = "-" . $counter++;
         }
+
         return $slug;
     }
 }
@@ -233,7 +234,7 @@ if (!function_exists('formatSeconds')) {
     /**
      * Format seconds to 'hh:mm:ss' if hours > 0 or 'mm:ss' if hours < 0.
      *
-     * @param $seconds
+     * @param integer $seconds
      * @return string
      */
     function formatSeconds($seconds)
@@ -247,6 +248,44 @@ if (!function_exists('formatSeconds')) {
         }
 
         return sprintf('%02d:%02d', $minutes, $secs);
+    }
+}
+
+if (!function_exists('formatNameToUsername')) {
+    /**
+     * Format user name to username. For instance: 'Mario Pérez' to 'marioperez'
+     *
+     * @param string $name
+     * @return string
+     */
+    function formatNameToUsername($name)
+    {
+        // Normalize chars
+        $name = normalizeChars($name);
+
+        // replace non letter or digits by -
+        $name = preg_replace('~[^\pL\d]+~u', '', $name);
+
+        // transliterate
+        $name = iconv('utf-8', 'us-ascii//TRANSLIT', $name);
+
+        // remove unwanted characters
+        $name = preg_replace('~[^-\w]+~', '', $name);
+
+        // trim
+        $name = trim($name, '-');
+
+        // remove duplicate -
+        $name = preg_replace('~-+~', '', $name);
+
+        // lowercase
+        $name = strtolower($name);
+
+        if (empty($name)) {
+            return 'n-a';
+        }
+
+        return $name;
     }
 }
 
