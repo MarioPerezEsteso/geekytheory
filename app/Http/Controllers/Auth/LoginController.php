@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/cuenta';
 
     /**
      * Create a new controller instance.
@@ -44,7 +44,7 @@ class LoginController extends Controller
      * Get the needed authorization credentials from the request.
      * Note: the user must have the can_login attribute set to 1.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     protected function credentials(Request $request)
@@ -53,25 +53,5 @@ class LoginController extends Controller
         $credentials['can_login'] = true;
 
         return $credentials;
-    }
-
-    /**
-     * Login through the API.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function apiLogin(Request $request)
-    {
-        $this->validateLogin($request);
-
-        if ($this->attemptLogin($request)) {
-            $user = Auth::user();
-            $token = $user->createToken('AccessToken', [])->accessToken;
-
-            return response()->json(['token' => $token]);
-        }
-
-        return response()->json([$this->username() => trans('auth.failed')], 422);
     }
 }
