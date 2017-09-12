@@ -59,6 +59,12 @@ Route::get('cursos', ['as' => 'courses', 'uses' => 'CourseController@index']);
 Route::get('curso/{slug}', ['as' => 'course', 'uses' => 'CourseController@show']);
 Route::get('curso/{courseSlug}/{lessonSlug}', ['as' => 'course.lesson', 'uses' => 'LessonController@show']);
 
+Route::get('cuenta', [
+    'as' => 'account',
+    'middleware' => 'auth',
+    'uses' => 'AccountController@index',
+]);
+
 /*
  * Newsletter subscription routes
  */
