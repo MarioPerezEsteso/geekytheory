@@ -131,11 +131,20 @@ class LoginControllerTest extends TestCase
     }
 
     /**
-     * Test redirect to login if user is not authenticated
+     * Test redirect to login if user is not authenticated and access to admin home URL
      */
-    public function testRedirectToLoginIfUserNotAuthenticated()
+    public function testRedirectToLoginIfUserNotAuthenticatedAndAccessToAdminHomeUrl()
     {
         $response = $this->call('GET', $this->adminHomeUrl);
+        $response->assertRedirect($this->loginUrl);
+    }
+
+    /**
+     * Test redirect to login if user is not authenticated and access to admin home URL
+     */
+    public function testRedirectToLoginIfUserNotAuthenticatedAndAccessToUserAccountUrl()
+    {
+        $response = $this->call('GET', $this->userAccountUrl);
         $response->assertRedirect($this->loginUrl);
     }
 
