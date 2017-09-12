@@ -4,7 +4,9 @@ namespace Tests\Helpers;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Testing\TestResponse;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use PHPUnit\Framework\Assert as PHPUnit;
 
@@ -166,5 +168,21 @@ class Response extends TestResponse
         $actual = $this->viewData[$item];
 
         PHPUnit::assertEquals($value, $actual);
+    }
+
+    /**
+     * Assert that logged user is the expected one.
+     *
+     * @param $user
+     */
+    public function assertLoggedUserIs($user)
+    {
+        $actual = Auth::user();
+
+        if (!$user) {
+            PHPUnit::assertEquals(null, $actual);
+        } else {
+            PHPUnit::assertEquals($user->id, $actual->id);
+        }
     }
 }
