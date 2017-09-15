@@ -43,20 +43,15 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id = null)
+    public function edit()
     {
-        if (!$id) {
-            $user = User::with('userMeta')->findOrFail(Auth::id());
-        } else {
-            $user = User::with('userMeta')->findOrFail($id);
-        }
+        $user = User::with('userMeta')->findOrFail(Auth::id());
 
         // The $user variable cant be sent as 'user' because there is already a 'user' 
         // variable shared to all the views.
-        return view('home.profile.profile', ['userProfile' => $user]);
+        return view('account.profile.profile', ['userProfile' => $user]);
     }
 
     /**

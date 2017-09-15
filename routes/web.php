@@ -65,6 +65,12 @@ Route::get('cuenta', [
     'uses' => 'AccountController@index',
 ]);
 
+Route::get('cuenta/perfil', [
+    'as' => 'account.profile',
+    'middleware' => 'auth',
+    'uses' => 'UserController@edit',
+]);
+
 /*
  * Newsletter subscription routes
  */
