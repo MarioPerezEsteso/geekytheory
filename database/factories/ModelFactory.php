@@ -30,6 +30,14 @@ $factory->define(App\UserMeta::class, function () {
         'instagram' => 'https://instagram.com/geekytheory',
         'facebook' => 'https://facebook.com/geekytheory',
         'github' => 'https://github.com/geekytheory',
+        'youtube' => 'https://youtube.com/',
+        'googleplus' => 'https://gplus.com',
+        'stackoverflow' => 'https://so.com',
+        'bitbucket' => 'https://bitbucket.com',
+        'linkedin' => 'https://linkedin.com',
+        'tumblr' => 'https://tumblr.com',
+        'twitch' => 'https://twitch.com',
+        'vimeo' => 'https://vimeo.com',
     ];
 });
 
