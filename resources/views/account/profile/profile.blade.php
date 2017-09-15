@@ -1,4 +1,4 @@
-@extends('home.layout')
+@extends('account.layout')
 
 @section('title')
     {{ trans('home.user_profile') }}
@@ -15,9 +15,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-4">
-            @include('home.posts.partials.formMessages')
-            
-            {!! Form::open(['url' => 'home/profile/update/' . $userProfile->id, 'class' => 'form']) !!}
+            {!! Form::open(['url' => 'account/profile', 'class' => 'form', 'method' => 'POST']) !!}
 
             <div class="form-group">
                 {!! Form::label('name', trans('auth.name')) !!}
@@ -36,12 +34,12 @@
 
             <div class="form-group">
                 {!! Form::label('biography', trans('auth.biography')) !!}
-                {!! Form::textarea('usermeta[biography]', $userProfile->userMeta->biography, ['class' => 'form-control', 'rows' => '4']) !!}
+                {!! Form::textarea('usermeta[biography]', $userProfile->userMeta->biography ?? '', ['class' => 'form-control', 'rows' => '4']) !!}
             </div>
 
             <div class="form-group">
                 {!! Form::label('job', trans('auth.job_position')) !!}
-                {!! Form::text('usermeta[job]', $userProfile->userMeta->job, ['class' => 'form-control']) !!}
+                {!! Form::text('usermeta[job]', $userProfile->userMeta->job ?? '', ['class' => 'form-control']) !!}
             </div>
 
             <h3>{{ trans('public.social-networks') }}</h3>
@@ -49,7 +47,7 @@
             @foreach(\App\UserMeta::$socialNetworks as $socialNetwork)
                 <div class="form-group">
                     {!! Form::label($socialNetwork, trans('public.' . $socialNetwork)) !!}
-                    {!! Form::text("usermeta[$socialNetwork]", $userProfile->userMeta->$socialNetwork, ['class' => 'form-control', 'placeholder' => trans('public.' . $socialNetwork . '.placeholder')]) !!}
+                    {!! Form::text("usermeta[$socialNetwork]", $userProfile->userMeta->$socialNetwork ?? '', ['class' => 'form-control', 'placeholder' => trans('public.' . $socialNetwork . '.placeholder')]) !!}
                 </div>
             @endforeach
 

@@ -38,7 +38,7 @@
             <span class="logo-mini">
                 <i class="fa fa-tachometer" aria-hidden="true"></i>
             </span>
-            <span class="logo-lg"><b>Admin</b>Panel</span>
+            <span class="logo-lg"><b>Geeky</b>Theory</span>
         </a>
 
         <!-- Header Navbar -->
@@ -73,7 +73,7 @@
                             <!-- Menu Footer-->
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="{{ url('home/profile') }}"
+                                    <a href="{{ route('account.profile') }}"
                                        class="btn btn-default btn-flat">{{ trans('home.user_profile') }}</a>
                                 </div>
                                 <div class="pull-right">
@@ -103,114 +103,12 @@
             </div>
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu">
-                <li class="{{ classActiveRoute(array('home')) }}">
-                    <a href="{{ url('home') }}">
-                        <i class="fa fa-home"></i>
-                        <span>{{ trans('home.home') }}</span>
-                    </a>
-                </li>
-                <li class="{{ classActiveRoute(array('home/articles', 'home/articles/create', 'home/categories', 'home/tags')) }} treeview">
-                    <a href="{{ url('home/articles') }}">
-                        <i class="fa fa-book"></i>
-                        <span>{{ trans('home.articles') }}</span>
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="{{ classActiveRoute(array('home/articles')) }}">
-                            <a href="{{ url('home/articles') }}">
-                                {{ trans('home.all_articles') }}
-                            </a>
-                        </li>
-                        <li class="{{ classActiveRoute(array('home/articles/create')) }}">
-                            <a href="{{ url('home/articles/create') }}">
-                                {{ trans('home.create_article') }}
-                            </a>
-                        </li>
-                        <li class="{{ classActiveRoute(array('home/categories')) }}">
-                            <a href="{{ url('home/categories') }}">
-                                {{ trans('home.categories') }}
-                            </a>
-                        </li>
-                        <li class="{{ classActiveRoute(array('home/tags')) }}">
-                            <a href="{{ url('home/tags') }}">
-                                {{ trans('home.tags') }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="{{ classActiveRoute(array('home/pages', 'home/pages/create')) }} treeview">
-                    <a href="{{ url('home/pages') }}">
-                        <i class="fa fa-book"></i>
-                        <span>{{ trans('home.pages') }}</span>
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="{{ classActiveRoute(array('home/articles')) }}">
-                            <a href="{{ url('home/pages') }}">
-                                {{ trans('home.all_pages') }}
-                            </a>
-                        </li>
-                        <li class="{{ classActiveRoute(array('home/pages/create')) }}">
-                            <a href="{{ url('home/pages/create') }}">
-                                {{ trans('home.page_create') }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="{{ classActiveRoute(array('home/galleries', 'home/gallery/create', 'home/gallery/edit')) }} treeview">
-                    <a href="{{ url('home/galleries') }}">
-                        <i class="fa fa-file-image-o"></i>
-                        <span>{{ trans('home.galleries') }}</span>
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="{{ classActiveRoute(array('home/galleries')) }}">
-                            <a href="{{ url('home/galleries') }}">
-                                {{ trans('home.all_galleries') }}
-                            </a>
-                        </li>
-                        <li class="{{ classActiveRoute(array('home/gallery/create')) }}">
-                            <a href="{{ url('home/gallery/create') }}">
-                                {{ trans('home.create_gallery') }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="{{ classActiveRoute(array('home/sitemeta', 'home/menu')) }} treeview">
-                    <a href="{{ url('home/sitemeta') }}">
-                        <i class="fa fa-cogs"></i>
-                        <span>{{ trans('home.settings') }}</span>
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="{{ classActiveRoute(array('home/sitemeta')) }}">
-                            <a href="{{ url('home/sitemeta') }}">
-                                <i class="fa fa-gear"></i>
-                                <span>{{ trans('home.site_options') }}</span>
-                            </a>
-                        </li>
-                        <li class="{{ classActiveRoute(array('home/menu')) }}">
-                            <a href="{{ url('home/menu') }}">
-                                <i class="fa fa-bars"></i>
-                                <span>{{ trans('home.menu') }}</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="{{ classActiveRoute(array('home/profile')) }}">
-                    <a href="{{ url('home/profile') }}">
+                <li class="{{ classActiveRoute(array('cuenta/perfil')) }}">
+                    <a href="{{ route('account.profile') }}">
                         <i class="fa fa-user"></i>
                         <span>{{ trans('home.user_profile') }}</span>
                     </a>
                 </li>
-                {{--<li class="treeview">
-                    <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span> <i
-                                class="fa fa-angle-left pull-right"></i></a>
-                    <ul class="treeview-menu">
-                        <li><a href="#">Link in level 2</a></li>
-                        <li><a href="#">Link in level 2</a></li>
-                    </ul>
-                </li>--}}
             </ul><!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
