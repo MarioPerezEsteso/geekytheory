@@ -150,9 +150,16 @@ class Response extends TestResponse
      */
     public function assertResponseDataModelHasValues($item, $values)
     {
-        /** @var Model $object */
-        $object = $this->viewData[$item];
-        $actual = $object->attributesToArray();
+        $itemsExploded = explode('.', $item);
+
+        /** @var Model $item*/
+        $item = $this->viewData[$itemsExploded[0]];
+
+        for ($index = 1; $index < count($itemsExploded); $index++) {
+            $item = $item->getRelationValue($itemsExploded[$index]);
+        }
+
+        $actual = $item->attributesToArray();
 
         PHPUnit::assertEquals($values, $actual);
     }
