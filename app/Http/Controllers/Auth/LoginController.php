@@ -39,19 +39,4 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-
-    /**
-     * Get the needed authorization credentials from the request.
-     * Note: the user must have the can_login attribute set to 1.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return array
-     */
-    protected function credentials(Request $request)
-    {
-        $credentials = $request->only($this->username(), 'password');
-        $credentials['can_login'] = true;
-
-        return $credentials;
-    }
 }
