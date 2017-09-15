@@ -22,6 +22,17 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\UserMeta::class, function () {
+    return [
+        'biography' => 'Developer and engineer.',
+        'job' => 'Laravel developer',
+        'twitter' => 'https://twitter.com/geekytheory',
+        'instagram' => 'https://instagram.com/geekytheory',
+        'facebook' => 'https://facebook.com/geekytheory',
+        'github' => 'https://github.com/geekytheory',
+    ];
+});
+
 $factory->define(App\Subscriber::class, function (Faker\Generator $faker) {
     return [
         'email' => $faker->email,
