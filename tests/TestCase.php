@@ -16,7 +16,7 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
      *
      * @var string
      */
-    protected $baseUrl = 'http://localhost';
+    protected $baseUrl = 'http://geekytheory.dev';
 
     /**
      * HTTP headers.
@@ -71,6 +71,7 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
     public function be(UserContract $user, $driver = null)
     {
         Auth::login($user);
+        $this->withoutMiddleware();
     }
 
     /**
