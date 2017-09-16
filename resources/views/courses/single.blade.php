@@ -23,7 +23,8 @@
     <![endif]-->
 
     <link href='https://fonts.googleapis.com/css?family=Raleway:400' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
+
+    @include('courses.partials.cookies')
 </head>
 <body>
 
