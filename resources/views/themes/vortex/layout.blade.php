@@ -32,6 +32,8 @@
     <!-- Hero newsletter CSS -->
     <link href="{{ autoVersion("/themes/vortex/assets/css/hero-newsletter.css") }}" rel="stylesheet">
 
+    @include('themes.vortex.partials.cookies')
+
     @if (!empty($siteMeta->analytics_script))
         {!! $siteMeta->analytics_script !!}
     @endif

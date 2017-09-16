@@ -11,7 +11,8 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ $post->title }}">
     <meta name="twitter:description" content="{{ $post->description ?? $post->title }}">
-    <meta name="twitter:image" content="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($post->image, false, true) }}">
+    <meta name="twitter:image"
+          content="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($post->image, false, true) }}">
 
     <!-- Favicons -->
     <link rel="shortcut icon"
@@ -38,6 +39,8 @@
     <link href="{{ autoVersion("/themes/vortex/assets/css/custom.css") }}" rel="stylesheet">
 
 @yield('custom-css')
+
+@include('themes.vortex.partials.cookies')
 
 <!-- Template core CSS -->
     <link href="{{ autoVersion("/themes/vortex/assets/css/style.css") }}" rel="stylesheet">
