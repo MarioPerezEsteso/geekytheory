@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
 use App\User;
 use App\Http\Requests;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\Validators\UserValidator;
 use App\Validators\UserMetaValidator;
@@ -58,27 +57,26 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $user = User::with('userMeta')->findOrFail($id);
+        $user = User::with('userMeta')->findOrFail(Auth::id());
 
-        $userValidatorPasses = $this->userValidator->update($id)->with($request->user)->passes();
-        $userMetaValidatorPasses = $this->userMetaValidator->update($id)->with($request->usermeta)->passes();
+        $userValidatorPasses = $this->userValidator->update($user->id)->with($request->user)->passes();
+        $userMetaValidatorPasses = $this->userMetaValidator->update($user->id)->with($request->usermeta)->passes();
         if (!$userValidatorPasses || !$userMetaValidatorPasses) {
             $errors = new MessageBag();
             $errors->merge($this->userValidator->errors());
             $errors->merge($this->userMetaValidator->errors());
 
-            return Redirect::to('home/profile/' . $user->id)->withErrors($errors);
+            return redirect()->route('account.profile')->withErrors($errors);
         } else {
             $user->update($request->user);
             $user->userMeta()->update($request->usermeta);
         }
 
-        return Redirect::to('home/profile/' . $user->id)->withSuccess(trans('auth.user_update_success'));
+        return redirect()->route('account.profile')->withSuccess(trans('auth.user_update_success'));
     }
 
     /**
