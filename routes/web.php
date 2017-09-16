@@ -71,6 +71,12 @@ Route::get('cuenta/perfil', [
     'uses' => 'UserController@edit',
 ]);
 
+Route::post('account/profile', [
+    'as' => 'account.profile.post',
+    'middleware' => 'auth',
+    'uses' => 'UserController@update',
+]);
+
 /*
  * Newsletter subscription routes
  */
@@ -84,17 +90,6 @@ Route::group(['prefix' => 'newsletter'], function () {
  * Home routes
  */
 Route::get('home', 'Home\HomeController@index');
-
-Route::get('home/profile/{id?}', [
-    'middleware'    => 'auth',
-    'uses'          => 'UserController@edit'
-]);
-
-Route::post('home/profile/update/{id?}', [
-    'middleware'    => 'auth',
-    'before'        => 'csrf',
-    'uses'          => 'UserController@update'
-]);
 
 Route::get('home/articles/create', [
     'middleware'    => 'auth',
