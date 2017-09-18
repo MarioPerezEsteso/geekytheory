@@ -1,145 +1,454 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>@yield('title')</title>
-    <!-- Tell the browser to be responsive to screen width -->
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.5 -->
-    {!! Html::style('assets/css/bootstrap/bootstrap.min.css') !!}
-            <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Theme style -->
-    {!! Html::style('admin/assets/css/AdminLTE.min.css') !!}
-    {!! Html::style('admin/assets/css/app.css') !!}
-    <!-- AdminLTE Skin -->
-    {!! Html::style('admin/assets/css/skins/skin-blue.min.css') !!}
-    @yield('custom-css')
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="/account/vendor/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="/account/vendor/animate.css/animate.min.css">
+    <link rel="stylesheet" href="/account/vendor/jquery.scrollbar/jquery.scrollbar.css">
+    <link rel="stylesheet" href="/account/vendor/fullcalendar/dist/fullcalendar.min.css">
+
+    <!-- App styles -->
+    <link rel="stylesheet" href="/account/css/app.min.css">
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
 
-    <!-- Main Header -->
-    <header class="main-header">
+<body data-ma-theme="green">
+<main class="main">
+    <div class="page-loader">
+        <div class="page-loader__spinner">
+            <svg viewBox="25 25 50 50">
+                <circle cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
 
-        <!-- Logo -->
-        <a href="/cuenta" class="logo">
-            <span class="logo-mini">
-                <i class="fa fa-tachometer" aria-hidden="true"></i>
-            </span>
-            <span class="logo-lg"><b>Geeky</b>Theory</span>
-        </a>
+    <header class="header">
+        <div class="navigation-trigger hidden-xl-up" data-ma-action="aside-open" data-ma-target=".sidebar">
+            <div class="navigation-trigger__inner">
+                <i class="navigation-trigger__line"></i>
+                <i class="navigation-trigger__line"></i>
+                <i class="navigation-trigger__line"></i>
+            </div>
+        </div>
 
-        <!-- Header Navbar -->
-        <nav class="navbar navbar-static-top" role="navigation">
-            <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                <span class="sr-only">Toggle navigation</span>
-            </a>
-            <!-- Navbar Right Menu -->
-            <div class="navbar-custom-menu">
-                <ul class="nav navbar-nav">
-                    <!-- User Account Menu -->
-                    <li class="dropdown user user-menu">
-                        <!-- Menu Toggle Button -->
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <!-- The user image in the navbar-->
-                            <img src="{{ $user['avatar'] }}" class="user-image" alt="User Image">
-                            <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                            <span class="hidden-xs">{{ $user['name'] }}</span>
+        <div class="header__logo hidden-sm-down">
+            <h1><a href="index.html">Geeky Theory</a></h1>
+        </div>
+
+        <form class="search">
+            <div class="search__inner">
+                <input type="text" class="search__text" placeholder="Search for people, files, documents...">
+                <i class="zmdi zmdi-search search__helper" data-ma-action="search-close"></i>
+            </div>
+        </form>
+
+        <ul class="top-nav">
+            <li class="hidden-xl-up"><a href="" data-ma-action="search-open"><i class="zmdi zmdi-search"></i></a></li>
+
+            <li class="dropdown">
+                <a href="" data-toggle="dropdown"><i class="zmdi zmdi-email"></i></a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu--block">
+                    <div class="listview listview--hover">
+                        <div class="listview__header">
+                            Messages
+
+                            <div class="actions">
+                                <a href="messages.html" class="actions__item zmdi zmdi-plus"></a>
+                            </div>
+                        </div>
+
+                        <a href="" class="listview__item">
+                            <img src="demo/img/profile-pics/1.jpg" class="listview__img" alt="">
+
+                            <div class="listview__content">
+                                <div class="listview__heading">
+                                    David Belle <small>12:01 PM</small>
+                                </div>
+                                <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
+                            </div>
                         </a>
-                        <ul class="dropdown-menu">
-                            <!-- The user image in the menu -->
-                            <li class="user-header">
-                                <img src="{{ $user['avatar'] }}" class="img-circle" alt="User Image">
-                                <p>
-                                    {{ $user['name'] }}
-                                    @if (!empty($user['job']))
-                                        - {{ $user['job'] }}
-                                    @endif
-                                </p>
-                            </li>
-                            <!-- Menu Footer-->
-                            <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="{{ route('account.profile') }}"
-                                       class="btn btn-default btn-flat">{{ trans('home.user_profile') }}</a>
+
+                        <a href="" class="listview__item">
+                            <img src="demo/img/profile-pics/2.jpg" class="listview__img" alt="">
+
+                            <div class="listview__content">
+                                <div class="listview__heading">
+                                    Jonathan Morris
+                                    <small>02:45 PM</small>
                                 </div>
-                                <div class="pull-right">
-                                    <a href="{{ url('logout') }}"
-                                       class="btn btn-default btn-flat">{{ trans('auth.logout') }}</a>
+                                <p>Nunc quis diam diamurabitur at dolor elementum, dictum turpis vel</p>
+                            </div>
+                        </a>
+
+                        <a href="" class="listview__item">
+                            <img src="demo/img/profile-pics/3.jpg" class="listview__img" alt="">
+
+                            <div class="listview__content">
+                                <div class="listview__heading">
+                                    Fredric Mitchell Jr.
+                                    <small>08:21 PM</small>
                                 </div>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </nav>
+                                <p>Phasellus a ante et est ornare accumsan at vel magnauis blandit turpis at augue ultricies</p>
+                            </div>
+                        </a>
+
+                        <a href="" class="listview__item">
+                            <img src="demo/img/profile-pics/4.jpg" class="listview__img" alt="">
+
+                            <div class="listview__content">
+                                <div class="listview__heading">
+                                    Glenn Jecobs
+                                    <small>08:43 PM</small>
+                                </div>
+                                <p>Ut vitae lacus sem ellentesque maximus, nunc sit amet varius dignissim, dui est consectetur neque</p>
+                            </div>
+                        </a>
+
+                        <a href="" class="listview__item">
+                            <img src="demo/img/profile-pics/5.jpg" class="listview__img" alt="">
+
+                            <div class="listview__content">
+                                <div class="listview__heading">
+                                    Bill Phillips
+                                    <small>11:32 PM</small>
+                                </div>
+                                <p>Proin laoreet commodo eros id faucibus. Donec ligula quam, imperdiet vel ante placerat</p>
+                            </div>
+                        </a>
+
+                        <a href="" class="view-more">View all messages</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="dropdown top-nav__notifications">
+                <a href="" data-toggle="dropdown" class="top-nav__notify">
+                    <i class="zmdi zmdi-notifications"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu--block">
+                    <div class="listview listview--hover">
+                        <div class="listview__header">
+                            Notifications
+
+                            <div class="actions">
+                                <a href="" class="actions__item zmdi zmdi-check-all" data-ma-action="notifications-clear"></a>
+                            </div>
+                        </div>
+
+                        <div class="listview__scroll scrollbar-inner">
+                            <a href="" class="listview__item">
+                                <img src="demo/img/profile-pics/1.jpg" class="listview__img" alt="">
+
+                                <div class="listview__content">
+                                    <div class="listview__heading">David Belle</div>
+                                    <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
+                                </div>
+                            </a>
+
+                            <a href="" class="listview__item">
+                                <img src="demo/img/profile-pics/2.jpg" class="listview__img" alt="">
+
+                                <div class="listview__content">
+                                    <div class="listview__heading">Jonathan Morris</div>
+                                    <p>Nunc quis diam diamurabitur at dolor elementum, dictum turpis vel</p>
+                                </div>
+                            </a>
+
+                            <a href="" class="listview__item">
+                                <img src="demo/img/profile-pics/3.jpg" class="listview__img" alt="">
+
+                                <div class="listview__content">
+                                    <div class="listview__heading">Fredric Mitchell Jr.</div>
+                                    <p>Phasellus a ante et est ornare accumsan at vel magnauis blandit turpis at augue ultricies</p>
+                                </div>
+                            </a>
+
+                            <a href="" class="listview__item">
+                                <img src="demo/img/profile-pics/4.jpg" class="listview__img" alt="">
+
+                                <div class="listview__content">
+                                    <div class="listview__heading">Glenn Jecobs</div>
+                                    <p>Ut vitae lacus sem ellentesque maximus, nunc sit amet varius dignissim, dui est consectetur neque</p>
+                                </div>
+                            </a>
+
+                            <a href="" class="listview__item">
+                                <img src="demo/img/profile-pics/5.jpg" class="listview__img" alt="">
+
+                                <div class="listview__content">
+                                    <div class="listview__heading">Bill Phillips</div>
+                                    <p>Proin laoreet commodo eros id faucibus. Donec ligula quam, imperdiet vel ante placerat</p>
+                                </div>
+                            </a>
+
+                            <a href="" class="listview__item">
+                                <img src="demo/img/profile-pics/1.jpg" class="listview__img" alt="">
+
+                                <div class="listview__content">
+                                    <div class="listview__heading">David Belle</div>
+                                    <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>
+                                </div>
+                            </a>
+
+                            <a href="" class="listview__item">
+                                <img src="demo/img/profile-pics/2.jpg" class="listview__img" alt="">
+
+                                <div class="listview__content">
+                                    <div class="listview__heading">Jonathan Morris</div>
+                                    <p>Nunc quis diam diamurabitur at dolor elementum, dictum turpis vel</p>
+                                </div>
+                            </a>
+
+                            <a href="" class="listview__item">
+                                <img src="demo/img/profile-pics/3.jpg" class="listview__img" alt="">
+
+                                <div class="listview__content">
+                                    <div class="listview__heading">Fredric Mitchell Jr.</div>
+                                    <p>Phasellus a ante et est ornare accumsan at vel magnauis blandit turpis at augue ultricies</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="p-1"></div>
+                    </div>
+                </div>
+            </li>
+
+            <li class="dropdown hidden-xs-down">
+                <a href="" data-toggle="dropdown"><i class="zmdi zmdi-check-circle"></i></a>
+
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu--block" role="menu">
+                    <div class="listview listview--hover">
+                        <div class="listview__header">Tasks</div>
+
+                        <a href="" class="listview__item">
+                            <div class="listview__content">
+                                <div class="listview__heading">HTML5 Validation Report</div>
+
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="" class="listview__item">
+                            <div class="listview__content">
+                                <div class="listview__heading">Google Chrome Extension</div>
+
+                                <div class="progress">
+                                    <div class="progress-bar bg-warning" style="width: 43%" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="" class="listview__item">
+                            <div class="listview__content">
+                                <div class="listview__heading">Social Intranet Projects</div>
+
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="" class="listview__item">
+                            <div class="listview__content">
+                                <div class="listview__heading">Bootstrap Admin Template</div>
+
+                                <div class="progress">
+                                    <div class="progress-bar bg-info" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="" class="listview__item">
+                            <div class="listview__content">
+                                <div class="listview__heading">Youtube Client App</div>
+
+                                <div class="progress">
+                                    <div class="progress-bar bg-danger" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="" class="view-more">View all tasks</a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="dropdown hidden-xs-down">
+                <a href="" data-toggle="dropdown"><i class="zmdi zmdi-apps"></i></a>
+
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu--block" role="menu">
+                    <div class="row app-shortcuts">
+                        <a class="col-4 app-shortcuts__item" href="">
+                            <i class="zmdi zmdi-calendar bg-red"></i>
+                            <small class="">Calendar</small>
+                        </a>
+                        <a class="col-4 app-shortcuts__item" href="">
+                            <i class="zmdi zmdi-file-text bg-blue"></i>
+                            <small class="">Files</small>
+                        </a>
+                        <a class="col-4 app-shortcuts__item" href="">
+                            <i class="zmdi zmdi-email bg-teal"></i>
+                            <small class="">Email</small>
+                        </a>
+                        <a class="col-4 app-shortcuts__item" href="">
+                            <i class="zmdi zmdi-trending-up bg-blue-grey"></i>
+                            <small class="">Reports</small>
+                        </a>
+                        <a class="col-4 app-shortcuts__item" href="">
+                            <i class="zmdi zmdi-view-headline bg-orange"></i>
+                            <small class="">News</small>
+                        </a>
+                        <a class="col-4 app-shortcuts__item" href="">
+                            <i class="zmdi zmdi-image bg-light-green"></i>
+                            <small class="">Gallery</small>
+                        </a>
+                    </div>
+                </div>
+            </li>
+
+            <li class="dropdown hidden-xs-down">
+                <a href="" data-toggle="dropdown"><i class="zmdi zmdi-more-vert"></i></a>
+
+                <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-item theme-switch">
+                        Theme Switch
+
+                        <div class="btn-group btn-group--colors mt-2" data-toggle="buttons">
+                            <label class="btn bg-green active"><input type="radio" value="green" autocomplete="off" checked></label>
+                            <label class="btn bg-blue"><input type="radio" value="blue" autocomplete="off"></label>
+                            <label class="btn bg-red"><input type="radio" value="red" autocomplete="off"></label>
+                            <label class="btn bg-orange"><input type="radio" value="orange" autocomplete="off"></label>
+                            <label class="btn bg-teal"><input type="radio" value="teal" autocomplete="off"></label>
+
+                            <br>
+
+                            <label class="btn bg-cyan"><input type="radio" value="cyan" autocomplete="off"></label>
+                            <label class="btn bg-blue-grey"><input type="radio" value="blue-grey" autocomplete="off"></label>
+                            <label class="btn bg-purple"><input type="radio" value="purple" autocomplete="off"></label>
+                            <label class="btn bg-indigo"><input type="radio" value="indigo" autocomplete="off"></label>
+                            <label class="btn bg-lime"><input type="radio" value="lime" autocomplete="off"></label>
+                        </div>
+                    </div>
+                    <a href="" class="dropdown-item">Fullscreen</a>
+                    <a href="" class="dropdown-item">Clear Local Storage</a>
+                </div>
+            </li>
+
+            <li class="hidden-xs-down">
+                <a href="" data-ma-action="aside-open" data-ma-target=".chat" class="top-nav__notify">
+                    <i class="zmdi zmdi-comment-alt-text"></i>
+                </a>
+            </li>
+        </ul>
     </header>
-    <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar">
-        <!-- sidebar: style can be found in sidebar.less -->
-        <section class="sidebar">
-            <!-- Sidebar user panel (optional) -->
-            <div class="user-panel">
-                <div class="pull-left image">
-                    <img src="{{ $user['avatar'] }}" class="img-circle" alt="User Image">
+
+    <aside class="sidebar">
+        <div class="scrollbar-inner">
+            <div class="user">
+                <div class="user__info" data-toggle="dropdown">
+                    <img class="user__img" src="{{ getGravatar($user['email']) }}" alt="">
+                    <div>
+                        <div class="user__name">{{ $user['name'] }}</div>
+                        <div class="user__email">{{ $user['email'] }}</div>
+                    </div>
                 </div>
-                <div class="pull-left info">
-                    <p>{{  $user['name'] }}</p>
-                    <small>{{ $user['job'] }}</small>
+
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="{{ route('logout') }}">Salir</a>
                 </div>
             </div>
-            <!-- Sidebar Menu -->
-            <ul class="sidebar-menu">
-                <li class="{{ classActiveRoute(array('cuenta/perfil')) }}">
-                    <a href="{{ route('account.profile') }}">
-                        <i class="fa fa-user"></i>
-                        <span>{{ trans('home.user_profile') }}</span>
-                    </a>
-                </li>
-            </ul><!-- /.sidebar-menu -->
-        </section>
-        <!-- /.sidebar -->
+
+            <ul class="navigation">
+                <li class="{{ isRoute('account') ? 'navigation__active' : '' }}"><a href="{{ route('account') }}"><i class="zmdi zmdi-home"></i> Inicio</a></li>
+                <li class="{{ isRoute('account.profile') ? 'navigation__active' : '' }}"><a href="{{ route('account.profile') }}"><i class="zmdi zmdi-home"></i> Perfil</a></li>
+                <li class="{{ isRoute('account.profile') ? 'navigation__active' : '' }}"><a href="{{ route('account.profile') }}"><i class="zmdi zmdi-home"></i> Administración de la cuenta</a></li>
+            </ul>
+        </div>
     </aside>
 
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-            <h1>
-                @yield('pageTitle')
-                <small>@yield('pageDescription')</small>
-            </h1>
-        </section>
+    <section class="content">
+        <header class="content__title">
+            <h1>@yield('contentTitle')</h1>
+            <small>@yield('contentSubtitle')</small>
+        </header>
 
-        <!-- Main content -->
-        <section class="content">
-            @yield('content')
-        </section><!-- /.content -->
-    </div><!-- /.content-wrapper -->
-</div><!-- ./wrapper -->
+        @yield('content')
 
-<!-- REQUIRED JS SCRIPTS -->
+        <footer class="footer hidden-xs-down">
+            <p>Geeky Theory. Todos los derechos reservados.</p>
 
-<!-- jQuery 2.2.1 -->
-{!! Html::script('assets/js/jquery/jquery-2.2.1.min.js') !!}
-        <!-- Bootstrap -->
-{!! Html::script('assets/js/bootstrap/bootstrap.min.js') !!}
-        <!-- AdminLTE App -->
-{!! Html::script('admin/assets/js/app.min.js') !!}
-        <!-- Custom Javascript -->
-@yield('custom-javascript')
+            <ul class="nav footer__nav">
+                <a class="nav-link" href="">Inicio</a>
+                <a class="nav-link" href="">Cursos</a>
+                <a class="nav-link" href="">Blog</a>
+                <a class="nav-link" href="">Sobre nosotros</a>
+                <a class="nav-link" href="">Soporte</a>
+            </ul>
+        </footer>
+    </section>
+</main>
+
+<!-- Older IE warning message -->
+<!--[if IE]>
+<div class="ie-warning">
+    <h1>Warning!!</h1>
+    <p>You are using an outdated version of Internet Explorer, please upgrade to any of the following web browsers to access this website.</p>
+
+    <div class="ie-warning__downloads">
+        <a href="http://www.google.com/chrome">
+            <img src="img/browsers/chrome.png" alt="">
+        </a>
+
+        <a href="https://www.mozilla.org/en-US/firefox/new">
+            <img src="img/browsers/firefox.png" alt="">
+        </a>
+
+        <a href="http://www.opera.com">
+            <img src="img/browsers/opera.png" alt="">
+        </a>
+
+        <a href="https://support.apple.com/downloads/safari">
+            <img src="img/browsers/safari.png" alt="">
+        </a>
+
+        <a href="https://www.microsoft.com/en-us/windows/microsoft-edge">
+            <img src="img/browsers/edge.png" alt="">
+        </a>
+
+        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
+            <img src="img/browsers/ie.png" alt="">
+        </a>
+    </div>
+    <p>Sorry for the inconvenience!</p>
+</div>
+<![endif]-->
+
+<!-- Javascript -->
+<!-- Vendors -->
+<script src="/account/vendor/jquery/dist/jquery.min.js"></script>
+<script src="/account/vendor/tether/dist/js/tether.min.js"></script>
+<script src="/account/vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/account/vendor/Waves/dist/waves.min.js"></script>
+<script src="/account/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+<script src="/account/vendor/jquery-scrollLock/jquery-scrollLock.min.js"></script>
+<script src="/account/vendor/Waves/dist/waves.min.js"></script>
+<script src="/account/vendor/flot/jquery.flot.js"></script>
+<script src="/account/vendor/flot/jquery.flot.resize.js"></script>
+<script src="/account/vendor/flot.curvedlines/curvedLines.js"></script>
+<script src="/account/vendor/jqvmap/dist/jquery.vmap.min.js"></script>
+<script src="/account/vendor/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+<script src="/account/vendor/jquery.easy-pie-chart/dist/jquery.easypiechart.min.js"></script>
+<script src="/account/vendor/salvattore/dist/salvattore.min.js"></script>
+<script src="/account/vendor/jquery.sparkline/jquery.sparkline.min.js"></script>
+<script src="/account/vendor/moment/min/moment.min.js"></script>
+<script src="/account/vendor/fullcalendar/dist/fullcalendar.min.js"></script>
+
+<!-- App functions and actions -->
+<script src="/account/js/app.min.js"></script>
 </body>
 </html>
