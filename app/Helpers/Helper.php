@@ -1,6 +1,7 @@
 <?php
 
 use App\Post;
+use Illuminate\Support\Facades\Route;
 
 /**
  * Returns class 'active' if the route request matches
@@ -20,6 +21,19 @@ if (!function_exists('classActiveRoute')) {
             }
         }
         return $class;
+    }
+}
+
+if (!function_exists('isRoute')) {
+    /**
+     * Check if the current route is the given one.
+     *
+     * @param $route
+     * @return bool
+     */
+    function isRoute($route)
+    {
+        return Route::current()->getName() == $route;
     }
 }
 
