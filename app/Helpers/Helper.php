@@ -33,7 +33,13 @@ if (!function_exists('isRoute')) {
      */
     function isRoute($route)
     {
-        return Route::current()->getName() == $route;
+        $currentRoute = Route::current();
+
+        if ($currentRoute) {
+            return $currentRoute->getName() == $route;
+        }
+
+        return false;
     }
 }
 
