@@ -70,7 +70,7 @@ class UserController extends Controller
             $errors->merge($this->userValidator->errors());
             $errors->merge($this->userMetaValidator->errors());
 
-            return redirect()->route('account.profile')->withErrors($errors);
+            return redirect()->route('account.profile')->withErrors($errors)->withInput();
         } else {
             $user->update($request->user);
             $user->userMeta()->update($request->usermeta);
