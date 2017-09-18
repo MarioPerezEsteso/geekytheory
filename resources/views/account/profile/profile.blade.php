@@ -15,6 +15,17 @@
 @section('content')
     <div class="row">
         <div class="col-md-4">
+
+            @if (Session::has('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="alert-heading">¡Bien!</h4>
+                    <p class="mb-0">{{ Session::get('success') }}</p>
+                </div>
+            @endif
+
             {!! Form::open(['url' => 'account/profile', 'class' => 'form', 'method' => 'POST']) !!}
             <div class="card">
                 <div class="card-header">
