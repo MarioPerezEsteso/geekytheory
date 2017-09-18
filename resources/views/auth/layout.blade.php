@@ -49,7 +49,7 @@
                     <li>
                         <a href="#">{{ Auth::user()->name }}</a>
                     </li>
-                    <li><a href="{{route('auth/logout')}}">{{ trans('auth.logout') }}</a></li>
+                    <li><a href="{{route('logout')}}">{{ trans('auth.logout') }}</a></li>
 
                 @endif
             </ul>
