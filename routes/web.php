@@ -71,6 +71,12 @@ Route::get('cuenta/perfil', [
     'uses' => 'UserController@edit',
 ]);
 
+Route::get('cuenta/perfil/contrasena', [
+    'as' => 'account.profile.password',
+    'middleware' => 'auth',
+    'uses' => 'UserController@editPassword',
+]);
+
 Route::post('account/profile', [
     'as' => 'account.profile.post',
     'middleware' => 'auth',

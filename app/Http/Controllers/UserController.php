@@ -89,6 +89,16 @@ class UserController extends Controller
     }
 
     /**
+     * Show screen to change the password of a user.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function editPassword()
+    {
+        return view('account.profile.changePassword');
+    }
+
+    /**
      * Format username to be alphanumeric
      *
      * @param string $username
