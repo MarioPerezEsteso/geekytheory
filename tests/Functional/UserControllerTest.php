@@ -172,19 +172,24 @@ class UserControllerTest extends TestCase
     }
 
     /**
-     * Test that a non-logged user can't update a profile.
-     */
-    public function testUpdateUserProfileErrorForbidden()
-    {
-
-    }
-
-    /**
      * Test validation error on profile update.
      */
     public function testUpdateUserProfileErrorValidations()
     {
 
+    }
+
+    /**
+     * Test that a non-logged user can't update a profile.
+     */
+    public function testUpdateUserProfileErrorForbidden()
+    {
+        // Request
+        $response = $this->call('POST', $this->accountProfilePostUrl, []);
+
+        // Assert redirect to login
+        $response->assertStatus(302);
+        $response->assertRedirect('login');
     }
 
     /**
