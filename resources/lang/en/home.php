@@ -106,4 +106,7 @@ return [
     'enable_adsense' => 'Enable adsense for this site (your theme must support it)',
     'current_password' => 'Current password',
     'new_password' => 'New password',
+    'password_changed' => 'Your password has been modified!',
+    'nice' => 'Nice!',
+    'current_password_incorrect' => 'The current password is incorrect',
 ];

@@ -21,8 +21,20 @@
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
-                    <h4 class="alert-heading">¡Bien!</h4>
+                    <h4 class="alert-heading">{{ trans('home.nice') }}</h4>
                     <p class="mb-0">{{ Session::get('success') }}</p>
+                </div>
+            @endif
+
+            @if (isset($errors) && !$errors->isEmpty())
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="alert-heading">Ups!</h4>
+                    @foreach($errors->all() as $error)
+                        <p class="mb-0">{{ $error }}</p>
+                    @endforeach
                 </div>
             @endif
 
@@ -47,7 +59,6 @@
                         {!! Form::label('newpassword', trans('home.new_password'), ['class' => 'form-control-label']) !!}
                         <i class="form-group__bar"></i>
                     </div>
-
                 </div>
 
                 <div class="card-block">

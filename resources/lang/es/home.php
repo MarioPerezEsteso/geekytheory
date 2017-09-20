@@ -108,4 +108,7 @@ return [
     'enable_adsense' => 'Habilitar adsense para este sitio (su tema debe soportarlo)',
     'current_password' => 'Contraseña actual',
     'new_password' => 'Nueva contraseña',
+    'password_changed' => '¡Tu contraseña ha sido cambiada!',
+    'nice' => '¡Bien!',
+    'current_password_incorrect' => 'La contraseña actual es incorrecta',
 ];
