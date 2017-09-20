@@ -36,33 +36,33 @@
                 </div>
 
                 <div class="card-block">
-                    <div class="form-group form-group--float {{ $errors->has('name') ? ' has-danger' : ''}}">
+                    <div class="form-group form-group--float {{ (isset($errors) && $errors->has('name')) ? ' has-danger' : ''}}">
                         {!! Form::text('user[name]', $userProfile->name, ['class' => 'form-control', 'required' => 'required']) !!}
-                        {!! Form::label('name', trans('auth.name') . ($errors->has('name') ? '. ' . $errors->first('name') : ''), ['class' => 'form-control-label']) !!}
+                        {!! Form::label('name', trans('auth.name') . ((isset($errors) && $errors->has('name')) ? '. ' . $errors->first('name') : ''), ['class' => 'form-control-label']) !!}
                         <i class="form-group__bar"></i>
                     </div>
 
-                    <div class="form-group form-group--float {{ $errors->has('email') ? ' has-danger' : ''}}">
+                    <div class="form-group form-group--float {{ (isset($errors) && $errors->has('email')) ? ' has-danger' : ''}}">
                         {!! Form::email('user[email]', $userProfile->email, ['class' => 'form-control', 'required' => 'required']) !!}
-                        {!! Form::label('email', trans('auth.email') . ($errors->has('email') ? '. ' . $errors->first('email') : ''), ['class' => 'form-control-label']) !!}
+                        {!! Form::label('email', trans('auth.email') . ((isset($errors) && $errors->has('email')) ? '. ' . $errors->first('email') : ''), ['class' => 'form-control-label']) !!}
                         <i class="form-group__bar"></i>
                     </div>
 
-                    <div class="form-group form-group--float {{ $errors->has('username') ? ' has-danger' : ''}}">
+                    <div class="form-group form-group--float {{ (isset($errors) && $errors->has('username')) ? ' has-danger' : ''}}">
                         {!! Form::text('user[username]', $userProfile->username, ['class' => 'form-control', 'required' => 'required']) !!}
-                        {!! Form::label('username', trans('auth.username') . ($errors->has('username') ? '. ' . $errors->first('username') : ''), ['class' => 'form-control-label']) !!}
+                        {!! Form::label('username', trans('auth.username') . ((isset($errors) && $errors->has('username')) ? '. ' . $errors->first('username') : ''), ['class' => 'form-control-label']) !!}
                         <i class="form-group__bar"></i>
                     </div>
 
-                    <div class="form-group {{ $errors->has('biography') ? ' has-danger' : ''}}">
-                        {!! Form::label('biography', trans('auth.biography') . ($errors->has('biography') ? '. ' . $errors->first('biography') : ''), ['class' => 'form-control-label']) !!}
+                    <div class="form-group {{ (isset($errors) && $errors->has('biography')) ? ' has-danger' : ''}}">
+                        {!! Form::label('biography', trans('auth.biography') . ((isset($errors) && $errors->has('biography')) ? '. ' . $errors->first('biography') : ''), ['class' => 'form-control-label']) !!}
                         {!! Form::textarea('usermeta[biography]', $userProfile->userMeta->biography ?? '', ['class' => 'form-control', 'rows' => '4']) !!}
                         <i class="form-group__bar"></i>
                     </div>
 
-                    <div class="form-group form-group--float {{ $errors->has('job') ? ' has-danger' : ''}}">
+                    <div class="form-group form-group--float {{ (isset($errors) && $errors->has('job')) ? ' has-danger' : ''}}">
                         {!! Form::text('usermeta[job]', $userProfile->userMeta->job ?? '', ['class' => 'form-control']) !!}
-                        {!! Form::label('job', trans('auth.job_position') . ($errors->has('job') ? '. ' . $errors->first('job') : ''), ['class' => 'form-control-label']) !!}
+                        {!! Form::label('job', trans('auth.job_position') . ((isset($errors) && $errors->has('job')) ? '. ' . $errors->first('job') : ''), ['class' => 'form-control-label']) !!}
                         <i class="form-group__bar"></i>
                     </div>
                 </div>
@@ -76,15 +76,15 @@
                 <div class="card-header">
                     <h2 class="card-title">{{ trans('public.social-networks') }}</h2>
                     <small class="card-subtitle">
-                        ¿En qué redes sociales publicas contenido?
+                        ¿Qué redes sociales utilizas?
                     </small>
                 </div>
 
                 <div class="card-block">
                     @foreach(\App\UserMeta::$socialNetworks as $socialNetwork)
-                        <div class="form-group form-group--float {{ $errors->has($socialNetwork) ? ' has-danger' : ''}}">
+                        <div class="form-group form-group--float {{ (isset($errors) && $errors->has($socialNetwork)) ? ' has-danger' : ''}}">
                             {!! Form::text("usermeta[$socialNetwork]", $userProfile->userMeta->$socialNetwork ?? '', ['class' => 'form-control']) !!}
-                            {!! Form::label($socialNetwork, trans('public.' . $socialNetwork) . ' URL' . ($errors->has($socialNetwork) ? '. ' . $errors->first($socialNetwork) : '') , ['class' => 'form-control-label']) !!}
+                            {!! Form::label($socialNetwork, trans('public.' . $socialNetwork) . ' URL' . ((isset($errors) && $errors->has($socialNetwork)) ? '. ' . $errors->first($socialNetwork) : '') , ['class' => 'form-control-label']) !!}
                             <i class="form-group__bar"></i>
                         </div>
                     @endforeach
