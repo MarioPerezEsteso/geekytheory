@@ -29,6 +29,11 @@ class UserControllerTest extends TestCase
     protected $accountChangePasswordPageUrl = '/cuenta/perfil/contrasena';
 
     /**
+     * Change password POST URL.
+     */
+    protected $accountChangePasswordPostUrl = '/account/profile/password';
+
+    /**
      * Test that user not logged in can't visit the account profile page.
      */
     public function testVisitUserAccountProfilePageRedirectsToLogin()
@@ -258,6 +263,101 @@ class UserControllerTest extends TestCase
     {
         // Request
         $response = $this->call('GET', $this->accountChangePasswordPageUrl);
+
+        // Asserts
+        $response->assertStatus(302);
+        $response->assertRedirect('login');
+    }
+
+    /**
+     * Test update password ok.
+     */
+    public function testUpdatePasswordOk()
+    {
+        // Config
+        $currentPassword = '123456789';
+        $newPassword = 'abcdef123456';
+
+        // Prepare
+        $user = factory(User::class)->create([
+            'password' => bcrypt($currentPassword),
+        ]);
+
+        $requestData = [
+            'currentpassword' => $currentPassword,
+            'newpassword' => $newPassword,
+        ];
+
+        $response = $this->actingAs($user)->call('POST', $this->accountChangePasswordPostUrl, $requestData);
+
+        // Asserts
+        $response->assertStatus(302);
+        $response->assertRedirect($this->accountChangePasswordPageUrl);
+        $response->assertSessionHas('success', trans('home.password_changed'));
+    }
+
+    /**
+     * Test update password throws an error if the current one is incorrect.
+     */
+    public function testUpdatePasswordCurrentIsIncorrectError()
+    {
+        // Config
+        $currentPassword = '123456789';
+        $newPassword = 'abcdef123456';
+
+        // Prepare
+        $user = factory(User::class)->create([
+            'password' => bcrypt($currentPassword),
+        ]);
+
+        $requestData = [
+            'currentpassword' => 'thisisnotthepassword',
+            'newpassword' => $newPassword,
+        ];
+
+        $response = $this->actingAs($user)->call('POST', $this->accountChangePasswordPostUrl, $requestData);
+
+        // Asserts
+        $response->assertStatus(302);
+        $response->assertRedirect($this->accountChangePasswordPageUrl);
+        $response->assertSessionHasErrors('password');
+        $response->assertSessionMissing('success');
+    }
+
+    /**
+     * Test update password with invalid data returns errors.
+     */
+    public function testUpdatePasswordValidationError()
+    {
+        // Config
+        $currentPassword = '123456789';
+        $newPassword = '123';
+
+        // Prepare
+        $user = factory(User::class)->create([
+            'password' => bcrypt($currentPassword),
+        ]);
+
+        $requestData = [
+            'currentpassword' => '123456789',
+            'newpassword' => $newPassword,
+        ];
+
+        $response = $this->actingAs($user)->call('POST', $this->accountChangePasswordPostUrl, $requestData);
+
+        // Asserts
+        $response->assertStatus(302);
+        $response->assertRedirect($this->accountChangePasswordPageUrl);
+        $response->assertSessionHasErrors('password');
+        $response->assertSessionMissing('success');
+    }
+
+    /**
+     * Test that a non-logged user can't update a password.
+     */
+    public function testNonLoggedUserUpdatePasswordRedirectsToLogin()
+    {
+        $response = $this->call('POST', $this->accountChangePasswordPostUrl);
 
         // Asserts
         $response->assertStatus(302);
