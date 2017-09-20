@@ -130,6 +130,8 @@ class UserControllerTest extends TestCase
         } else if ($userHasMetadata && !empty($userMetadata)) {
             $this->assertDatabaseHas('user_meta', array_merge(['user_id' => $user->id,], $userMetadata)); // 4
         }
+
+        $response->assertSessionHas('success');
     }
 
     /**
@@ -176,7 +178,41 @@ class UserControllerTest extends TestCase
      */
     public function testUpdateUserProfileErrorValidations()
     {
+        // Prepare
+        $user = factory(User::class)->create();
 
+        $requestData = [
+            'user' => [],
+            'usermeta' => [
+                'twitter' => '@geekytheory',
+                'instagram' => 'geekytheory',
+                'facebook' => 'GeekyTheory',
+                'biography' => 'This text is longer than 255 characters and will not pass the validation. The 
+                                biography cannot have more than 255 characters and this text has more than that
+                                quantity so the validation will fail showing an error message in the 
+                                biography attribute.',
+            ],
+        ];
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->accountProfilePostUrl, $requestData);
+
+        // Asserts
+        $response->assertStatus(302);
+        $response->assertRedirect($this->accountProfilePageUrl);
+        $response->assertSessionHasErrors([
+            'name',
+            'username',
+            'email',
+            'twitter',
+            'instagram',
+            'facebook',
+            'biography',
+        ]);
+
+        // Check that user and user meta haven't been modified
+        $this->assertDatabaseHas('users', $user->attributesToArray());
+        $this->assertDatabaseMissing('user_meta', ['user_id' => $user->id,]);
     }
 
     /**
