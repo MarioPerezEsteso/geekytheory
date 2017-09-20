@@ -2,11 +2,7 @@
 
 namespace Tests\Functional;
 
-use App\Chapter;
-use App\Course;
-use App\Lesson;
 use App\User;
-use Illuminate\Database\Eloquent\Collection;
 use Tests\Helpers\TestUtils;
 use Tests\TestCase;
 

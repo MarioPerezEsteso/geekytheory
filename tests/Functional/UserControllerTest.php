@@ -4,6 +4,7 @@ namespace Tests\Functional;
 
 use App\User;
 use App\UserMeta;
+use Faker\Factory;
 use Tests\TestCase;
 
 class UserControllerTest extends TestCase
@@ -14,6 +15,11 @@ class UserControllerTest extends TestCase
      * @var string
      */
     protected $accountProfilePageUrl = '/cuenta/perfil';
+
+    /**
+     * Account profile POST URL.
+     */
+    protected $accountProfilePostUrl = '/account/profile';
 
     /**
      * Test that user not logged in can't visit the account profile page.
@@ -27,7 +33,7 @@ class UserControllerTest extends TestCase
     /**
      * Test that a logged user can visit its account profile page.
      *
-     * @dataProvider providerUserMeta
+     * @dataProvider providerTestLoggedUserVisitAccountProfilePageOk
      * @param boolean $withUserMeta
      */
     public function testLoggedUserVisitAccountProfilePageOk($withUserMeta)
@@ -62,20 +68,123 @@ class UserControllerTest extends TestCase
             $response->assertResponseDataHasRelationLoaded('userProfile', 'userMeta', 1);
             $response->assertResponseDataModelHasValues('userProfile.userMeta', $userMeta->attributesToArray());
         }
-
     }
 
     /**
-     * Provider for testLoggedUserVisitAccountProfilePageOk
+     * Provider for testLoggedUserVisitAccountProfilePageOk.
      *
      * @return array
      */
-    public function providerUserMeta()
+    public function providerTestLoggedUserVisitAccountProfilePageOk()
     {
         return [
             'without user meta' => [false],
             'with user meta' => [true],
         ];
+    }
+
+    /**
+     * Test users can update their profiles.
+     *
+     * @dataProvider providerTestUpdateUserProfileOk
+     * @param array $userData
+     * @param array $userMetadata
+     * @param boolean $userHasMetadata
+     */
+    public function testUpdateUserProfileOk($userData, $userMetadata, $userHasMetadata)
+    {
+        // Prepare
+        /** @var User $user */
+        $user = factory(User::class)->create();
+
+        if ($userHasMetadata) {
+            /** @var UserMeta $userMeta */
+            $userMeta = factory(UserMeta::class)->create([
+                'user_id' => $user->id,
+            ]);
+        }
+
+        $requestData['user'] = $userData;
+        $requestData['usermeta'] = $userMetadata;
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->accountProfilePostUrl, $requestData);
+
+        // Asserts
+        $response->assertStatus(302);
+        $response->assertRedirect($this->accountProfilePageUrl);
+
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'name' => $userData['name'],
+            'username' => $userData['username'],
+            'email' => $userData['email'],
+        ]);
+
+        if (!$userHasMetadata && empty($userMetadata)) {
+            $this->assertDatabaseMissing('user_meta', ['user_id' => $user->id,]); // 1
+        } else if (!$userHasMetadata && !empty($userMetadata)) {
+            $this->assertDatabaseHas('user_meta', array_merge(['user_id' => $user->id,], $userMetadata)); // 3
+        } else if ($userHasMetadata && empty($userMetadata)) {
+            $this->assertDatabaseHas('user_meta', $userMeta->attributesToArray()); // 2
+        } else if ($userHasMetadata && !empty($userMetadata)) {
+            $this->assertDatabaseHas('user_meta', array_merge(['user_id' => $user->id,], $userMetadata)); // 4
+        }
+    }
+
+    /**
+     * Provider for testUpdateUserProfileOk.
+     *
+     * @return array
+     */
+    public function providerTestUpdateUserProfileOk()
+    {
+        $faker = Factory::create();
+        $userData = [
+            'name' => $faker->name,
+            'email' => $faker->email,
+            'username' => $faker->word,
+        ];
+
+        $userMetadata = [
+            'biography' => $faker->text,
+            'job' => $faker->text,
+            'twitter' => $faker->url,
+            'instagram' => null,
+            'facebook' => null,
+            'github' => $faker->url,
+            'youtube' => $faker->url,
+            'googleplus' => $faker->url,
+            'stackoverflow' => null,
+            'bitbucket' => $faker->url,
+            'linkedin' => $faker->url,
+            'tumblr' => $faker->url,
+            'twitch' => $faker->url,
+            'vimeo' => null,
+        ];
+
+        return [
+            'User data without metadata and no previous metadata existent' => [$userData, [], false,],
+            'User data without metadata and previous metadata existent' => [$userData, [], true,],
+            'User data with metadata and no previous metadata existent' => [$userData, $userMetadata, false,],
+            'User data with metadata and previous metadata existent' => [$userData, $userMetadata, true,],
+        ];
+    }
+
+    /**
+     * Test that a non-logged user can't update a profile.
+     */
+    public function testUpdateUserProfileErrorForbidden()
+    {
+
+    }
+
+    /**
+     * Test validation error on profile update.
+     */
+    public function testUpdateUserProfileErrorValidations()
+    {
+
     }
 
     /**
