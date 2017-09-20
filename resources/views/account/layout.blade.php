@@ -365,8 +365,13 @@
 
             <ul class="navigation">
                 <li class="{{ isRoute('account') ? 'navigation__active' : '' }}"><a href="{{ route('account') }}"><i class="zmdi zmdi-home"></i> Inicio</a></li>
-                <li class="{{ isRoute('account.profile') ? 'navigation__active' : '' }}"><a href="{{ route('account.profile') }}"><i class="zmdi zmdi-home"></i> Perfil</a></li>
-                <li class="{{ isRoute('account.profile') ? 'navigation__active' : '' }}"><a href="{{ route('account.profile') }}"><i class="zmdi zmdi-home"></i> Administración de la cuenta</a></li>
+                <li class="navigation__sub {{ isRoute('account.profile') || isRoute('account.profile.password') ? 'navigation__sub--active' : '' }}">
+                    <a href=""><i class="zmdi zmdi-account zmdi-hc-fw"></i> Perfil de usuario</a>
+                    <ul>
+                        <li class="{{ isRoute('account.profile') ? 'navigation__active' : '' }}"><a href="{{ route('account.profile') }}">Datos de usuario</a></li>
+                        <li class="{{ isRoute('account.profile.password') ? 'navigation__active' : '' }}"><a href="{{ route('account.profile.password') }}">Cambio de contraseña</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </aside>
