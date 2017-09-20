@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Validator;
 use App\Validators\UserValidator;
 use App\Validators\UserMetaValidator;
@@ -96,6 +97,36 @@ class UserController extends Controller
     public function editPassword()
     {
         return view('account.profile.changePassword');
+    }
+
+    /**
+     * Update user password.
+     *
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
+    public function updatePassword(Request $request)
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        // Check if the received current password is actually the current one
+        if (!Hash::check($request->currentpassword, $user->password)) {
+            $errors = new MessageBag();
+            $errors->add('password', trans('home.current_password_incorrect'));
+
+            return redirect()->route('account.profile.password')->withErrors($errors);
+        }
+
+        // Check if the new password is valid or not
+        if (!$this->userValidator->validatePassword()->with(['password' => $request->newpassword])->passes()) {
+            return redirect()->route('account.profile.password')->withErrors($this->userValidator->errors());
+        }
+
+        $user->password = bcrypt($request->newpassword);
+        $user->save();
+
+        return redirect()->route('account.profile.password')->withSuccess(trans('home.password_changed'));
     }
 
     /**

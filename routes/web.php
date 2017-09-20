@@ -83,6 +83,12 @@ Route::post('account/profile', [
     'uses' => 'UserController@update',
 ]);
 
+Route::post('account/profile/password', [
+    'as' => 'account.profile.password.post',
+    'middleware' => 'auth',
+    'uses' => 'UserController@updatePassword',
+]);
+
 /*
  * Newsletter subscription routes
  */
