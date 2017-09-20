@@ -22,6 +22,13 @@ class UserControllerTest extends TestCase
     protected $accountProfilePostUrl = '/account/profile';
 
     /**
+     * Change password page URL.
+     *
+     * @var string
+     */
+    protected $accountChangePasswordPageUrl = '/cuenta/perfil/contrasena';
+
+    /**
      * Test that user not logged in can't visit the account profile page.
      */
     public function testVisitUserAccountProfilePageRedirectsToLogin()
@@ -224,6 +231,35 @@ class UserControllerTest extends TestCase
         $response = $this->call('POST', $this->accountProfilePostUrl, []);
 
         // Assert redirect to login
+        $response->assertStatus(302);
+        $response->assertRedirect('login');
+    }
+
+    /**
+     * Test logged user can visit the account page to change the password.
+     */
+    public function testLoggedUserVisitsChangePasswordPageOk()
+    {
+        // Prepare
+        $user = factory(User::class)->create();
+
+        // Request
+        $response = $this->actingAs($user)->call('GET', $this->accountChangePasswordPageUrl);
+
+        // Asserts
+        $response->assertStatus(200);
+        $response->assertViewIs('account.profile.changePassword');
+    }
+
+    /**
+     * Test non logged user visits change password page and is redirected to login.
+     */
+    public function testNonLoggedUserVisitsChangePasswordPageRedirectsToLogin()
+    {
+        // Request
+        $response = $this->call('GET', $this->accountChangePasswordPageUrl);
+
+        // Asserts
         $response->assertStatus(302);
         $response->assertRedirect('login');
     }
