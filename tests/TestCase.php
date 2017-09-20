@@ -61,17 +61,17 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
     }
 
     /**
-     * Login as user for tests.
-     *
-     * Note: it is done this way because the method actingAs or be are not working.
+     * Act as a user for tests calls.
      *
      * @param UserContract $user
      * @param null $driver
+     *
+     * @return TestCase
      */
-    public function be(UserContract $user, $driver = null)
+    public function actingAs(UserContract $user, $driver = null)
     {
         Auth::login($user);
-        $this->withoutMiddleware();
+        return parent::actingAs($user, $driver);
     }
 
     /**
