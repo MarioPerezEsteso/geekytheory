@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\UserMeta;
 use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests;
@@ -73,7 +74,15 @@ class UserController extends Controller
             return redirect()->route('account.profile')->withErrors($errors)->withInput();
         } else {
             $user->update($request->user);
-            $user->userMeta()->update($request->usermeta);
+            if (!empty($request->usermeta)) {
+                if (!$user->userMeta) {
+                    $userMeta = new UserMeta($request->usermeta);
+                    $userMeta->user_id = $user->id;
+                    $userMeta->save();
+                } else {
+                    $user->userMeta()->update($request->usermeta);
+                }
+            }
         }
 
         return redirect()->route('account.profile')->withSuccess(trans('auth.user_update_success'));
