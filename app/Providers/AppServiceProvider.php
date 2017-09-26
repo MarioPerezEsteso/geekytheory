@@ -6,6 +6,7 @@ use App\Http\Controllers\SiteMetaController;
 use Auth;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Cashier\Cashier;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,8 @@ class AppServiceProvider extends ServiceProvider
                 $view->with('user', Auth::user()->getBasicUserData());
             }
         });
+
+        Cashier::useCurrency('eur', '€');
     }
 
     /**
