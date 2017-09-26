@@ -109,4 +109,12 @@ return [
     'password_changed' => 'Your password has been modified!',
     'nice' => 'Nice!',
     'current_password_incorrect' => 'The current password is incorrect',
+    'subscription_info' => 'You are not subscribed to Geeky Theory. Do you want to enjoy our Premium features for 15 €/month?',
+    'credit_card_name' => 'Credit card name',
+    'credit_card_number' => 'Credit card number',
+    'postal_code' => 'Postal code',
+    'credit_card_expiration_month' => 'Expiration month',
+    'credit_card_expiration_year' => 'Expiration year',
+    'credit_card_cvv' => 'CVV',
+    'go_premium' => 'Go Premium',
 ];

@@ -111,4 +111,12 @@ return [
     'password_changed' => '¡Tu contraseña ha sido cambiada!',
     'nice' => '¡Bien!',
     'current_password_incorrect' => 'La contraseña actual es incorrecta',
+    'subscription_info' => 'Todavía no estás suscrito a Geeky Theory. ¿Quieres disfrutar de todas las ventajas de plan Premium por tan solo 15 €/mes?',
+    'credit_card_name' => 'Nombre del titular de la tarjeta',
+    'credit_card_number' => 'Número de tarjeta de crédito',
+    'postal_code' => 'Código postal',
+    'credit_card_expiration_month' => 'Mes de caducidad',
+    'credit_card_expiration_year' => 'Año de caducidad',
+    'credit_card_cvv' => 'CVV',
+    'go_premium' => 'Hacerme Premium',
 ];
