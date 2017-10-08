@@ -79,6 +79,16 @@ class Course extends Model
     }
 
     /**
+     * Get the users of this course.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function courses()
+    {
+        return $this->belongsToMany('App\User', 'users_courses', 'course_id', 'user_id');
+    }
+
+    /**
      * Get published courses.
      *
      * @param array $andWhere
@@ -92,5 +102,15 @@ class Course extends Model
         }
 
         return $query;
+    }
+
+    /**
+     * Check if a course is published.
+     *
+     * @return bool
+     */
+    public function isPublished()
+    {
+        return $this->status === self::STATUS_PUBLISHED;
     }
 }
