@@ -74,4 +74,6 @@ return [
     'beginner' => 'Beginner',
     'intermediate' => 'Intermediate',
     'advanced' => 'Advanced',
+    'course_does_not_exist' => 'The course does not exist.',
+    'you_must_be_premium_subscriber' => 'You must be premium subscriber to join this course',
 ];
