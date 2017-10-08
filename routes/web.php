@@ -55,9 +55,26 @@ Route::post('register', [
 /**
  * Routes for courses
  */
-Route::get('cursos', ['as' => 'courses', 'uses' => 'CourseController@index']);
-Route::get('curso/{slug}', ['as' => 'course', 'uses' => 'CourseController@show']);
-Route::get('curso/{courseSlug}/{lessonSlug}', ['as' => 'course.lesson', 'uses' => 'LessonController@show']);
+Route::get('cursos', [
+    'as' => 'courses',
+    'uses' => 'CourseController@index',
+]);
+
+Route::get('curso/{slug}', [
+    'as' => 'course',
+    'uses' => 'CourseController@show',
+]);
+
+Route::get('curso/{courseSlug}/{lessonSlug}', [
+    'as' => 'course.lesson',
+    'uses' => 'LessonController@show',
+]);
+
+Route::post('curso/{id}/matriculacion', [
+    'as' => 'course.join.post',
+    'middleware' => 'auth',
+    'uses' => 'CourseController@join',
+]);
 
 Route::get('cuenta', [
     'as' => 'account',
