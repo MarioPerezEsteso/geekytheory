@@ -127,6 +127,13 @@ function stripeResponseHandler(status, response) {
 
         form.append($('<input type="hidden" name="stripe_token" />').val(token));
 
+        var subscriptionPlan = 'yearly';
+        if ($('#monthly-plan').is(':checked')) {
+            subscriptionPlan = 'monthly';
+        }
+
+        form.append($('<input type="hidden" name="subscription_plan" />').val(subscriptionPlan));
+
         form.get(0).submit();
     }
 }
