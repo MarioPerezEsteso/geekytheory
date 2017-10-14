@@ -47,9 +47,55 @@
             @endif
 
             @if (!$loggedUser->hasSubscriptionActive())
-                <div class="alert alert-info" role="alert">
-                    <p class="mb-0">{{ trans('home.subscription_info') }}</p>
+                {{-- Hidden form to create subscription with Stripe token --}}
+                {!! Form::open(['url' => 'account/subscription', 'method' => 'POST', 'id' => 'subscription-form']) !!}
+                {!! Form::close() !!}
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Elige tu plan</h2>
+                    </div>
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="listview">
+                                    <div class="listview__item">
+                                        <label class="custom-control custom-checkbox align-self-start">
+                                            <input id="monthly-plan" class="custom-control-input" type="checkbox">
+                                            <span class="custom-control-indicator"></span>
+                                        </label>
+                                        <div class="listview__content">
+                                            <div class="listview__heading">PLAN MENSUAL</div>
+                                            <p>15 €/mes</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="listview">
+                                    <div class="listview__item">
+                                        <label class="custom-control custom-checkbox align-self-start">
+                                            <input id="yearly-plan" class="custom-control-input" type="checkbox" checked="checked">
+                                            <span class="custom-control-indicator"></span>
+                                        </label>
+                                        <div class="listview__content">
+                                            <div class="listview__heading">PLAN ANUAL</div>
+                                            <p>150 €/año</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p id="error-message-plan-choose" class="text-danger" style="display: none">
+                                    Por favor, elige un plan.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="card">
                     <div class="card-header">
                         <h2 class="card-title">Datos de pago</h2>
@@ -57,7 +103,6 @@
                             Introduce los datos de tu tarjeta para suscribirte a nuestro plan Premium.
                         </small>
                     </div>
-
                     <div class="card-block">
                         <div class="row">
                             <div class="col-lg-8 col-sm-12">
@@ -110,7 +155,8 @@
 
                         <div class="row">
                             <div class="col-lg-12">
-                                <p id="error-message" class="text-danger" style="display: none">Ha habido un error en la comunicación con Stripe. Por favor,
+                                <p id="error-message" class="text-danger" style="display: none">Ha habido un error en la
+                                    comunicación con Stripe. Por favor,
                                     inténtalo de nuevo.</p>
                             </div>
                         </div>

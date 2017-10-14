@@ -6,6 +6,32 @@ $.ajaxSetup({
 
 Stripe.setPublishableKey(window.stripePublicKey);
 
+/**
+ * Toggle plan checkboxes on monthly plan click
+ */
+$('#monthly-plan').click(function () {
+    var yearlyPlanChecked = true;
+
+    if ($(this).is(':checked')) {
+        yearlyPlanChecked = false;
+    }
+
+    $('#yearly-plan').prop('checked', yearlyPlanChecked);
+});
+
+/**
+ * Toggle plan checkboxes on yearly plan click
+ */
+$('#yearly-plan').click(function () {
+    var monthlyPlanChecked = true;
+
+    if ($(this).is(':checked')) {
+        monthlyPlanChecked = false;
+    }
+
+    $('#monthly-plan').prop('checked', monthlyPlanChecked);
+});
+
 $('#btn-add-credit-card').click(function () {
     var creditCardNameInput = $('#credit-card-name');
     var postalCodeInput = $('#postal-code');
@@ -13,8 +39,19 @@ $('#btn-add-credit-card').click(function () {
     var creditCardExpirationMonthInput = $('#credit-card-expiration-month');
     var creditCardExpirationYearInput = $('#credit-card-expiration-year');
     var creditCardExpirationCVVInput = $('#credit-card-cvv');
-    const classInputWithError = 'has-danger';
+    var monthlyPlan = $('#monthly-plan');
+    var yearlyPlan = $('#yearly-plan');
     var errors = false;
+
+    const classInputWithError = 'has-danger';
+
+    if (!monthlyPlan.is(':checked') && !yearlyPlan.is(':checked')
+        || (monthlyPlan.is(':checked') && yearlyPlan.is(':checked'))) {
+        errors = true;
+        $('#error-message-plan-choose').css("display", "");
+    } else {
+        $('#error-message-plan-choose').css("display", "none");
+    }
 
     if (!creditCardNameInput.val()) {
         errors = true;
@@ -80,14 +117,16 @@ $('#credit-card-number').keyup(function () {
 function stripeResponseHandler(status, response) {
     if (response.error) {
         $('#error-message').css("display", "");
-    } else { // Token was created!
+    } else {
         $('#error-message').css("display", "none");
-
-        // Get the token ID:
+        // Get the token ID
         var token = response.id;
 
-        // Insert the token into the form so it gets submitted to the server:
-        console.log(token);
-        // TODO: send the token to the backend.
+        // Submit the form with the Stripe Token
+        var form = $('#subscription-form');
+
+        form.append($('<input type="hidden" name="stripe_token" />').val(token));
+
+        form.get(0).submit();
     }
 }
