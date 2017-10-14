@@ -71,6 +71,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Get user courses.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function courses()
+    {
+        return $this->belongsToMany('App\Course', 'users_courses', 'user_id', 'course_id');
+    }
+
+    /**
      * Check if user has subscription active.
      *
      * @return bool

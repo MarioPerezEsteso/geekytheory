@@ -28,7 +28,8 @@ class TestUtils
     }
 
     /**
-     * Populate the database with courses, chapters and lessons.
+     * Populate the database with courses, chapters and lessons. By default, the course has beginner difficulty,
+     * it is published and it is not free.
      *
      * @param User $teacher
      * @param integer $numberOfCourses
