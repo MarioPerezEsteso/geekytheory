@@ -13,7 +13,7 @@ class CreateSubscriptionsTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function ($table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->string('stripe_id')->nullable();
             $table->string('card_brand')->nullable();
             $table->string('card_last_four')->nullable();
@@ -40,11 +40,11 @@ class CreateSubscriptionsTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function ($table) {
-            $table->dropIfExists('stripe_id');
-            $table->dropIfExists('card_brand');
-            $table->dropIfExists('card_last_four');
-            $table->dropIfExists('trial_ends_at');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('stripe_id');
+            $table->dropColumn('card_brand');
+            $table->dropColumn('card_last_four');
+            $table->dropColumn('trial_ends_at');
         });
 
         Schema::dropIfExists('subscriptions');
