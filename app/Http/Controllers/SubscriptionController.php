@@ -36,6 +36,14 @@ class SubscriptionController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
+        if ($user->hasSubscriptionActive()) {
+            $errors = new MessageBag([
+                'subscription_error' => trans('home.subscription_already_active'),
+            ]);
+
+            return redirect()->route('account.subscription')->withErrors($errors);
+        }
+
         $subscriptionPlan = Subscription::PLAN_YEARLY;
         $subscriptionPlanName = Subscription::PLAN_YEARLY_NAME;
 
