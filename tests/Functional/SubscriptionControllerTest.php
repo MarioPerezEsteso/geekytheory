@@ -4,6 +4,7 @@ namespace Tests\Functional;
 
 use App\User;
 use Tests\Helpers\TestConstants;
+use Tests\Helpers\TestUtils;
 use Tests\TestCase;
 
 class SubscriptionControllerTest extends TestCase
@@ -359,6 +360,51 @@ class SubscriptionControllerTest extends TestCase
      */
     public function testSubscriptionCanOnlyBeCreatedOnceError()
     {
+        // Config
+        $creditCard = [
+            'stripe_token' => 'tok_es',
+            'cardLastFour' => '0007',
+            'cardBrand' => 'Visa',
+        ];
+
+        // Prepare
+        list($user, $subscription) = TestUtils::createUserAndSusbcription();
+
+        // The current subscription is monthly and this tries to create a yearly subscription.
+        // It does not matter if the subscription plan is equal or different. It should not updated.
+        $requestData = [
+            'stripe_token' => $creditCard['stripe_token'],
+            'subscription_plan' => 'yearly',
+        ];
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->subscriptionCreatePostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->subscriptionPageUrl);
+
+        $response->assertSessionHasErrors(['subscription_error' => trans('home.subscription_already_active')]);
+
+        // Check that the user has not been modified
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'stripe_id' => $user->stripe_id,
+            'card_brand' => $user->card_brand,
+            'card_last_four' => $user->card_last_four,
+            'trial_ends_at' => null,
+            'created_at' => $user->created_at,
+            'updated_at' => $user->updated_at,
+        ]);
+
+        // Check that the subscription has not been modified
+        $this->assertDatabaseHas('subscriptions', [
+            'user_id' => $user->id,
+            'stripe_id' => $subscription->stripe_id,
+            'name' => $subscription->name,
+            'stripe_plan' => $subscription->stripe_plan,
+            'created_at' => $subscription->created_at,
+            'updated_at' => $subscription->updated_at,
+        ]);
     }
 
     /**
