@@ -110,6 +110,7 @@ return [
     'nice' => 'Nice!',
     'current_password_incorrect' => 'The current password is incorrect',
     'subscription_info' => 'You are not subscribed to Geeky Theory. Do you want to enjoy our Premium features for 15 €/month?',
+    'subscription_created' => 'Your subscription has been created successfully!',
     'credit_card_name' => 'Credit card name',
     'credit_card_number' => 'Credit card number',
     'postal_code' => 'Postal code',
@@ -117,4 +118,9 @@ return [
     'credit_card_expiration_year' => 'Expiration year',
     'credit_card_cvv' => 'CVV',
     'go_premium' => 'Go Premium',
+    'credit_card_not_valid' => 'Your credit card is not valid.',
+    'credit_card_cvv_incorrect' => 'The CVC code is incorrect.',
+    'credit_card_expired' => 'Your credit cart has expired.',
+    'incorrect_zip' => 'Your ZIP is incorrect.',
+    'stripe_processing_error' => 'There has been an error processing the payment. Please, try it again.',
 ];

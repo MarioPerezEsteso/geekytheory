@@ -112,6 +112,7 @@ return [
     'nice' => '¡Bien!',
     'current_password_incorrect' => 'La contraseña actual es incorrecta',
     'subscription_info' => 'Todavía no estás suscrito a Geeky Theory. ¿Quieres disfrutar de todas las ventajas de plan Premium por tan solo 15 €/mes?',
+    'subscription_created' => '¡Tu suscripción ha sido creada con éxito!',
     'credit_card_name' => 'Nombre del titular de la tarjeta',
     'credit_card_number' => 'Número de tarjeta de crédito',
     'postal_code' => 'Código postal',
@@ -119,4 +120,9 @@ return [
     'credit_card_expiration_year' => 'Año de caducidad',
     'credit_card_cvv' => 'CVV',
     'go_premium' => 'Hacerme Premium',
+    'credit_card_not_valid' => 'Su tarjeta de crédito no es válida.',
+    'credit_card_cvv_incorrect' => 'Su código CVC es incorrecto.',
+    'credit_card_expired' => 'Su tarjeta de crédito ha expirado.',
+    'incorrect_zip' => 'El código postal es incorrecto.',
+    'stripe_processing_error' => 'Ha habido un error procesando el pago. Por favor, inténtelo de nuevo.',
 ];
