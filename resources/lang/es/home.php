@@ -113,6 +113,7 @@ return [
     'current_password_incorrect' => 'La contraseña actual es incorrecta',
     'subscription_info' => 'Todavía no estás suscrito a Geeky Theory. ¿Quieres disfrutar de todas las ventajas de plan Premium por tan solo 15 €/mes?',
     'subscription_created' => '¡Tu suscripción ha sido creada con éxito!',
+    'subscription_already_active' => 'Ya tienes una suscripción premium activa.',
     'credit_card_name' => 'Nombre del titular de la tarjeta',
     'credit_card_number' => 'Número de tarjeta de crédito',
     'postal_code' => 'Código postal',
