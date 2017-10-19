@@ -68,3 +68,7 @@ $factory->define(App\Chapter::class, function () {
 $factory->define(App\Lesson::class, function () {
     return [];
 });
+
+$factory->define(\Laravel\Cashier\Subscription::class, function () {
+    return [];
+});

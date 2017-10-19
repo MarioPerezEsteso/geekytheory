@@ -5,6 +5,7 @@ namespace Tests\Helpers;
 use App\Chapter;
 use App\Course;
 use App\Lesson;
+use App\Subscription;
 use App\User;
 use Faker\Factory;
 use Illuminate\Database\Eloquent\Collection;
@@ -108,5 +109,40 @@ class TestUtils
         ], $lessonAttributes);
 
         return factory(Lesson::class)->create($attributes);
+    }
+
+    /**
+     * Create a user and a subscription.
+     *
+     * @param array $userAndCardAttributes
+     * @param array $subscriptionAttributes
+     * @return void
+     */
+    public static function createUserAndSusbcription($userAndCardAttributes = [], $subscriptionAttributes = [])
+    {
+        $userAttributes = array_merge([
+            'stripe_id' => 'fake_stripe_id_123',
+            'card_brand' => 'Visa',
+            'card_last_four' => '4242',
+            'trial_ends_at' => null,
+        ], $userAndCardAttributes);
+
+        /** @var User $user */
+        $user = factory(User::class)->create($userAttributes);
+
+        $subscriptionAttributes = array_merge([
+            'user_id' => $user->id,
+            'stripe_id' => 'another_fake_stripe_id_456',
+            'name' => Subscription::PLAN_MONTHLY_NAME,
+            'stripe_plan' => Subscription::PLAN_MONTHLY,
+            'quantity' => 1,
+            'trial_ends_at' => null,
+            'ends_at' => null,
+        ], $subscriptionAttributes);
+
+        /** @var \Laravel\Cashier\Subscription $subscription */
+        $subscription = factory(\Laravel\Cashier\Subscription::class)->create($subscriptionAttributes);
+
+        return [$user, $subscription];
     }
 }
