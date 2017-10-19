@@ -189,10 +189,169 @@ class SubscriptionControllerTest extends TestCase
 
     /**
      * Test the different Stripe errors that could be received on a subscription creation.
+     *
+     * @dataProvider providerTestSubscriptionNotCreatedAndCreditCardNotStoredWithErrorsFromStripe
+     * @param array $example
      */
-    public function testCreateSubscriptionWithErrorsFromStripe()
+    public function testSubscriptionNotCreatedAndCreditCardNotStoredWithErrorsFromStripe($example)
     {
+        $requestData = [
+            'stripe_token' => $example['stripe_token'],
+            'subscription_plan' => 'monthly',
+        ];
 
+        /** @var User $user */
+        $user = factory(User::class)->create();
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->subscriptionCreatePostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->subscriptionPageUrl);
+
+        $response->assertSessionHasErrors(['stripe_error' => trans($example['expected_error'])]);
+        
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'card_brand' => null,
+            'card_last_four' => null,
+            'trial_ends_at' => null,
+        ]);
+
+        $this->assertDatabaseMissing('subscriptions', [
+            'user_id' => $user->id,
+        ]);
+    }
+
+    /**
+     * Data provider for testSubscriptionNotCreatedAndCreditCardNotStoredWithErrorsFromStripe.
+     *
+     * @return array
+     */
+    public function providerTestSubscriptionNotCreatedAndCreditCardNotStoredWithErrorsFromStripe()
+    {
+        return [
+            [
+                [
+                    'stripe_token' => 'tok_cvcCheckFail',
+                    'expected_error' => 'home.credit_card_cvv_incorrect',
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_chargeDeclined',
+                    'expected_error' => 'home.credit_card_not_valid'
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_chargeDeclinedIncorrectCvc',
+                    'expected_error' => 'home.credit_card_cvv_incorrect'
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_chargeDeclinedExpiredCard',
+                    'expected_error' => 'home.credit_card_expired'
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_chargeDeclinedProcessingError',
+                    'expected_error' => 'home.stripe_processing_error'
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_avsZipFail',
+                    'expected_error' => 'home.incorrect_zip'
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_avsFail',
+                    'expected_error' => 'home.incorrect_zip'
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Test the different Stripe errors that could be received on a subscription creation.
+     *
+     * @dataProvider providerTestSubscriptionNotCreatedButCreditCardStoredWithErrorsFromStripe
+     * @param array $example
+     */
+    public function testSubscriptionNotCreatedButCreditCardStoredWithErrorsFromStripe($example)
+    {
+        $requestData = [
+            'stripe_token' => $example['stripe_token'],
+            'subscription_plan' => 'monthly',
+        ];
+
+        /** @var User $user */
+        $user = factory(User::class)->create();
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->subscriptionCreatePostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->subscriptionPageUrl);
+
+        $response->assertSessionHasErrors(['stripe_error' => trans($example['expected_error'])]);
+        
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'card_brand' => $example['card']['brand'],
+            'card_last_four' => $example['card']['last_four'],
+            'trial_ends_at' => null,
+        ]);
+
+        $this->assertDatabaseMissing('subscriptions', [
+            'user_id' => $user->id,
+        ]);
+    }
+
+    /**
+     * Data provider for testSubscriptionNotCreatedButCreditCardStoredWithErrorsFromStripe.
+     *
+     * @return void
+     */
+    public function providerTestSubscriptionNotCreatedButCreditCardStoredWithErrorsFromStripe()
+    {
+        return [
+            [
+                [
+                    'stripe_token' => 'tok_discover',
+                    'expected_error' => 'home.credit_card_not_valid',
+                    'card' => [
+                        'last_four' => '9424',
+                        'brand' => 'Discover',
+                    ],
+                ],
+            ],[
+                [
+                    'stripe_token' => 'tok_jcb',
+                    'expected_error' => 'home.credit_card_not_valid',
+                    'card' => [
+                        'last_four' => '0000',
+                        'brand' => 'JCB',
+                    ],
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_chargeDeclinedFraudulent',
+                    'expected_error' => 'home.credit_card_not_valid',
+                    'card' => [
+                        'last_four' => '0019',
+                        'brand' => 'Visa',
+                    ],
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_chargeCustomerFail',
+                    'expected_error' => 'home.credit_card_not_valid',
+                    'card' => [
+                        'last_four' => '0341',
+                        'brand' => 'Visa',
+                    ],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -200,7 +359,6 @@ class SubscriptionControllerTest extends TestCase
      */
     public function testSubscriptionCanOnlyBeCreatedOnceError()
     {
-
     }
 
     /**
@@ -208,7 +366,6 @@ class SubscriptionControllerTest extends TestCase
      */
     public function testCreateSubscriptionErrorValidation()
     {
-
     }
 
     /**
@@ -216,7 +373,6 @@ class SubscriptionControllerTest extends TestCase
      */
     public function testCreateSubscriptionNotAuthorizedRedirectsToLogin()
     {
-
     }
 
     /**
@@ -224,7 +380,6 @@ class SubscriptionControllerTest extends TestCase
      */
     public function testRegisterUserAndCreateSubscriptionOk()
     {
-
     }
 
     /**
@@ -232,7 +387,6 @@ class SubscriptionControllerTest extends TestCase
      */
     public function updateSubscriptionFromMonthlyToYearlyOk()
     {
-
     }
 
     /**
@@ -240,7 +394,6 @@ class SubscriptionControllerTest extends TestCase
      */
     public function updateSubscriptionFromYearlyToMonthlyOk()
     {
-
     }
 
     /**
@@ -248,6 +401,5 @@ class SubscriptionControllerTest extends TestCase
      */
     public function updateSubscriptionNotAuthorizedRedirectsToLogin()
     {
-
     }
 }
