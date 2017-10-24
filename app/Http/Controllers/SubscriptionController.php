@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Subscription;
 use App\User;
+use App\Validators\SubscriptionValidator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\MessageBag;
@@ -11,6 +12,18 @@ use Stripe\Error\Card;
 
 class SubscriptionController extends Controller
 {
+    /** @var SubscriptionValidator */
+    protected $subscriptionValidator;
+
+    /**
+     * Controller constructor.
+     *
+     * @param SubscriptionValidator $subscriptionValidator
+     */
+    public function __construct(SubscriptionValidator $subscriptionValidator)
+    {
+        $this->subscriptionValidator = $subscriptionValidator;
+    }
 
     /**
      * Show subscription page.
@@ -35,6 +48,10 @@ class SubscriptionController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
+
+        if (!$this->subscriptionValidator->with($request->all())->passes()) {
+            return redirect()->route('account.subscription')->withErrors($this->subscriptionValidator->errors());
+        }
 
         if ($user->hasSubscriptionActive()) {
             $errors = new MessageBag([
