@@ -409,9 +409,73 @@ class SubscriptionControllerTest extends TestCase
 
     /**
      * Test that the subscription validator throws errors when the data is not valid.
+     *
+     * @dataProvider providerTestCreateSubscriptionErrorValidation
+     * @param array $requestData
+     * @param array $validationErrorKeys
+     * 
+     * @return array
      */
-    public function testCreateSubscriptionErrorValidation()
+    public function testCreateSubscriptionErrorValidation($requestData, $validationErrorKeys)
     {
+        /** @var User $user */
+        $user = factory(User::class)->create();
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->subscriptionCreatePostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->subscriptionPageUrl);
+        
+        $response->assertSessionHasErrors($validationErrorKeys);
+        
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'stripe_id' => null,
+            'card_brand' => null,
+            'card_last_four' => null,
+            'trial_ends_at' => null,
+        ]);
+
+        $this->assertDatabaseMissing('subscriptions', [
+            'user_id' => $user->id,
+        ]);
+    }
+
+    /**
+     * Provider for testCreateSubscriptionErrorValidation.
+     *
+     * @return array
+     */
+    public function providerTestCreateSubscriptionErrorValidation()
+    {
+        return [
+            [
+                'requestData' => [
+                    'stripe_token' => null,
+                    'subscription' => 'thisfieldisnotvalid',
+                ],
+                'validationErrorKeys' => ['stripe_token', 'subscription_plan',],
+            ], [
+                'requestData' => [
+                    'stripe_token' => null,
+                    'subscription_plan' => 'monthly',
+                ],
+                'validationErrorKeys' => ['stripe_token',],
+            ], [
+                'requestData' => [
+                    'stripe_token' => null,
+                    'subscription_plan' => 'yearly',
+                ],
+                'validationErrorKeys' => ['stripe_token',],
+            ], [
+                'requestData' => [
+                    'stripe_token' => 'whatever',
+                    'subscription_plan' => 'thisIsNotASubscriptionPlan',
+                ],
+                'validationErrorKeys' => ['subscription_plan',],
+            ],
+        ];
     }
 
     /**
