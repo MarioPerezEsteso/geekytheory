@@ -413,7 +413,7 @@ class SubscriptionControllerTest extends TestCase
      * @dataProvider providerTestCreateSubscriptionErrorValidation
      * @param array $requestData
      * @param array $validationErrorKeys
-     * 
+     *
      * @return array
      */
     public function testCreateSubscriptionErrorValidation($requestData, $validationErrorKeys)
@@ -482,7 +482,12 @@ class SubscriptionControllerTest extends TestCase
      * Test that a user that is not authenticated can't create a subscription.
      */
     public function testCreateSubscriptionNotAuthorizedRedirectsToLogin()
-    {
+    {    
+        // Request
+        $response = $this->call('POST', $this->subscriptionCreatePostUrl, ['stripe_token' => 'xxx', 'subscription_plan' => 'monthly']);
+        
+        // Asserts
+        $response->assertRedirect('login');
     }
 
     /**
