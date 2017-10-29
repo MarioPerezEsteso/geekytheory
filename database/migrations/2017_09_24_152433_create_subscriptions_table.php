@@ -13,6 +13,12 @@ class CreateSubscriptionsTable extends Migration
      */
     public function up()
     {
+        /**
+         * Fix issues with default value of user timestamps.
+         */
+        \DB::raw("ALTER TABLE users CHANGE `created_at` `created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;");
+        \DB::raw("ALTER TABLE users CHANGE `updated_at` `updated_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP;");
+
         Schema::table('users', function (Blueprint $table) {
             $table->string('stripe_id')->nullable();
             $table->string('card_brand')->nullable();
@@ -29,7 +35,8 @@ class CreateSubscriptionsTable extends Migration
             $table->integer('quantity');
             $table->timestamp('trial_ends_at')->nullable();
             $table->timestamp('ends_at')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 
