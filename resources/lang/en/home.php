@@ -112,6 +112,7 @@ return [
     'subscription_info' => 'You are not subscribed to Geeky Theory. Do you want to enjoy our Premium features for 15 €/month?',
     'subscription_created' => 'Your subscription has been created successfully!',
     'subscription_already_active' => 'You already have an active premium subscription.',
+    'subscription_card_updated' => 'Your card has been updated successfully.',
     'credit_card_name' => 'Credit card name',
     'credit_card_number' => 'Credit card number',
     'postal_code' => 'Postal code',
