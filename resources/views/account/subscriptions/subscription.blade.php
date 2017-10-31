@@ -24,16 +24,6 @@
     <div class="row">
         <div class="col-lg-6 col-md-8 col-sm-12">
 
-            @if (Session::has('success'))
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                    <h4 class="alert-heading">{{ trans('home.nice') }}</h4>
-                    <p class="mb-0">{{ Session::get('success') }}</p>
-                </div>
-            @endif
-
             @if (isset($errors) && !$errors->isEmpty())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -75,7 +65,8 @@
                                 <div class="listview">
                                     <div class="listview__item">
                                         <label class="custom-control custom-checkbox align-self-start">
-                                            <input id="yearly-plan" class="custom-control-input" type="checkbox" checked="checked">
+                                            <input id="yearly-plan" class="custom-control-input" type="checkbox"
+                                                   checked="checked">
                                             <span class="custom-control-indicator"></span>
                                         </label>
                                         <div class="listview__content">
@@ -170,9 +161,13 @@
             @else
                 <div class="alert alert-success" role="alert">
                     <h4 class="alert-heading">{{ trans('home.nice') }}</h4>
-                    <p class="mb-0">Tienes una suscripción activa en Geeky Theory
-                        por {{ \App\Subscription::PLAN_MONTHLY_PRICE_EUR }}
-                        €/mes</p>
+                    <p class="mb-0">
+                        @if ($loggedUser->subscribed(\App\Subscription::PLAN_MONTHLY_NAME, \App\Subscription::PLAN_MONTHLY))
+                            Tienes una suscripción premium mensual en Geeky Theory por {{ \App\Subscription::PLAN_MONTHLY_PRICE_EUR }} €/mes
+                        @else
+                            Tienes una suscripción premium anual en Geeky Theory por {{ \App\Subscription::PLAN_YEARLY_PRICE_EUR }} €/año
+                        @endif
+                    </p>
                 </div>
             @endif
         </div>
