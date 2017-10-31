@@ -116,32 +116,48 @@ class TestUtils
      *
      * @param array $userAndCardAttributes
      * @param array $subscriptionAttributes
+     * @param bool $saveSubscriptionInStripe
      * @return void
      */
-    public static function createUserAndSusbcription($userAndCardAttributes = [], $subscriptionAttributes = [])
+    public static function createUserAndSubscription($userAndCardAttributes = [], $subscriptionAttributes = [], $saveSubscriptionInStripe = false)
     {
-        $userAttributes = array_merge([
-            'stripe_id' => 'fake_stripe_id_123',
-            'card_brand' => 'Visa',
-            'card_last_four' => '4242',
-            'trial_ends_at' => null,
-        ], $userAndCardAttributes);
+        if (!$saveSubscriptionInStripe) {
+            $userAttributes = array_merge([
+                'stripe_id' => 'fake_stripe_id_123',
+                'card_brand' => 'Visa',
+                'card_last_four' => '4242',
+                'trial_ends_at' => null,
+            ], $userAndCardAttributes);
 
-        /** @var User $user */
-        $user = factory(User::class)->create($userAttributes);
+            /** @var User $user */
+            $user = factory(User::class)->create($userAttributes);
 
-        $subscriptionAttributes = array_merge([
-            'user_id' => $user->id,
-            'stripe_id' => 'another_fake_stripe_id_456',
-            'name' => Subscription::PLAN_MONTHLY_NAME,
-            'stripe_plan' => Subscription::PLAN_MONTHLY,
-            'quantity' => 1,
-            'trial_ends_at' => null,
-            'ends_at' => null,
-        ], $subscriptionAttributes);
+            $subscriptionAttributes = array_merge([
+                'user_id' => $user->id,
+                'stripe_id' => 'another_fake_stripe_id_456',
+                'name' => Subscription::PLAN_MONTHLY_NAME,
+                'stripe_plan' => Subscription::PLAN_MONTHLY,
+                'quantity' => 1,
+                'trial_ends_at' => null,
+                'ends_at' => null,
+            ], $subscriptionAttributes);
 
-        /** @var \Laravel\Cashier\Subscription $subscription */
-        $subscription = factory(\Laravel\Cashier\Subscription::class)->create($subscriptionAttributes);
+            /** @var \Laravel\Cashier\Subscription $subscription */
+            $subscription = factory(\Laravel\Cashier\Subscription::class)->create($subscriptionAttributes);
+        } else {
+            /** @var User $user */
+            $user = factory(User::class)->create();
+
+            /** @var \Stripe\Subscription $subscription */
+            $subscription = $user->newSubscription(Subscription::PLAN_MONTHLY_NAME, Subscription::PLAN_MONTHLY)
+                ->skipTrial()
+                ->create('tok_visa', [
+                    'email' => $user->email,
+                    'metadata' => [
+                        'ip' => getClientIPAddress(),
+                    ]
+                ]);
+        }
 
         return [$user, $subscription];
     }
