@@ -118,6 +118,18 @@ Route::post('account/subscription', [
     'uses' => 'SubscriptionController@store',
 ]);
 
+Route::get('cuenta/suscripcion/metodo-pago', [
+    'as' => 'account.subscription.payment-method',
+    'middleware' => 'auth',
+    'uses' => 'SubscriptionController@showPaymentMethod',
+]);
+
+Route::post('account/subscription/payment-method', [
+    'as' => 'account.subscription.payment-method.post',
+    'middleware' => 'auth',
+    'uses' => 'SubscriptionController@updatePaymentMethod',
+]);
+
 /*
  * Newsletter subscription routes
  */

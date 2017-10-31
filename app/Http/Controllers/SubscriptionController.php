@@ -112,4 +112,22 @@ class SubscriptionController extends Controller
         // Response
         return redirect()->route('account.subscription')->withSuccess(trans('home.subscription_created'));
     }
+
+    /**
+     * Show subscription payment method view.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function showPaymentMethod(Request $request)
+    {
+        /** @var User $loggedUser */
+        $loggedUser = Auth::user();
+
+        if (!$loggedUser->hasSubscriptionActive()) {
+            return redirect()->route('account.subscription');
+        }
+
+        return view('account.subscriptions.paymentMethod', compact('loggedUser'));
+    }
 }
