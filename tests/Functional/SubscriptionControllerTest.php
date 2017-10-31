@@ -24,6 +24,20 @@ class SubscriptionControllerTest extends TestCase
     protected $subscriptionPageUrl = '/cuenta/suscripcion';
 
     /**
+     * Update subscription card POST URL.
+     *
+     * @var string
+     */
+    protected $subscriptionCardUpdatePostUrl = '/account/subscription/card';
+
+    /**
+     * Subscription payment method page URL.
+     *
+     * @var string
+     */
+    protected $subscriptionPaymentMethodPageUrl = '/cuenta/suscripcion/metodo-pago';
+
+    /**
      * Test create subscription successfully.
      *
      * @dataProvider providerTestCreateSubscriptionOk
@@ -211,7 +225,7 @@ class SubscriptionControllerTest extends TestCase
         $response->assertRedirect($this->subscriptionPageUrl);
 
         $response->assertSessionHasErrors(['stripe_error' => trans($example['expected_error'])]);
-        
+
         $this->assertDatabaseHas('users', [
             'id' => $user->id,
             'card_brand' => null,
@@ -294,7 +308,7 @@ class SubscriptionControllerTest extends TestCase
         $response->assertRedirect($this->subscriptionPageUrl);
 
         $response->assertSessionHasErrors(['stripe_error' => trans($example['expected_error'])]);
-        
+
         $this->assertDatabaseHas('users', [
             'id' => $user->id,
             'card_brand' => $example['card']['brand'],
@@ -310,9 +324,9 @@ class SubscriptionControllerTest extends TestCase
     /**
      * Data provider for testSubscriptionNotCreatedButCreditCardStoredWithErrorsFromStripe.
      *
-     * @return void
+     * @return array
      */
-    public function providerTestSubscriptionNotCreatedButCreditCardStoredWithErrorsFromStripe()
+    public function providerTestSubscriptionNotCreatedButCreditCardStoredWithErrorsFromStripe(): array
     {
         return [
             [
@@ -324,7 +338,7 @@ class SubscriptionControllerTest extends TestCase
                         'brand' => 'Discover',
                     ],
                 ],
-            ],[
+            ], [
                 [
                     'stripe_token' => 'tok_jcb',
                     'expected_error' => 'home.credit_card_not_valid',
@@ -368,7 +382,7 @@ class SubscriptionControllerTest extends TestCase
         ];
 
         // Prepare
-        list($user, $subscription) = TestUtils::createUserAndSusbcription();
+        list($user, $subscription) = TestUtils::createUserAndSubscription();
 
         // The current subscription is monthly and this tries to create a yearly subscription.
         // It does not matter if the subscription plan is equal or different. It should not updated.
@@ -426,9 +440,9 @@ class SubscriptionControllerTest extends TestCase
 
         // Asserts
         $response->assertRedirect($this->subscriptionPageUrl);
-        
+
         $response->assertSessionHasErrors($validationErrorKeys);
-        
+
         $this->assertDatabaseHas('users', [
             'id' => $user->id,
             'stripe_id' => null,
@@ -482,12 +496,135 @@ class SubscriptionControllerTest extends TestCase
      * Test that a user that is not authenticated can't create a subscription.
      */
     public function testCreateSubscriptionNotAuthorizedRedirectsToLogin()
-    {    
+    {
         // Request
         $response = $this->call('POST', $this->subscriptionCreatePostUrl, ['stripe_token' => 'xxx', 'subscription_plan' => 'monthly']);
-        
+
         // Asserts
         $response->assertRedirect('login');
+    }
+
+    /**
+     * Test update credit card of a subscription.
+     *
+     * @dataProvider providerUpdateSubscriptionCardOk
+     * @param array $example
+     */
+    public function testUpdateSubscriptionCardOk($example)
+    {
+        // Prepare
+        list($user) = TestUtils::createUserAndSubscription([], [], true);
+
+        $requestData = [
+            'stripe_token' => $example['stripe_token'],
+        ];
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->subscriptionCardUpdatePostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->subscriptionPaymentMethodPageUrl);
+        $response->assertSessionHas('success', trans('home.subscription_card_updated'));
+
+        // Database asserts
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'card_brand' => $example['card']['brand'],
+            'card_last_four' => $example['card']['last_four'],
+            'trial_ends_at' => null,
+        ]);
+    }
+
+    /**
+     * Data provider for testSubscriptionNotCreatedButCreditCardStoredWithErrorsFromStripe.
+     *
+     * @return void
+     */
+    public function providerUpdateSubscriptionCardOk()
+    {
+        return [
+            [
+                [
+                    'stripe_token' => 'tok_mastercard',
+                    'card' => [
+                        'last_four' => '4444',
+                        'brand' => 'MasterCard',
+                    ],
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_amex',
+                    'card' => [
+                        'last_four' => '8431',
+                        'brand' => 'American Express',
+                    ],
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_visa',
+                    'card' => [
+                        'last_four' => '4242',
+                        'brand' => 'Visa',
+                    ],
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_riskLevelElevated',
+                    'card' => [
+                        'last_four' => '9235',
+                        'brand' => 'Visa',
+                    ],
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_bypassPending',
+                    'card' => [
+                        'last_four' => '0077',
+                        'brand' => 'Visa',
+                    ],
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_domesticPricing',
+                    'card' => [
+                        'last_four' => '0093',
+                        'brand' => 'Visa',
+                    ],
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_avsLine1Fail',
+                    'card' => [
+                        'last_four' => '0028',
+                        'brand' => 'Visa',
+                    ],
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_avsUnchecked',
+                    'card' => [
+                        'last_four' => '0044',
+                        'brand' => 'Visa',
+                    ],
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_chargeCustomerFail',
+                    'card' => [
+                        'last_four' => '0341',
+                        'brand' => 'Visa',
+                    ],
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_chargeDeclinedFraudulent',
+                    'card' => [
+                        'last_four' => '0019',
+                        'brand' => 'Visa',
+                    ],
+                ],
+            ],
+        ];
     }
 
     /**

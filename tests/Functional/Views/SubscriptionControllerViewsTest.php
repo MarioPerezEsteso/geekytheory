@@ -25,7 +25,7 @@ class SubscriptionControllerViewsTest extends TestCase
     public function testVisitPaymentMethodPageWithSubscriptionActiveOk()
     {
         // Prepare
-        list($user) = TestUtils::createUserAndSusbcription();
+        list($user) = TestUtils::createUserAndSubscription();
 
         // Request
         $response = $this->actingAs($user)->call('GET', $this->paymentMethodPageUrl);

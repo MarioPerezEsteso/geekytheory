@@ -124,10 +124,10 @@ Route::get('cuenta/suscripcion/metodo-pago', [
     'uses' => 'SubscriptionController@showPaymentMethod',
 ]);
 
-Route::post('account/subscription/payment-method', [
-    'as' => 'account.subscription.payment-method.post',
+Route::post('account/subscription/card', [
+    'as' => 'account.subscription.card.post',
     'middleware' => 'auth',
-    'uses' => 'SubscriptionController@updatePaymentMethod',
+    'uses' => 'SubscriptionController@updateCard',
 ]);
 
 /*

@@ -116,12 +116,12 @@ class TestUtils
      *
      * @param array $userAndCardAttributes
      * @param array $subscriptionAttributes
-     * @param bool $saveSubscriptionInStripe
+     * @param bool $createSubscriptionInStripe
      * @return void
      */
-    public static function createUserAndSubscription($userAndCardAttributes = [], $subscriptionAttributes = [], $saveSubscriptionInStripe = false)
+    public static function createUserAndSubscription($userAndCardAttributes = [], $subscriptionAttributes = [], $createSubscriptionInStripe = false)
     {
-        if (!$saveSubscriptionInStripe) {
+        if (!$createSubscriptionInStripe) {
             $userAttributes = array_merge([
                 'stripe_id' => 'fake_stripe_id_123',
                 'card_brand' => 'Visa',
