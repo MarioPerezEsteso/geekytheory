@@ -83,7 +83,7 @@ class SubscriptionControllerTest extends TestCase
      *
      * @return array
      */
-    public function providerTestCreateSubscriptionOk()
+    public function providerTestCreateSubscriptionOk(): array
     {
         return [
             [
@@ -243,7 +243,7 @@ class SubscriptionControllerTest extends TestCase
      *
      * @return array
      */
-    public function providerTestSubscriptionNotCreatedAndCreditCardNotStoredWithErrorsFromStripe()
+    public function providerTestSubscriptionNotCreatedAndCreditCardNotStoredWithErrorsFromStripe(): array
     {
         return [
             [
@@ -427,8 +427,6 @@ class SubscriptionControllerTest extends TestCase
      * @dataProvider providerTestCreateSubscriptionErrorValidation
      * @param array $requestData
      * @param array $validationErrorKeys
-     *
-     * @return array
      */
     public function testCreateSubscriptionErrorValidation($requestData, $validationErrorKeys)
     {
@@ -538,9 +536,9 @@ class SubscriptionControllerTest extends TestCase
     /**
      * Data provider for testSubscriptionNotCreatedButCreditCardStoredWithErrorsFromStripe.
      *
-     * @return void
+     * @return array
      */
-    public function providerUpdateSubscriptionCardOk()
+    public function providerUpdateSubscriptionCardOk(): array
     {
         return [
             [
@@ -647,6 +645,28 @@ class SubscriptionControllerTest extends TestCase
         $response->assertRedirect($this->subscriptionPaymentMethodPageUrl);
 
         $response->assertSessionHasErrors(['validation' => trans('home.subscription_error_updating_card')]);
+    }
+
+    /**
+     * Test that a card can't be updated if a user does not have an active subscription.
+     */
+    public function testUpdateNonActiveSubscriptionCreditCardError()
+    {
+        // Prepare
+        /** @var User $user */
+        $user = factory(User::class)->create();
+
+        $requestData = [
+            'stripe_token' => 'tok_visa',
+        ];
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->subscriptionCardUpdatePostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->subscriptionPaymentMethodPageUrl);
+
+        $response->assertSessionHasErrors(['subscription' => trans('home.subscription_needed_to_update_card')]);
     }
 
     /**
