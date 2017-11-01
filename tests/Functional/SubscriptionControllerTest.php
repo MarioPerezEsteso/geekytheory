@@ -665,8 +665,108 @@ class SubscriptionControllerTest extends TestCase
 
         // Asserts
         $response->assertRedirect($this->subscriptionPaymentMethodPageUrl);
-
         $response->assertSessionHasErrors(['subscription' => trans('home.subscription_needed_to_update_card')]);
+
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'card_brand' => null,
+            'card_last_four' => null,
+            'trial_ends_at' => null,
+        ]);
+    }
+
+    /**
+     * Test that updating a subscription card can throw error from Stripe.
+     *
+     * @dataProvider providerUpdateSubscriptionCreditCardWithStripeErrors
+     * @param $example
+     */
+    public function testUpdateSubscriptionCardWithStripeErrors($example)
+    {
+        // Prepare
+        $requestData = [
+            'stripe_token' => $example['stripe_token'],
+        ];
+
+        list($user) = TestUtils::createUserAndSubscription([], [], true);
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->subscriptionCardUpdatePostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->subscriptionPaymentMethodPageUrl);
+        $response->assertSessionHasErrors(['stripe_error' => trans($example['expected_error'])]);
+
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'card_brand' => $user->card_brand,
+            'card_last_four' => $user->card_last_four,
+            'trial_ends_at' => $user->trial_ends_at,
+        ]);
+    }
+
+    /**
+     * Data provider for updateSubscriptionCreditCardWithStripeErrors.
+     *
+     * @return array
+     */
+    public function providerUpdateSubscriptionCreditCardWithStripeErrors()
+    {
+        return [
+            [
+                [
+                    'stripe_token' => 'tok_avsFail',
+                    'expected_error' => 'home.incorrect_zip',
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_avsZipFail',
+                    'expected_error' => 'home.incorrect_zip',
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_chargeDeclinedExpiredCard',
+                    'expected_error' => 'home.credit_card_expired',
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_chargeDeclinedProcessingError',
+                    'expected_error' => 'home.stripe_processing_error',
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_chargeDeclined',
+                    'expected_error' => 'home.credit_card_not_valid',
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_chargeDeclinedIncorrectCvc',
+                    'expected_error' => 'home.credit_card_cvv_incorrect',
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_cvcCheckFail',
+                    'expected_error' => 'home.credit_card_cvv_incorrect',
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * Test that a user must be authenticated in order to update a subscription card.
+     */
+    public function testUpdateSubscriptionCardNotAuthenticatedRedirectsToLogin()
+    {
+        // Prepare
+        $requestData = [
+            'stripe_token' => 'tok_mastercard',
+        ];
+
+        // Request
+        $response = $this->call('POST', $this->subscriptionCardUpdatePostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->loginUrl);
     }
 
     /**
