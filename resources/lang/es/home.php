@@ -115,6 +115,7 @@ return [
     'subscription_created' => '¡Tu suscripción ha sido creada con éxito!',
     'subscription_already_active' => 'Ya tienes una suscripción premium activa.',
     'subscription_card_updated' => 'Su tarjeta se ha actualizado con éxito.',
+    'subscription_error_updating_card' => 'Ha habido un error actualizando su tarjeta. Por favor, inténtelo de nuevo.',
     'credit_card_name' => 'Nombre del titular de la tarjeta',
     'credit_card_number' => 'Número de tarjeta de crédito',
     'postal_code' => 'Código postal',

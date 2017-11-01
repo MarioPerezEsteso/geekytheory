@@ -130,4 +130,56 @@ class SubscriptionController extends Controller
 
         return view('account.subscriptions.paymentMethod', compact('loggedUser'));
     }
+
+    /**
+     * Update user card.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function updateCard(Request $request)
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        if (!$this->subscriptionValidator->validateCreditCardUpdate()->with($request->all())->passes()) {
+            return redirect()
+                ->route('account.subscription.payment-method')
+                ->withErrors(new MessageBag(['validation' => trans('home.subscription_error_updating_card')]));
+        }
+
+        try {
+            $user->updateCard($request->stripe_token);
+        } catch (\Exception $exception) {
+            $errors = new MessageBag();
+            if ($exception instanceof Card) {
+                $stripeCode = $exception->getStripeCode();
+                switch ($stripeCode) {
+                    case 'card_declined':
+                        $errorMessage = trans('home.credit_card_not_valid');
+                        break;
+                    case 'incorrect_cvc':
+                        $errorMessage = trans('home.credit_card_cvv_incorrect');
+                        break;
+                    case 'expired_card':
+                        $errorMessage = trans('home.credit_card_expired');
+                        break;
+                    case 'incorrect_zip':
+                        $errorMessage = trans('home.incorrect_zip');
+                        break;
+                    case 'processing_error':
+                    default:
+                        $errorMessage = trans('home.stripe_processing_error');
+                        break;
+                }
+                $errors->add('stripe_error', $errorMessage);
+            } else {
+                $errors->add('stripe_error', trans('home.stripe_processing_error'));
+            }
+
+            return redirect()->route('account.subscription.payment-method')->withErrors($errors);
+        }
+
+        return redirect()->route('account.subscription.payment-method')->withSuccess(trans('home.subscription_card_updated'));
+    }
 }

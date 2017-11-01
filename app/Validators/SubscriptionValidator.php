@@ -25,4 +25,18 @@ class SubscriptionValidator extends LaravelValidator implements ValidableInterfa
     {
         return $this;
     }
+
+    /**
+     * Modify te rules for updating a Subscription credit card.
+     *
+     * @return $this
+     */
+    public function validateCreditCardUpdate()
+    {
+        $this->rules = [
+            'stripe_token' => 'required',
+        ];
+
+        return $this;
+    }
 }
