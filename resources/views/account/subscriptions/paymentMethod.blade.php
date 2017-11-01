@@ -17,12 +17,22 @@
         window.stripePublicKey = '{{ config('services.stripe.public') }}'
     </script>
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    <script type="text/javascript" src="/account/js/subscription/payMethodFormHandler.js"></script>
+    <script type="text/javascript" src="/account/js/subscription/updateCardFormHandler.js"></script>
 @endsection
 
 @section('content')
     <div class="row">
         <div class="col-lg-6 col-md-8 col-sm-12">
+
+            @if (Session::has('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="alert-heading">{{ trans('home.nice') }}</h4>
+                    <p class="mb-0">{{ Session::get('success') }}</p>
+                </div>
+            @endif
 
             @if (isset($errors) && !$errors->isEmpty())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -37,7 +47,7 @@
             @endif
 
             {{-- Hidden form to create subscription with Stripe token --}}
-            {!! Form::open(['url' => route('account.subscription.card.post'), 'method' => 'POST', 'id' => 'subscription-form']) !!}
+            {!! Form::open(['url' => route('account.subscription.card.post'), 'method' => 'POST', 'id' => 'update-card-form']) !!}
             {!! Form::close() !!}
 
             <div class="card">
@@ -116,9 +126,9 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <p id="error-message" class="text-danger" style="display: none">Ha habido un error en la
-                                comunicación con Stripe. Por favor,
-                                inténtalo de nuevo.</p>
+                            <p id="error-message" class="text-danger" style="display: none">
+                                Ha habido un error en la comunicación con Stripe. Por favor, inténtalo de nuevo.
+                            </p>
                         </div>
                     </div>
                 </div>
