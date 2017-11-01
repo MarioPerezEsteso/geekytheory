@@ -373,11 +373,15 @@
                         <li class="{{ isRoute('account.profile.password') ? 'navigation__active' : '' }}"><a href="{{ route('account.profile.password') }}">Cambio de contraseña</a></li>
                     </ul>
                 </li>
-                <li class="navigation__sub {{ isRoute('account.subscription') ? 'navigation__sub--active' : '' }}">
+                <li class="navigation__sub {{ isRoute('account.subscription') || isRoute('account.subscription.payment-method') ? 'navigation__sub--active' : '' }}">
                     <a href=""><i class="zmdi zmdi-account zmdi-hc-fw"></i> Suscripción</a>
                     <ul>
-                        <li class="{{ isRoute('account.subscription') ? 'navigation__active' : '' }}"><a href="{{ route('account.subscription') }}">Mi suscripción</a></li>
-                        <li class="{{ isRoute('account.subscription.payment-method') ? 'navigation__active' : '' }}"><a href="{{ route('account.subscription.payment-method') }}">Método de pago</a></li>
+                        <li class="{{ isRoute('account.subscription') ? 'navigation__active' : '' }}">
+                            <a href="{{ route('account.subscription') }}">Mi suscripción</a>
+                        </li>
+                        <li class="{{ isRoute('account.subscription.payment-method') ? 'navigation__active' : '' }}">
+                            <a href="{{ route('account.subscription.payment-method') }}">Método de pago</a>
+                        </li>
                     </ul>
                 </li>
             </ul>

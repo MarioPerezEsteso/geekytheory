@@ -112,30 +112,28 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-6">
                                 <div class="form-group form-group--float">
                                     {!! Form::text('credit_card_number', null, ['class' => 'form-control', 'required' => 'required', 'id' => 'credit-card-number',]) !!}
                                     {!! Form::label('credit_card_number', trans('home.credit_card_number'), ['class' => 'form-control-label']) !!}
                                     <i class="form-group__bar"></i>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <div class="form-group form-group--float">
                                     {!! Form::text('credit_card_expiration_month', null, ['class' => 'form-control', 'required' => 'required', 'id' => 'credit-card-expiration-month',]) !!}
                                     {!! Form::label('credit_card_expiration_month', trans('home.credit_card_expiration_month'), ['class' => 'form-control-label']) !!}
                                     <i class="form-group__bar"></i>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <div class="form-group form-group--float">
                                     {!! Form::text('credit_card_expiration_year', null, ['class' => 'form-control', 'required' => 'required', 'id' => 'credit-card-expiration-year',]) !!}
                                     {!! Form::label('credit_card_expiration_year', trans('home.credit_card_expiration_year'), ['class' => 'form-control-label']) !!}
                                     <i class="form-group__bar"></i>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <div class="form-group form-group--float">
                                     {!! Form::text('credit_card_cvv', null, ['class' => 'form-control', 'required' => 'required', 'id' => 'credit-card-cvv',]) !!}
                                     {!! Form::label('credit_card_cvv', trans('home.credit_card_cvv'), ['class' => 'form-control-label']) !!}

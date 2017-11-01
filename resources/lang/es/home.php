@@ -124,6 +124,7 @@ return [
     'credit_card_expiration_year' => 'Año de caducidad',
     'credit_card_cvv' => 'CVV',
     'go_premium' => 'Hacerme Premium',
+    'update_card' => 'Actualizar tarjeta',
     'credit_card_not_valid' => 'Su tarjeta de crédito no es válida.',
     'credit_card_cvv_incorrect' => 'Su código CVC es incorrecto.',
     'credit_card_expired' => 'Su tarjeta de crédito ha expirado.',

@@ -122,6 +122,7 @@ return [
     'credit_card_expiration_year' => 'Expiration year',
     'credit_card_cvv' => 'CVV',
     'go_premium' => 'Go Premium',
+    'update_card' => 'Update card',
     'credit_card_not_valid' => 'Your credit card is not valid.',
     'credit_card_cvv_incorrect' => 'The CVC code is incorrect.',
     'credit_card_expired' => 'Your credit cart has expired.',
