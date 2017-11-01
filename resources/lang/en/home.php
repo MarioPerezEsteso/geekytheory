@@ -114,6 +114,7 @@ return [
     'subscription_already_active' => 'You already have an active premium subscription.',
     'subscription_card_updated' => 'Your card has been updated successfully.',
     'subscription_error_updating_card' => 'There has been an error on the card update. Please, try again.',
+    'subscription_needed_to_update_card' => 'You must have an active subscription in order to update your card.',
     'credit_card_name' => 'Credit card name',
     'credit_card_number' => 'Credit card number',
     'postal_code' => 'Postal code',

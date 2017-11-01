@@ -142,6 +142,12 @@ class SubscriptionController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
+        if (!$user->hasSubscriptionActive()) {
+            return redirect()
+                ->route('account.subscription.payment-method')
+                ->withErrors(new MessageBag(['subscription' => trans('home.subscription_needed_to_update_card')]));
+        }
+
         if (!$this->subscriptionValidator->validateCreditCardUpdate()->with($request->all())->passes()) {
             return redirect()
                 ->route('account.subscription.payment-method')
