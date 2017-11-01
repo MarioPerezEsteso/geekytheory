@@ -627,6 +627,28 @@ class SubscriptionControllerTest extends TestCase
         ];
     }
 
+
+    /**
+     * Test that update subscription card throws validation errors.
+     */
+    public function testUpdateSubscriptionCardErrorValidation()
+    {
+        // Prepare
+        $requestData = [
+            'stripe_token' => '',
+        ];
+
+        list($user) = TestUtils::createUserAndSubscription();
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->subscriptionCardUpdatePostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->subscriptionPaymentMethodPageUrl);
+
+        $response->assertSessionHasErrors(['validation' => trans('home.subscription_error_updating_card')]);
+    }
+
     /**
      * Test create subscription from registration page.
      */
