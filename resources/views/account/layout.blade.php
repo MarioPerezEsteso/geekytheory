@@ -12,6 +12,7 @@
 
     <!-- App styles -->
     <link rel="stylesheet" href="/account/css/app.min.css">
+    <link rel="stylesheet" href="/account/css/custom.css">
 </head>
 
 <body data-ma-theme="green">
@@ -376,6 +377,7 @@
                     <a href=""><i class="zmdi zmdi-account zmdi-hc-fw"></i> Suscripción</a>
                     <ul>
                         <li class="{{ isRoute('account.subscription') ? 'navigation__active' : '' }}"><a href="{{ route('account.subscription') }}">Mi suscripción</a></li>
+                        <li class="{{ isRoute('account.subscription.payment-method') ? 'navigation__active' : '' }}"><a href="{{ route('account.subscription.payment-method') }}">Método de pago</a></li>
                     </ul>
                 </li>
             </ul>
