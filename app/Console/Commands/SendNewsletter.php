@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Subscriber;
+use App\User;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Mail;
 
 class SendNewsletter extends Command
@@ -44,10 +46,24 @@ class SendNewsletter extends Command
 
         $subscribers = Subscriber::where('active', 1)->get();
 
+        $users = User::all();
+
+        $emails = [];
+
+        foreach ($users as $user) {
+            $emails[] = $user->email;
+        }
+
         foreach ($subscribers as $subscriber) {
+            if (!in_array($subscriber->email, $emails)) {
+                $emails[] = $subscriber->email;
+            }
+        }
+
+        foreach ($emails as $email) {
             $data = [
                 'subject' => 'Novedades de Geeky Theory',
-                'to' => $subscriber->email,
+                'to' => $email,
             ];
 
             try {
@@ -56,9 +72,9 @@ class SendNewsletter extends Command
                     $message->to($data['to']);
                     $message->subject($data['subject']);
                 });
-                $this->info("Email successfully sent to " . $subscriber->email);
+                $this->info("Email successfully sent to " . $email);
             } catch (\Exception $e) {
-                $this->info("Failed to send email to " . $subscriber->email);
+                $this->info("Failed to send email to " . $email);
                 $this->info((string)$e);
             }
         }
