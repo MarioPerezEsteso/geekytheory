@@ -17,6 +17,13 @@ class SubscriptionControllerTest extends TestCase
     protected $subscriptionCreatePostUrl = '/account/subscription';
 
     /**
+     * Subscription update POST URL.
+     *
+     * @var string
+     */
+    protected $subscriptionPlanUpdatePostUrl = '/account/subscription/update';
+
+    /**
      * Subscription page URL.
      *
      * @var string
@@ -70,7 +77,7 @@ class SubscriptionControllerTest extends TestCase
 
         $this->assertDatabaseHas('subscriptions', [
             'user_id' => $user->id,
-            'name' => $example['subscriptionPlan'] === 'monthly' ? TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY_NAME : TestConstants::MODEL_SUBSCRIPTION_PLAN_YEARLY_NAME,
+            'name' => TestConstants::MODEL_SUBSCRIPTION_PLAN_NAME,
             'stripe_plan' => $example['subscriptionPlan'],
             'quantity' => 1,
             'trial_ends_at' => null,
@@ -767,6 +774,69 @@ class SubscriptionControllerTest extends TestCase
 
         // Asserts
         $response->assertRedirect($this->loginUrl);
+    }
+
+    /**
+     * Test change subscription plan from monthly to yearly.
+     *
+     * @dataProvider providerTestChangeSubscriptionPlanOk
+     * @param array $example
+     */
+    public function testChangeSubscriptionPlanOk($example)
+    {
+        // Prepare
+        list($user, $subscription) = TestUtils::createUserAndSubscription(
+            [],
+            [
+                'stripe_plan' => $example['current_subscription_plan'],
+            ],
+            true
+        );
+
+        $requestData = [
+            'subscription_plan' => $example['new_subscription_plan'],
+        ];
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->subscriptionPlanUpdatePostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertSessionHas(['success' => trans($example['expected_message'])]);
+
+        $this->assertDatabaseHas('subscriptions', [
+            'user_id' => $user->id,
+            'stripe_id' => $subscription->stripe_id,
+            'name' => TestConstants::MODEL_SUBSCRIPTION_PLAN_NAME,
+            'stripe_plan' => $example['new_subscription_plan'],
+            'quantity' => 1,
+            'trial_ends_at' => null,
+            'ends_at' => null,
+        ]);
+    }
+
+    /**
+     * Data provider for testChangeSubscriptionPlanOk.
+     *
+     * @return array
+     */
+    public function providerTestChangeSubscriptionPlanOk(): array
+    {
+        return [
+            [
+                [
+                    'current_subscription_plan' => TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY,
+                    'new_subscription_plan' => TestConstants::MODEL_SUBSCRIPTION_PLAN_YEARLY,
+                    'expected_message' => 'home.subscription_updated_from_monthly_to_yearly',
+                ],
+            ], [
+                [
+                    'current_subscription_plan' => TestConstants::MODEL_SUBSCRIPTION_PLAN_YEARLY,
+                    'new_subscription_plan' => TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY,
+                    'expected_message' => 'home.subscription_updated_from_yearly_to_monthly',
+                ],
+            ],
+        ];
     }
 
     /**

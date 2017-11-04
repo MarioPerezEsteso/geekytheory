@@ -29,10 +29,9 @@ class TestConstants
     /**
      * Subscription.php
      */
+    const MODEL_SUBSCRIPTION_PLAN_NAME = 'main';
     const MODEL_SUBSCRIPTION_PLAN_MONTHLY = 'monthly';
     const MODEL_SUBSCRIPTION_PLAN_MONTHLY_PRICE_EUR = 15;
-    const MODEL_SUBSCRIPTION_PLAN_MONTHLY_NAME = 'Monthly subscription';
     const MODEL_SUBSCRIPTION_PLAN_YEARLY = 'yearly';
     const MODEL_SUBSCRIPTION_PLAN_YEARLY_PRICE_EUR = 150;
-    const MODEL_SUBSCRIPTION_PLAN_YEARLY_NAME = 'Yearly subscription';
 }
