@@ -135,8 +135,8 @@ class TestUtils
             $subscriptionAttributes = array_merge([
                 'user_id' => $user->id,
                 'stripe_id' => 'another_fake_stripe_id_456',
-                'name' => Subscription::PLAN_MONTHLY_NAME,
-                'stripe_plan' => Subscription::PLAN_MONTHLY,
+                'name' => TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY_NAME,
+                'stripe_plan' => TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY,
                 'quantity' => 1,
                 'trial_ends_at' => null,
                 'ends_at' => null,
@@ -148,8 +148,11 @@ class TestUtils
             /** @var User $user */
             $user = factory(User::class)->create();
 
+            $subscriptionPlanName = $subscriptionAttributes['name'] ?? TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY_NAME;
+            $stripePlan = $subscriptionAttributes['stripe_plan'] ?? TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY;
+
             /** @var \Stripe\Subscription $subscription */
-            $subscription = $user->newSubscription(Subscription::PLAN_MONTHLY_NAME, Subscription::PLAN_MONTHLY)
+            $subscription = $user->newSubscription($subscriptionPlanName, $stripePlan)
                 ->skipTrial()
                 ->create('tok_visa', [
                     'email' => $user->email,
