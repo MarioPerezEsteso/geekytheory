@@ -160,7 +160,7 @@
                 <div class="alert alert-success" role="alert">
                     <h4 class="alert-heading">{{ trans('home.nice') }}</h4>
                     <p class="mb-0">
-                        @if ($loggedUser->subscribed(\App\Subscription::PLAN_MONTHLY_NAME, \App\Subscription::PLAN_MONTHLY))
+                        @if ($loggedUser->subscribed(\App\Subscription::PLAN_NAME, \App\Subscription::PLAN_MONTHLY))
                             Tienes una suscripción premium mensual en Geeky Theory por {{ \App\Subscription::PLAN_MONTHLY_PRICE_EUR }} €/mes
                         @else
                             Tienes una suscripción premium anual en Geeky Theory por {{ \App\Subscription::PLAN_YEARLY_PRICE_EUR }} €/año

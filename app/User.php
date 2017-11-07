@@ -87,8 +87,8 @@ class User extends Authenticatable
      */
     public function hasSubscriptionActive()
     {
-        return $this->subscribed(Subscription::PLAN_MONTHLY_NAME, Subscription::PLAN_MONTHLY)
-            || $this->subscribed(Subscription::PLAN_YEARLY_NAME, Subscription::PLAN_YEARLY);
+        return $this->subscribed(Subscription::PLAN_NAME, Subscription::PLAN_MONTHLY)
+            || $this->subscribed(Subscription::PLAN_NAME, Subscription::PLAN_YEARLY);
     }
 
     /**
