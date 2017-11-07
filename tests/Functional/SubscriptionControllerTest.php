@@ -958,6 +958,9 @@ class SubscriptionControllerTest extends TestCase
         ];
     }
 
+    /**
+     * Test that a non authorized user cannot update any subscription.
+     */
     public function testUserNotAuthorizedIsRedirectedToLoginOnSubscriptionPlanChange()
     {
         // Prepare
