@@ -917,6 +917,47 @@ class SubscriptionControllerTest extends TestCase
         ]);
     }
 
+    /**
+     * Test validation errors on subscription plan update with wrong parameters.
+     *
+     * @dataProvider providerTestChangeSubscriptionPlanWithValidationErrors
+     * @param string $subscriptionPlan
+     */
+    public function testChangeSubscriptionPlanWithValidationErrors($subscriptionPlan)
+    {
+        // Prepare
+        list($user) = TestUtils::createUserAndSubscription();
+
+        $requestData = [
+            'subscription_plan' => $subscriptionPlan,
+        ];
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->subscriptionPlanUpdatePostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertSessionHasErrors('subscription_plan');
+    }
+
+    /**
+     * Data provider for testChangeSubscriptionPlanWithValidationErrors.
+     *
+     * @return array
+     */
+    public function providerTestChangeSubscriptionPlanWithValidationErrors(): array
+    {
+        return [
+            [
+                null,
+            ], [
+                '',
+            ], [
+                'weekly',
+            ],
+        ];
+    }
+
     public function testUserNotAuthorizedIsRedirectedToLoginOnSubscriptionPlanChange()
     {
         // Prepare
