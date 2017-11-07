@@ -863,7 +863,7 @@ class SubscriptionControllerTest extends TestCase
 
         // Asserts
         $response->assertRedirect($this->subscriptionPageUrl);
-        $response->assertSessionHasErrors(['subscription_erroren' => trans('home.you_cannot_update_subscription_plan_to_same_active')]);
+        $response->assertSessionHasErrors(['subscription_error' => trans('home.you_cannot_update_subscription_plan_to_same_active')]);
 
         $this->assertDatabaseHas('subscriptions', [
             'user_id' => $user->id,
@@ -891,6 +891,44 @@ class SubscriptionControllerTest extends TestCase
                 TestConstants::MODEL_SUBSCRIPTION_PLAN_YEARLY,
             ],
         ];
+    }
+
+    /**
+     * Test that a user can't update the subscription plan without having a subscription plan.
+     */
+    public function testChangeSubscriptionPlanWithoutActiveSubscriptionThrowsErrors()
+    {
+        // Prepare
+        $user = factory(User::class)->create();
+
+        $requestData = [
+            'subscription_plan' => TestConstants::MODEL_SUBSCRIPTION_PLAN_YEARLY,
+        ];
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->subscriptionPlanUpdatePostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertSessionHasErrors(['subscription_error' => trans('home.you_do_not_have_an_active_subscription'),]);
+
+        $this->assertDatabaseMissing('subscriptions', [
+            'user_id' => $user->id,
+        ]);
+    }
+
+    public function testUserNotAuthorizedIsRedirectedToLoginOnSubscriptionPlanChange()
+    {
+        // Prepare
+        $requestData = [
+            'subscription_plan' => TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY,
+        ];
+
+        // Request
+        $response = $this->call('POST', $this->subscriptionPlanUpdatePostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->loginUrl);
     }
 
     /**
