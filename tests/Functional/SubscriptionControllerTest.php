@@ -840,6 +840,60 @@ class SubscriptionControllerTest extends TestCase
     }
 
     /**
+     * Test change subscription plan to the one that is already active throws errors.
+     *
+     * @dataProvider providerTestChangeSubscriptionPlanToTheSamePlanThatIsAlreadyActive
+     * @param string $subscriptionPlan
+     */
+    public function testChangeSubscriptionPlanToTheSamePlanThatIsAlreadyActive($subscriptionPlan)
+    {
+        // Prepare
+        list($user, $subscription) = TestUtils::createUserAndSubscription(
+            [],
+            ['stripe_plan' => $subscriptionPlan,],
+            true
+        );
+
+        $requestData = [
+            'subscription_plan' => $subscriptionPlan,
+        ];
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->subscriptionPlanUpdatePostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertSessionHasErrors(['subscription_erroren' => trans('home.you_cannot_update_subscription_plan_to_same_active')]);
+
+        $this->assertDatabaseHas('subscriptions', [
+            'user_id' => $user->id,
+            'stripe_id' => $subscription->stripe_id,
+            'name' => TestConstants::MODEL_SUBSCRIPTION_PLAN_NAME,
+            'stripe_plan' => $subscriptionPlan,
+            'quantity' => 1,
+            'trial_ends_at' => null,
+            'ends_at' => null,
+        ]);
+    }
+
+    /**
+     * Data provider for testChangeSubscriptionPlanToTheSamePlanThatIsAlreadyActive.
+     *
+     * @return array
+     */
+    public function providerTestChangeSubscriptionPlanToTheSamePlanThatIsAlreadyActive(): array
+    {
+        return [
+            [
+                TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY,
+            ],
+            [
+                TestConstants::MODEL_SUBSCRIPTION_PLAN_YEARLY,
+            ],
+        ];
+    }
+
+    /**
      * Test create subscription from registration page.
      */
     public function testRegisterUserAndCreateSubscriptionOk()
