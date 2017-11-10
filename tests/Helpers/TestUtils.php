@@ -57,6 +57,7 @@ class TestUtils
                 'title' => $faker->text,
                 'description' => $faker->text,
                 'image' => $faker->url,
+                'image_thumbnail' => $faker->url,
                 'difficulty' => $courseAttributes['difficulty'],
                 'duration' => 100,
                 'students' => 50,
@@ -67,6 +68,7 @@ class TestUtils
                 $chapter = factory(Chapter::class)->create([
                     'course_id' => $course->id,
                     'order' => $numChapters,
+                    'title' => $faker->text,
                 ]);
                 for ($numLessons = 1; $numLessons <= $numberOfLessons; $numLessons++) {
                     $lesson = factory(Lesson::class)->create([
