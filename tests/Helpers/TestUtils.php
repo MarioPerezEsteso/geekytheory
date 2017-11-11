@@ -73,7 +73,7 @@ class TestUtils
                 for ($numLessons = 1; $numLessons <= $numberOfLessons; $numLessons++) {
                     $lesson = factory(Lesson::class)->create([
                         'chapter_id' => $chapter->id,
-                        'slug' => 'course-' . $i . '-chapter-' . $numChapters . '-lesson-' . $numLessons,
+                        'slug' => 'course-' . $course->id . '-chapter-' . $numChapters . '-lesson-' . $numLessons,
                         'title' => $faker->title,
                         'content' => $faker->text,
                         'video' => 'https://youtube.com/whatever',
