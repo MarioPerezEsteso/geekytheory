@@ -12,8 +12,7 @@
                         </div>
                         <div class="info">
                             <div class="title">
-                                <a target="_blank"
-                                   href="{{ route('course', ['slug' => $course->slug]) }}">{{ $course->title }}</a>
+                                <a href="{{ route('course', ['slug' => $course->slug]) }}">{{ $course->title }}</a>
                             </div>
                         </div>
                         <div class="bottom">
