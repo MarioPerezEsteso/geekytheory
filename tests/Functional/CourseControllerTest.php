@@ -21,7 +21,7 @@ class CourseControllerTest extends TestCase
     /**
      * Single course endpoint.
      */
-    protected $singleCourseEndpoint = 'curso/{slug}';
+    protected $singleCourseUrl = 'curso/{slug}';
 
     /**
      * Join course endpoint.
@@ -41,7 +41,7 @@ class CourseControllerTest extends TestCase
         $course = $courses->first();
 
         // Request
-        $response = $this->call('GET', TestUtils::createEndpoint($this->singleCourseEndpoint, ['slug' => $course->slug]));
+        $response = $this->call('GET', TestUtils::createEndpoint($this->singleCourseUrl, ['slug' => $course->slug]));
 
         // Asserts
         $response->assertStatus(200);
@@ -58,7 +58,7 @@ class CourseControllerTest extends TestCase
     public function testGetSingleCourseErrorNotFound()
     {
         // Request
-        $response = $this->call('GET', TestUtils::createEndpoint($this->singleCourseEndpoint, ['slug' => 'course-that-does-not-exist']));
+        $response = $this->call('GET', TestUtils::createEndpoint($this->singleCourseUrl, ['slug' => 'course-that-does-not-exist']));
 
         // Asserts
         $response->assertStatus(404);
@@ -78,7 +78,7 @@ class CourseControllerTest extends TestCase
         $course = $courses->first();
 
         // Request
-        $response = $this->call('GET', TestUtils::createEndpoint($this->singleCourseEndpoint, ['slug' => $course->slug]));
+        $response = $this->call('GET', TestUtils::createEndpoint($this->singleCourseUrl, ['slug' => $course->slug]));
 
         $response->assertStatus(404);
     }
@@ -107,11 +107,12 @@ class CourseControllerTest extends TestCase
         $courses = TestUtils::createCoursesWithChaptersAndLessons(null, 1, 1, 1, ['free' => $courseFree]);
         /** @var Course $course */
         $course = $courses->first();
-        /** @var User $pupil */
-        $pupil = factory(User::class)->create([]);
 
+        /** @var User $pupil */
         if (!$subscriptionFree) {
-            // @TODO: subscribe user to paid plan
+            list($pupil, $subscription) = TestUtils::createUserAndSubscription();
+        } else {
+            $pupil = factory(User::class)->create([]);
         }
 
         // Request
@@ -119,9 +120,9 @@ class CourseControllerTest extends TestCase
         $response = $this->actingAs($pupil)->call('POST', TestUtils::createEndpoint($this->joinCoursePostEndpoint, ['id' => $course->id,]));
 
         // Asserts
-        $response->assertStatus(200);
+        $response->assertRedirect(TestUtils::createEndpoint($this->singleCourseUrl, ['slug' => $course->slug]));
 
-        $response->assertExactJson(['joined' => 1]);
+        $response->assertSessionHas(['success' => trans('public.joined_course_ok')]);
 
         $this->assertDatabaseHas('users_courses', [
             'user_id' => $pupil->id,
@@ -132,7 +133,7 @@ class CourseControllerTest extends TestCase
     /**
      * Test that the teacher of the course can join in.
      *
-     * @dataProvider getJoinCourseOkTestData
+     * @dataProvider providerTestTeacherCanJoinCourseOk
      * @param boolean $courseFree
      * @param boolean $subscriptionFree
      */
@@ -171,7 +172,7 @@ class CourseControllerTest extends TestCase
      *
      * @return array
      */
-    public static function getJoinCourseOkTestData()
+    public static function providerTestTeacherCanJoinCourseOk()
     {
         return [
             'Free course and free subscription' => [true, true,],

@@ -37,7 +37,9 @@
                 <span class="btn btn-info">{{ trans('public.' . $course->difficulty) }}</span>
                 <h1 class="jumbotron-title">{{ $course->title }}</h1>
                 <p>{!! $course->description !!}</p>
-                <a class="btn btn-primary btn-join-course">Apuntarme</a>
+                {!! Form::open(['url' => route('course.join.post', ['id' => $course->id])]) !!}
+                {!! Form::submit("Apuntarme" ,['class' => 'btn btn-primary btn-join-course']) !!}
+                {!! Form::close() !!}
             </div>
             <div class="col-lg-5 col-lg-push-1">
                 <img class="img-responsive" src="{{ $course->image_thumbnail }}">

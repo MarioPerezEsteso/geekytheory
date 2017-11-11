@@ -6,6 +6,7 @@ use App\Course;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\MessageBag;
 
 class CourseController extends Controller
 {
@@ -40,21 +41,17 @@ class CourseController extends Controller
 
         // Check if the course is published
         if (!$course->isPublished()) {
-            return [
-                'joined' => 0,
-                'error' => trans('public.course_does_not_exist'),
-            ];
+            abort(404);
         }
 
         if (!policy($course)->join($user, $course)) {
-            return [
-                'joined' => 0,
-                'error' => trans('public.you_must_be_premium_subscriber'),
-            ];
+            return redirect()->route('pricing')->withErrors(
+                new MessageBag(['subscription' => trans('public.you_must_be_premium_subscriber')])
+            );
         }
 
         $user->courses()->attach($course->id);
 
-        return ['joined' => 1];
+        return redirect()->route('course', ['slug' => $course->slug])->withSuccess(trans('public.joined_course_ok'));
     }
 }
