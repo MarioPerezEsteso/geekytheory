@@ -35,15 +35,8 @@
         </div>
 
         <div class="header__logo hidden-sm-down">
-            <h1><a href="index.html">Geeky Theory</a></h1>
+            <h1><a href="/">Geeky Theory</a></h1>
         </div>
-
-        <form class="search">
-            <div class="search__inner">
-                <input type="text" class="search__text" placeholder="Search for people, files, documents...">
-                <i class="zmdi zmdi-search search__helper" data-ma-action="search-close"></i>
-            </div>
-        </form>
 
         <ul class="top-nav">
             <li class="hidden-xl-up"><a href="" data-ma-action="search-open"><i class="zmdi zmdi-search"></i></a></li>
@@ -374,13 +367,13 @@
                     </ul>
                 </li>
                 <li class="navigation__sub {{ isRoute('account.subscription') || isRoute('account.subscription.payment-method') ? 'navigation__sub--active' : '' }}">
-                    <a href=""><i class="zmdi zmdi-account zmdi-hc-fw"></i> Suscripción</a>
+                    <a href=""><i class="zmdi zmdi-ticket-star zmdi-hc-fw"></i> Suscripción</a>
                     <ul>
                         <li class="{{ isRoute('account.subscription') ? 'navigation__active' : '' }}">
                             <a href="{{ route('account.subscription') }}">Mi suscripción</a>
                         </li>
                         <li class="{{ isRoute('account.subscription.payment-method') ? 'navigation__active' : '' }}">
-                            <a href="{{ route('account.subscription.payment-method') }}">Método de pago</a>
+                            <a href="{{ route('account.subscription.payment-method') }}"><i class="zmdi zmdi-card zmdi-hc-fw"></i>Método de pago</a>
                         </li>
                     </ul>
                 </li>
