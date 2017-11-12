@@ -12,7 +12,6 @@ class SubscriptionValidator extends LaravelValidator implements ValidableInterfa
      */
     protected $rules = [
         'stripe_token' => 'required',
-        'subscription_plan' => 'required|in:monthly,yearly',
     ];
 
     /**
@@ -23,10 +22,6 @@ class SubscriptionValidator extends LaravelValidator implements ValidableInterfa
      */
     public function update($id = null)
     {
-        $this->rules = [
-            'subscription_plan' => 'required|in:monthly,yearly',
-        ];
-
         return $this;
     }
 
