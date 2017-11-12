@@ -6,32 +6,6 @@ $.ajaxSetup({
 
 Stripe.setPublishableKey(window.stripePublicKey);
 
-/**
- * Toggle plan checkboxes on monthly plan click
- */
-$('#monthly-plan').click(function () {
-    var yearlyPlanChecked = true;
-
-    if ($(this).is(':checked')) {
-        yearlyPlanChecked = false;
-    }
-
-    $('#yearly-plan').prop('checked', yearlyPlanChecked);
-});
-
-/**
- * Toggle plan checkboxes on yearly plan click
- */
-$('#yearly-plan').click(function () {
-    var monthlyPlanChecked = true;
-
-    if ($(this).is(':checked')) {
-        monthlyPlanChecked = false;
-    }
-
-    $('#monthly-plan').prop('checked', monthlyPlanChecked);
-});
-
 $('#btn-add-credit-card').click(function () {
     var creditCardNameInput = $('#credit-card-name');
     var postalCodeInput = $('#postal-code');
@@ -39,19 +13,9 @@ $('#btn-add-credit-card').click(function () {
     var creditCardExpirationMonthInput = $('#credit-card-expiration-month');
     var creditCardExpirationYearInput = $('#credit-card-expiration-year');
     var creditCardExpirationCVVInput = $('#credit-card-cvv');
-    var monthlyPlan = $('#monthly-plan');
-    var yearlyPlan = $('#yearly-plan');
     var errors = false;
 
     const classInputWithError = 'has-danger';
-
-    if (!monthlyPlan.is(':checked') && !yearlyPlan.is(':checked')
-        || (monthlyPlan.is(':checked') && yearlyPlan.is(':checked'))) {
-        errors = true;
-        $('#error-message-plan-choose').css("display", "");
-    } else {
-        $('#error-message-plan-choose').css("display", "none");
-    }
 
     if (!creditCardNameInput.val()) {
         errors = true;
@@ -126,13 +90,6 @@ function stripeResponseHandler(status, response) {
         var form = $('#subscription-form');
 
         form.append($('<input type="hidden" name="stripe_token" />').val(token));
-
-        var subscriptionPlan = 'yearly';
-        if ($('#monthly-plan').is(':checked')) {
-            subscriptionPlan = 'monthly';
-        }
-
-        form.append($('<input type="hidden" name="subscription_plan" />').val(subscriptionPlan));
 
         form.get(0).submit();
     }

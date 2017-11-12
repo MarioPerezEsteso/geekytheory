@@ -17,13 +17,6 @@ class SubscriptionControllerTest extends TestCase
     protected $subscriptionCreatePostUrl = '/account/subscription';
 
     /**
-     * Subscription update POST URL.
-     *
-     * @var string
-     */
-    protected $subscriptionPlanUpdatePostUrl = '/account/subscription/update';
-
-    /**
      * Subscription page URL.
      *
      * @var string
@@ -56,7 +49,6 @@ class SubscriptionControllerTest extends TestCase
         $user = factory(User::class)->create();
 
         $requestData = [
-            'subscription_plan' => $example['subscriptionPlan'],
             'stripe_token' => $example['stripeToken'],
         ];
 
@@ -78,7 +70,7 @@ class SubscriptionControllerTest extends TestCase
         $this->assertDatabaseHas('subscriptions', [
             'user_id' => $user->id,
             'name' => TestConstants::MODEL_SUBSCRIPTION_PLAN_NAME,
-            'stripe_plan' => $example['subscriptionPlan'],
+            'stripe_plan' => TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY,
             'quantity' => 1,
             'trial_ends_at' => null,
             'ends_at' => null,
@@ -96,112 +88,48 @@ class SubscriptionControllerTest extends TestCase
             [
                 [
                     'stripeToken' => 'tok_visa',
-                    'subscriptionPlan' => 'monthly',
                     'cardLastFour' => '4242',
                     'cardBrand' => 'Visa',
                 ]
             ], [
                 [
                     'stripeToken' => 'tok_visa_debit',
-                    'subscriptionPlan' => 'monthly',
                     'cardLastFour' => '5556',
                     'cardBrand' => 'Visa',
                 ]
             ], [
                 [
                     'stripeToken' => 'tok_mastercard',
-                    'subscriptionPlan' => 'monthly',
                     'cardLastFour' => '4444',
                     'cardBrand' => 'MasterCard',
                 ]
             ], [
                 [
                     'stripeToken' => 'tok_mastercard_debit',
-                    'subscriptionPlan' => 'monthly',
                     'cardLastFour' => '8210',
                     'cardBrand' => 'MasterCard',
                 ]
             ], [
                 [
                     'stripeToken' => 'tok_mastercard_prepaid',
-                    'subscriptionPlan' => 'monthly',
                     'cardLastFour' => '5100',
                     'cardBrand' => 'MasterCard',
                 ]
             ], [
                 [
                     'stripeToken' => 'tok_amex',
-                    'subscriptionPlan' => 'monthly',
                     'cardLastFour' => '8431',
                     'cardBrand' => 'American Express',
                 ]
             ], [
                 [
                     'stripeToken' => 'tok_mx',
-                    'subscriptionPlan' => 'monthly',
                     'cardLastFour' => '0008',
                     'cardBrand' => 'Visa',
                 ]
             ], [
                 [
                     'stripeToken' => 'tok_es',
-                    'subscriptionPlan' => 'monthly',
-                    'cardLastFour' => '0007',
-                    'cardBrand' => 'Visa',
-                ]
-            ], [
-                [
-                    'stripeToken' => 'tok_visa',
-                    'subscriptionPlan' => 'yearly',
-                    'cardLastFour' => '4242',
-                    'cardBrand' => 'Visa',
-                ]
-            ], [
-                [
-                    'stripeToken' => 'tok_visa_debit',
-                    'subscriptionPlan' => 'yearly',
-                    'cardLastFour' => '5556',
-                    'cardBrand' => 'Visa',
-                ]
-            ], [
-                [
-                    'stripeToken' => 'tok_mastercard',
-                    'subscriptionPlan' => 'yearly',
-                    'cardLastFour' => '4444',
-                    'cardBrand' => 'MasterCard',
-                ]
-            ], [
-                [
-                    'stripeToken' => 'tok_mastercard_debit',
-                    'subscriptionPlan' => 'yearly',
-                    'cardLastFour' => '8210',
-                    'cardBrand' => 'MasterCard',
-                ]
-            ], [
-                [
-                    'stripeToken' => 'tok_mastercard_prepaid',
-                    'subscriptionPlan' => 'yearly',
-                    'cardLastFour' => '5100',
-                    'cardBrand' => 'MasterCard',
-                ]
-            ], [
-                [
-                    'stripeToken' => 'tok_amex',
-                    'subscriptionPlan' => 'yearly',
-                    'cardLastFour' => '8431',
-                    'cardBrand' => 'American Express',
-                ]
-            ], [
-                [
-                    'stripeToken' => 'tok_mx',
-                    'subscriptionPlan' => 'yearly',
-                    'cardLastFour' => '0008',
-                    'cardBrand' => 'Visa',
-                ]
-            ], [
-                [
-                    'stripeToken' => 'tok_es',
-                    'subscriptionPlan' => 'yearly',
                     'cardLastFour' => '0007',
                     'cardBrand' => 'Visa',
                 ]
@@ -219,7 +147,6 @@ class SubscriptionControllerTest extends TestCase
     {
         $requestData = [
             'stripe_token' => $example['stripe_token'],
-            'subscription_plan' => 'monthly',
         ];
 
         /** @var User $user */
@@ -302,7 +229,6 @@ class SubscriptionControllerTest extends TestCase
     {
         $requestData = [
             'stripe_token' => $example['stripe_token'],
-            'subscription_plan' => 'monthly',
         ];
 
         /** @var User $user */
@@ -391,11 +317,8 @@ class SubscriptionControllerTest extends TestCase
         // Prepare
         list($user, $subscription) = TestUtils::createUserAndSubscription();
 
-        // The current subscription is monthly and this tries to create a yearly subscription.
-        // It does not matter if the subscription plan is equal or different. It should not updated.
         $requestData = [
             'stripe_token' => $creditCard['stripe_token'],
-            'subscription_plan' => 'yearly',
         ];
 
         // Request
@@ -472,27 +395,8 @@ class SubscriptionControllerTest extends TestCase
             [
                 'requestData' => [
                     'stripe_token' => null,
-                    'subscription' => 'thisfieldisnotvalid',
-                ],
-                'validationErrorKeys' => ['stripe_token', 'subscription_plan',],
-            ], [
-                'requestData' => [
-                    'stripe_token' => null,
-                    'subscription_plan' => 'monthly',
                 ],
                 'validationErrorKeys' => ['stripe_token',],
-            ], [
-                'requestData' => [
-                    'stripe_token' => null,
-                    'subscription_plan' => 'yearly',
-                ],
-                'validationErrorKeys' => ['stripe_token',],
-            ], [
-                'requestData' => [
-                    'stripe_token' => 'whatever',
-                    'subscription_plan' => 'thisIsNotASubscriptionPlan',
-                ],
-                'validationErrorKeys' => ['subscription_plan',],
             ],
         ];
     }
@@ -503,7 +407,7 @@ class SubscriptionControllerTest extends TestCase
     public function testCreateSubscriptionNotAuthorizedRedirectsToLogin()
     {
         // Request
-        $response = $this->call('POST', $this->subscriptionCreatePostUrl, ['stripe_token' => 'xxx', 'subscription_plan' => 'monthly']);
+        $response = $this->call('POST', $this->subscriptionCreatePostUrl, ['stripe_token' => 'xxx',]);
 
         // Asserts
         $response->assertRedirect('login');
@@ -777,229 +681,10 @@ class SubscriptionControllerTest extends TestCase
     }
 
     /**
-     * Test change subscription plan from monthly to yearly.
-     *
-     * @dataProvider providerTestChangeSubscriptionPlanOk
-     * @param array $example
-     */
-    public function testChangeSubscriptionPlanOk($example)
-    {
-        // Prepare
-        list($user, $subscription) = TestUtils::createUserAndSubscription(
-            [],
-            [
-                'stripe_plan' => $example['current_subscription_plan'],
-            ],
-            true
-        );
-
-        $requestData = [
-            'subscription_plan' => $example['new_subscription_plan'],
-        ];
-
-        // Request
-        $response = $this->actingAs($user)->call('POST', $this->subscriptionPlanUpdatePostUrl, $requestData);
-
-        // Asserts
-        $response->assertRedirect($this->subscriptionPageUrl);
-        $response->assertSessionHas(['success' => trans($example['expected_message'])]);
-
-        $this->assertDatabaseHas('subscriptions', [
-            'user_id' => $user->id,
-            'stripe_id' => $subscription->stripe_id,
-            'name' => TestConstants::MODEL_SUBSCRIPTION_PLAN_NAME,
-            'stripe_plan' => $example['new_subscription_plan'],
-            'quantity' => 1,
-            'trial_ends_at' => null,
-            'ends_at' => null,
-        ]);
-    }
-
-    /**
-     * Data provider for testChangeSubscriptionPlanOk.
-     *
-     * @return array
-     */
-    public function providerTestChangeSubscriptionPlanOk(): array
-    {
-        return [
-            [
-                [
-                    'current_subscription_plan' => TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY,
-                    'new_subscription_plan' => TestConstants::MODEL_SUBSCRIPTION_PLAN_YEARLY,
-                    'expected_message' => 'home.subscription_updated_from_monthly_to_yearly',
-                ],
-            ], [
-                [
-                    'current_subscription_plan' => TestConstants::MODEL_SUBSCRIPTION_PLAN_YEARLY,
-                    'new_subscription_plan' => TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY,
-                    'expected_message' => 'home.subscription_updated_from_yearly_to_monthly',
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * Test change subscription plan to the one that is already active throws errors.
-     *
-     * @dataProvider providerTestChangeSubscriptionPlanToTheSamePlanThatIsAlreadyActive
-     * @param string $subscriptionPlan
-     */
-    public function testChangeSubscriptionPlanToTheSamePlanThatIsAlreadyActive($subscriptionPlan)
-    {
-        // Prepare
-        list($user, $subscription) = TestUtils::createUserAndSubscription(
-            [],
-            ['stripe_plan' => $subscriptionPlan,],
-            true
-        );
-
-        $requestData = [
-            'subscription_plan' => $subscriptionPlan,
-        ];
-
-        // Request
-        $response = $this->actingAs($user)->call('POST', $this->subscriptionPlanUpdatePostUrl, $requestData);
-
-        // Asserts
-        $response->assertRedirect($this->subscriptionPageUrl);
-        $response->assertSessionHasErrors(['subscription_error' => trans('home.you_cannot_update_subscription_plan_to_same_active')]);
-
-        $this->assertDatabaseHas('subscriptions', [
-            'user_id' => $user->id,
-            'stripe_id' => $subscription->stripe_id,
-            'name' => TestConstants::MODEL_SUBSCRIPTION_PLAN_NAME,
-            'stripe_plan' => $subscriptionPlan,
-            'quantity' => 1,
-            'trial_ends_at' => null,
-            'ends_at' => null,
-        ]);
-    }
-
-    /**
-     * Data provider for testChangeSubscriptionPlanToTheSamePlanThatIsAlreadyActive.
-     *
-     * @return array
-     */
-    public function providerTestChangeSubscriptionPlanToTheSamePlanThatIsAlreadyActive(): array
-    {
-        return [
-            [
-                TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY,
-            ],
-            [
-                TestConstants::MODEL_SUBSCRIPTION_PLAN_YEARLY,
-            ],
-        ];
-    }
-
-    /**
-     * Test that a user can't update the subscription plan without having a subscription plan.
-     */
-    public function testChangeSubscriptionPlanWithoutActiveSubscriptionThrowsErrors()
-    {
-        // Prepare
-        $user = factory(User::class)->create();
-
-        $requestData = [
-            'subscription_plan' => TestConstants::MODEL_SUBSCRIPTION_PLAN_YEARLY,
-        ];
-
-        // Request
-        $response = $this->actingAs($user)->call('POST', $this->subscriptionPlanUpdatePostUrl, $requestData);
-
-        // Asserts
-        $response->assertRedirect($this->subscriptionPageUrl);
-        $response->assertSessionHasErrors(['subscription_error' => trans('home.you_do_not_have_an_active_subscription'),]);
-
-        $this->assertDatabaseMissing('subscriptions', [
-            'user_id' => $user->id,
-        ]);
-    }
-
-    /**
-     * Test validation errors on subscription plan update with wrong parameters.
-     *
-     * @dataProvider providerTestChangeSubscriptionPlanWithValidationErrors
-     * @param string $subscriptionPlan
-     */
-    public function testChangeSubscriptionPlanWithValidationErrors($subscriptionPlan)
-    {
-        // Prepare
-        list($user) = TestUtils::createUserAndSubscription();
-
-        $requestData = [
-            'subscription_plan' => $subscriptionPlan,
-        ];
-
-        // Request
-        $response = $this->actingAs($user)->call('POST', $this->subscriptionPlanUpdatePostUrl, $requestData);
-
-        // Asserts
-        $response->assertRedirect($this->subscriptionPageUrl);
-        $response->assertSessionHasErrors('subscription_plan');
-    }
-
-    /**
-     * Data provider for testChangeSubscriptionPlanWithValidationErrors.
-     *
-     * @return array
-     */
-    public function providerTestChangeSubscriptionPlanWithValidationErrors(): array
-    {
-        return [
-            [
-                null,
-            ], [
-                '',
-            ], [
-                'weekly',
-            ],
-        ];
-    }
-
-    /**
-     * Test that a non authorized user cannot update any subscription.
-     */
-    public function testUserNotAuthorizedIsRedirectedToLoginOnSubscriptionPlanChange()
-    {
-        // Prepare
-        $requestData = [
-            'subscription_plan' => TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY,
-        ];
-
-        // Request
-        $response = $this->call('POST', $this->subscriptionPlanUpdatePostUrl, $requestData);
-
-        // Asserts
-        $response->assertRedirect($this->loginUrl);
-    }
-
-    /**
      * Test create subscription from registration page.
      */
     public function testRegisterUserAndCreateSubscriptionOk()
     {
-    }
 
-    /**
-     *
-     */
-    public function updateSubscriptionFromMonthlyToYearlyOk()
-    {
-    }
-
-    /**
-     *
-     */
-    public function updateSubscriptionFromYearlyToMonthlyOk()
-    {
-    }
-
-    /**
-     *
-     */
-    public function updateSubscriptionNotAuthorizedRedirectsToLogin()
-    {
     }
 }

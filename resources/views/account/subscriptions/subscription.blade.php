@@ -24,6 +24,16 @@
     <div class="row">
         <div class="col-lg-6 col-md-8 col-sm-12">
 
+            @if (Session::has('success'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="alert-heading">{{ trans('home.nice') }}</h4>
+                    <p class="mb-0">{{ Session::get('success') }}</p>
+                </div>
+            @endif
+
             @if (isset($errors) && !$errors->isEmpty())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -41,48 +51,40 @@
                 {!! Form::open(['url' => 'account/subscription', 'method' => 'POST', 'id' => 'subscription-form']) !!}
                 {!! Form::close() !!}
 
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="card-title">Elige tu plan</h2>
-                    </div>
-                    <div class="card-block">
-                        <div class="row">
-                            <div class="col-lg-6">
-                                <div class="listview">
-                                    <div class="listview__item">
-                                        <label class="custom-control custom-checkbox align-self-start">
-                                            <input id="monthly-plan" class="custom-control-input" type="checkbox">
-                                            <span class="custom-control-indicator"></span>
-                                        </label>
-                                        <div class="listview__content">
-                                            <div class="listview__heading">PLAN MENSUAL</div>
-                                            <p>15 €/mes</p>
-                                        </div>
-                                    </div>
-                                </div>
+                <div class="row price-table price-table--highlight">
+                    <div class="col-md-6">
+                        <div class="price-table__item">
+                            <header class="price-table__header bg-teal">
+                                <div class="price-table__title">Plan Gratuito</div>
+                            </header>
+                            <div class="price-table__price color-teal">
+                                0 €/
+                                <small>mes</small>
                             </div>
-                            <div class="col-lg-6">
-                                <div class="listview">
-                                    <div class="listview__item">
-                                        <label class="custom-control custom-checkbox align-self-start">
-                                            <input id="yearly-plan" class="custom-control-input" type="checkbox"
-                                                   checked="checked">
-                                            <span class="custom-control-indicator"></span>
-                                        </label>
-                                        <div class="listview__content">
-                                            <div class="listview__heading">PLAN ANUAL</div>
-                                            <p>150 €/año</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <ul class="price-table__info">
+                                <li>In dapibus ipsum sit amet leo</li>
+                                <li>Vestibulum ut mauris tellus donec</li>
+                                <li>Purna lectus venenatis felis nonsemper</li>
+                                <li>Aliquam erat volutpat hasellus ultri</li>
+                            </ul>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <p id="error-message-plan-choose" class="text-danger" style="display: none">
-                                    Por favor, elige un plan.
-                                </p>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="price-table__item price-table__item--popular">
+                            <header class="price-table__header bg-blue">
+                                <div class="price-table__title">Plan Premium</div>
+                            </header>
+                            <div class="price-table__price color-blue">
+                                {{ \App\Subscription::PLAN_MONTHLY_PRICE_EUR }} €/
+                                <small>mes</small>
                             </div>
+                            <ul class="price-table__info">
+                                <li>Morbi leo risus porta acconseetur</li>
+                                <li>Nullam quis risus eget urna mollis ornare</li>
+                                <li>Purna lectus venenatis felis nonsemper</li>
+                                <li>Aenean ellentesque ornare sem lacinia</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -144,9 +146,9 @@
 
                         <div class="row">
                             <div class="col-lg-12">
-                                <p id="error-message" class="text-danger" style="display: none">Ha habido un error en la
-                                    comunicación con Stripe. Por favor,
-                                    inténtalo de nuevo.</p>
+                                <p id="error-message" class="text-danger" style="display: none">
+                                    Ha habido un error en la comunicación con Stripe. Por favor, inténtalo de nuevo.
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -157,16 +159,25 @@
                 </div>
 
             @else
-                <div class="alert alert-success" role="alert">
-                    <h4 class="alert-heading">{{ trans('home.nice') }}</h4>
-                    <p class="mb-0">
-                        @if ($loggedUser->subscribed(\App\Subscription::PLAN_NAME, \App\Subscription::PLAN_MONTHLY))
-                            Tienes una suscripción premium mensual en Geeky Theory por {{ \App\Subscription::PLAN_MONTHLY_PRICE_EUR }} €/mes
-                        @else
-                            Tienes una suscripción premium anual en Geeky Theory por {{ \App\Subscription::PLAN_YEARLY_PRICE_EUR }} €/año
-                        @endif
-                    </p>
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Suscripción</h2>
+                        <small class="card-subtitle">
+                            Estos son los datos de tu suscripción Premium.
+                        </small>
+                    </div>
+                    <div class="card-block">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                Tienes activa una suscripción Premium mensual en Geeky Theory
+                                por {{ \App\Subscription::PLAN_MONTHLY_PRICE_EUR }} €/mes.
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
+                <button class="btn btn-danger waves-effect">Cancelar suscripción</button>
+
             @endif
         </div>
     </div>

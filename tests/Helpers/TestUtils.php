@@ -5,7 +5,6 @@ namespace Tests\Helpers;
 use App\Chapter;
 use App\Course;
 use App\Lesson;
-use App\Subscription;
 use App\User;
 use Faker\Factory;
 use Illuminate\Database\Eloquent\Collection;

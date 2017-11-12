@@ -61,15 +61,9 @@ class SubscriptionController extends Controller
             return redirect()->route('account.subscription')->withErrors($errors);
         }
 
-        if ($request->subscription_plan === Subscription::PLAN_MONTHLY) {
-            $subscriptionPlan = Subscription::PLAN_MONTHLY;
-        } else {
-            $subscriptionPlan = Subscription::PLAN_YEARLY;
-        }
-
         try {
             /** @var \Stripe\Subscription $subscription */
-            $user->newSubscription(Subscription::PLAN_NAME, $subscriptionPlan)
+            $user->newSubscription(Subscription::PLAN_NAME, Subscription::PLAN_MONTHLY)
                 ->skipTrial()
                 ->create($request->stripe_token, [
                     'email' => $user->email,
@@ -109,62 +103,6 @@ class SubscriptionController extends Controller
 
         // Response
         return redirect()->route('account.subscription')->withSuccess(trans('home.subscription_created'));
-    }
-
-    /**
-     * Update a subscription.
-     *
-     * @param Request $request
-     * @return \Stripe\Subscription
-     */
-    public function update(Request $request)
-    {
-        /** @var User $user */
-        $user = Auth::user();
-
-        if (!$this->subscriptionValidator->update()->with($request->all())->passes()) {
-            return redirect()->route('account.subscription')->withErrors($this->subscriptionValidator->errors());
-        }
-
-        $subscriptionPlan = $request->subscription_plan === Subscription::PLAN_MONTHLY ? Subscription::PLAN_MONTHLY : Subscription::PLAN_YEARLY;
-
-        /** @var Subscription $subscription */
-        $subscription = $user->subscription(Subscription::PLAN_NAME);
-
-        if (is_null($subscription)) {
-            $errors = new MessageBag([
-                'subscription_error' => trans('home.you_do_not_have_an_active_subscription'),
-            ]);
-
-            return redirect()->route('account.subscription')->withErrors($errors);
-        }
-
-        if ($subscription->stripe_plan === $subscriptionPlan) {
-            $errors = new MessageBag([
-                'subscription_error' => trans('home.you_cannot_update_subscription_plan_to_same_active'),
-            ]);
-
-            return redirect()->route('account.subscription')->withErrors($errors);
-        }
-
-        try {
-            $subscription->swap($subscriptionPlan);
-        } catch (\Exception $exception) {
-            $errors = new MessageBag([
-                'stripe_error' => trans('home.stripe_processing_error'),
-            ]);
-
-            return redirect()->route('account.subscription')->withErrors($errors);
-        }
-
-        // Response
-        if ($subscriptionPlan === Subscription::PLAN_MONTHLY) {
-            $successMessage = 'home.subscription_updated_from_yearly_to_monthly';
-        } else {
-            $successMessage = 'home.subscription_updated_from_monthly_to_yearly';
-        }
-
-        return redirect()->route('account.subscription')->withSuccess(trans($successMessage));
     }
 
     /**
