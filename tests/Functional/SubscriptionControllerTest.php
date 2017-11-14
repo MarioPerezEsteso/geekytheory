@@ -710,9 +710,39 @@ class SubscriptionControllerTest extends TestCase
         $response->assertSessionHas(['success' => trans('home.subscription_canceled')]);
 
         // Assert that the attribute ends_at is not null
-        $this->assertDatabaseMissing('users', [
+        $this->assertDatabaseMissing('subscriptions', [
             'user_id' => $user->id,
             'ends_at' => null,
+        ]);
+    }
+
+    /**
+     * Test that a user can't cancel a subscription if they are not subscribed.
+     */
+    public function testCancelSubscriptionThatDoesNotExist()
+    {
+        // Config
+        $password = '123456abcdef';
+
+        // Prepare
+        $user = factory(User::class)->create([
+            'password' => bcrypt($password),
+        ]);
+
+        $requestData = [
+            'password' => $password,
+        ];
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->subscriptionCancelPostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertSessionHasErrors(['subscription_error' => trans('home.subscription_needed_to_cancel_it')]);
+
+        // Assert that the attribute ends_at is not null
+        $this->assertDatabaseMissing('subscriptions', [
+            'user_id' => $user->id,
         ]);
     }
 
