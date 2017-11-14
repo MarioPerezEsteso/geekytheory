@@ -122,6 +122,11 @@ class TestUtils
      */
     public static function createUserAndSubscription($userAndCardAttributes = [], $subscriptionAttributes = [], $createSubscriptionInStripe = false)
     {
+        $userAttributes = [];
+        if (isset($userAndCardAttributes['password'])) {
+            $userAttributes['password'] = bcrypt($userAndCardAttributes['password']);
+        }
+
         if (!$createSubscriptionInStripe) {
             $userAttributes = array_merge([
                 'stripe_id' => 'fake_stripe_id_123',
@@ -147,7 +152,7 @@ class TestUtils
             $subscription = factory(\Laravel\Cashier\Subscription::class)->create($subscriptionAttributes);
         } else {
             /** @var User $user */
-            $user = factory(User::class)->create();
+            $user = factory(User::class)->create($userAttributes);
 
             $stripePlan = $subscriptionAttributes['stripe_plan'] ?? TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY;
 

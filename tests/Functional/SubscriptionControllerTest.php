@@ -747,6 +747,35 @@ class SubscriptionControllerTest extends TestCase
     }
 
     /**
+     * Test subscription can't be canceled if the password is incorrect.
+     */
+    public function testCancelSubscriptionPasswordIncorrectError()
+    {
+        // Config
+        $password = '123456abcdef';
+
+        // Prepare
+        list($user) = TestUtils::createUserAndSubscription(['password' => $password]);
+
+        $requestData = [
+            'password' => 'thisPasswordIsIncorrect',
+        ];
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->subscriptionCancelPostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertSessionHasErrors(['password' => trans('home.password_incorrect')]);
+
+        // Assert that the attribute ends_at is not null
+        $this->assertDatabaseHas('subscriptions', [
+            'user_id' => $user->id,
+            'ends_at' => null,
+        ]);
+    }
+
+    /**
      * Test create subscription from registration page.
      */
     public function testRegisterUserAndCreateSubscriptionOk()
