@@ -123,9 +123,6 @@ class TestUtils
     public static function createUserAndSubscription($userAndCardAttributes = [], $subscriptionAttributes = [], $createSubscriptionInStripe = false)
     {
         $userAttributes = [];
-        if (isset($userAndCardAttributes['password'])) {
-            $userAttributes['password'] = bcrypt($userAndCardAttributes['password']);
-        }
 
         if (!$createSubscriptionInStripe) {
             $userAttributes = array_merge([
@@ -134,6 +131,10 @@ class TestUtils
                 'card_last_four' => '4242',
                 'trial_ends_at' => null,
             ], $userAndCardAttributes);
+
+            if (isset($userAndCardAttributes['password'])) {
+                $userAttributes['password'] = bcrypt($userAndCardAttributes['password']);
+            }
 
             /** @var User $user */
             $user = factory(User::class)->create($userAttributes);
@@ -151,6 +152,10 @@ class TestUtils
             /** @var \Laravel\Cashier\Subscription $subscription */
             $subscription = factory(\Laravel\Cashier\Subscription::class)->create($subscriptionAttributes);
         } else {
+            if (isset($userAndCardAttributes['password'])) {
+                $userAttributes['password'] = bcrypt($userAndCardAttributes['password']);
+            }
+
             /** @var User $user */
             $user = factory(User::class)->create($userAttributes);
 

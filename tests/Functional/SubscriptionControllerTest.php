@@ -3,6 +3,7 @@
 namespace Tests\Functional;
 
 use App\User;
+use Carbon\Carbon;
 use Tests\Helpers\TestConstants;
 use Tests\Helpers\TestUtils;
 use Tests\TestCase;
@@ -713,6 +714,35 @@ class SubscriptionControllerTest extends TestCase
         $this->assertDatabaseMissing('subscriptions', [
             'user_id' => $user->id,
             'ends_at' => null,
+        ]);
+    }
+
+    /**
+     * Test user can't cancel subscription that is already canceled.
+     */
+    public function testCancelSubscriptionAlreadyCanceledError()
+    {
+        // Config
+        $password = '123456abcdef';
+
+        // Prepare
+        list($user, $subscription) = TestUtils::createUserAndSubscription(['password' => $password], ['ends_at' => Carbon::now()->subDay()]);
+
+        $requestData = [
+            'password' => $password,
+        ];
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->subscriptionCancelPostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertSessionHasErrors(['subscription_error' => trans('home.subscription_needed_to_cancel_it')]);
+
+        // Assert that the attribute ends_at is not null
+        $this->assertDatabaseHas('subscriptions', [
+            'user_id' => $user->id,
+            'ends_at' => $subscription->ends_at,
         ]);
     }
 
