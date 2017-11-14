@@ -118,6 +118,12 @@ Route::post('account/subscription', [
     'uses' => 'SubscriptionController@store',
 ]);
 
+Route::post('account/subscription/cancel', [
+    'as' => 'account.subscription.cancel',
+    'middleware' => 'auth',
+    'uses' => 'SubscriptionController@cancel',
+]);
+
 Route::get('cuenta/suscripcion/metodo-pago', [
     'as' => 'account.subscription.payment-method',
     'middleware' => 'auth',

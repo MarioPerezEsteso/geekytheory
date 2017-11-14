@@ -7,6 +7,7 @@ use App\User;
 use App\Validators\SubscriptionValidator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\MessageBag;
 use Stripe\Error\Card;
 
@@ -179,5 +180,40 @@ class SubscriptionController extends Controller
         }
 
         return redirect()->route('account.subscription.payment-method')->withSuccess(trans('home.subscription_card_updated'));
+    }
+
+    /**
+     * Cancel a subscription.
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function cancel(Request $request)
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        if (!Hash::check($request->password, $user->password)) {
+            return redirect()->route('account.subscription')->withErrors(
+                new MessageBag([
+                    'password' => 'home.password_incorrect',
+                ])
+            );
+        }
+
+        /** @var Subscription $subscription */
+        $subscription = $user->subscription(Subscription::PLAN_NAME);
+
+        if (is_null($subscription)) {
+            return redirect()->route('account.subscription')->withErrors(
+                new MessageBag([
+                    'subscription_error' => trans('home.subscription_needed_to_cancel_it')
+                ])
+            );
+        }
+
+        $subscription->cancelNow();
+
+        return redirect()->route('account.subscription')->withSuccess('home.subscription_canceled');
     }
 }
