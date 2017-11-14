@@ -204,7 +204,7 @@ class SubscriptionController extends Controller
         /** @var Subscription $subscription */
         $subscription = $user->subscription(Subscription::PLAN_NAME);
 
-        if (is_null($subscription)) {
+        if (is_null($subscription) || !$subscription->active()) {
             return redirect()->route('account.subscription')->withErrors(
                 new MessageBag([
                     'subscription_error' => trans('home.subscription_needed_to_cancel_it')
