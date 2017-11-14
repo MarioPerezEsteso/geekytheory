@@ -38,6 +38,13 @@ class SubscriptionControllerTest extends TestCase
     protected $subscriptionPaymentMethodPageUrl = '/cuenta/suscripcion/metodo-pago';
 
     /**
+     * Subscription cancel POST URL.
+     *
+     * @var string
+     */
+    protected $subscriptionCancelPostUrl = '/account/subscription/cancel';
+
+    /**
      * Test create subscription successfully.
      *
      * @dataProvider providerTestCreateSubscriptionOk
@@ -678,6 +685,35 @@ class SubscriptionControllerTest extends TestCase
 
         // Asserts
         $response->assertRedirect($this->loginUrl);
+    }
+
+    /**
+     * Test cancel subscription ok.
+     */
+    public function testCancelSubscriptionOk()
+    {
+        // Config
+        $password = '123456abcdef';
+
+        // Prepare
+        list($user) = TestUtils::createUserAndSubscription(['password' => $password], [], true);
+
+        $requestData = [
+            'password' => $password,
+        ];
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->subscriptionCancelPostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertSessionHas(['success' => trans('home.subscription_canceled')]);
+
+        // Assert that the attribute ends_at is not null
+        $this->assertDatabaseMissing('users', [
+            'user_id' => $user->id,
+            'ends_at' => null,
+        ]);
     }
 
     /**
