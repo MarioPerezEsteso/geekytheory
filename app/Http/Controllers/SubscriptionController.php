@@ -33,10 +33,10 @@ class SubscriptionController extends Controller
      */
     public function show()
     {
-        /** @var User $loggedUser */
-        $loggedUser = Auth::user();
+        $user = Auth::user();
+        $subscription = $user->subscription(Subscription::PLAN_NAME);
 
-        return view('account.subscriptions.subscription', compact('loggedUser'));
+        return view('account.subscriptions.subscription', compact('subscription'));
     }
 
     /**
@@ -212,7 +212,7 @@ class SubscriptionController extends Controller
             );
         }
 
-        $subscription->cancelNow();
+        $subscription->cancel();
 
         return redirect()->route('account.subscription')->withSuccess('home.subscription_canceled');
     }
