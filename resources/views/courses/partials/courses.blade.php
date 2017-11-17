@@ -8,7 +8,7 @@
                     <div class="card hovercard">
                         <div class="cardheader" style="background: url('{{ $course->image }}');"></div>
                         <div class="avatar">
-                            <img alt="" src="{{ getGravatar($course->teacher->email, 50) }}">
+                            <img alt="{{ $course->teacher->name }}" src="{{ getGravatar($course->teacher->email, 50) }}">
                         </div>
                         <div class="info">
                             <div class="title">
@@ -19,7 +19,7 @@
                             <div class="row">
                                 <div class="col-lg-4">
                                     <div class="info">
-                                        <span class="fui-user info"></span>{{ $course->students }}
+                                        {{--<span class="fui-user info"></span>{{ $course->students }}--}}
                                     </div>
                                 </div>
                                 <div class="col-lg-8">
