@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <title>@yield('pageTitle')</title>
     <!-- Vendor styles -->
     <link rel="stylesheet" href="/account/vendor/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="/account/vendor/animate.css/animate.min.css">
@@ -373,7 +374,7 @@
                             <a href="{{ route('account.subscription') }}">Mi suscripción</a>
                         </li>
                         <li class="{{ isRoute('account.subscription.payment-method') ? 'navigation__active' : '' }}">
-                            <a href="{{ route('account.subscription.payment-method') }}"><i class="zmdi zmdi-card zmdi-hc-fw"></i>Método de pago</a>
+                            <a href="{{ route('account.subscription.payment-method') }}">Método de pago</a>
                         </li>
                     </ul>
                 </li>

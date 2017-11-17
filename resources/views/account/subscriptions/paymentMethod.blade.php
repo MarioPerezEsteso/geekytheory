@@ -1,15 +1,15 @@
 @extends('account.layout')
 
 @section('pageTitle')
-    {{ trans('home.user_profile') }}
+    {{ trans('home.payment_method') }}
 @endsection
 
 @section('contentTitle')
-    {{ trans('home.user_profile') }}
+    {{ trans('home.payment_method') }}
 @endsection
 
 @section('contentSubtitle')
-    {{ trans('home.user_profile_page_description') }}
+    {{ trans('home.payment_method_page_description') }}
 @endsection
 
 @section('customJavascript')
