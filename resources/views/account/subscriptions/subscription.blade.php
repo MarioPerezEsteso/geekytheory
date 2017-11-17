@@ -185,43 +185,45 @@
                     <div class="card">
                         <div class="card-header">
                             <h2 class="card-title">Zona peligrosa</h2>
-                            <small class="card-subtitle">
-                                Puedes cancelar tu suscripción Premium desde aquí.
-                            </small>
-                        </div>
-                        <div class="card-block">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    Si cancelas tu suscripción, perderás el acceso a todo el contenido Premium que
-                                    ofrece
-                                    Geeky Theory. <a href="https://www.youtube.com/watch?v=8TGb2fjT6I0">¿Realmente
-                                        quieres
-                                        marcharte?</a>
-                                </div>
+                            <div class="actions">
+                                <a data-toggle="collapse" href="#collapse-panel" class="actions__item zmdi zmdi-chevron-down zmdi-hc-fw"></a>
                             </div>
                         </div>
-                        <div class="card-block">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    Debes introducir tu contraseña para poder cancelar tu suscripción.
-                                </div>
-                            </div>
-                            {!! Form::open(['url' => route('account.subscription.cancel'), 'method' => 'POST', 'id' => 'subscription-cancel-form']) !!}
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group form-group--float">
-                                        {!! Form::password('password', ['class' => 'form-control', 'required' => 'required']) !!}
-                                        {!! Form::label('password', 'Contraseña', ['class' => 'form-control-label']) !!}
-                                        <i class="form-group__bar"></i>
+                        <div id="collapse-panel" class="panel-collapse collapse">
+                            <div class="card-block">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        Si cancelas tu suscripción, perderás el acceso a todo el contenido Premium que
+                                        ofrece
+                                        Geeky Theory. <a href="https://www.youtube.com/watch?v=8TGb2fjT6I0">¿Realmente
+                                            quieres
+                                            marcharte?</a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    {!! Form::button('Cancelar suscripción', ['class' => 'btn btn-danger waves-effect', 'type' => 'submit']) !!}
+                            <div class="card-block">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        Debes introducir tu contraseña para poder cancelar tu suscripción.
+                                    </div>
                                 </div>
+                                {!! Form::open(['url' => route('account.subscription.cancel'), 'method' => 'POST', 'id' => 'subscription-cancel-form']) !!}
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group form-group--float">
+                                            {!! Form::password('password', ['class' => 'form-control', 'required' => 'required']) !!}
+                                            {!! Form::label('password', 'Contraseña', ['class' => 'form-control-label']) !!}
+                                            <i class="form-group__bar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        {!! Form::button('Cancelar suscripción', ['class' => 'btn btn-danger waves-effect', 'type' => 'submit']) !!}
+                                    </div>
+                                </div>
+                                {!! Form::close() !!}
                             </div>
-                            {!! Form::close() !!}
                         </div>
                     </div>
                 @endif
