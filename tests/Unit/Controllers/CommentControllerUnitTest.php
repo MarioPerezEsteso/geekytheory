@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Controllers;
 
+use App\Http\Controllers\CommentController;
 use Carbon\Carbon;
 use Tests\TestCase;
 
