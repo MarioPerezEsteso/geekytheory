@@ -31,28 +31,6 @@ class CourseControllerTest extends TestCase
     protected $joinCoursePostEndpoint = 'curso/{id}/matriculacion';
 
     /**
-     * Test page single course ok.
-     */
-    public function testVisitPageGetSingleCourseOk()
-    {
-        // Prepare
-        $teacher = factory(User::class)->create();
-        $courses = TestUtils::createCoursesWithChaptersAndLessons($teacher, 1, 3, 5);
-        $course = $courses->first();
-
-        // Request
-        $response = $this->call('GET', TestUtils::createEndpoint($this->singleCourseUrl, ['slug' => $course->slug]));
-
-        // Asserts
-        $response->assertStatus(200);
-        $response->assertResponseIsView('courses.course');
-        $response->assertResponseHasData('course');
-        $response->assertResponseDataHasRelationLoaded('course', 'teacher');
-        $response->assertResponseDataHasRelationLoaded('course', 'chapters', 3);
-        $response->assertResponseDataHasRelationLoaded('course.chapters', 'lessons', 5);
-    }
-
-    /**
      * Test get single course that does not exist throws a not found error.
      */
     public function testGetSingleCourseErrorNotFound()
@@ -67,7 +45,7 @@ class CourseControllerTest extends TestCase
     /**
      * Test get single course that exists but is not published throws a not found error.
      *
-     * @dataProvider getCourseStatuses
+     * @dataProvider providerTestGetSingleCourseNotPublishedErrorNotFound
      * @param string $status
      */
     public function testGetSingleCourseNotPublishedErrorNotFound($status)
@@ -88,7 +66,7 @@ class CourseControllerTest extends TestCase
      *
      * @return array
      */
-    public static function getCourseStatuses()
+    public static function providerTestGetSingleCourseNotPublishedErrorNotFound()
     {
         return [['draft'], ['pending'], ['scheduled'], ['deleted']];
     }
@@ -96,7 +74,7 @@ class CourseControllerTest extends TestCase
     /**
      * Test join course ok.
      *
-     * @dataProvider getJoinCourseOkTestData
+     * @dataProvider providerTestTeacherCanJoinCourseOk
      * @param $courseFree
      * @param $subscriptionFree
      */
@@ -184,7 +162,7 @@ class CourseControllerTest extends TestCase
     /**
      * Test that a user can't join a course that has not been published.
      *
-     * @dataProvider getJoinCourseNonPublishedErrorTestData
+     * @dataProvider providerTestJoinCourseNonPublishedError
      * @param string $courseStatus
      */
     public function testJoinCourseNonPublishedError($courseStatus)
@@ -204,12 +182,7 @@ class CourseControllerTest extends TestCase
         $response = $this->actingAs($pupil)->call('POST', TestUtils::createEndpoint($this->joinCoursePostEndpoint, ['id' => $course->id,]));
 
         // Asserts
-        $response->assertStatus(200);
-
-        $response->assertExactJson([
-            'joined' => 0,
-            'error' => trans('public.course_does_not_exist'),
-        ]);
+        $response->assertStatus(404);
 
         $this->assertDatabaseMissing('users_courses', [
             'user_id' => $pupil->id,
@@ -222,7 +195,7 @@ class CourseControllerTest extends TestCase
      *
      * @return array
      */
-    public static function getJoinCourseNonPublishedErrorTestData()
+    public static function providerTestJoinCourseNonPublishedError()
     {
         return [
             'Course status draft' => ['draft'],
