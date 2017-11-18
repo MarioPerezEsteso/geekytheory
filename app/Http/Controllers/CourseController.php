@@ -18,9 +18,17 @@ class CourseController extends Controller
      */
     public function show($slug)
     {
+        /** @var User $user */
+        $loggedUser = Auth::user();
         $course = Course::getPublished(['slug' => $slug])->with('teacher')->with('chapters.lessons')->firstOrFail();
 
-        return view('courses.single', compact('course'));
+        $userHasJoinedCourse = false;
+
+        if (!is_null($loggedUser)) {
+            $userHasJoinedCourse = $loggedUser->courses->contains($course);
+        }
+
+        return view('courses.single', compact('course', 'userHasJoinedCourse'));
     }
 
 
@@ -45,13 +53,13 @@ class CourseController extends Controller
         }
 
         if (!policy($course)->join($user, $course)) {
-            return redirect()->route('pricing')->withErrors(
-                new MessageBag(['subscription' => trans('public.you_must_be_premium_subscriber')])
+            return redirect()->route('course', ['slug' => $course->slug])->withErrors(
+                new MessageBag(['subscription_error' => trans('public.you_must_be_premium_subscriber')])
             );
         }
 
         $user->courses()->attach($course->id);
 
-        return redirect()->route('course', ['slug' => $course->slug])->withSuccess(trans('public.joined_course_ok'));
+        return redirect()->route('course', ['slug' => $course->slug]);
     }
 }

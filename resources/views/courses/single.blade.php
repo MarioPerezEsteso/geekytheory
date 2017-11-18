@@ -30,7 +30,11 @@
 
 @include('courses.partials.navbar')
 
-@include('courses.partials.course.headerJoinCourse')
+@if(isset($errors) && $errors->has('subscription_error'))
+    @include('courses.partials.lesson.headerGoPremium')
+@else
+    @include('courses.partials.course.headerJoinCourse')
+@endif
 
 <section class="container">
     <div class="row">
