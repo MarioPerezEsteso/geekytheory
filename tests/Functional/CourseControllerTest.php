@@ -100,47 +100,8 @@ class CourseControllerTest extends TestCase
         // Asserts
         $response->assertRedirect(TestUtils::createEndpoint($this->singleCourseUrl, ['slug' => $course->slug]));
 
-        $response->assertSessionHas(['success' => trans('public.joined_course_ok')]);
-
         $this->assertDatabaseHas('users_courses', [
             'user_id' => $pupil->id,
-            'course_id' => $course->id,
-        ]);
-    }
-
-    /**
-     * Test that the teacher of the course can join in.
-     *
-     * @dataProvider providerTestTeacherCanJoinCourseOk
-     * @param boolean $courseFree
-     * @param boolean $subscriptionFree
-     */
-    public function testTeacherCanJoinCourseOk($courseFree, $subscriptionFree)
-    {
-        // Prepare
-        /** @var User $teacher */
-        $teacher = factory(User::class)->create([]);
-
-        /** @var Collection $courses */
-        $courses = TestUtils::createCoursesWithChaptersAndLessons($teacher, 1, 1, 1, ['free' => $courseFree]);
-        /** @var Course $course */
-        $course = $courses->first();
-
-        if (!$subscriptionFree) {
-            // @TODO: subscribe user to paid plan
-        }
-
-        // Request
-        /** @var Response $response */
-        $response = $this->actingAs($teacher)->call('POST', TestUtils::createEndpoint($this->joinCoursePostEndpoint, ['id' => $course->id,]));
-
-        // Asserts
-        $response->assertStatus(200);
-
-        $response->assertExactJson(['joined' => 1]);
-
-        $this->assertDatabaseHas('users_courses', [
-            'user_id' => $teacher->id,
             'course_id' => $course->id,
         ]);
     }
@@ -240,13 +201,10 @@ class CourseControllerTest extends TestCase
         $response = $this->actingAs($pupil)->call('POST', TestUtils::createEndpoint($this->joinCoursePostEndpoint, ['id' => $course->id,]));
 
         // Asserts
-        $response->assertStatus(200);
+        $response->assertRedirect(TestUtils::createEndpoint($this->singleCourseUrl, ['slug' => $course->slug]));
 
-        $response->assertExactJson([
-            'joined' => 0,
-            'error' => trans('public.you_must_be_premium_subscriber'),
-        ]);
-
+        $response->assertSessionHasErrors(['subscription_error' => trans('public.you_must_be_premium_subscriber')]);
+        
         $this->assertDatabaseMissing('users_courses', [
             'user_id' => $pupil->id,
             'course_id' => $course->id,
