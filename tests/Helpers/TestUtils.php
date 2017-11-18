@@ -174,4 +174,15 @@ class TestUtils
 
         return [$user, $subscription];
     }
+
+    /**
+     * Enroll a user in a course.
+     *
+     * @param User $user
+     * @param Course $course
+     */
+    public static function enrollUserInCourse(User $user, Course $course)
+    {
+        $user->courses()->attach($course->id);
+    }
 }
