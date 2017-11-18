@@ -72,3 +72,18 @@ $factory->define(App\Lesson::class, function () {
 $factory->define(\Laravel\Cashier\Subscription::class, function () {
     return [];
 });
+
+$factory->define(App\Comment::class, function (Faker\Generator $faker) {
+    return [
+        'post_id' => 1,
+        'user_id' => 1,
+        'parent' => null,
+        'author_name' => $faker->name,
+        'author_email' => $faker->email,
+        'author_url' => null,
+        'body' => $faker->text,
+        'approved' => true,
+        'spam' => false,
+        'ip' => $faker->ipv4,
+    ];
+});
