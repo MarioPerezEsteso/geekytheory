@@ -77,7 +77,7 @@ class User extends Authenticatable
      */
     public function courses()
     {
-        return $this->belongsToMany('App\Course', 'users_courses', 'user_id', 'course_id');
+        return $this->belongsToMany('App\Course', 'users_courses', 'user_id', 'course_id')->withTimestamps();
     }
 
     /**
