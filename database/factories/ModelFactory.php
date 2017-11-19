@@ -44,6 +44,7 @@ $factory->define(App\UserMeta::class, function () {
 $factory->define(App\Subscriber::class, function (Faker\Generator $faker) {
     return [
         'email' => $faker->email,
+        'token' => $faker->sha256,
     ];
 });
 
