@@ -43,10 +43,7 @@ class LoginControllerTest extends TestCase
         // Prepare
         $user = factory(User::class)->create([
             'name' => 'Alice',
-            'email' => 'alice@geekytheory.com',
             'password' => bcrypt('123456'),
-            'username' => 'alice',
-            'can_login' => true,
         ]);
 
         // Request
@@ -72,10 +69,7 @@ class LoginControllerTest extends TestCase
     {
         factory(User::class)->create([
             'name' => 'Alice',
-            'email' => 'alice@geekytheory.com',
             'password' => bcrypt('123456'),
-            'username' => 'alice',
-            'can_login' => true,
         ]);
 
         $response = $this->call('POST', $this->loginUrl, $registrationData);
@@ -94,9 +88,7 @@ class LoginControllerTest extends TestCase
     {
         $user = factory(User::class)->create([
             'name' => 'Alice',
-            'email' => 'alice@geekytheory.com',
             'password' => bcrypt('123456'),
-            'username' => 'alice',
         ]);
 
         $response = $this->actingAs($user)->call('GET', $this->logoutUrl);
