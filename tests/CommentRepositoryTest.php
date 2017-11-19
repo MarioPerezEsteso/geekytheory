@@ -2,8 +2,9 @@
 
 namespace Tests;
 
+use App\Post;
 use App\Repositories\CommentRepository;
-use App\Repositories\PostRepository;
+use Tests\Helpers\TestUtils;
 
 class CommentRepositoryTest extends TestCase
 {
@@ -12,11 +13,10 @@ class CommentRepositoryTest extends TestCase
      */
     public function testFindCommentsByPost()
     {
-        $postRepository = new PostRepository();
-        /** @var Post $post */
-        $post = $postRepository->find(1);
+        $article = factory(Post::class)->create();
+        TestUtils::createComments($article->id);
         $repository = new CommentRepository();
-        $comments = $repository->findCommentByPost($post);
+        $comments = $repository->findCommentByPost($article);
         $this->assertNotNull($comments);
         $this->assertEquals(5, count($comments));
     }

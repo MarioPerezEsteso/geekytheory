@@ -3,6 +3,7 @@
 namespace Tests\Helpers;
 
 use App\Chapter;
+use App\Comment;
 use App\Course;
 use App\Lesson;
 use App\User;
@@ -184,5 +185,28 @@ class TestUtils
     public static function enrollUserInCourse(User $user, Course $course)
     {
         $user->courses()->attach($course->id);
+    }
+
+    /**
+     * Create comments.
+     *
+     * @param int $postId
+     * @return Collection
+     */
+    public static function createComments(int $postId): Collection
+    {
+        $comment1 = factory(Comment::class)->create(['post_id' => $postId, 'parent' => null,]);
+        $comment2 = factory(Comment::class)->create(['post_id' => $postId, 'parent' => $comment1->id,]);
+        $comment3 = factory(Comment::class)->create(['post_id' => $postId, 'parent' => $comment2->id,]);
+        $comment4 = factory(Comment::class)->create(['post_id' => $postId, 'parent' => $comment1->id,]);
+        $comment5 = factory(Comment::class)->create(['post_id' => $postId, 'parent' => null,]);
+
+        return new Collection([
+            $comment1,
+            $comment2,
+            $comment3,
+            $comment4,
+            $comment5,
+        ]);
     }
 }

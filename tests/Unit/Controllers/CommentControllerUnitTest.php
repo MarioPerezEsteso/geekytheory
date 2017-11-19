@@ -4,8 +4,10 @@ namespace Tests\Unit\Controllers;
 
 use App\Comment;
 use App\Http\Controllers\CommentController;
+use App\Post;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
+use Tests\Helpers\TestUtils;
 use Tests\TestCase;
 
 class CommentControllerUnitTest extends TestCase
@@ -58,7 +60,8 @@ class CommentControllerUnitTest extends TestCase
      */
     public function testSortByParent()
     {
-        $comments = $this->getFactoryComments();
+        $article = factory(Post::class)->create();
+        $comments = TestUtils::createComments($article->id);
 
         $commentsOrdered = CommentController::sortByParent($comments);
 
@@ -85,33 +88,12 @@ class CommentControllerUnitTest extends TestCase
      */
     public function testNoSortByParent()
     {
-        $comments = $this->getFactoryComments();
+        $article = factory(Post::class)->create();
+        $comments = TestUtils::createComments($article->id);
         $this->assertEquals(5, count($comments));
 
         $commentsOrdered = CommentController::sortByParent($comments, false);
         $this->assertEquals($comments, $commentsOrdered);
-    }
-
-    /**
-     * Build comments.
-     *
-     * @return Collection
-     */
-    public function getFactoryComments(): Collection
-    {
-        $comment1 = factory(Comment::class)->create(['parent' => null,]);
-        $comment2 = factory(Comment::class)->create(['parent' => $comment1->id,]);
-        $comment3 = factory(Comment::class)->create(['parent' => $comment2->id,]);
-        $comment4 = factory(Comment::class)->create(['parent' => $comment1->id,]);
-        $comment5 = factory(Comment::class)->create(['parent' => null,]);
-
-        return new Collection([
-            $comment1,
-            $comment2,
-            $comment3,
-            $comment4,
-            $comment5,
-        ]);
     }
 
 }
