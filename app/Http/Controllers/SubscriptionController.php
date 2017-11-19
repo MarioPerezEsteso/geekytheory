@@ -196,7 +196,7 @@ class SubscriptionController extends Controller
         if (!Hash::check($request->password, $user->password)) {
             return redirect()->route('account.subscription')->withErrors(
                 new MessageBag([
-                    'password' => 'home.password_incorrect',
+                    'password' => trans('home.password_incorrect'),
                 ])
             );
         }
@@ -214,6 +214,6 @@ class SubscriptionController extends Controller
 
         $subscription->cancel();
 
-        return redirect()->route('account.subscription')->withSuccess('home.subscription_canceled');
+        return redirect()->route('account.subscription')->withSuccess(trans('home.subscription_canceled'));
     }
 }
