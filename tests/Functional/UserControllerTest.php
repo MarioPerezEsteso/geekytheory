@@ -53,8 +53,6 @@ class UserControllerTest extends TestCase
         // Prepare
         $user = factory(User::class)->create([
             'name' => 'Mario',
-            'username' => 'mario',
-            'email' => 'mario@domain.com',
             'password' => bcrypt('123456'),
             'can_login' => true,
         ]);
@@ -123,7 +121,6 @@ class UserControllerTest extends TestCase
         $response = $this->actingAs($user)->call('POST', $this->accountProfilePostUrl, $requestData);
 
         // Asserts
-        $response->assertStatus(302);
         $response->assertRedirect($this->accountProfilePageUrl);
 
         $this->assertDatabaseHas('users', [
@@ -154,12 +151,6 @@ class UserControllerTest extends TestCase
     public function providerTestUpdateUserProfileOk()
     {
         $faker = Factory::create();
-        $userData = [
-            'name' => $faker->name,
-            'email' => $faker->email,
-            'username' => $faker->word,
-        ];
-
         $userMetadata = [
             'biography' => $faker->text,
             'job' => $faker->text,
@@ -178,10 +169,26 @@ class UserControllerTest extends TestCase
         ];
 
         return [
-            'User data without metadata and no previous metadata existent' => [$userData, [], false,],
-            'User data without metadata and previous metadata existent' => [$userData, [], true,],
-            'User data with metadata and no previous metadata existent' => [$userData, $userMetadata, false,],
-            'User data with metadata and previous metadata existent' => [$userData, $userMetadata, true,],
+            'User data without metadata and no previous metadata existent' => [[
+                'name' => $faker->name,
+                'email' => $faker->email,
+                'username' => $faker->word,
+            ], [], false,],
+            'User data without metadata and previous metadata existent' => [[
+                'name' => $faker->name,
+                'email' => $faker->email,
+                'username' => $faker->word,
+            ], [], true,],
+            'User data with metadata and no previous metadata existent' => [[
+                'name' => $faker->name,
+                'email' => $faker->email,
+                'username' => $faker->word,
+            ], $userMetadata, false,],
+            'User data with metadata and previous metadata existent' => [[
+                'name' => $faker->name,
+                'email' => $faker->email,
+                'username' => $faker->word,
+            ], $userMetadata, true,],
         ];
     }
 

@@ -19,6 +19,10 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'password' => bcrypt(str_random(10)),
         'remember_token' => str_random(10),
         'can_login' => true,
+        'stripe_id' => null,
+        'card_brand' => null,
+        'card_last_four' => null,
+        'trial_ends_at' => null,
     ];
 });
 
