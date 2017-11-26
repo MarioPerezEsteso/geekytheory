@@ -45,7 +45,7 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
     public function tearDown()
     {
         if (env('RESET_DATABASE_TEST', "1") === "1") {
-            //Artisan::call('migrate:reset');
+            Artisan::call('migrate:reset');
         }
         parent::tearDown();
     }
