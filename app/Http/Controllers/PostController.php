@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Repositories\CategoryRepository;
-use App\Repositories\GalleryRepository;
 use App\Repositories\PostRepository;
 use App\Repositories\SiteMetaRepository;
 use App\Repositories\UserRepository;
@@ -309,29 +308,5 @@ class PostController extends Controller
         }
 
         return $url;
-    }
-
-    /**
-     * Process gallery shortcodes.
-     *
-     * @param Article|Page $post
-     * @return mixed
-     */
-    public function processGalleryShortcodes($post)
-    {
-        $galleryRepository = new GalleryRepository();
-        preg_match_all("/\[gallery.*id=[\"|\'](.*?)?[\"|\'].*\]/", $post->body, $matches);
-        for ($index = 0; $index < count($matches[0]); $index++) {
-            $id = $matches[1][$index];
-            if (Cache::has('gallery_rendered_' . $id)) {
-                $galleryHtml = Cache::get('gallery_rendered_' . $id);
-            } else {
-                $galleryHtml = GalleryController::render($galleryRepository->find($id));
-                Cache::put('gallery_rendered_' . $id, $galleryHtml, self::CACHE_EXPIRATION_TIME);
-            }
-            $post->body = str_replace($matches[0][$index], $galleryHtml, $post->body);
-        }
-
-        return $post;
     }
 }

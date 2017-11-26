@@ -284,38 +284,6 @@ Route::post('home/categories/delete-image', [
     'uses' => 'CategoryController@deleteImage',
 ]);
 
-/*Route::get('home/galleries/{username?}', [
-    'middleware' => 'auth',
-    'uses' => 'GalleryController@indexHome',
-]);
-
-Route::post('home/gallery/store', [
-    'middleware' => 'auth',
-    'before' => 'csrf',
-    'uses' => 'GalleryController@store',
-]);
-
-Route::get('home/gallery/create', [
-    'middleware' => 'auth',
-    'uses' => 'GalleryController@create',
-]);
-
-Route::get('home/gallery/edit/{id}', [
-    'middleware' => 'auth',
-    'uses' => 'GalleryController@edit',
-]);
-
-Route::post('home/gallery/update/{id}', [
-    'middleware' => 'auth',
-    'uses' => 'GalleryController@update',
-]);
-
-Route::post('home/gallery/image/delete', [
-    'middleware' => 'auth',
-    'before' => 'csrf',
-    'uses' => 'ImageController@deleteImageFromGallery',
-]);*/
-
 Route::get('home/articles/imagemanager/upload', [
     'middleware' => 'auth',
     'uses' => 'ImageManagerController@create'
