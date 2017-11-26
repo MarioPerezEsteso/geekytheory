@@ -172,22 +172,22 @@ class UserControllerTest extends TestCase
             'User data without metadata and no previous metadata existent' => [[
                 'name' => $faker->name,
                 'email' => $faker->email,
-                'username' => $faker->word,
+                'username' => str_random(),
             ], [], false,],
             'User data without metadata and previous metadata existent' => [[
                 'name' => $faker->name,
                 'email' => $faker->email,
-                'username' => $faker->word,
+                'username' => str_random(),
             ], [], true,],
             'User data with metadata and no previous metadata existent' => [[
                 'name' => $faker->name,
                 'email' => $faker->email,
-                'username' => $faker->word,
+                'username' => str_random(),
             ], $userMetadata, false,],
             'User data with metadata and previous metadata existent' => [[
                 'name' => $faker->name,
                 'email' => $faker->email,
-                'username' => $faker->word,
+                'username' => str_random(),
             ], $userMetadata, true,],
         ];
     }
