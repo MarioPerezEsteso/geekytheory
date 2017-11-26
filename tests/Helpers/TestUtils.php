@@ -3,6 +3,7 @@
 namespace Tests\Helpers;
 
 use App\Chapter;
+use App\Comment;
 use App\Course;
 use App\Lesson;
 use App\User;
@@ -28,7 +29,8 @@ class TestUtils
     }
 
     /**
-     * Populate the database with courses, chapters and lessons.
+     * Populate the database with courses, chapters and lessons. By default, the course has beginner difficulty,
+     * it is published and it is not free.
      *
      * @param User $teacher
      * @param integer $numberOfCourses
@@ -55,6 +57,7 @@ class TestUtils
                 'title' => $faker->text,
                 'description' => $faker->text,
                 'image' => $faker->url,
+                'image_thumbnail' => $faker->url,
                 'difficulty' => $courseAttributes['difficulty'],
                 'duration' => 100,
                 'students' => 50,
@@ -65,11 +68,12 @@ class TestUtils
                 $chapter = factory(Chapter::class)->create([
                     'course_id' => $course->id,
                     'order' => $numChapters,
+                    'title' => $faker->text,
                 ]);
                 for ($numLessons = 1; $numLessons <= $numberOfLessons; $numLessons++) {
                     $lesson = factory(Lesson::class)->create([
                         'chapter_id' => $chapter->id,
-                        'slug' => 'course-' . $i . '-chapter-' . $numChapters . '-lesson-' . $numLessons,
+                        'slug' => 'course-' . $course->id . '-chapter-' . $numChapters . '-lesson-' . $numLessons,
                         'title' => $faker->title,
                         'content' => $faker->text,
                         'video' => 'https://youtube.com/whatever',
@@ -107,5 +111,102 @@ class TestUtils
         ], $lessonAttributes);
 
         return factory(Lesson::class)->create($attributes);
+    }
+
+    /**
+     * Create a user and a subscription.
+     *
+     * @param array $userAndCardAttributes
+     * @param array $subscriptionAttributes
+     * @param bool $createSubscriptionInStripe
+     * @return void
+     */
+    public static function createUserAndSubscription($userAndCardAttributes = [], $subscriptionAttributes = [], $createSubscriptionInStripe = false)
+    {
+        $userAttributes = [];
+
+        if (!$createSubscriptionInStripe) {
+            $userAttributes = array_merge([
+                'stripe_id' => 'fake_stripe_id_123',
+                'card_brand' => 'Visa',
+                'card_last_four' => '4242',
+                'trial_ends_at' => null,
+            ], $userAndCardAttributes);
+
+            if (isset($userAndCardAttributes['password'])) {
+                $userAttributes['password'] = bcrypt($userAndCardAttributes['password']);
+            }
+
+            /** @var User $user */
+            $user = factory(User::class)->create($userAttributes);
+
+            $subscriptionAttributes = array_merge([
+                'user_id' => $user->id,
+                'stripe_id' => 'another_fake_stripe_id_456',
+                'name' => TestConstants::MODEL_SUBSCRIPTION_PLAN_NAME,
+                'stripe_plan' => TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY,
+                'quantity' => 1,
+                'trial_ends_at' => null,
+                'ends_at' => null,
+            ], $subscriptionAttributes);
+
+            /** @var \Laravel\Cashier\Subscription $subscription */
+            $subscription = factory(\Laravel\Cashier\Subscription::class)->create($subscriptionAttributes);
+        } else {
+            if (isset($userAndCardAttributes['password'])) {
+                $userAttributes['password'] = bcrypt($userAndCardAttributes['password']);
+            }
+
+            /** @var User $user */
+            $user = factory(User::class)->create($userAttributes);
+
+            $stripePlan = $subscriptionAttributes['stripe_plan'] ?? TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY;
+
+            /** @var \Stripe\Subscription $subscription */
+            $subscription = $user->newSubscription(TestConstants::MODEL_SUBSCRIPTION_PLAN_NAME, $stripePlan)
+                ->skipTrial()
+                ->create('tok_visa', [
+                    'email' => $user->email,
+                    'metadata' => [
+                        'ip' => getClientIPAddress(),
+                    ]
+                ]);
+        }
+
+        return [$user, $subscription];
+    }
+
+    /**
+     * Enroll a user in a course.
+     *
+     * @param User $user
+     * @param Course $course
+     */
+    public static function enrollUserInCourse(User $user, Course $course)
+    {
+        $user->courses()->attach($course->id);
+    }
+
+    /**
+     * Create comments.
+     *
+     * @param int $postId
+     * @return Collection
+     */
+    public static function createComments(int $postId): Collection
+    {
+        $comment1 = factory(Comment::class)->create(['post_id' => $postId, 'parent' => null,]);
+        $comment2 = factory(Comment::class)->create(['post_id' => $postId, 'parent' => $comment1->id,]);
+        $comment3 = factory(Comment::class)->create(['post_id' => $postId, 'parent' => $comment2->id,]);
+        $comment4 = factory(Comment::class)->create(['post_id' => $postId, 'parent' => $comment1->id,]);
+        $comment5 = factory(Comment::class)->create(['post_id' => $postId, 'parent' => null,]);
+
+        return new Collection([
+            $comment1,
+            $comment2,
+            $comment3,
+            $comment4,
+            $comment5,
+        ]);
     }
 }

@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laravel\Passport\HasApiTokens;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Billable, Notifiable;
 
     /**
      * The database table used by the model.
@@ -71,17 +71,27 @@ class User extends Authenticatable
     }
 
     /**
+     * Get user courses.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function courses()
+    {
+        return $this->belongsToMany('App\Course', 'users_courses', 'user_id', 'course_id')->withTimestamps();
+    }
+
+    /**
      * Check if user has subscription active.
      *
      * @return bool
      */
     public function hasSubscriptionActive()
     {
-        return false;
+        return $this->subscribed(Subscription::PLAN_NAME, Subscription::PLAN_MONTHLY);
     }
 
     /**
-     * Returns the basic user data for the admin panel view
+     * Returns the basic user data for the admin panel view.
      *
      * @return array
      */

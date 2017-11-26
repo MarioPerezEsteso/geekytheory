@@ -1,14 +1,13 @@
 <?php
 
-namespace Tests\Functional;
+namespace Tests\Functional\Views;
 
 use App\User;
-use Illuminate\Support\Facades\Auth;
 use Tests\Helpers\TestConstants;
 use Tests\Helpers\TestUtils;
 use Tests\TestCase;
 
-class LessonControllerTest extends TestCase
+class LessonControllerViewsTest extends TestCase
 {
     /**
      * Lesson endpoint.
@@ -39,11 +38,12 @@ class LessonControllerTest extends TestCase
         }
 
         if ($example['loggedUser']) {
-            $user = factory(User::class)->create(['can_login' => true]);
-            $this->be($user);
             if ($example['subscriptionActive']) {
-                // TODO: mock active subscription
+                list($user, $subscription) = TestUtils::createUserAndSubscription();
+            } else {
+                $user = factory(User::class)->create();
             }
+            $this->actingAs($user);
         }
 
         // Request
@@ -180,5 +180,4 @@ class LessonControllerTest extends TestCase
         // Asserts
         $response->assertStatus(404);
     }
-
 }

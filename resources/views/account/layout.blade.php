@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <title>@yield('pageTitle')</title>
     <!-- Vendor styles -->
     <link rel="stylesheet" href="/account/vendor/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="/account/vendor/animate.css/animate.min.css">
@@ -12,6 +13,7 @@
 
     <!-- App styles -->
     <link rel="stylesheet" href="/account/css/app.min.css">
+    <link rel="stylesheet" href="/account/css/custom.css">
 </head>
 
 <body data-ma-theme="green">
@@ -34,15 +36,8 @@
         </div>
 
         <div class="header__logo hidden-sm-down">
-            <h1><a href="index.html">Geeky Theory</a></h1>
+            <h1><a href="/">Geeky Theory</a></h1>
         </div>
-
-        <form class="search">
-            <div class="search__inner">
-                <input type="text" class="search__text" placeholder="Search for people, files, documents...">
-                <i class="zmdi zmdi-search search__helper" data-ma-action="search-close"></i>
-            </div>
-        </form>
 
         <ul class="top-nav">
             <li class="hidden-xl-up"><a href="" data-ma-action="search-open"><i class="zmdi zmdi-search"></i></a></li>
@@ -372,6 +367,17 @@
                         <li class="{{ isRoute('account.profile.password') ? 'navigation__active' : '' }}"><a href="{{ route('account.profile.password') }}">Cambio de contraseña</a></li>
                     </ul>
                 </li>
+                <li class="navigation__sub {{ isRoute('account.subscription') || isRoute('account.subscription.payment-method') ? 'navigation__sub--active' : '' }}">
+                    <a href=""><i class="zmdi zmdi-ticket-star zmdi-hc-fw"></i> Suscripción</a>
+                    <ul>
+                        <li class="{{ isRoute('account.subscription') ? 'navigation__active' : '' }}">
+                            <a href="{{ route('account.subscription') }}">Mi suscripción</a>
+                        </li>
+                        <li class="{{ isRoute('account.subscription.payment-method') ? 'navigation__active' : '' }}">
+                            <a href="{{ route('account.subscription.payment-method') }}">Método de pago</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </aside>
@@ -455,5 +461,8 @@
 
 <!-- App functions and actions -->
 <script src="/account/js/app.min.js"></script>
+
+@yield('customJavascript')
+
 </body>
 </html>

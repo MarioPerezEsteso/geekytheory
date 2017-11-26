@@ -74,4 +74,6 @@ return [
     'beginner' => 'Principiante',
     'intermediate' => 'Intermedio',
     'advanced' => 'Avanzado',
+    'course_does_not_exist' => 'El curso no existe.',
+    'you_must_be_premium_subscriber' => 'Debes tener una suscripción premium para matricularte en este curso.',
 ];

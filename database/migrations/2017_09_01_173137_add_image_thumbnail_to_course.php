@@ -14,7 +14,7 @@ class AddImageThumbnailToCourse extends Migration
     public function up()
     {
         Schema::table('courses', function (Blueprint $table) {
-            $table->string('image_thumbnail')->after('image');
+            $table->string('image_thumbnail')->default('')->after('image');
         });
     }
 

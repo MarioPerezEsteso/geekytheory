@@ -30,21 +30,11 @@
 
 @include('courses.partials.navbar')
 
-<div class="jumbotron jumbotron-course center-flex gradient-blue-geeky">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <span class="btn btn-info">{{ trans('public.' . $course->difficulty) }}</span>
-                <h1 class="jumbotron-title">{{ $course->title }}</h1>
-                <p>{!! $course->description !!}</p>
-                <a class="btn btn-primary btn-join-course">Apuntarme</a>
-            </div>
-            <div class="col-lg-5 col-lg-push-1">
-                <img class="img-responsive" src="{{ $course->image_thumbnail }}">
-            </div>
-        </div>
-    </div>
-</div>
+@if(isset($errors) && $errors->has('subscription_error'))
+    @include('courses.partials.lesson.headerGoPremium')
+@else
+    @include('courses.partials.course.headerJoinCourse')
+@endif
 
 <section class="container">
     <div class="row">

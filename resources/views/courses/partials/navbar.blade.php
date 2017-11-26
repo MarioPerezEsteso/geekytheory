@@ -30,14 +30,30 @@
                                 <ul class="dropdown-menu" role="menu">
                                     @foreach($menuItem['submenu'] as $submenuItem)
                                         <li>
-                                            <a href="{{ $submenuItem['link'] }}"
-                                               title="{{ $submenuItem['text'] }}">{{ $submenuItem['text'] }}</a>
+                                            <a href="{{ $submenuItem['link'] }}" title="{{ $submenuItem['text'] }}">
+                                                {{ $submenuItem['text'] }}
+                                            </a>
                                         </li>
                                     @endforeach
                                 </ul>
                             </li>
                         @endif
                     @endforeach
+
+                    @if(Auth::user() !== null)
+                        <div class="navbar-header navbar-header-avatar">
+                            <a class="navbar-brand" href="{{ route('account.profile') }}">
+                                <img class="img-responsive" src="{{ getGravatar(Auth::user()->email, 200) }}">
+                            </a>
+                        </div>
+                    @else
+                        <li>
+                            <a href="{{ route('login') }}" title="{{ trans('auth.login') }}">
+                                {{ trans('auth.login') }}
+                            </a>
+                        </li>
+                    @endif
+
                 @endif
             </ul>
         </div>

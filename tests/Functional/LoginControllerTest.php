@@ -43,10 +43,7 @@ class LoginControllerTest extends TestCase
         // Prepare
         $user = factory(User::class)->create([
             'name' => 'Alice',
-            'email' => 'alice@geekytheory.com',
             'password' => bcrypt('123456'),
-            'username' => 'alice',
-            'can_login' => true,
         ]);
 
         // Request
@@ -62,31 +59,6 @@ class LoginControllerTest extends TestCase
     }
 
     /**
-     * Test user can not login
-     */
-    public function testUserCanNotLoginError()
-    {
-        $user = factory(User::class)->create([
-            'name' => 'Alice',
-            'email' => 'alice@geekytheory.com',
-            'password' => bcrypt('123456'),
-            'username' => 'alice',
-            'can_login' => false,
-        ]);
-
-        $response = $this->call('POST', $this->loginUrl, [
-            'email' => $user->email,
-            'password' => '123456',
-        ]);
-
-        // If the user has the can_login field to false, we throw the error
-        // saying that the credentials are wrong, and not the one saying that
-        // the user is banned.
-        $response->assertSessionHasErrors(['email']);
-        $response->assertLoggedUserIs(null);
-    }
-
-    /**
      * Test user can not login with wrong credentials.
      *
      * @dataProvider getInvalidLoginData
@@ -97,10 +69,7 @@ class LoginControllerTest extends TestCase
     {
         factory(User::class)->create([
             'name' => 'Alice',
-            'email' => 'alice@geekytheory.com',
             'password' => bcrypt('123456'),
-            'username' => 'alice',
-            'can_login' => true,
         ]);
 
         $response = $this->call('POST', $this->loginUrl, $registrationData);
@@ -119,9 +88,7 @@ class LoginControllerTest extends TestCase
     {
         $user = factory(User::class)->create([
             'name' => 'Alice',
-            'email' => 'alice@geekytheory.com',
             'password' => bcrypt('123456'),
-            'username' => 'alice',
         ]);
 
         $response = $this->actingAs($user)->call('GET', $this->logoutUrl);

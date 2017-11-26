@@ -47,9 +47,7 @@ class RegisterControllerTest extends TestCase
         $response = $this->call('POST', $this->registerUrlPost, $registrationData);
 
         // Asserts
-        $response->assertStatus(302);
-
-        $response->assertHeader('location', $this->getUrlWithBase($this->urlToRedirectOnRegister));
+        $response->assertRedirect($this->urlToRedirectOnRegister);
 
         $this->assertDatabaseHas('users', [
             'name' => $registrationData['name'],
@@ -87,9 +85,7 @@ class RegisterControllerTest extends TestCase
         $response = $this->call('POST', $this->registerUrlPost, $registrationData);
 
         // Asserts
-        $response->assertStatus(302);
-
-        $response->assertHeader('location', $this->getUrlWithBase($this->urlToRedirectOnRegister));
+        $response->assertRedirect($this->urlToRedirectOnRegister);
 
         // We append a suffix to username because it was already in the database
         $this->assertDatabaseHas('users', [
@@ -122,11 +118,9 @@ class RegisterControllerTest extends TestCase
         $response = $this->call('POST', $this->registerUrlPost, $registrationData);
 
         // Asserts
-        $response->assertStatus(302);
+        $response->assertRedirect($this->registerUrlGet);
 
         $response->assertSessionHasErrors('email');
-
-        $response->assertHeader('location', $this->getUrlWithBase($this->registerUrlGet));
     }
 
     /**
@@ -142,11 +136,9 @@ class RegisterControllerTest extends TestCase
         $response = $this->call('POST', $this->registerUrlPost, $registrationData);
 
         // Asserts
-        $response->assertStatus(302);
+        $response->assertRedirect($this->registerUrlGet);
 
         $response->assertSessionHasErrors($sessionErrorKeys);
-
-        $response->assertHeader('location', $this->getUrlWithBase($this->registerUrlGet));
     }
 
     /**

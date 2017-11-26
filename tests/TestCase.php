@@ -19,6 +19,11 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
     protected $baseUrl = 'http://geekytheory.dev';
 
     /**
+     * @var string
+     */
+    protected $loginUrl = '/login';
+
+    /**
      * HTTP headers.
      *
      * @var array
@@ -29,14 +34,19 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
     {
         parent::setUp();
         $this->createApplication();
-        Artisan::call('migrate:reset');
-        Artisan::call('migrate');
-        Artisan::call('db:seed', array("--class" => "TestDatabaseSeeder"));
+
+        if (env('RESET_DATABASE_TEST', "1") === "1") {
+            Artisan::call('migrate:reset');
+            Artisan::call('migrate');
+            Artisan::call('db:seed', array("--class" => "TestDatabaseSeeder"));
+        }
     }
 
     public function tearDown()
     {
-        Artisan::call('migrate:reset');
+        if (env('RESET_DATABASE_TEST', "1") === "1") {
+            //Artisan::call('migrate:reset');
+        }
         parent::tearDown();
     }
 

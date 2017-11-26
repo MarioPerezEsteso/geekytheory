@@ -27,6 +27,8 @@ class ImageRepositoryTest extends TestCase
 
     /**
      * Test findImagesByGallery searching all of the images with different sizes.
+     *
+     * @TODO: fix
      */
     public function testFindImagesByGalleryInAllSizes()
     {
@@ -37,6 +39,8 @@ class ImageRepositoryTest extends TestCase
 
     /**
      * Test findImagesByGallery searching all of the images with original size.
+     *
+     * @TODO: fix
      */
     public function testFindImagesByGalleryWithOriginalSize()
     {
@@ -47,6 +51,8 @@ class ImageRepositoryTest extends TestCase
 
     /**
      * Test findImageAllSizes
+     *
+     * @TODO: fix
      */
     public function testFindImageAllSizes()
     {
