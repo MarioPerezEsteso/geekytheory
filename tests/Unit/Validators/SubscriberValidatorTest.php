@@ -174,7 +174,6 @@ class SubscriberValidatorTest extends TestCase
         return [
             [ // Test input 1
                 [
-                    'email' => 'alice@geekytheory.com',
                     'token' => false,
                     'active' => 'true',
                     'token_expires_at' => \Carbon\Carbon::now()->addHours(24),
@@ -183,7 +182,6 @@ class SubscriberValidatorTest extends TestCase
             ],
             [ // Test input 2
                 [
-                    'email' => 'bob@geekytheory.com',
                 ],
                 'validationErrorKeys' => ['email', 'token', 'token_expires_at'],
             ],
