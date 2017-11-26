@@ -12,6 +12,13 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
     use CreatesApplication;
 
     /**
+     * Variable to check if database is migrated
+     *
+     * @var bool
+     */
+    protected static $databaseMigrated = false;
+
+    /**
      * The base URL to use while testing the application.
      *
      * @var string
@@ -35,18 +42,16 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
         parent::setUp();
         $this->createApplication();
 
-        if (env('RESET_DATABASE_TEST', "1") === "1") {
+        if (env('RESET_DATABASE_TEST', "1") === "1" && !static::$databaseMigrated) {
             Artisan::call('migrate:reset');
             Artisan::call('migrate');
             Artisan::call('db:seed', array("--class" => "TestDatabaseSeeder"));
+            static::$databaseMigrated = true;
         }
     }
 
     public function tearDown()
     {
-        if (env('RESET_DATABASE_TEST', "1") === "1") {
-            Artisan::call('migrate:reset');
-        }
         parent::tearDown();
     }
 
