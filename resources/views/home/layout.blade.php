@@ -157,25 +157,6 @@
                         </li>
                     </ul>
                 </li>
-                <li class="{{ classActiveRoute(array('home/galleries', 'home/gallery/create', 'home/gallery/edit')) }} treeview">
-                    <a href="{{ url('home/galleries') }}">
-                        <i class="fa fa-file-image-o"></i>
-                        <span>{{ trans('home.galleries') }}</span>
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="{{ classActiveRoute(array('home/galleries')) }}">
-                            <a href="{{ url('home/galleries') }}">
-                                {{ trans('home.all_galleries') }}
-                            </a>
-                        </li>
-                        <li class="{{ classActiveRoute(array('home/gallery/create')) }}">
-                            <a href="{{ url('home/gallery/create') }}">
-                                {{ trans('home.create_gallery') }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
                 <li class="{{ classActiveRoute(array('home/sitemeta', 'home/menu')) }} treeview">
                     <a href="{{ url('home/sitemeta') }}">
                         <i class="fa fa-cogs"></i>

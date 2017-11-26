@@ -2,15 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
 use App\Post;
 use App\Article;
-use App\Repositories\GalleryRepository;
 use App\Repositories\UserRepository;
 use App\Validators\ArticleValidator;
 use Illuminate\Http\Request;
 use App\Repositories\CategoryRepository;
-use App\User;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Cache;
@@ -107,8 +104,6 @@ class ArticleController extends PostController
 
 		$authorUser = $post->user()->with('userMeta')->first();
 
-		$post = $this->processGalleryShortcodes($post);
-
 		$socialShareButtons = $this->getSocialShareButtonsData($post);
 
 		/*
@@ -137,7 +132,6 @@ class ArticleController extends PostController
 	public function preview($slug)
 	{
 		$post = Article::findArticleBySlug($slug, true)->with('tags', 'categories')->firstOrFail();
-		$post = $this->processGalleryShortcodes($post);
 		$authorUser = $post->user()->with('userMeta')->first();
 		$comments = $post->hamComments()->get();
 		$commentCount = count($comments);

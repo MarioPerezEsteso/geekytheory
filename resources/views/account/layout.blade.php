@@ -298,10 +298,6 @@
                             <i class="zmdi zmdi-view-headline bg-orange"></i>
                             <small class="">News</small>
                         </a>
-                        <a class="col-4 app-shortcuts__item" href="">
-                            <i class="zmdi zmdi-image bg-light-green"></i>
-                            <small class="">Gallery</small>
-                        </a>
                     </div>
                 </div>
             </li>
