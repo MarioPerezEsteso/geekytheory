@@ -35,6 +35,58 @@
     @include('courses.partials.pricing')
 </section>
 
+<section class="container-fluid section-testimonials">
+    <div class="container testimonials-content">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="testimonials">
+                    <div class="active item">
+                        <blockquote><p>Denim you probably haven't heard of. Lorem ipsum dolor met consectetur
+                                adipisicing sit amet, consectetur adipisicing elit...</p></blockquote>
+                        <div class="carousel-info">
+                            <img alt="" src="http://keenthemes.com/assets/bootsnipp/img1-small.jpg" class="pull-left">
+                            <div class="pull-left">
+                                <span class="testimonials-name">Lina Mars</span>
+                                <span class="testimonials-post">Commercial Director</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonials">
+                    <div class="active item">
+                        <blockquote><p>consectetur adipisicing elit, of them jean shorts sed magna
+                                aliqua. Lorem ipsum dolor met. lorem ipsum</p></blockquote>
+                        <div class="carousel-info">
+                            <img alt="" src="http://keenthemes.com/assets/bootsnipp/img1-small.jpg" class="pull-left">
+                            <div class="pull-left">
+                                <span class="testimonials-name">Lina Mars</span>
+                                <span class="testimonials-post">Commercial Director</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonials">
+                    <div class="active item">
+                        <blockquote><p>Denim you probably haven't heard of. Lorem ipsum dolor met consectetur
+                                adipisicing sit amet, consectetur adipisicing elit</p></blockquote>
+                        <div class="carousel-info">
+                            <img alt="" src="http://keenthemes.com/assets/bootsnipp/img1-small.jpg" class="pull-left">
+                            <div class="pull-left">
+                                <span class="testimonials-name">Lina Mars</span>
+                                <span class="testimonials-post">Commercial Director</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 @include('courses.partials.footer')
 
 <script src="assets/vendor/flat-ui/dist/js/vendor/jquery.min.js"></script>
