@@ -57,4 +57,16 @@ class AccountControllerViewsTest extends TestCase
             'user has not subscription' => [false],
         ];
     }
+
+    /**
+     * Test that only logged users can visit the account page.
+     */
+    public function testVisitPageAccountNotLoggedInRedirectsToLogin()
+    {
+        // Request
+        $response = $this->call('GET', $this->accountUrl);
+
+        // Asserts
+        $response->assertRedirect($this->loginUrl);
+    }
 }
