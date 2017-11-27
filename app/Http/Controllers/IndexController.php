@@ -56,4 +56,14 @@ class IndexController extends Controller
         return view('courses.index', compact('posts', 'courses'));
     }
 
+    /**
+     * Show pricing page.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function pricing()
+    {
+        return view('courses.pricing');
+    }
+
 }

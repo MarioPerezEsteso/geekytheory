@@ -148,6 +148,10 @@ a {
     height: 740px;
 }
 
+.section-pricing-mt-53 {
+    margin-top: 53px;
+}
+
 @media (max-width: 576px) {
     .section-pricing {
         height: 1150px;

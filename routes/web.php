@@ -136,6 +136,11 @@ Route::post('account/subscription/card', [
     'uses' => 'SubscriptionController@updateCard',
 ]);
 
+Route::get('precios', [
+    'as' => 'pricing',
+    'uses' => 'IndexController@pricing',
+]);
+
 /*
  * Newsletter subscription routes
  */
