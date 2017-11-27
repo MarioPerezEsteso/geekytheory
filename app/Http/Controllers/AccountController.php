@@ -2,15 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Course;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
 {
     /**
-     * @return string
+     * Show the index page of the account section.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
     {
-        return 'AccountController@index';
+        $courses = Course::getPublished()->get();
+
+        /** @var User $user */
+        $user = Auth::user();
+        $userHasSubscriptionActive = $user->hasSubscriptionActive();
+
+        return view('account.index', compact('courses', 'userHasSubscriptionActive'));
     }
 }
