@@ -31,8 +31,8 @@
                 <div class="footer-banner">
                     <h3 class="footer-title"></h3>
                     <ul>
-                        <li>Acceder</li>
-                        <li>Registrarse</li>
+                        <li><a href="{{ route('login') }}">Acceder</a></li>
+                        <li><a href="{{ route('auth.register.get') }}">Registrarse</a></li>
                         <li>Términos y condiciones</li>
                         <li>Privacidad</li>
                         <li>Código de conducta</li>
