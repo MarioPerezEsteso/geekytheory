@@ -5920,6 +5920,7 @@ footer a {
   font-weight: 700;
 }
 footer p {
+  color: #34495e;
   font-size: 15px;
   line-height: 20px;
   margin-bottom: 10px;
@@ -5933,10 +5934,10 @@ footer p {
 .footer-brand {
   display: block;
   margin-bottom: 26px;
-  width: 220px;
+  padding-top: 40px;
 }
 .footer-brand img {
-  width: 216px;
+  width: 100%;
 }
 .footer-banner {
   background-color: #1abc9c;
