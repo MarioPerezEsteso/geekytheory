@@ -643,3 +643,14 @@ a {
     color: #656565;
     font-size: 12px;
 }
+
+/**
+ * FAQs
+ */
+.panel-question {
+    font-weight: bold;
+}
+
+.panel-faq {
+    background: #f8f8f8;
+}
