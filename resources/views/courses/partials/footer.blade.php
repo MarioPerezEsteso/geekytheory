@@ -18,6 +18,14 @@
                         </p>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-8">
+                        <p>
+                            &copy; 2017 Geeky Theory. Todos los derechos reservados.
+                        </p>
+                    </div>
+                </div>
+
             </div>
             <div class="col-lg-5 col-md-6 col-sm-6 col-xs-12">
                 <div class="footer-banner">
