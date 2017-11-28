@@ -654,3 +654,12 @@ a {
 .panel-faq {
     background: #f8f8f8;
 }
+
+/**
+ * Footer
+ */
+@media (max-width: 768px) {
+  .footer-banner {
+      margin-left: 0px;
+  }
+}
