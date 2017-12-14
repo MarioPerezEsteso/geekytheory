@@ -51,47 +51,32 @@
                 {!! Form::open(['url' => 'account/subscription', 'method' => 'POST', 'id' => 'subscription-form']) !!}
                 {!! Form::close() !!}
 
-                <div class="row price-table price-table--highlight">
-                    <div class="col-md-6">
-                        <div class="price-table__item">
-                            <header class="price-table__header bg-teal">
-                                <div class="price-table__title">Plan Gratuito</div>
-                            </header>
-                            <div class="price-table__price color-teal">
-                                0 €/
-                                <small>mes</small>
-                            </div>
-                            <ul class="price-table__info">
-                                <li>In dapibus ipsum sit amet leo</li>
-                                <li>Vestibulum ut mauris tellus donec</li>
-                                <li>Purna lectus venenatis felis nonsemper</li>
-                                <li>Aliquam erat volutpat hasellus ultri</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="price-table__item price-table__item--popular">
-                            <header class="price-table__header bg-blue">
-                                <div class="price-table__title">Plan Premium</div>
-                            </header>
-                            <div class="price-table__price color-blue">
-                                {{ \App\Subscription::PLAN_MONTHLY_PRICE_EUR }} €/
-                                <small>mes</small>
-                            </div>
-                            <ul class="price-table__info">
-                                <li>Morbi leo risus porta acconseetur</li>
-                                <li>Nullam quis risus eget urna mollis ornare</li>
-                                <li>Purna lectus venenatis felis nonsemper</li>
-                                <li>Aenean ellentesque ornare sem lacinia</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
+                {{--@include('account.subscriptions.partials.pricingTable')--}}
 
                 <div class="card">
+                    <div class="card-header card-header-subscription-info">
+                        <div class="row">
+                            <div class="col-lg-1 col-md-1 col-sm-1 hidden-xs-down">
+                                <div class="subscription-info-icon">
+                                    <i class="zmdi zmdi-library zmdi-hc-fw"></i>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-md-6 col-sm-6 col-xs-12">
+                                <h2 class="card-title">Estás comprando una cuenta PRO</h2>
+                                <small class="card-subtitle">
+                                    Tendrás acceso a todos los cursos
+                                </small>
+                            </div>
+                            <div class="col-lg-4 col-md-5 col-sm-5 col-xs-12">
+                                <h2 class="card-title">15 €/mes</h2>
+                                <small class="card-subtitle">
+                                    Impuestos incluidos
+                                </small>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-header">
-                        <h2 class="card-title">Datos de pago</h2>
+                        <h3 class="card-title">Datos de pago</h3>
                         <small class="card-subtitle">
                             Introduce los datos de tu tarjeta para suscribirte a nuestro plan Premium.
                         </small>
@@ -179,7 +164,8 @@
                         <div class="card-header">
                             <h2 class="card-title">Zona peligrosa</h2>
                             <div class="actions">
-                                <a data-toggle="collapse" href="#collapse-panel" class="actions__item zmdi zmdi-chevron-down zmdi-hc-fw"></a>
+                                <a data-toggle="collapse" href="#collapse-panel"
+                                   class="actions__item zmdi zmdi-chevron-down zmdi-hc-fw"></a>
                             </div>
                         </div>
                         <div id="collapse-panel" class="panel-collapse collapse">

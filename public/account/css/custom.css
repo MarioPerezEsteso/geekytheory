@@ -13,6 +13,26 @@
     font-size: 20px;
 }
 
+.card-header-subscription-info {
+    background-color: #1abc9c;
+    border-color: #1abc9c;
+    color: #FFF;
+}
+
+.card-header-subscription-info .card-title {
+    color: #FFF;
+    font-weight: 500;
+}
+
+.card-header-subscription-info .card-subtitle {
+    color: #FFF;
+    font-weight: 300;
+}
+
+.card-header-subscription-info .subscription-info-icon {
+    font-size: 200%;
+}
+
 .alert-go-pro {
     background-color: #1abc9c;
     border-color: #1abc9c;
