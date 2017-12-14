@@ -6,7 +6,8 @@
 
     <title>@yield('pageTitle')</title>
     <!-- Vendor styles -->
-    <link rel="stylesheet" href="/account/vendor/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet"
+          href="/account/vendor/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="/account/vendor/animate.css/animate.min.css">
     <link rel="stylesheet" href="/account/vendor/jquery.scrollbar/jquery.scrollbar.css">
     <link rel="stylesheet" href="/account/vendor/fullcalendar/dist/fullcalendar.min.css">

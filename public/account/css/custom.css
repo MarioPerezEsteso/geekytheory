@@ -12,3 +12,14 @@
 .subscription-current-card {
     font-size: 20px;
 }
+
+.alert-go-pro {
+    background-color: #1abc9c;
+    border-color: #1abc9c;
+    color: #FFF;
+}
+
+.alert-go-pro > p {
+    font-size: 20px;
+    margin-bottom: 0rem;
+}
