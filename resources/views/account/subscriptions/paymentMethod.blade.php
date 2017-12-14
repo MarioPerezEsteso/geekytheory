@@ -78,17 +78,10 @@
                 </div>
                 <div class="card-block">
                     <div class="row">
-                        <div class="col-lg-8 col-sm-12">
+                        <div class="col-lg-12 col-sm-12">
                             <div class="form-group form-group--float">
                                 {!! Form::text('name', null, ['class' => 'form-control', 'required' => 'required', 'id' => 'credit-card-name',]) !!}
                                 {!! Form::label('name', trans('home.credit_card_name'), ['class' => 'form-control-label']) !!}
-                                <i class="form-group__bar"></i>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-sm-12">
-                            <div class="form-group form-group--float">
-                                {!! Form::text('postal_code', null, ['class' => 'form-control', 'required' => 'required', 'id' => 'postal-code',]) !!}
-                                {!! Form::label('postal_code', trans('home.postal_code'), ['class' => 'form-control-label']) !!}
                                 <i class="form-group__bar"></i>
                             </div>
                         </div>

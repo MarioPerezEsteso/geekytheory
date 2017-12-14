@@ -8,7 +8,6 @@ Stripe.setPublishableKey(window.stripePublicKey);
 
 $('#btn-add-credit-card').click(function () {
     var creditCardNameInput = $('#credit-card-name');
-    var postalCodeInput = $('#postal-code');
     var creditCardNumberInput = $('#credit-card-number');
     var creditCardExpirationMonthInput = $('#credit-card-expiration-month');
     var creditCardExpirationYearInput = $('#credit-card-expiration-year');
@@ -22,13 +21,6 @@ $('#btn-add-credit-card').click(function () {
         creditCardNameInput.closest('div').addClass(classInputWithError);
     } else {
         creditCardNameInput.closest('div').removeClass(classInputWithError);
-    }
-
-    if (!postalCodeInput.val()) {
-        errors = true;
-        postalCodeInput.closest('div').addClass(classInputWithError);
-    } else {
-        postalCodeInput.closest('div').removeClass(classInputWithError);
     }
 
     if (!Stripe.card.validateCardNumber(creditCardNumberInput.val())) {
@@ -60,8 +52,7 @@ $('#btn-add-credit-card').click(function () {
             cvc: creditCardExpirationCVVInput.val(),
             exp_month: creditCardExpirationMonthInput.val(),
             exp_year: creditCardExpirationYearInput.val(),
-            name: creditCardNameInput.val(),
-            address_zip: postalCodeInput.val()
+            name: creditCardNameInput.val()
         }, stripeResponseHandler);
     }
 });
