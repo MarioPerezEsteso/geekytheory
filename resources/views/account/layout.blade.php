@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="/account/vendor/fullcalendar/dist/fullcalendar.min.css">
 
     <!-- App styles -->
-    <link rel="stylesheet" href="/account/css/app.min.css">
-    <link rel="stylesheet" href="/account/css/custom.css">
+    <link rel="stylesheet" href="{{ autoVersion("/account/css/app.min.css") }}">
+    <link rel="stylesheet" href="{{ autoVersion("/account/css/custom.css") }}">
 </head>
 
 <body data-ma-theme="dark-blue">
@@ -100,17 +100,6 @@
 
         @yield('content')
 
-        <footer class="footer hidden-xs-down">
-            <p>Geeky Theory. Todos los derechos reservados.</p>
-
-            <ul class="nav footer__nav">
-                <a class="nav-link" href="">Inicio</a>
-                <a class="nav-link" href="">Cursos</a>
-                <a class="nav-link" href="">Blog</a>
-                <a class="nav-link" href="">Sobre nosotros</a>
-                <a class="nav-link" href="">Soporte</a>
-            </ul>
-        </footer>
     </section>
 </main>
 
