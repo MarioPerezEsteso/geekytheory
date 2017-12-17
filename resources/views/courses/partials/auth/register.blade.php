@@ -5,13 +5,13 @@
     {!! Form::open(['route' => 'auth.register.post', 'class' => 'login-form']) !!}
     <div class="form-group">
         <input type="text" class="form-control login-field" value=""
-               placeholder="Introduce tu nombre" name="name" id="name">
+               placeholder="Nombre" name="name" id="name">
         <label class="login-field-icon fui-user" for="name"></label>
     </div>
 
     <div class="form-group">
         <input type="email" class="form-control login-field" value=""
-               placeholder="Introduce tu email"
+               placeholder="Email"
                id="email"
                name="email">
         <label class="login-field-icon fui-mail" for="email"></label>
