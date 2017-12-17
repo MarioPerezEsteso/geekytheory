@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
 
     <!-- Loading Flat UI -->
-    <link href="assets/vendor/flat-ui/dist/css/flat-ui.css" rel="stylesheet">
-    <link href="{{ autoVersion('assets/courses/css/app.css') }}" rel="stylesheet">
+    <link href="/assets/vendor/flat-ui/dist/css/flat-ui.css" rel="stylesheet">
+    <link href="{{ autoVersion('/assets/courses/css/app.css') }}" rel="stylesheet">
 
     <link rel="shortcut icon" href="assets/vendor/flat-ui/img/favicon.ico">
 
@@ -34,14 +34,23 @@
 <div class="jumbotron jumbotron-home background-home center-flex">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6">
-                <h1 class="jumbotron-title">Aprende programación, desarrollo web y mucho más</h1>
-                <p>Con Geeky Theory aprenderás a programar desde Javascript a Laravel, pasando por SQL y muchas tecnologías más. ¿Quieres convertirte
-                    en un desarrollador experto? ¡Apúntate!</p>
-            </div>
-            <div class="col-lg-5 col-lg-push-1">
-                @include('courses.partials.auth.register')
-            </div>
+            @if (!isset($user))
+                <div class="col-lg-6 col-md-6 hidden-xs">
+                    <h1 class="jumbotron-title">{{ trans('public.home_header') }}</h1>
+                    <p>{{ trans('public.home_subheader') }}</p>
+                </div>
+                <div class="col-lg-5 col-lg-push-1 col-md-6">
+                    @include('courses.partials.auth.register')
+                </div>
+            @else
+                <div class="col-lg-6 col-md-6">
+                    <h3 class="jumbotron-title">{{ trans('public.home_header') }}</h3>
+                    <p>{{ trans('public.home_subheader') }}</p>
+                </div>
+                <div class="col-lg-5 col-lg-push-1 col-md-6 hidden-sm hidden-xs">
+                    <img class="img-responsive" src="/images/terminal.png">
+                </div>
+            @endif
         </div>
     </div>
 </div>

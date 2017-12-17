@@ -86,6 +86,10 @@ a {
 }
 
 @media (max-width: 768px) {
+    .jumbotron-home {
+        height: auto;
+    }
+
     .jumbotron-post {
         padding: 0px;
     }
