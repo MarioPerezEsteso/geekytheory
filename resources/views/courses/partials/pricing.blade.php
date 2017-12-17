@@ -9,25 +9,13 @@
                         Básico
                     </li>
                     <li class="plan-price">
-                        <strong>Gratis</strong>
+                        <strong>0 €/mes</strong>
                     </li>
                     <li>
-                        <strong>5GB</strong> Storage
-                    </li>
-                    <li>
-                        <strong>1GB</strong> RAM
-                    </li>
-                    <li>
-                        <strong>400GB</strong> Bandwidth
-                    </li>
-                    <li>
-                        <strong>10</strong> Email Address
-                    </li>
-                    <li>
-                        <strong>Forum</strong> Support
+                        <strong>Acceso a cursos gratuitos</strong>
                     </li>
                     <li class="plan-action">
-                        <a href="#" class="btn btn-inverse btn-lg">Signup</a>
+                        <a href="{{ route('auth.register.get') }}" class="btn btn-inverse btn-lg">Registrarse</a>
                     </li>
                 </ul>
             </div>
@@ -37,25 +25,25 @@
                         Premium
                     </li>
                     <li class="plan-price">
-                        <strong>15 €</strong> / mes
+                        <strong>15 €/mes</strong>
                     </li>
                     <li>
-                        <strong>5GB</strong> Storage
+                        <strong>Acceso a todo el contenido</strong>
                     </li>
                     <li>
-                        <strong>1GB</strong> RAM
+                        <strong>Certificado de finalización</strong>
                     </li>
                     <li>
-                        <strong>400GB</strong> Bandwidth
+                        <strong>Preguntar dudas en cada curso</strong>
                     </li>
                     <li>
-                        <strong>10</strong> Email Address
+                        <strong>Acceso a contenido exclusivo</strong>
                     </li>
                     <li>
-                        <strong>Forum</strong> Support
+                        <strong>Soporte</strong>
                     </li>
                     <li class="plan-action">
-                        <a href="#" class="btn btn-primary btn-lg">Signup</a>
+                        <a href="{{ route('auth.register.get') }}" class="btn btn-primary btn-lg">Registrarse</a>
                     </li>
                 </ul>
             </div>
