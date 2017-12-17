@@ -36,8 +36,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <h1 class="jumbotron-title">Aprende programación, desarrollo web y mucho más</h1>
-                <p>Geeky Theory ofrece un período de prueba de 7 días para que puedas probar todos los cursos del
-                    catálogo. Desde Javascript a Laravel, pasando por SQL y muchas tecnologías más. ¿Quieres convertirte
+                <p>Con Geeky Theory aprenderás a programar desde Javascript a Laravel, pasando por SQL y muchas tecnologías más. ¿Quieres convertirte
                     en un desarrollador experto? ¡Apúntate!</p>
             </div>
             <div class="col-lg-5 col-lg-push-1">
