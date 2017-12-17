@@ -76,4 +76,6 @@ return [
     'advanced' => 'Advanced',
     'course_does_not_exist' => 'The course does not exist.',
     'you_must_be_premium_subscriber' => 'You must be premium subscriber to join this course',
+    'home_header' => 'Aprende programación, desarrollo web y mucho más',
+    'home_subheader' => 'Con Geeky Theory aprenderás a programar desde Javascript a Laravel, pasando por SQL y muchas tecnologías más. ¿Quieres convertirte en un desarrollador experto? ¿Preparado?',
 ];
