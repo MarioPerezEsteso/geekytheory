@@ -97,11 +97,13 @@ class User extends Authenticatable
      */
     public function getBasicUserData()
     {
-        return array(
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'job' => $this->job,
             'email' => $this->email,
-            'avatar' => getGravatar($this->email, '100', 'mm', 'g'));
+            'avatar' => getGravatar($this->email, '100', 'mm', 'g'),
+            'premium' => $this->hasSubscriptionActive(),
+        ];
     }
 }

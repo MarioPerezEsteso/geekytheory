@@ -51,9 +51,11 @@
     @include('courses.partials.courses')
 </section>
 
-<section class="container-fluid section-pricing">
-    @include('courses.partials.pricing')
-</section>
+@if (!isset($user) || (isset($user) && !$user['premium']))
+    <section class="container-fluid section-pricing">
+        @include('courses.partials.pricing')
+    </section>
+@endif
 
 @include('courses.partials.footer')
 
