@@ -6,9 +6,14 @@
             @foreach ($courses as $course)
                 <div class="col-lg-4 col-sm-12">
                     <div class="card hovercard">
-                        <div class="cardheader" style="background: url('{{ $course->image }}');"></div>
+                        <div class="cardheader" style="background: url('{{ $course->image }}');">
+                            @if ($course->free)
+                                <div class="cardheader-label-free">Gratis</div>
+                            @endif
+                        </div>
                         <div class="avatar">
-                            <img alt="{{ $course->teacher->name }}" src="{{ getGravatar($course->teacher->email, 50) }}">
+                            <img alt="{{ $course->teacher->name }}"
+                                 src="{{ getGravatar($course->teacher->email, 50) }}">
                         </div>
                         <div class="info">
                             <div class="title">
@@ -21,13 +26,6 @@
                                     <div class="info">
                                         {{--<span class="fui-user info"></span>{{ $course->students }}--}}
                                     </div>
-                                </div>
-                                <div class="col-lg-8">
-                                    @if ($course->free)
-                                        <span class="pull-right subscription subscription-free">GRATIS</span>
-                                    @else
-                                        <span class="pull-right subscription subscription-pro">PREMIUM</span>
-                                    @endif
                                 </div>
                             </div>
                         </div>

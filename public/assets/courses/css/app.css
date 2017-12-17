@@ -361,6 +361,22 @@ a {
     height: 220px;
 }
 
+.cardheader .cardheader-label-free {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    right: 0px;
+    top: 0;
+    font-size: 0.8em;
+    padding: .9em;
+    color: #fff;
+    text-align: right;
+    text-transform: uppercase;
+    background-color: #1abc9c;
+    font-weight: bold;
+    border-bottom-left-radius: 3px;
+}
+
 .card.hovercard .avatar {
     position: relative;
     top: -25px;
