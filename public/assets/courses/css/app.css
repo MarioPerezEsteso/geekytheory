@@ -66,7 +66,9 @@ a {
 }
 
 .background-home {
-    background: url('https://images.unsplash.com/photo-1478180142614-26cabe747dbc?dpr=1&auto=format&fit=crop&w=1500&h=1000&q=80&cs=tinysrgb&crop=');
+    background: url('http://geekytheory.dev/images/background.png');
+    background-size: cover;
+    margin-top: 43px;
 }
 
 .jumbotron-course {
@@ -659,7 +661,7 @@ a {
  * Footer
  */
 @media (max-width: 768px) {
-  .footer-banner {
-      margin-left: 0px;
-  }
+    .footer-banner {
+        margin-left: 0px;
+    }
 }
