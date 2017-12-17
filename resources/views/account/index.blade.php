@@ -14,15 +14,11 @@
 
 @section('content')
     <div class="row">
-        <div class="col-lg-8">
-            @if (!$userHasSubscriptionActive)
-                <div class="alert alert-info" role="alert">
-                    <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
-                </div>
-            @endif
+        <div class="col-lg-8 col-md-12">
+            @include('account.partials.bannerGoPro')
             <div class="row">
                 @foreach($courses as $course)
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 col-md-4">
                         <div class="card">
                             <a href="{{ route('course', ['slug' => $course->slug]) }}">
                                 <img class="card-img-top" src="{{ $course->image }}">

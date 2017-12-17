@@ -14,7 +14,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-lg-5 col-md-6">
 
             @if (Session::has('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
