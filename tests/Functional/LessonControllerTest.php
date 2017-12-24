@@ -68,7 +68,7 @@ class LessonControllerTest extends TestCase
             'POST',
             $this->completeLessonPostUrl,
             [
-                'lessonId' => $lesson->id,
+                'lesson_id' => $lesson->id,
             ]
         );
 
@@ -226,7 +226,7 @@ class LessonControllerTest extends TestCase
             'POST',
             $this->completeLessonPostUrl,
             [
-                'lessonId' => $lesson->id,
+                'lesson_id' => $lesson->id,
             ]
         );
 
@@ -278,7 +278,7 @@ class LessonControllerTest extends TestCase
             'POST',
             $this->completeLessonPostUrl,
             [
-                'lessonId' => $lesson->id,
+                'lesson_id' => $lesson->id,
             ]
         );
 
@@ -325,7 +325,7 @@ class LessonControllerTest extends TestCase
             'POST',
             $this->completeLessonPostUrl,
             [
-                'lessonId' => 99999,
+                'lesson_id' => 99999,
             ]
         );
 
@@ -336,5 +336,59 @@ class LessonControllerTest extends TestCase
             'user_id' => $pupil->id,
             'lesson_id' => $lesson->id,
         ]);
+    }
+
+    /**
+     * Test complete a lesson with validation errors.
+     * @dataProvider providerTestCompleteLessonWithValidationErrors
+     *
+     * @param $requestData
+     * @param $validationErrorKeys
+     */
+    public function testCompleteLessonWithValidationErrors($requestData, $validationErrorKeys)
+    {
+        /** @var User $user */
+        $user = factory(User::class)->create();
+
+        // Request
+        $response = $this->actingAs($user)->call(
+            'POST',
+            $this->completeLessonPostUrl,
+            $requestData
+        );
+
+        // Asserts
+        $response->assertStatus(422);
+
+        $this->assertDatabaseMissing('users_lessons', [
+            'user_id' => $user->id,
+        ]);
+    }
+
+    /**
+     * Provider for testCompleteLessonWithValidationErrors.
+     *
+     * @return array
+     */
+    public function providerTestCompleteLessonWithValidationErrors(): array
+    {
+        return [
+            [
+                'requestData' => [
+                    'lesson_id' => null,
+                ],
+                'validationErrorKeys' => ['lesson_id',],
+            ], [
+                'requestData' => [
+                    'lesson_id' => 0,
+                ],
+                'validationErrorKeys' => ['lesson_id',],
+            ], [
+                'requestData' => [
+                    'lesson_id' => 'lesson-1',
+                ],
+                'validationErrorKeys' => ['lesson_id',],
+            ],
+        ];
     }
 }

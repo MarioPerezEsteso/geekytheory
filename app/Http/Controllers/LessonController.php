@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Course;
 use App\Lesson;
 use App\User;
+use App\Validators\LessonValidator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -24,6 +25,20 @@ class LessonController extends Controller
      * Template header name to show go pro message.
      */
     const TEMPLATE_HEADER_GOPREMIUM = 'headerGopremium';
+
+    /**
+     * @var LessonValidator
+     */
+    protected $lessonValidator;
+
+    /**
+     * LessonController constructor.
+     * @param LessonValidator $lessonValidator
+     */
+    public function __construct(LessonValidator $lessonValidator)
+    {
+        $this->lessonValidator = $lessonValidator;
+    }
 
     /**
      * Show a lesson of a course.
@@ -77,7 +92,15 @@ class LessonController extends Controller
      */
     public function complete(Request $request)
     {
-        // @TODO: validate request input
+        if (!$this->lessonValidator->with($request->all())->complete()->passes()) {
+
+            return response()->json(
+                [
+                    'message' => $this->lessonValidator->errors(),
+                ],
+                422
+            );
+        }
 
         /** @var Lesson $lesson */
         $lesson = Lesson::with('chapter.course')->findOrFail($request->lessonId);
@@ -91,6 +114,7 @@ class LessonController extends Controller
         }
 
         if ($user->hasCompletedLesson($lesson)) {
+
             return response()->json(
                 [
                     'message' => 'Lesson already completed',
@@ -99,6 +123,7 @@ class LessonController extends Controller
         }
 
         if (!policy($lesson)->complete($user, $lesson)) {
+
             return response()->json(
                 [
                     'message' => 'Could not mark lesson as completed',
