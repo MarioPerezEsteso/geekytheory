@@ -54,4 +54,24 @@ class Lesson extends Model
     {
         return $this->belongsTo('App\Chapter');
     }
+
+    /**
+     * Check if a lesson is free.
+     *
+     * @return bool
+     */
+    public function isFree(): bool
+    {
+        return $this->free;
+    }
+
+    /**
+     * Check if a lesson is premium.
+     *
+     * @return bool
+     */
+    public function isPremium(): bool
+    {
+        return !$this->isFree();
+    }
 }

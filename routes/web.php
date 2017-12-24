@@ -76,6 +76,15 @@ Route::post('curso/{id}/matriculacion', [
     'uses' => 'CourseController@join',
 ]);
 
+Route::post('lesson/complete', [
+    'as' => 'lesson.complete',
+    'middleware' => 'auth',
+    'uses' => 'LessonController@complete',
+]);
+
+/**
+ * Routes for account
+ */
 Route::get('cuenta', [
     'as' => 'account',
     'middleware' => 'auth',

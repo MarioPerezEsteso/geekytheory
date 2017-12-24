@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Lesson;
 use App\User;
-use Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LessonController extends Controller
 {
@@ -67,4 +69,74 @@ class LessonController extends Controller
 
         return view('courses.lesson', compact('course', 'lesson', 'user', 'showHeaderTemplate'));
     }
+
+    /**
+     * Mark lesson as completed for a certain user.
+     *
+     * @param Request $request
+     */
+    public function complete(Request $request)
+    {
+        // @TODO: validate request input
+
+        /** @var Lesson $lesson */
+        $lesson = Lesson::with('chapter.course')->findOrFail($request->lessonId);
+
+        /** @var User $user */
+        $user = Auth::user();
+
+        // Check if the course is published
+        if (!$lesson->chapter->course->isPublished()) {
+            abort(404);
+        }
+
+        if (!policy($lesson)->complete($user, $lesson)) {
+            return response()->json(
+                [
+                    'message' => 'Could not mark lesson as completed',
+                ],
+                403
+            );
+        }
+
+        $user->lessons()->attach($lesson->id);
+
+        return response()->json(
+            [
+                'message' => 'Lesson completed',
+            ]
+        );
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
