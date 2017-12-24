@@ -7,6 +7,7 @@ use App\Course;
 use App\Lesson;
 use App\User;
 use Tests\Helpers\Response;
+use Tests\Helpers\TestConstants;
 use Tests\Helpers\TestUtils;
 use Tests\TestCase;
 
@@ -243,8 +244,51 @@ class LessonControllerTest extends TestCase
         ]);
     }
 
+    /**
+     * Test complete a lesson of a course that has not been published throws a 404 error.
+     */
     public function testCompleteLessonOfCourseNotPublishedError()
     {
+        // Prepare
+        $courses = TestUtils::createCoursesWithChaptersAndLessons(
+            null,
+            1,
+            1,
+            1,
+            [
+                'free' => true,
+                'status' => 'draft',
+            ]
+        );
 
+        /** @var Course $course */
+        $course = $courses->first();
+
+        /** @var Chapter $chapter */
+        $chapter = $course->chapters->first();
+
+        /** @var Lesson $lesson */
+        $lesson = TestUtils::addLessonToCourseChapter($chapter, ['free' => true,]);
+
+        /** @var User $pupil */
+        $pupil = factory(User::class)->create([]);
+
+        // Request
+        /** @var Response $response */
+        $response = $this->actingAs($pupil)->call(
+            'POST',
+            $this->completeLessonPostUrl,
+            [
+                'lessonId' => $lesson->id,
+            ]
+        );
+
+        // Asserts
+        $response->assertStatus(404);
+
+        $this->assertDatabaseMissing('users_lessons', [
+            'user_id' => $pupil->id,
+            'lesson_id' => $lesson->id,
+        ]);
     }
 }
