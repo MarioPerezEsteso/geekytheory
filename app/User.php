@@ -116,6 +116,17 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if a user has completed a lesson.
+     *
+     * @param Lesson $lesson
+     * @return bool
+     */
+    public function hasCompletedLesson(Lesson $lesson): bool
+    {
+        return $this->lessons->contains($lesson);
+    }
+
+    /**
      * Returns the basic user data for the admin panel view.
      *
      * @return array

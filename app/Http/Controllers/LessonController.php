@@ -90,6 +90,14 @@ class LessonController extends Controller
             abort(404);
         }
 
+        if ($user->hasCompletedLesson($lesson)) {
+            return response()->json(
+                [
+                    'message' => 'Lesson already completed',
+                ]
+            );
+        }
+
         if (!policy($lesson)->complete($user, $lesson)) {
             return response()->json(
                 [
