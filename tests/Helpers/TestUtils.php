@@ -188,6 +188,17 @@ class TestUtils
     }
 
     /**
+     * Mark lesson as completed for a given user.
+     *
+     * @param User $user
+     * @param Lesson $lesson
+     */
+    public static function markLessonAsCompletedForUser(User $user, Lesson $lesson)
+    {
+        $user->lessons()->attach($lesson->id);
+    }
+
+    /**
      * Create comments.
      *
      * @param int $postId

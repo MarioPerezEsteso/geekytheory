@@ -189,4 +189,62 @@ class LessonControllerTest extends TestCase
             ],
         ];
     }
+
+    /**
+     * Test complete a lesson that has already been completed.
+     */
+    public function testCompleteLessonThatHasBeenAlreadyCompletedOk()
+    {
+        // Prepare
+        $courses = TestUtils::createCoursesWithChaptersAndLessons(
+            null,
+            1,
+            1,
+            1,
+            ['free' => true,]
+        );
+
+        /** @var Course $course */
+        $course = $courses->first();
+
+        /** @var Chapter $chapter */
+        $chapter = $course->chapters->first();
+
+        /** @var Lesson $lesson */
+        $lesson = TestUtils::addLessonToCourseChapter($chapter, ['free' => true,]);
+
+        /** @var User $pupil */
+        $pupil = factory(User::class)->create([]);
+
+        TestUtils::enrollUserInCourse($pupil, $course);
+
+        TestUtils::markLessonAsCompletedForUser($pupil, $lesson);
+
+        // Request
+        /** @var Response $response */
+        $response = $this->actingAs($pupil)->call(
+            'POST',
+            $this->completeLessonPostUrl,
+            [
+                'lessonId' => $lesson->id,
+            ]
+        );
+
+        // Asserts
+        $response->assertStatus(200);
+
+        $response->assertExactJson([
+            'message' => 'Lesson already completed',
+        ]);
+
+        $this->assertDatabaseHas('users_lessons', [
+            'user_id' => $pupil->id,
+            'lesson_id' => $lesson->id,
+        ]);
+    }
+
+    public function testCompleteLessonOfCourseNotPublishedError()
+    {
+
+    }
 }
