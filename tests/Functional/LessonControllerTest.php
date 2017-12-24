@@ -7,7 +7,6 @@ use App\Course;
 use App\Lesson;
 use App\User;
 use Tests\Helpers\Response;
-use Tests\Helpers\TestConstants;
 use Tests\Helpers\TestUtils;
 use Tests\TestCase;
 
@@ -247,7 +246,7 @@ class LessonControllerTest extends TestCase
     /**
      * Test complete a lesson of a course that has not been published throws a 404 error.
      */
-    public function testCompleteLessonOfCourseNotPublishedError()
+    public function testCompleteLessonOfCourseNotPublishedThrowsError()
     {
         // Prepare
         $courses = TestUtils::createCoursesWithChaptersAndLessons(
@@ -280,6 +279,53 @@ class LessonControllerTest extends TestCase
             $this->completeLessonPostUrl,
             [
                 'lessonId' => $lesson->id,
+            ]
+        );
+
+        // Asserts
+        $response->assertStatus(404);
+
+        $this->assertDatabaseMissing('users_lessons', [
+            'user_id' => $pupil->id,
+            'lesson_id' => $lesson->id,
+        ]);
+    }
+
+    /**
+     * Test complete a lesson that does not exist throws a 404 error.
+     */
+    public function testCompleteLessonThatDoesNotExistThrowsError()
+    {
+        // Prepare
+        $courses = TestUtils::createCoursesWithChaptersAndLessons(
+            null,
+            1,
+            1,
+            1,
+            [
+                'free' => true,
+            ]
+        );
+
+        /** @var Course $course */
+        $course = $courses->first();
+
+        /** @var Chapter $chapter */
+        $chapter = $course->chapters->first();
+
+        /** @var Lesson $lesson */
+        $lesson = TestUtils::addLessonToCourseChapter($chapter, ['free' => true,]);
+
+        /** @var User $pupil */
+        $pupil = factory(User::class)->create([]);
+
+        // Request
+        /** @var Response $response */
+        $response = $this->actingAs($pupil)->call(
+            'POST',
+            $this->completeLessonPostUrl,
+            [
+                'lessonId' => 99999,
             ]
         );
 
