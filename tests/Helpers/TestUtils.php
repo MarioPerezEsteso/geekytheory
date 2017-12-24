@@ -79,7 +79,7 @@ class TestUtils
                         'video' => 'https://youtube.com/whatever',
                         'order' => $numLessons,
                         'duration' => $faker->numberBetween(10, 50),
-                        'free' => false,
+                        'free' => $courseAttributes['free'],
                     ]);
                 }
             }
@@ -119,7 +119,7 @@ class TestUtils
      * @param array $userAndCardAttributes
      * @param array $subscriptionAttributes
      * @param bool $createSubscriptionInStripe
-     * @return void
+     * @return array
      */
     public static function createUserAndSubscription($userAndCardAttributes = [], $subscriptionAttributes = [], $createSubscriptionInStripe = false)
     {

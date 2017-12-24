@@ -1,0 +1,192 @@
+<?php
+
+namespace Tests\Functional;
+
+use App\Chapter;
+use App\Course;
+use App\Lesson;
+use App\User;
+use Tests\Helpers\Response;
+use Tests\Helpers\TestUtils;
+use Tests\TestCase;
+
+class LessonControllerTest extends TestCase
+{
+    /**
+     * Subscription creation POST URL.
+     *
+     * @var string
+     */
+    protected $completeLessonPostUrl = '/lesson/complete';
+
+    /**
+     * Test complete lesson.
+     * @dataProvider providerTestCompleteLesson
+     *
+     * @param array $example
+     */
+    public function testCompleteLesson($example)
+    {
+        // Prepare
+        $isFreeCourse = $example['premiumCourse'] === false;
+        $isFreeLesson = $example['premiumLesson'] === false;
+        $hasJoinedCourse = $example['joinedCourse'] === true;
+        $isPremiumUser = $example['premiumUser'] === true;
+        $userCanMarkLessonAsCompleted = $example['canMarkLessonAsCompleted'] === true;
+
+        $courses = TestUtils::createCoursesWithChaptersAndLessons(
+            null,
+            1,
+            1,
+            1,
+            ['free' => $isFreeCourse,]
+        );
+
+        /** @var Course $course */
+        $course = $courses->first();
+
+        /** @var Chapter $chapter */
+        $chapter = $course->chapters->first();
+
+        /** @var Lesson $lesson */
+        $lesson = TestUtils::addLessonToCourseChapter($chapter, ['free' => $isFreeLesson,]);
+
+        /** @var User $pupil */
+        if ($isPremiumUser) {
+            list($pupil, $subscription) = TestUtils::createUserAndSubscription();
+        } else {
+            $pupil = factory(User::class)->create([]);
+        }
+
+        if ($hasJoinedCourse) {
+            TestUtils::enrollUserInCourse($pupil, $course);
+        }
+
+        // Request
+        /** @var Response $response */
+        $response = $this->actingAs($pupil)->call(
+            'POST',
+            $this->completeLessonPostUrl,
+            [
+                'lessonId' => $lesson->id,
+            ]
+        );
+
+        // Asserts
+        if ($userCanMarkLessonAsCompleted) {
+            $response->assertStatus(200);
+
+            $response->assertExactJson([
+                'message' => 'Lesson completed',
+            ]);
+
+            $this->assertDatabaseHas('users_lessons', [
+                'user_id' => $pupil->id,
+                'lesson_id' => $lesson->id,
+            ]);
+        } else {
+            $response->assertStatus(403);
+
+            $response->assertExactJson([
+                'message' => 'Could not mark lesson as completed',
+            ]);
+
+            $this->assertDatabaseMissing('users_lessons', [
+                'user_id' => $pupil->id,
+                'lesson_id' => $lesson->id,
+            ]);
+        }
+    }
+
+    /**
+     * Data provider for testCompleteLesson.
+     *
+     * @return array
+     */
+    public function providerTestCompleteLesson(): array
+    {
+        return [
+            [
+                [
+                    'joinedCourse' => false,
+                    'premiumCourse' => false,
+                    'premiumLesson' => false,
+                    'premiumUser' => false,
+                    'canMarkLessonAsCompleted' => false,
+                ]
+            ], [
+                [
+                    'joinedCourse' => false,
+                    'premiumCourse' => false,
+                    'premiumLesson' => false,
+                    'premiumUser' => true,
+                    'canMarkLessonAsCompleted' => false,
+                ]
+            ], [
+                [
+                    'joinedCourse' => false,
+                    'premiumCourse' => true,
+                    'premiumLesson' => false,
+                    'premiumUser' => false,
+                    'canMarkLessonAsCompleted' => true,
+                ]
+            ], [
+                [
+                    'joinedCourse' => false,
+                    'premiumCourse' => true,
+                    'premiumLesson' => false,
+                    'premiumUser' => true,
+                    'canMarkLessonAsCompleted' => true,
+                ]
+            ], [
+                [
+                    'joinedCourse' => false,
+                    'premiumCourse' => true,
+                    'premiumLesson' => true,
+                    'premiumUser' => false,
+                    'canMarkLessonAsCompleted' => false,
+                ]
+            ], [
+                [
+                    'joinedCourse' => false,
+                    'premiumCourse' => true,
+                    'premiumLesson' => true,
+                    'premiumUser' => true,
+                    'canMarkLessonAsCompleted' => false,
+                ]
+            ], [
+                [
+                    'joinedCourse' => true,
+                    'premiumCourse' => false,
+                    'premiumLesson' => false,
+                    'premiumUser' => false,
+                    'canMarkLessonAsCompleted' => true,
+                ]
+            ], [
+                [
+                    'joinedCourse' => true,
+                    'premiumCourse' => false,
+                    'premiumLesson' => false,
+                    'premiumUser' => true,
+                    'canMarkLessonAsCompleted' => true,
+                ]
+            ], [
+                [
+                    'joinedCourse' => true,
+                    'premiumCourse' => true,
+                    'premiumLesson' => false,
+                    'premiumUser' => true,
+                    'canMarkLessonAsCompleted' => true,
+                ]
+            ], [
+                [
+                    'joinedCourse' => true,
+                    'premiumCourse' => true,
+                    'premiumLesson' => true,
+                    'premiumUser' => true,
+                    'canMarkLessonAsCompleted' => true,
+                ]
+            ],
+        ];
+    }
+}
