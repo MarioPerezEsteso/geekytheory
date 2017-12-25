@@ -11,12 +11,17 @@
                     @foreach($chapter->lessons as $lesson)
                         <li class="list-group-item">
                             <div class="row">
-                                <div class="col-sm-7">
+                                <div class="col-sm-1 col-xs-1">
+                                    @if ($lesson->completed === true)
+                                        <span class="lesson-completed-icon fui-check-circle"></span>
+                                    @endif
+                                </div>
+                                <div class="col-sm-7 col-xs-7">
                                     <a href="{{ route('course.lesson', ['courseSlug' => $course->slug, 'lessonSlug' => $lesson->slug]) }}">
                                         {{ $chapter->order }}.{{ $lesson->order }}. {{ $lesson->title }}
                                     </a>
                                 </div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-4 col-xs-4">
                                     <div class="pull-right">
                                         @if(!Auth::user())
                                             @if($course->free || $lesson->free)

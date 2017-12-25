@@ -82,6 +82,18 @@ class LessonController extends Controller
             $showHeaderTemplate = self::TEMPLATE_HEADER_REGISTER;
         }
 
+        if ($user) {
+            $completedLessons = $user->lessons;
+
+            foreach ($course->chapters as $chapter) {
+                foreach ($chapter->lessons as $chapterLesson) {
+                    if ($completedLessons->contains($chapterLesson)) {
+                        $chapterLesson->completed = true;
+                    }
+                }
+            }
+        }
+
         return view('courses.lesson', compact('course', 'lesson', 'user', 'showHeaderTemplate'));
     }
 
