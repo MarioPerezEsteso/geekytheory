@@ -94,7 +94,36 @@ class LessonController extends Controller
             }
         }
 
-        return view('courses.lesson', compact('course', 'lesson', 'user', 'showHeaderTemplate'));
+        list($previousLesson, $nextLesson) = $this->getPreviousAndNextLessons($course, $lesson);
+
+        return view('courses.lesson', compact('course', 'lesson', 'user', 'showHeaderTemplate', 'previousLesson', 'nextLesson'));
+    }
+
+    /**
+     * Get the previous and next lessons for navigation purposes.
+     *
+     * @param Course $course
+     * @param Lesson $currentLesson
+     * @return array
+     */
+    public function getPreviousAndNextLessons($course, $currentLesson): array
+    {
+        $previousLesson = null;
+        $nextLesson = null;
+
+        foreach ($course->chapters as $chapter) {
+            foreach ($chapter->lessons as $lesson) {
+                if ($lesson->order === $currentLesson->order + 1) {
+                    $nextLesson = $lesson;
+                }
+
+                if ($lesson->order === $currentLesson->order - 1) {
+                    $previousLesson = $lesson;
+                }
+            }
+        }
+
+        return [$previousLesson, $nextLesson];
     }
 
     /**
