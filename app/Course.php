@@ -113,4 +113,24 @@ class Course extends Model
     {
         return $this->status === self::STATUS_PUBLISHED;
     }
+
+    /**
+     * Check if a course is free.
+     *
+     * @return bool
+     */
+    public function isFree(): bool
+    {
+        return $this->free;
+    }
+
+    /**
+     * Check if a course is premium.
+     *
+     * @return bool
+     */
+    public function isPremium(): bool
+    {
+        return !$this->isFree();
+    }
 }

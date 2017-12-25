@@ -77,7 +77,21 @@ class User extends Authenticatable
      */
     public function courses()
     {
-        return $this->belongsToMany('App\Course', 'users_courses', 'user_id', 'course_id')->withTimestamps();
+        return $this
+            ->belongsToMany('App\Course', 'users_courses', 'user_id', 'course_id')
+            ->withTimestamps();
+    }
+
+    /**
+     * Get user lessons.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function lessons()
+    {
+        return $this
+            ->belongsToMany('App\Lesson', 'users_lessons', 'user_id', 'lesson_id')
+            ->withTimestamps();
     }
 
     /**
@@ -88,6 +102,28 @@ class User extends Authenticatable
     public function hasSubscriptionActive()
     {
         return $this->subscribed(Subscription::PLAN_NAME, Subscription::PLAN_MONTHLY);
+    }
+
+    /**
+     * Check if a user has joined a course.
+     *
+     * @param Course $course
+     * @return bool
+     */
+    public function hasJoinedCourse(Course $course): bool
+    {
+        return $this->courses->contains($course);
+    }
+
+    /**
+     * Check if a user has completed a lesson.
+     *
+     * @param Lesson $lesson
+     * @return bool
+     */
+    public function hasCompletedLesson(Lesson $lesson): bool
+    {
+        return $this->lessons->contains($lesson);
     }
 
     /**

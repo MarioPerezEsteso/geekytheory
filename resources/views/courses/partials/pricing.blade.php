@@ -15,7 +15,7 @@
                         <strong>Acceso a cursos gratuitos</strong>
                     </li>
                     <li class="plan-action">
-                        <a href="{{ route('auth.register.get') }}" class="btn btn-inverse btn-lg">Registrarse</a>
+                        <a href="{{ route('auth.register.get') }}" class="btn btn-inverse btn-lg">{{ trans('public.obtain') }}</a>
                     </li>
                 </ul>
             </div>
@@ -43,7 +43,7 @@
                         <strong>Soporte</strong>
                     </li>
                     <li class="plan-action">
-                        <a href="{{ route('auth.register.get') }}" class="btn btn-primary btn-lg">Registrarse</a>
+                        <a href="{{ route('auth.register.get') }}" class="btn btn-primary btn-lg">{{ trans('public.obtain') }}</a>
                     </li>
                 </ul>
             </div>

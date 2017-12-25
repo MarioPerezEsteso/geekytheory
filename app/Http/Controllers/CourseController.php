@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\MessageBag;
@@ -25,7 +26,20 @@ class CourseController extends Controller
         $userHasJoinedCourse = false;
 
         if (!is_null($loggedUser)) {
-            $userHasJoinedCourse = $loggedUser->courses->contains($course);
+            $userHasJoinedCourse = $loggedUser->hasJoinedCourse($course);
+
+            if ($userHasJoinedCourse) {
+                /** @var Collection $completedLessons */
+                $completedLessons = $loggedUser->lessons;
+
+                foreach ($course->chapters as $chapter) {
+                    foreach ($chapter->lessons as $chapterLesson) {
+                        if ($completedLessons->contains($chapterLesson)) {
+                            $chapterLesson->completed = true;
+                        }
+                    }
+                }
+            }
         }
 
         return view('courses.single', compact('course', 'userHasJoinedCourse'));
