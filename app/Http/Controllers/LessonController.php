@@ -103,7 +103,7 @@ class LessonController extends Controller
         }
 
         /** @var Lesson $lesson */
-        $lesson = Lesson::with('chapter.course')->findOrFail($request->lessonId);
+        $lesson = Lesson::with('chapter.course')->findOrFail($request->lesson_id);
 
         /** @var User $user */
         $user = Auth::user();

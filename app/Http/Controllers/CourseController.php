@@ -25,7 +25,7 @@ class CourseController extends Controller
         $userHasJoinedCourse = false;
 
         if (!is_null($loggedUser)) {
-            $userHasJoinedCourse = $user->hasJoinedCourse($course);
+            $userHasJoinedCourse = $loggedUser->hasJoinedCourse($course);
         }
 
         return view('courses.single', compact('course', 'userHasJoinedCourse'));

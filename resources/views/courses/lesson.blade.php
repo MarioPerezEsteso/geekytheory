@@ -6,6 +6,7 @@
     <meta name="description" content="Geeky Theory Cursos"/>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Loading Bootstrap -->
     <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -27,7 +28,7 @@
 
     @include('courses.partials.cookies')
 </head>
-<body>
+<body data-lesson-id="{{ $lesson->id }}">
 
 @include('courses.partials.navbar')
 
@@ -77,6 +78,8 @@
 <script src="/assets/vendor/flat-ui/dist/js/vendor/video.js"></script>
 <script src="/assets/vendor/flat-ui/dist/js/flat-ui.min.js"></script>
 <script src="/assets/vendor/flat-ui/docs/assets/js/application.js"></script>
+<script src="https://player.vimeo.com/api/player.js"></script>
+<script src="/assets/courses/js/video.js"></script>
 
 </body>
 </html>
