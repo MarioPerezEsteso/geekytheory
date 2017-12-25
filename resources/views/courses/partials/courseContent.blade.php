@@ -16,7 +16,7 @@
                                         <span class="lesson-completed-icon fui-check-circle"></span>
                                     @endif
                                 </div>
-                                <div class="col-sm-7 col-xs-7">
+                                <div class="col-sm-7 col-xs-6">
                                     <a href="{{ route('course.lesson', ['courseSlug' => $course->slug, 'lessonSlug' => $lesson->slug]) }}">
                                         {{ $chapter->order }}.{{ $lesson->order }}. {{ $lesson->title }}
                                     </a>
