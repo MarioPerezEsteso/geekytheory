@@ -28,13 +28,15 @@ class CourseController extends Controller
         if (!is_null($loggedUser)) {
             $userHasJoinedCourse = $loggedUser->hasJoinedCourse($course);
 
-            /** @var Collection $completedLessons */
-            $completedLessons = $loggedUser->lessons;
+            if ($userHasJoinedCourse) {
+                /** @var Collection $completedLessons */
+                $completedLessons = $loggedUser->lessons;
 
-            foreach ($course->chapters as $chapter) {
-                foreach ($chapter->lessons as $chapterLesson) {
-                    if ($completedLessons->contains($chapterLesson)) {
-                        $chapterLesson->completed = true;
+                foreach ($course->chapters as $chapter) {
+                    foreach ($chapter->lessons as $chapterLesson) {
+                        if ($completedLessons->contains($chapterLesson)) {
+                            $chapterLesson->completed = true;
+                        }
                     }
                 }
             }
