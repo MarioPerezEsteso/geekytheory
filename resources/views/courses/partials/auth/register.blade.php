@@ -25,5 +25,6 @@
     </div>
 
     <input type="submit" class="btn btn-primary btn-lg btn-block" value="Registrarme">
+    <a href="{{ route('login') }}"><small>Ya tengo una cuenta</small></a>
     {!! Form::close() !!}
 </div>
