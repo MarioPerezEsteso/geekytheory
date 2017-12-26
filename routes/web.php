@@ -61,7 +61,7 @@ Route::get('password/reset', [
 ]);
 Route::post('password/email', ['as' => 'password.email', 'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail']);
 Route::get('password/reset/{token?}', ['as' => 'password.reset', 'uses' => 'Auth\ResetPasswordController@showResetForm']);
-Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+Route::post('password/reset', ['as' => 'password.reset.post', 'uses' => 'Auth\ResetPasswordController@reset']);
 
 /**
  * Routes for courses
