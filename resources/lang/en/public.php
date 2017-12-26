@@ -80,4 +80,5 @@ return [
     'home_subheader' => 'Con Geeky Theory aprenderás a programar desde Javascript a Laravel, pasando por SQL y muchas tecnologías más. ¿Quieres convertirte en un desarrollador experto? ¿Preparado?',
     'obtain' => 'Obtain',
     'i_want_it' => 'I want it!',
+    'you_have_it' => 'You have it',
 ];

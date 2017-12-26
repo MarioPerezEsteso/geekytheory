@@ -15,7 +15,13 @@
                         <strong>Acceso a cursos gratuitos</strong>
                     </li>
                     <li class="plan-action">
-                        <a href="{{ route('auth.register.get') }}" class="btn btn-inverse btn-lg">{{ trans('public.obtain') }}</a>
+                        @if (!isset($user))
+                            <a href="{{ route('auth.register.get') }}"
+                               class="btn btn-inverse btn-lg">{{ trans('public.i_want_it') }}</a>
+                        @elseif(isset($user) && !$user['premium'])
+                            <a href="{{ route('account.subscription') }}"
+                               class="btn btn-inverse btn-lg">{{ trans('public.you_have_it') }}</a>
+                        @endif
                     </li>
                 </ul>
             </div>
@@ -33,9 +39,9 @@
                     <li>
                         <strong>Certificado de finalización</strong>
                     </li>
-                    <li>
+                    {{--<li>
                         <strong>Preguntar dudas en cada curso</strong>
-                    </li>
+                    </li>--}}
                     <li>
                         <strong>Acceso a contenido exclusivo</strong>
                     </li>
@@ -43,7 +49,16 @@
                         <strong>Soporte</strong>
                     </li>
                     <li class="plan-action">
-                        <a href="{{ route('auth.register.get') }}" class="btn btn-primary btn-lg">{{ trans('public.obtain') }}</a>
+                        @if (!isset($user))
+                            <a href="{{ route('auth.register.get') }}"
+                               class="btn btn-primary btn-lg">{{ trans('public.i_want_it') }}</a>
+                        @elseif (!isset($user) || (isset($user) && !$user['premium']))
+                            <a href="{{ route('account.subscription') }}"
+                               class="btn btn-primary btn-lg">{{ trans('public.i_want_it') }}</a>
+                        @elseif(isset($user) && $user['premium'])
+                            <a href="{{ route('account.subscription') }}"
+                               class="btn btn-primary btn-lg">{{ trans('public.you_have_it') }}</a>
+                        @endif
                     </li>
                 </ul>
             </div>
