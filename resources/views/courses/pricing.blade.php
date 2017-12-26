@@ -191,6 +191,7 @@
 <script src="assets/vendor/flat-ui/dist/js/vendor/video.js"></script>
 <script src="assets/vendor/flat-ui/dist/js/flat-ui.min.js"></script>
 <script src="assets/vendor/flat-ui/docs/assets/js/application.js"></script>
+<script src="/assets/courses/js/drift.js" async></script>
 
 </body>
 </html>
