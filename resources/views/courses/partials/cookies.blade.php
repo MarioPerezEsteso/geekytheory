@@ -12,7 +12,7 @@
                     "background": "#2c3e50;"
                 }
             },
-            "position": "bottom-right",
+            "position": "bottom-left",
             "content": {
                 "message": "Utilizamos cookies para asegurarnos de que tengas una mejor experiencia en Geeky Theory.",
                 "dismiss": "De acuerdo",
