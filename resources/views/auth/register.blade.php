@@ -38,3 +38,8 @@
         </div>
     </div>
 @endsection
+
+@section('customJavascript')
+    {!! Html::script('/assets/js/jquery-md5/jquery-md5.js') !!}
+    {!! Html::script('/assets/courses/js/auth.js') !!}
+@endsection
