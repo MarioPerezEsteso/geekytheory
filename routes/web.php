@@ -53,6 +53,17 @@ Route::post('register', [
 ]);
 
 /**
+ * Password routes
+ */
+Route::get('password/reset', [
+    'as' => 'password.request',
+    'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm'
+]);
+Route::post('password/email', ['as' => 'password.email', 'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail']);
+Route::get('password/reset/{token?}', ['as' => 'password.reset', 'uses' => 'Auth\ResetPasswordController@showResetForm']);
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+/**
  * Routes for courses
  */
 Route::get('cursos', [
