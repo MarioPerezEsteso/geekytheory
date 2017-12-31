@@ -49,9 +49,15 @@
                         <h3>{{ $lesson->title }}</h3>
                     </div>
                 </div>
+                <div class="lesson-content">
+                    {!! $lesson->content !!}
+                </div>
             </div>
-            <div class="lesson-content">
-                {!! $lesson->content !!}
+            <div class="row">
+                <div class="col-sm-12">
+                    <h4>Comentarios</h4>
+                    <div id="disqus_thread"></div>
+                </div>
             </div>
         </div>
         <div class="col-lg-5 col-lg-offset-1 col-sm-12">
@@ -80,6 +86,7 @@
 <script src="/assets/vendor/flat-ui/docs/assets/js/application.js"></script>
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script src="/assets/courses/js/video.js"></script>
+<script src="/assets/courses/js/disqus.js"></script>
 
 </body>
 </html>
