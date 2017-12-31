@@ -33,10 +33,9 @@
                     <ul>
                         <li><a href="{{ route('login') }}">Acceder</a></li>
                         <li><a href="{{ route('auth.register.get') }}">Registrarse</a></li>
-                        <li>Términos y condiciones</li>
+                        {{--<li>Términos y condiciones</li>
                         <li>Privacidad</li>
-                        <li>Código de conducta</li>
-                        <li>Contacto</li>
+                        <li>Código de conducta</li>--}}
                     </ul>
                 </div>
             </div>
