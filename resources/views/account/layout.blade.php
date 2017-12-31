@@ -15,6 +15,11 @@
     <!-- App styles -->
     <link rel="stylesheet" href="{{ autoVersion("/account/css/app.min.css") }}">
     <link rel="stylesheet" href="{{ autoVersion("/account/css/custom.css") }}">
+
+    @if (!empty($siteMeta->analytics_script))
+        {!! $siteMeta->analytics_script !!}
+    @endif
+
 </head>
 
 <body data-ma-theme="dark-blue">
