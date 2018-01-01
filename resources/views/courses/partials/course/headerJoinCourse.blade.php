@@ -13,7 +13,7 @@
                     {!! Form::close() !!}
                 @endif
             </div>
-            <div class="col-lg-5 col-lg-push-1">
+            <div class="col-lg-5 col-lg-push-1 hidden-xs hidden-sm hidden-md">
                 <img class="img-responsive" src="{{ $course->image_thumbnail }}">
             </div>
         </div>
