@@ -29,6 +29,7 @@
     @endif
 
     @include('courses.partials.cookies')
+    @include('courses.partials.hotjar')
 </head>
 <body>
 

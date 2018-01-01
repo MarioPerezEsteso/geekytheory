@@ -19,7 +19,7 @@
     @if (!empty($siteMeta->analytics_script))
         {!! $siteMeta->analytics_script !!}
     @endif
-
+    @include('courses.partials.hotjar')
 </head>
 
 <body data-ma-theme="dark-blue">

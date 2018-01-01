@@ -31,6 +31,7 @@
     @endif
 
     @include('courses.partials.cookies')
+    @include('courses.partials.hotjar')
 </head>
 <body data-lesson-id="{{ $lesson->id }}">
 
