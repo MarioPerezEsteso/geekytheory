@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\ArticleController;
+namespace Tests\Functional;
+
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use App\Post;
-use App\Article;
+use Tests\TestCase;
 
 class ArticleControllerTest extends TestCase
 {
@@ -39,9 +40,10 @@ class ArticleControllerTest extends TestCase
 	 */
 	public function testUpdateSharesSuccess()
 	{
-		$postId = 1;
+	    $post = factory(Post::class)->create();
+
 		$data = [
-			'postId' => $postId,
+			'postId' => $post->id,
 			'socialNetwork' => 'whatsapp',
 		];
 		$response = $this->call('POST', 'share-article', $data);
@@ -49,7 +51,7 @@ class ArticleControllerTest extends TestCase
 		$response->assertStatus(200);
 
 		$this->assertDatabaseHas('posts', [
-			'id' => $postId,
+			'id' => $post->id,
 			'shares_whatsapp' => 1,
 		]);
 	}

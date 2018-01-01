@@ -1,6 +1,10 @@
 <?php
 
+namespace Tests\Unit\Validators;
+
 use \App\Validators\PageValidator;
+use Illuminate\Support\Facades\App;
+use Tests\TestCase;
 
 class PageValidatorTest extends TestCase
 {

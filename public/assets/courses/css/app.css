@@ -1,0 +1,767 @@
+/**
+ * Body and HTML
+ */
+html, body {
+    font-family: Raleway;
+    height: 100%;
+    margin: 0px;
+    overflow-x: hidden;
+    padding: 0px;
+    width: 100%;
+}
+
+.title-img-header {
+    height: 40px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    padding-right: 20px;
+}
+
+.gradient-blue-geeky {
+    background: #1abc9c; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(left top, #2C3E50, #1abc9c); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom right, #2C3E50, #1abc9c); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom right, #2C3E50, #1abc9c); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#2C3E50, #1abc9c); /* Standard syntax */
+    color: #fff;
+}
+
+/**
+ * Links
+ */
+a {
+    color: #399e8f;
+}
+
+/**
+ * Navbar
+ */
+.navbar-brand {
+    padding: 0px;
+}
+
+.navbar-brand > img {
+    height: 100%;
+    padding: 9px;
+    width: auto;
+}
+
+.navbar-header-avatar > a > img {
+    border-radius: 50%;
+    margin-left: 30px;
+}
+
+/**
+ * Jumbotron
+ */
+.center-flex {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.jumbotron-home {
+    height: 800px;
+    margin-bottom: 0px;
+}
+
+.background-home {
+    background: url('http://geekytheory.dev/images/background.png');
+    background-size: cover;
+    margin-top: 43px;
+}
+
+.jumbotron-course {
+    height: 700px;
+    margin-bottom: 0px;
+}
+
+.jumbotron-post {
+    background: #000; /* For browsers that do not support gradients */
+    color: #fff;
+    margin-bottom: 0px;
+    margin-top: 53px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+@media (max-width: 768px) {
+    .jumbotron-home {
+        height: auto;
+    }
+
+    .jumbotron-post {
+        padding: 0px;
+    }
+
+    .container-post {
+        padding: 0px;
+    }
+}
+
+.jumbotron-post .jumbotron-title {
+    font-size: 60px;
+}
+
+.jumbotron-post .btn-join-course {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.jumbotron-post p {
+    font-size: 18px;
+}
+
+.login-jumbotron-trial-banner {
+    background-color: #637a91;
+    border-radius: 6px 6px 0 0;
+    text-align: center;
+    font-weight: 500;
+    padding: 20px;
+    color: #fff;
+}
+
+.login-jumbotron-trial-banner > p {
+    margin-bottom: 0px;
+}
+
+.login-jumbotron .login-form {
+    -webkit-border-radius: 0 0 6px 6px;
+    -moz-border-radius: 0 0 6px 6px;
+    border-radius: 0 0 6px 6px;
+}
+
+@media screen and (min-width: 768px) {
+    .jumbotron h1, .jumbotron .h1 {
+        font-size: 50px;
+    }
+}
+
+/**
+ * Sections
+ */
+.section-white {
+    background-color: #ffffff;
+}
+
+.section-gray {
+    background-color: #edeff1;
+}
+
+.section-pricing {
+    background-image: url('https://cdn-images-1.medium.com/max/2000/1*FrxmXLx5IomOZzYh4bI2OA.png');
+    height: 740px;
+}
+
+.section-pricing-mt-53 {
+    margin-top: 53px;
+}
+
+@media (max-width: 576px) {
+    .section-pricing {
+        height: 1150px;
+    }
+}
+
+/**
+ * Cards
+ */
+.card {
+    padding-top: 20px;
+    margin: 10px 0 20px 0;
+    background-color: rgba(214, 224, 226, 0.2);
+    border-top-width: 0;
+    border-bottom-width: 2px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.card .card-heading {
+    padding: 0 20px;
+    margin: 0;
+}
+
+.card .card-heading.simple {
+    font-size: 20px;
+    font-weight: 300;
+    color: #777;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.card .card-heading.image img {
+    display: inline-block;
+    width: 46px;
+    height: 46px;
+    margin-right: 15px;
+    vertical-align: top;
+    border: 0;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+
+.card .card-heading.image .card-heading-header {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.card .card-heading.image .card-heading-header h3 {
+    margin: 0;
+    font-size: 14px;
+    line-height: 16px;
+    color: #262626;
+}
+
+.card .card-heading.image .card-heading-header span {
+    font-size: 12px;
+    color: #999999;
+}
+
+.card .card-body {
+    padding: 0 20px;
+    margin-top: 20px;
+}
+
+.card .card-media {
+    padding: 0 20px;
+    margin: 0 -14px;
+}
+
+.card .card-media img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.card .card-actions {
+    min-height: 30px;
+    padding: 0 20px 20px 20px;
+    margin: 20px 0 0 0;
+}
+
+.card .card-comments {
+    padding: 20px;
+    margin: 0;
+    background-color: #f8f8f8;
+}
+
+.card .card-comments .comments-collapse-toggle {
+    padding: 0;
+    margin: 0 20px 12px 20px;
+}
+
+.card .card-comments .comments-collapse-toggle a,
+.card .card-comments .comments-collapse-toggle span {
+    padding-right: 5px;
+    overflow: hidden;
+    font-size: 12px;
+    color: #999;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.card-comments .media-heading {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.card.people {
+    position: relative;
+    display: inline-block;
+    width: 170px;
+    height: 300px;
+    padding-top: 0;
+    margin-left: 20px;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+.card.people:first-child {
+    margin-left: 0;
+}
+
+.card.people .card-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    width: 170px;
+    height: 150px;
+    background-color: #ffffff;
+}
+
+.card.people .card-top.green {
+    background-color: #53a93f;
+}
+
+.card.people .card-top.blue {
+    background-color: #427fed;
+}
+
+.card.people .card-info {
+    position: absolute;
+    top: 150px;
+    display: inline-block;
+    width: 100%;
+    height: 101px;
+    overflow: hidden;
+    background: #ffffff;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.card.people .card-info .title {
+    display: block;
+    margin: 8px 14px 0 14px;
+    overflow: hidden;
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 18px;
+    color: #404040;
+}
+
+.card.people .card-info .desc {
+    display: block;
+    margin: 8px 14px 0 14px;
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 16px;
+    color: #737373;
+    text-overflow: ellipsis;
+}
+
+.card.people .card-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: inline-block;
+    width: 100%;
+    padding: 10px 20px;
+    line-height: 29px;
+    text-align: center;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.card.hovercard {
+    position: relative;
+    padding-top: 0;
+    overflow: hidden;
+    text-align: center;
+    background-color: #fff;
+}
+
+.card.hovercard .cardheader {
+    background-size: cover !important;
+    height: 220px;
+}
+
+.cardheader .cardheader-label-free {
+    display: block;
+    position: absolute;
+    z-index: 2;
+    right: 0px;
+    top: 0;
+    font-size: 0.8em;
+    padding: .9em;
+    color: #fff;
+    text-align: right;
+    text-transform: uppercase;
+    background-color: #1abc9c;
+    font-weight: bold;
+    border-bottom-left-radius: 3px;
+}
+
+.card.hovercard .avatar {
+    position: relative;
+    top: -25px;
+    margin-bottom: -25px;
+}
+
+.card.hovercard .avatar img {
+    width: 50px;
+    height: 50px;
+    max-width: 50px;
+    max-height: 50px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.5);
+}
+
+.card.hovercard .info {
+    padding: 4px 8px 10px;
+}
+
+.card.hovercard .info .title {
+    color: #262626;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 2;
+    margin-bottom: 4px;
+    vertical-align: middle;
+}
+
+.card.hovercard .info .desc {
+    overflow: hidden;
+    font-size: 12px;
+    line-height: 20px;
+    color: #737373;
+    text-overflow: ellipsis;
+}
+
+.card.hovercard .bottom {
+    padding: 0 20px;
+    margin-bottom: 17px;
+}
+
+.card.hovercard .bottom .info {
+    font-size: 13px;
+}
+
+.card.hovercard .bottom .subscription {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.card.hovercard .bottom .subscription.subscription-free {
+    color: #26A65B;
+}
+
+.card.hovercard .bottom .subscription.subscription-pro {
+    color: #34495e;
+}
+
+/**
+ * Pricing
+ */
+.pricing .plan {
+    background: #fff;
+    border: 1px solid #34495e;
+    border-radius: 6px;
+    list-style: none;
+    margin: 0 0 15px;
+    padding: 0 0 20px;
+    text-align: center;
+    width: 115%;
+}
+
+.pricing .plan li {
+    border-top: 1px solid #f5f5f5;
+    color: #ccc;
+    padding: 10px 15px;
+    transition: 300ms;
+    -webkit-transition: 300ms;
+}
+
+.pricing .plan li.plan-price {
+    border-top: 0;
+}
+
+.pricing .plan li.plan-name {
+    background: #34495e;
+    border-radius: 6px 6px 0 0;
+    border-top: 0;
+    color: #fff;
+    font-size: 24px;
+    line-height: 24px;
+    margin-bottom: 30px;
+    padding: 15px;
+}
+
+.pricing .plan li > strong {
+    color: #34495e;
+}
+
+.pricing .plan li.plan-action {
+    border-top: 0;
+    margin-top: 10px;
+}
+
+.pricing .plan.featured {
+    border: 1px solid #1abc9c;
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.pricing .plan.featured li.plan-name {
+    background: #1abc9c;
+}
+
+#footer {
+    margin-top: 100px;
+    padding-bottom: 30px;
+}
+
+@media (max-width: 576px) {
+    .pricing .plan {
+        width: 100%;
+    }
+
+    .pricing .plan.featured {
+        -webkit-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+/* COURSE CONTENT */
+.course-content {
+    margin-top: 20px;
+    padding-bottom: 40px;
+}
+
+.course-content .panel {
+    border: 1px solid #2C3E50;
+    border-radius: 0px;
+    margin-bottom: 0px;
+}
+
+.course-content .panel-heading {
+    background: #1abc9c; /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(left top, #2C3E50, #4f6a82); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom right, #2C3E50, #4f6a82); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom right, #2C3E50, #4f6a82); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom right, #2C3E50, #4f6a82); /* Standard syntax */
+    border-radius: 0px;
+    color: #fff;
+}
+
+.course-content .panel-title {
+    font-size: 23px;
+}
+
+.course-content .list-group {
+    font-size: 16px;
+}
+
+.course-content .list-group li {
+    border-top: 1px solid #f0f0f0;
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+}
+
+.course-content .list-group li:first-child {
+    border-top: none;
+}
+
+.course-content .list-group li:last-child {
+    border-bottom: none;
+}
+
+.course-content .lesson-info-item {
+    border-radius: 5px;
+    display: inline-block;
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+.course-content .lesson-info-item.lesson-info-free {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+.course-content .lesson-info-item.lesson-info-time {
+    background-color: #e0e0e0;
+    text-align: center;
+    width: 60px;
+}
+
+.course-content .lesson-completed-icon {
+    color: #1abc9c;
+}
+
+/**
+ * Lesson content
+ */
+.lesson-content {
+    padding-top: 20px;
+}
+
+/**
+ * Testimonials
+ */
+/* Content */
+.testimonials-content {
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+/* Testimonials */
+.testimonials blockquote {
+    background: #f8f8f8 none repeat scroll 0 0;
+    border: medium none;
+    color: #666;
+    display: block;
+    font-size: 14px;
+    line-height: 20px;
+    padding: 15px;
+    position: relative;
+}
+
+.testimonials blockquote::before {
+    width: 0;
+    height: 0;
+    right: 0;
+    bottom: 0;
+    content: " ";
+    display: block;
+    position: absolute;
+    border-bottom: 20px solid #fff;
+    border-right: 0 solid transparent;
+    border-left: 15px solid transparent;
+    border-left-style: inset; /*FF fixes*/
+    border-bottom-style: inset; /*FF fixes*/
+}
+
+.testimonials blockquote::after {
+    width: 0;
+    height: 0;
+    right: 0;
+    bottom: 0;
+    content: " ";
+    display: block;
+    position: absolute;
+    border-style: solid;
+    border-width: 20px 20px 0 0;
+    border-color: #1abc9c transparent transparent transparent;
+}
+
+.testimonials .carousel-info img {
+    border: 1px solid #f5f5f5;
+    border-radius: 150px !important;
+    height: 75px;
+    padding: 3px;
+    width: 75px;
+}
+
+.testimonials .carousel-info {
+    overflow: hidden;
+}
+
+.testimonials .carousel-info img {
+    margin-right: 15px;
+}
+
+.testimonials .carousel-info span {
+    display: block;
+}
+
+.testimonials span.testimonials-name {
+    color: #1abc9c;
+    font-size: 16px;
+    font-weight: 300;
+    margin: 23px 0 7px;
+}
+
+.testimonials span.testimonials-post {
+    color: #656565;
+    font-size: 12px;
+}
+
+/**
+ * FAQs
+ */
+.panel-question {
+    font-weight: bold;
+}
+
+.panel-faq {
+    background: #f8f8f8;
+}
+
+/**
+ * Footer
+ */
+@media (max-width: 768px) {
+    .footer-banner {
+        margin-left: 0px;
+    }
+}
+
+/**
+ * Arrow next lesson
+ */
+.lesson-navigation-button {
+    background: #1abc9c;
+    padding: 8px 15px;
+    color: #fff;
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    z-index: 2;
+    margin-top: -20px;
+    display: none;
+    opacity: .8;
+    -webkit-transition: opacity .4s;
+    transition: opacity .4s
+}
+
+@media screen and (max-width: 768px) {
+    .lesson-navigation-button {
+        right: 0;
+        top: 115%;
+        display: block
+    }
+}
+
+.lesson-video:hover > .lesson-navigation-button {
+    display: block;
+}
+
+.lesson-navigation-button.previous {
+    left: 0;
+    right: inherit
+}
+
+@media screen and (max-width: 768px) {
+    .lesson-navigation-button.previous {
+        left: 0
+    }
+}
+
+.lesson-navigation-button:hover {
+    opacity: 1
+}
+
+.lesson-navigation-button a {
+    color: inherit;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center
+}
+
+.lesson-navigation-button .arrow {
+    font-size: 48px
+}
+
+.lesson-navigation-title {
+    display: none
+}
+
+.lesson-navigation-button:hover .lesson-navigation-title, .video-player:hover .lesson-navigation-button {
+    display: block
+}
+
+.lesson-navigation-button:hover .icon {
+    padding-left: 20px
+}
+
+.lesson-navigation-button:hover.previous .icon {
+    padding-left: 0;
+    padding-right: 20px
+}

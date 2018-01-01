@@ -1,5 +1,7 @@
 <?php
 
+use Tests\TestCase;
+
 class HelperTest extends TestCase
 {
     /**
@@ -13,6 +15,64 @@ class HelperTest extends TestCase
     {
         $slug = slugify($text);
         $this->assertEquals($slug, $expected);
+    }
+
+    /**
+     * Test method that formats seconds to hh:mm:ss.
+     *
+     * @dataProvider getSecondsToFormat
+     * @param $seconds
+     * @param $expectedFormat
+     */
+    public function testFormatSeconds($seconds, $expectedFormat)
+    {
+        $secondsFormatted = formatSeconds($seconds);
+        $this->assertEquals($expectedFormat, $secondsFormatted);
+    }
+
+    /**
+     * Test helper method that formats a name to a username.
+     *
+     * @dataProvider getNamesToFormat
+     * @param string $name
+     * @param string $expectedUsername
+     */
+    public function testFormatNameToUsername($name, $expectedUsername)
+    {
+        $actualUsername = formatNameToUsername($name);
+        $this->assertEquals($expectedUsername, $actualUsername);
+    }
+
+    /**
+     * Get names to format and their expected username.
+     *
+     * @return array
+     */
+    public static function getNamesToFormat()
+    {
+        return [
+            ['name' => 'Mario Pérez', 'expectedUsername' => 'marioperez',],
+            ['name' => 'Mario_Pér-ez', 'expectedUsername' => 'marioperez',],
+            ['name' => 'Mario Pérez 01', 'expectedUsername' => 'marioperez01',],
+            ['name' => 'Mario ÑÑÑ', 'expectedUsername' => 'marionnn',],
+            ['name' => '¿Real~name?', 'expectedUsername' => 'realname',],
+        ];
+    }
+
+    /**
+     * Get seconds to format and their expected values.
+     *
+     * @return array
+     */
+    public static function getSecondsToFormat()
+    {
+        return [
+            ['seconds' => 5, 'expectedFormat' => '00:05',],
+            ['seconds' => 0, 'expectedFormat' => '00:00',],
+            ['seconds' => 65, 'expectedFormat' => '01:05',],
+            ['seconds' => 320, 'expectedFormat' => '05:20',],
+            ['seconds' => 3920, 'expectedFormat' => '01:05:20',],
+        ];
     }
 
     /**
@@ -50,6 +110,10 @@ class HelperTest extends TestCase
             [
                 'text' => '#DdaysArena 2015',
                 'expected' => 'ddaysarena-2015',
+            ],
+            [
+                'text' => 'Guión_bajo',
+                'expected' => 'guion-bajo',
             ],
         ];
     }

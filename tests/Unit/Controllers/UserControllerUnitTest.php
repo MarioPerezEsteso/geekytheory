@@ -1,6 +1,9 @@
 <?php
 
+namespace Tests\Unit\Controllers;
+
 use App\Http\Controllers\UserController;
+use Tests\TestCase;
 
 class UserControllerUnitTest extends TestCase
 {

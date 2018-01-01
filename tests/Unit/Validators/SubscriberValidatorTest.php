@@ -1,6 +1,11 @@
 <?php
 
+namespace Tests\Unit\Validators;
+
+use App\Subscriber;
 use App\Validators\SubscriberValidator;
+use Illuminate\Support\Facades\App;
+use Tests\TestCase;
 
 class SubscriberValidatorTest extends TestCase
 {
@@ -19,18 +24,14 @@ class SubscriberValidatorTest extends TestCase
         parent::setUp();
 
         // Create two subscribers
-        $this->subscribers[0] = factory(App\Subscriber::class)->create([
-            'email' => 'alice@geekytheory.com',
-        ]);
+        $this->subscribers[0] = factory(Subscriber::class)->create();
 
-        $this->subscribers[1] = factory(App\Subscriber::class)->create([
-            'email' => 'bob@geekytheory.com',
-        ]);
+        $this->subscribers[1] = factory(Subscriber::class)->create();
     }
 
     /**
      * Test create with valid data.
-     * 
+     *
      * @dataProvider getValidCreateData
      * @param array $data
      */
@@ -57,6 +58,25 @@ class SubscriberValidatorTest extends TestCase
         foreach ($validationErrorKeys as $validationErrorKey) {
             $this->assertArrayHasKey($validationErrorKey, $validator->errors()->toArray());
         }
+    }
+
+    /**
+     * Test create with invalid data because of duplicated email.
+     */
+    public function testDuplicatedEmailValidationOnCreateError()
+    {
+        $data = [
+            'email' => $this->subscribers[0]->email,
+            'token' => hash_hmac('sha256', str_random(40), 'someRandomString'),
+            'active' => false,
+            'token_expires_at' => \Carbon\Carbon::now()->addHours(24),
+        ];
+
+        $validator = new SubscriberValidator(App::make('validator'));
+        $passes = $validator->with($data)->passes();
+        $this->assertFalse($passes);
+        $this->assertEquals(1, count($validator->errors()));
+        $this->assertArrayHasKey('email', $validator->errors()->toArray());
     }
 
     /**
@@ -91,8 +111,27 @@ class SubscriberValidatorTest extends TestCase
     }
 
     /**
+     * Test update with invalid data because of duplicated email.
+     */
+    public function testDuplicatedEmailValidationOnUpdateError()
+    {
+        $data = [
+            'email' => $this->subscribers[0]->email,
+            'token' => hash_hmac('sha256', str_random(40), 'someRandomString'),
+            'active' => false,
+            'token_expires_at' => \Carbon\Carbon::now()->addHours(24),
+        ];
+
+        $validator = new SubscriberValidator(App::make('validator'));
+        $passes = $validator->with($data)->update($this->subscribers[1]->id)->passes();
+        $this->assertFalse($passes);
+        $this->assertEquals(1, count($validator->errors()));
+        $this->assertArrayHasKey('email', $validator->errors()->toArray());
+    }
+
+    /**
      * Returns valid data.
-     * 
+     *
      * @return array
      */
     public static function getValidCreateData()
@@ -127,7 +166,7 @@ class SubscriberValidatorTest extends TestCase
 
     /**
      * Returns invalid data.
-     * 
+     *
      * @return array
      */
     public static function getInvalidCreateData()
@@ -135,7 +174,6 @@ class SubscriberValidatorTest extends TestCase
         return [
             [ // Test input 1
                 [
-                    'email' => 'alice@geekytheory.com',
                     'token' => false,
                     'active' => 'true',
                     'token_expires_at' => \Carbon\Carbon::now()->addHours(24),
@@ -144,7 +182,6 @@ class SubscriberValidatorTest extends TestCase
             ],
             [ // Test input 2
                 [
-                    'email' => 'bob@geekytheory.com',
                 ],
                 'validationErrorKeys' => ['email', 'token', 'token_expires_at'],
             ],
@@ -196,25 +233,25 @@ class SubscriberValidatorTest extends TestCase
         return [
             [ // Test input 1
                 [
-                    'email' => 'bob@geekytheory.com',
+                    'email' => 'testinput1@geekytheory.com',
                     'token' => false,
                     'active' => 'true',
                 ],
-                'validationErrorKeys' => ['email', 'token', 'active', 'token_expires_at'],
+                'validationErrorKeys' => ['token', 'active', 'token_expires_at'],
             ],
             [ // Test input 2
                 [
-                    'email' => 'alice@geekytheory.com',
+                    'email' => 'wachufleiva@geekytheory.com',
                     'token_expires_at' => 'monday'
                 ],
                 'validationErrorKeys' => ['token', 'token_expires_at'],
             ],
             [ // Test input 3
                 [
-                    'email' => 'bob@geekytheory.com',
+                    'email' => 'testinput3@geekytheory.com',
                     'token_expires_at' => 'monday'
                 ],
-                'validationErrorKeys' => ['email', 'token', 'token_expires_at'],
+                'validationErrorKeys' => ['token', 'token_expires_at'],
             ],
             [ // Test input 4
                 [

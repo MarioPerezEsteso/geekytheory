@@ -1,83 +1,84 @@
 <?php
 
+namespace Tests\Functional;
+
+use App\User;
+use Tests\TestCase;
+
 class LoginControllerTest extends TestCase
 {
     /**
-     * Test redirect to login if user is not authenticated
+     * Administrator home URL.
+     *
+     * @var string
      */
-    public function testRedirectToLoginIfUserNotAuthenticated()
-    {
-		$response = $this->call('GET', 'home');
-        $response->assertRedirect('login');
-    }
+    protected $adminHomeUrl = '/home';
 
     /**
-     * Test user login ok and redirect to /home
+     * User account URL.
+     *
+     * @var string
+     */
+    protected $userAccountUrl = '/cuenta';
+
+    /**
+     * Login URL.
+     *
+     * @var string
+     */
+    protected $loginUrl = '/login';
+
+    /**
+     * Logout URL.
+     *
+     * @var string
+     */
+    protected $logoutUrl = '/logout';
+
+    /**
+     * test user login ok and redirect to user account URL.
      */
     public function testUserLoginOk()
     {
-        $user = factory(App\User::class)->create([
+        // Prepare
+        $user = factory(User::class)->create([
             'name' => 'Alice',
-            'email' => 'alice@geekytheory.com',
             'password' => bcrypt('123456'),
-            'username' => 'alice',
-            'can_login' => true,
         ]);
 
-        $response = $this->call('POST', 'login', [
+        // Request
+        $response = $this->call('POST', $this->loginUrl, [
             'email' => $user->email,
             'password' => '123456',
         ]);
 
-        $response->assertRedirect('home');
+        // Asserts
+        $response->assertStatus(302);
+        $response->assertRedirect($this->userAccountUrl);
+        $response->assertLoggedUserIs($user);
     }
 
     /**
-     * Test user can not login
+     * Test user can not login with wrong credentials.
+     *
+     * @dataProvider getInvalidLoginData
+     * @param array $registrationData
+     * @param array $sessionErrorKeys
      */
-    public function testUserCanNotLoginError()
+    public function testUserCanNotLoginWrongCredentialsError($registrationData, $sessionErrorKeys)
     {
-        $user = factory(App\User::class)->create([
+        factory(User::class)->create([
             'name' => 'Alice',
-            'email' => 'alice@geekytheory.com',
             'password' => bcrypt('123456'),
-            'username' => 'alice',
-            'can_login' => false,
         ]);
 
-        $response = $this->call('POST', 'login', [
-            'email' => $user->email,
-            'password' => '123456',
-        ]);
+        $response = $this->call('POST', $this->loginUrl, $registrationData);
 
         // If the user has the can_login field to false, we throw the error
         // saying that the credentials are wrong, and not the one saying that
         // the user is banned.
-        $response->assertSessionHasErrors(['email']);
-    }
-
-    /**
-     * Test user can not login with wrong credentials
-     */
-    public function testUserCanNotLoginWrongCredentialsError()
-    {
-        $user = factory(App\User::class)->create([
-            'name' => 'Alice',
-            'email' => 'alice@geekytheory.com',
-            'password' => bcrypt('123456'),
-            'username' => 'alice',
-            'can_login' => true,
-        ]);
-
-        $response = $this->call('POST', 'login', [
-            'email' => $user->email,
-            'password' => 'abcdef',
-        ]);
-
-        // If the user has the can_login field to false, we throw the error
-        // saying that the credentials are wrong, and not the one saying that
-        // the user is banned.
-        $response->assertSessionHasErrors(['email']);
+        $response->assertSessionHasErrors($sessionErrorKeys);
+        $response->assertLoggedUserIs(null);
     }
 
     /**
@@ -85,15 +86,59 @@ class LoginControllerTest extends TestCase
      */
     public function testUserLogoutRedirectToHomePage()
     {
-        $user = factory(App\User::class)->create([
+        $user = factory(User::class)->create([
             'name' => 'Alice',
-            'email' => 'alice@geekytheory.com',
             'password' => bcrypt('123456'),
-            'username' => 'alice',
         ]);
 
-        $response = $this->actingAs($user)->call('GET', 'logout');
+        $response = $this->actingAs($user)->call('GET', $this->logoutUrl);
 
         $response->assertRedirect('/');
+        $response->assertLoggedUserIs(null);
+    }
+
+    /**
+     * Test redirect to login if user is not authenticated and access to admin home URL
+     */
+    public function testRedirectToLoginIfUserNotAuthenticatedAndAccessToAdminHomeUrl()
+    {
+        $response = $this->call('GET', $this->adminHomeUrl);
+        $response->assertRedirect($this->loginUrl);
+    }
+
+    /**
+     * Test redirect to login if user is not authenticated and access to admin home URL
+     */
+    public function testRedirectToLoginIfUserNotAuthenticatedAndAccessToUserAccountUrl()
+    {
+        $response = $this->call('GET', $this->userAccountUrl);
+        $response->assertRedirect($this->loginUrl);
+    }
+
+    /**
+     * Returns an array with an example of invalid data.
+     */
+    public static function getInvalidLoginData()
+    {
+        return [
+            [
+                [   // Login data
+                    'email' => '',
+                    'password' => '123456',
+                ],
+                [   // Validation error keys
+                    'email',
+                ],
+            ],
+            [
+                [   // Login data
+                    'email' => 'aliasdomain.com',
+                    'password' => '123',
+                ],
+                [   // Validation error keys
+                    'email',
+                ],
+            ],
+        ];
     }
 }

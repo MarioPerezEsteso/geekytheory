@@ -1,0 +1,45 @@
+.header__logo img {
+    width: 215px;
+}
+
+.img-account-avatar {
+    width: 32px;
+    border-radius: 100px;
+    -webkit-border-radius: 100px;
+    -moz-border-radius: 100px;
+}
+
+.subscription-current-card {
+    font-size: 20px;
+}
+
+.card-header-subscription-info {
+    background-color: #1abc9c;
+    border-color: #1abc9c;
+    color: #FFF;
+}
+
+.card-header-subscription-info .card-title {
+    color: #FFF;
+    font-weight: 500;
+}
+
+.card-header-subscription-info .card-subtitle {
+    color: #FFF;
+    font-weight: 300;
+}
+
+.card-header-subscription-info .subscription-info-icon {
+    font-size: 200%;
+}
+
+.alert-go-pro {
+    background-color: #1abc9c;
+    border-color: #1abc9c;
+    color: #FFF;
+}
+
+.alert-go-pro > p {
+    font-size: 20px;
+    margin-bottom: 0rem;
+}

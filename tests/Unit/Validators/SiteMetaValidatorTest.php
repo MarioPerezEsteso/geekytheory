@@ -1,8 +1,12 @@
 <?php
 
+namespace Tests\Unit\Validators;
+
 use App\Validators\SiteMetaValidator;
 use App\Http\Controllers\SiteMetaController;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\App;
+use Tests\TestCase;
 
 class SiteMetaValidatorTest extends TestCase
 {

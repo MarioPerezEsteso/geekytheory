@@ -34,7 +34,7 @@
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="/home" class="logo">
+        <a href="/cuenta" class="logo">
             <span class="logo-mini">
                 <i class="fa fa-tachometer" aria-hidden="true"></i>
             </span>
@@ -153,25 +153,6 @@
                         <li class="{{ classActiveRoute(array('home/pages/create')) }}">
                             <a href="{{ url('home/pages/create') }}">
                                 {{ trans('home.page_create') }}
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="{{ classActiveRoute(array('home/galleries', 'home/gallery/create', 'home/gallery/edit')) }} treeview">
-                    <a href="{{ url('home/galleries') }}">
-                        <i class="fa fa-file-image-o"></i>
-                        <span>{{ trans('home.galleries') }}</span>
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li class="{{ classActiveRoute(array('home/galleries')) }}">
-                            <a href="{{ url('home/galleries') }}">
-                                {{ trans('home.all_galleries') }}
-                            </a>
-                        </li>
-                        <li class="{{ classActiveRoute(array('home/gallery/create')) }}">
-                            <a href="{{ url('home/gallery/create') }}">
-                                {{ trans('home.create_gallery') }}
                             </a>
                         </li>
                     </ul>

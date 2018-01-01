@@ -1,6 +1,11 @@
 <?php
 
+namespace Tests\Unit\Validators;
+
+use App\User;
 use \App\Validators\UserValidator;
+use Illuminate\Support\Facades\App;
+use Tests\TestCase;
 
 class UserValidatorTest extends TestCase
 {
@@ -19,24 +24,18 @@ class UserValidatorTest extends TestCase
         parent::setUp();
 
         // Create two users
-        $this->users[0] = factory(App\User::class)->create([
-            'name' => 'Alice',
-            'email' => 'alice@geekytheory.com',
+        $this->users[0] = factory(User::class)->create([
             'password' => bcrypt('123456'),
-            'username' => 'alice',
         ]);
 
-        $this->users[1] = factory(App\User::class)->create([
-            'name' => 'Bob',
-            'email' => 'bob@geekytheory.com',
+        $this->users[1] = factory(User::class)->create([
             'password' => bcrypt('123456'),
-            'username' => 'bob',
         ]);
     }
 
     /**
      * Test create with valid data.
-     * 
+     *
      * @dataProvider getValidCreateData
      * @param array $data
      */
@@ -49,19 +48,24 @@ class UserValidatorTest extends TestCase
 
     /**
      * Test create with invalid data.
-     *
-     * @dataProvider getInvalidCreateData
-     * @param array $data
-     * @param $validationErrorKeys
      */
-    public function testValidationError($data, $validationErrorKeys)
+    public function testCreateValidationError()
     {
-        $validator = new UserValidator(App::make('validator'));
-        $passes = $validator->with($data)->passes();
-        $this->assertFalse($passes);
-        $this->assertEquals(count($validationErrorKeys), count($validator->errors()));
-        foreach ($validationErrorKeys as $validationErrorKey) {
-            $this->assertArrayHasKey($validationErrorKey, $validator->errors()->toArray());
+        $examples = $this->getInvalidCreateData();
+        foreach ($examples as $example) {
+            $data = $example['data'];
+            $validationErrorKeys = $example['validationErrorKeys'];
+            $validator = new UserValidator(App::make('validator'));
+            $passes = $validator->with($data)->passes();
+            $this->assertFalse($passes);
+            $this->assertEquals(
+                count($validationErrorKeys),
+                count($validator->errors()),
+                "Expected " . implode(',', $validationErrorKeys) . " but received " . implode(',', array_keys($validator->errors()->toArray()))
+            );
+            foreach ($validationErrorKeys as $validationErrorKey) {
+                $this->assertArrayHasKey($validationErrorKey, $validator->errors()->toArray());
+            }
         }
     }
 
@@ -80,25 +84,30 @@ class UserValidatorTest extends TestCase
 
     /**
      * Test update with invalid data.
-     * 
-     * @dataProvider getInvalidUpdateData
-     * @param array $data
-     * @param array $data
      */
-    public function testUpdateValidationError($data, $validationErrorKeys)
+    public function testUpdateValidationError()
     {
-        $validator = new UserValidator(App::make('validator'));
-        $passes = $validator->with($data)->update($this->users[0]->id)->passes();
-        $this->assertFalse($passes);
-        $this->assertEquals(count($validationErrorKeys), count($validator->errors()));
-        foreach ($validationErrorKeys as $validationErrorKey) {
-            $this->assertArrayHasKey($validationErrorKey, $validator->errors()->toArray());
+        $examples = $this->getInvalidUpdateData();
+        foreach ($examples as $example) {
+            $data = $example['data'];
+            $validationErrorKeys = $example['validationErrorKeys'];
+            $validator = new UserValidator(App::make('validator'));
+            $passes = $validator->with($data)->update($this->users[0]->id)->passes();
+            $this->assertFalse($passes);
+            $this->assertEquals(
+                count($validationErrorKeys),
+                count($validator->errors()->toArray()),
+                "Expected " . implode(',', $validationErrorKeys) . " but received " . implode(',', array_keys($validator->errors()->toArray()))
+            );
+            foreach ($validationErrorKeys as $validationErrorKey) {
+                $this->assertArrayHasKey($validationErrorKey, $validator->errors()->toArray());
+            }
         }
     }
 
     /**
      * Returns invalid data.
-     * 
+     *
      * @return array
      */
     public static function getValidCreateData()
@@ -130,7 +139,7 @@ class UserValidatorTest extends TestCase
 
     /**
      * Returns valid update data.
-     * 
+     *
      * @return array
      */
     public static function getValidUpdateData()
@@ -162,46 +171,38 @@ class UserValidatorTest extends TestCase
 
     /**
      * Returns invalid data.
-     * 
+     *
      * @return array
      */
-    public static function getInvalidCreateData()
+    public function getInvalidCreateData()
     {
         return [
-            [ // Test input 1
-                [
+            [
+                'data' => [
                     'name' => 'Alice',
-                    'email' => 'alice@geekytheory.com',
+                    'email' => $this->users[0]->email,
                 ],
                 'validationErrorKeys' => ['email', 'username'],
             ],
-            [ // Test input 2
-                [
+            [
+                'data' => [
                     'name' => 'Mario',
-                    'email' => 'mario@geekytheory.com',
-                    'username' => 'mario perez'
-                ],
-                'validationErrorKeys' => ['username'],
-            ],
-            [ // Test input 3
-                [
-                    'name' => 'Mario',
-                    'email' => 'mario@geekytheory.com',
+                    'email' => 'whatever@geekytheory.com',
                     'username' => 'mario_perez'
                 ],
                 'validationErrorKeys' => ['username'],
             ],
-            [ // Test input 4
-                [
+            [
+                'data' => [
                     'name' => 'Alice',
-                    'email' => 'alice@geekytheory.com',
+                    'email' => $this->users[0]->email,
                     'username' => 'alice2'
                 ],
                 'validationErrorKeys' => ['email'],
             ],
-            [ // Test input 5
-                [
-                    'email' => 'alice@geekytheory.com',
+            [
+                'data' => [
+                    'email' => $this->users[0]->email,
                     'username' => 'a'
                 ],
                 'validationErrorKeys' => ['name', 'email', 'username'],
@@ -211,45 +212,45 @@ class UserValidatorTest extends TestCase
 
     /**
      * Returns invalid data.
-     * 
+     *
      * @return array
      */
-    public static function getInvalidUpdateData()
+    public function getInvalidUpdateData()
     {
         return [
             [ // Test input 1
-                [
+                'data' => [
                     'name' => 'Alice',
-                    'email' => 'alice@geekytheory.com',
+                    'email' => 'bliblibli@geekytheory.com',
                 ],
                 'validationErrorKeys' => ['username'],
             ],
             [ // Test input 2
-                [
+                'data' => [
                     'name' => 'Mario',
-                    'email' => 'mario@geekytheory.com',
+                    'email' => 'blablabla@geekytheory.com',
                     'username' => 'mario perez'
                 ],
                 'validationErrorKeys' => ['username']
             ],
             [ // Test input 3
-                [
+                'data' => [
                     'name' => 'Mario',
-                    'email' => 'mario@geekytheory.com',
+                    'email' => 'tititi@geekytheory.com',
                     'username' => 'mario_perez'
                 ],
                 'validationErrorKeys' => ['username']
             ],
             [ // Test input 4
-                [
+                'data' => [
                     'name' => 'Alice',
-                    'email' => 'bob@geekytheory.com',
+                    'email' => $this->users[1]->email,
                     'username' => 'alice2'
                 ],
                 'validationErrorKeys' => ['email']
             ],
             [ // Test input 5
-                [
+                'data' => [
                     'email' => 'alice@geekytheory.com',
                     'username' => 'a'
                 ],

@@ -1,6 +1,11 @@
 <?php
 
+namespace Tests\Functional;
+
 use \App\Http\Controllers\FeedController;
+use DateTime;
+use SimpleXMLElement;
+use Tests\TestCase;
 
 class FeedTest extends TestCase
 {

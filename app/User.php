@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Billable, Notifiable;
 
     /**
      * The database table used by the model.
@@ -70,17 +71,75 @@ class User extends Authenticatable
     }
 
     /**
-     * Returns the basic user data for the admin panel view
+     * Get user courses.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function courses()
+    {
+        return $this
+            ->belongsToMany('App\Course', 'users_courses', 'user_id', 'course_id')
+            ->withTimestamps();
+    }
+
+    /**
+     * Get user lessons.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function lessons()
+    {
+        return $this
+            ->belongsToMany('App\Lesson', 'users_lessons', 'user_id', 'lesson_id')
+            ->withTimestamps();
+    }
+
+    /**
+     * Check if user has subscription active.
+     *
+     * @return bool
+     */
+    public function hasSubscriptionActive()
+    {
+        return $this->subscribed(Subscription::PLAN_NAME, Subscription::PLAN_MONTHLY);
+    }
+
+    /**
+     * Check if a user has joined a course.
+     *
+     * @param Course $course
+     * @return bool
+     */
+    public function hasJoinedCourse(Course $course): bool
+    {
+        return $this->courses->contains($course);
+    }
+
+    /**
+     * Check if a user has completed a lesson.
+     *
+     * @param Lesson $lesson
+     * @return bool
+     */
+    public function hasCompletedLesson(Lesson $lesson): bool
+    {
+        return $this->lessons->contains($lesson);
+    }
+
+    /**
+     * Returns the basic user data for the admin panel view.
      *
      * @return array
      */
     public function getBasicUserData()
     {
-        return array(
+        return [
             'id' => $this->id,
             'name' => $this->name,
             'job' => $this->job,
             'email' => $this->email,
-            'avatar' => getGravatar($this->email, '100', 'mm', 'g'));
+            'avatar' => getGravatar($this->email, '100', 'mm', 'g'),
+            'premium' => $this->hasSubscriptionActive(),
+        ];
     }
 }

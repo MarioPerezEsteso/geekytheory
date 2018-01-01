@@ -35,11 +35,11 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map()
     {
-//        $this->mapApiRoutes();
+        $this->mapApiRoutes();
 
         $this->mapWebRoutes();
 
-        //
+        $this->mapWebhookRoutes();
     }
 
     /**
@@ -54,6 +54,20 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
+    }
+
+    /**
+     * Define the "webhook" routes for the application.
+     *
+     * These routes are only called by Stripe.
+     *
+     * @return void
+     */
+    protected function mapWebhookRoutes()
+    {
+        Route::middleware('webhooks')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/webhooks.php'));
     }
 
     /**

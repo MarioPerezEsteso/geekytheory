@@ -32,7 +32,9 @@ return [
     'stripe' => [
         'model' => App\User::class,
         'key' => env('STRIPE_KEY'),
+        'public' => env('STRIPE_PUBLIC'),
         'secret' => env('STRIPE_SECRET'),
+        'webhookRoute' => env('STRIPE_WEBHOOK_ROUTE'),
     ],
 
 ];

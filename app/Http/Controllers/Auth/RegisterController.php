@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -27,7 +29,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/cuenta';
 
     /**
      * Create a new controller instance.
@@ -40,9 +42,32 @@ class RegisterController extends Controller
     }
 
     /**
+     * Handle a registration request for the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function register(Request $request)
+    {
+        /** @var Validator $validator */
+        $validator = $this->validator($request->all());
+
+        if ($validator->fails()) {
+            return redirect()->route('auth.register.get')->withErrors($validator->errors());
+        }
+
+        event(new Registered($user = $this->create($request->all())));
+
+        $this->guard()->login($user);
+
+        return $this->registered($request, $user)
+            ?: redirect($this->redirectPath());
+    }
+
+    /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -50,14 +75,14 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6',
         ]);
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
@@ -65,7 +90,33 @@ class RegisterController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'username' => $this->createUsername($data['name']),
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    /**
+     * Create username from name.
+     *
+     * @param string $name
+     * @return string
+     */
+    protected function createUsername($name)
+    {
+        $usernameAvailable = false;
+        $nameSuffix = $username = '';
+        $counter = 1;
+
+        while (!$usernameAvailable) {
+            $username = formatNameToUsername($name . $nameSuffix);
+
+            if (User::where('username', $username)->first() == null) {
+                $usernameAvailable = true;
+            }
+
+            $nameSuffix = ' ' . $counter++;
+        }
+
+        return $username;
     }
 }

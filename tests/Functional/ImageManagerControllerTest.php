@@ -1,6 +1,10 @@
 <?php
 
+namespace Tests\Functional;
+
 use App\Http\Controllers\ImageManagerController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Tests\TestCase;
 
 class ImageManagerControllerTest extends TestCase
 {
@@ -11,7 +15,7 @@ class ImageManagerControllerTest extends TestCase
     {
         $file = tempnam(sys_get_temp_dir(), 'upl');
         imagepng(imagecreatetruecolor(10, 10), $file);
-        $image = new \Symfony\Component\HttpFoundation\File\UploadedFile(
+        $image = new UploadedFile(
             $file,
             'image.png',
             'image/png',

@@ -1,6 +1,7 @@
 <?php
 
 use App\Post;
+use Illuminate\Support\Facades\Route;
 
 /**
  * Returns class 'active' if the route request matches
@@ -23,6 +24,25 @@ if (!function_exists('classActiveRoute')) {
     }
 }
 
+if (!function_exists('isRoute')) {
+    /**
+     * Check if the current route is the given one.
+     *
+     * @param $route
+     * @return bool
+     */
+    function isRoute($route)
+    {
+        $currentRoute = Route::current();
+
+        if ($currentRoute) {
+            return $currentRoute->getName() == $route;
+        }
+
+        return false;
+    }
+}
+
 /**
  * Returns pagination text
  *
@@ -33,12 +53,12 @@ if (!function_exists('getPaginationText')) {
     function getPaginationText($paginator, $item = '')
     {
         return trans('home.showing') . ' '
-        . (($paginator->currentPage() - 1) * $paginator->perPage() + 1) . ' '
-        . trans('home.to') . ' '
-        . min($paginator->total(), $paginator->currentPage() * $paginator->perPage()) . ' '
-        . trans('home.of') . ' '
-        . $paginator->total() . ' '
-        . $item;
+            . (($paginator->currentPage() - 1) * $paginator->perPage() + 1) . ' '
+            . trans('home.to') . ' '
+            . min($paginator->total(), $paginator->currentPage() * $paginator->perPage()) . ' '
+            . trans('home.of') . ' '
+            . $paginator->total() . ' '
+            . $item;
     }
 }
 
@@ -73,15 +93,15 @@ if (!function_exists('getStatusLabelClass')) {
     }
 }
 
-/**
- * Returns slug from a text
- *
- * @see http://stackoverflow.com/a/2955878
- *
- * @param string $text
- * @return string
- */
 if (!function_exists('slugify')) {
+    /**
+     * Returns slug from a text
+     *
+     * @see http://stackoverflow.com/a/2955878
+     *
+     * @param string $text
+     * @return string
+     */
     function slugify($text)
     {
         // Normalize chars
@@ -123,29 +143,29 @@ if (!function_exists('normalizeChars')) {
     function normalizeChars($chars)
     {
         $normalizeChars = [
-            'Š'=>'S', 'š'=>'s', 'Ð'=>'Dj','Ž'=>'Z', 'ž'=>'z', 'À'=>'A', 'Á'=>'A', 'Â'=>'A', 'Ã'=>'A', 'Ä'=>'A',
-            'Å'=>'A', 'Æ'=>'A', 'Ç'=>'C', 'È'=>'E', 'É'=>'E', 'Ê'=>'E', 'Ë'=>'E', 'Ì'=>'I', 'Í'=>'I', 'Î'=>'I',
-            'Ï'=>'I', 'Ñ'=>'N', 'Ń'=>'N', 'Ò'=>'O', 'Ó'=>'O', 'Ô'=>'O', 'Õ'=>'O', 'Ö'=>'O', 'Ø'=>'O', 'Ù'=>'U', 'Ú'=>'U',
-            'Û'=>'U', 'Ü'=>'U', 'Ý'=>'Y', 'Þ'=>'B', 'ß'=>'Ss','à'=>'a', 'á'=>'a', 'â'=>'a', 'ã'=>'a', 'ä'=>'a',
-            'å'=>'a', 'æ'=>'a', 'ç'=>'c', 'è'=>'e', 'é'=>'e', 'ê'=>'e', 'ë'=>'e', 'ì'=>'i', 'í'=>'i', 'î'=>'i',
-            'ï'=>'i', 'ð'=>'o', 'ñ'=>'n', 'ń'=>'n', 'ò'=>'o', 'ó'=>'o', 'ô'=>'o', 'õ'=>'o', 'ö'=>'o', 'ø'=>'o', 'ù'=>'u',
-            'ú'=>'u', 'û'=>'u', 'ü'=>'u', 'ý'=>'y', 'ý'=>'y', 'þ'=>'b', 'ÿ'=>'y', 'ƒ'=>'f',
-            'ă'=>'a', 'î'=>'i', 'â'=>'a', 'ș'=>'s', 'ț'=>'t', 'Ă'=>'A', 'Î'=>'I', 'Â'=>'A', 'Ș'=>'S', 'Ț'=>'T',
+            'Š' => 'S', 'š' => 's', 'Ð' => 'Dj', 'Ž' => 'Z', 'ž' => 'z', 'À' => 'A', 'Á' => 'A', 'Â' => 'A', 'Ã' => 'A', 'Ä' => 'A',
+            'Å' => 'A', 'Æ' => 'A', 'Ç' => 'C', 'È' => 'E', 'É' => 'E', 'Ê' => 'E', 'Ë' => 'E', 'Ì' => 'I', 'Í' => 'I', 'Î' => 'I',
+            'Ï' => 'I', 'Ñ' => 'N', 'Ń' => 'N', 'Ò' => 'O', 'Ó' => 'O', 'Ô' => 'O', 'Õ' => 'O', 'Ö' => 'O', 'Ø' => 'O', 'Ù' => 'U', 'Ú' => 'U',
+            'Û' => 'U', 'Ü' => 'U', 'Ý' => 'Y', 'Þ' => 'B', 'ß' => 'Ss', 'à' => 'a', 'á' => 'a', 'â' => 'a', 'ã' => 'a', 'ä' => 'a',
+            'å' => 'a', 'æ' => 'a', 'ç' => 'c', 'è' => 'e', 'é' => 'e', 'ê' => 'e', 'ë' => 'e', 'ì' => 'i', 'í' => 'i', 'î' => 'i',
+            'ï' => 'i', 'ð' => 'o', 'ñ' => 'n', 'ń' => 'n', 'ò' => 'o', 'ó' => 'o', 'ô' => 'o', 'õ' => 'o', 'ö' => 'o', 'ø' => 'o', 'ù' => 'u',
+            'ú' => 'u', 'û' => 'u', 'ü' => 'u', 'ý' => 'y', 'ý' => 'y', 'þ' => 'b', 'ÿ' => 'y', 'ƒ' => 'f',
+            'ă' => 'a', 'î' => 'i', 'â' => 'a', 'ș' => 's', 'ț' => 't', 'Ă' => 'A', 'Î' => 'I', 'Â' => 'A', 'Ș' => 'S', 'Ț' => 'T',
         ];
 
         return strtr($chars, $normalizeChars);
     }
 }
 
-/**
- * Returns slug from a text
- *
- * @see http://stackoverflow.com/a/2955878
- *
- * @param string $text
- * @return string
- */
 if (!function_exists('getAvailableSlug')) {
+    /**
+     * Returns slug from a text
+     *
+     * @see http://stackoverflow.com/a/2955878
+     *
+     * @param string $text
+     * @return string
+     */
     function getAvailableSlug($text, $table, $column = 'slug')
     {
         $slugAvailable = false;
@@ -158,6 +178,7 @@ if (!function_exists('getAvailableSlug')) {
             }
             $slugSuffix = "-" . $counter++;
         }
+
         return $slug;
     }
 }
@@ -226,6 +247,65 @@ if (!function_exists('autoVersion')) {
         $modifiedTime = filemtime($absoluteFilePath);
 
         return $file . '?version=' . $modifiedTime;
+    }
+}
+
+if (!function_exists('formatSeconds')) {
+    /**
+     * Format seconds to 'hh:mm:ss' if hours > 0 or 'mm:ss' if hours < 0.
+     *
+     * @param integer $seconds
+     * @return string
+     */
+    function formatSeconds($seconds)
+    {
+        $hours = floor($seconds / 3600);
+        $minutes = floor($seconds / 60 % 60);
+        $secs = floor($seconds % 60);
+
+        if ($hours > 0) {
+            return sprintf('%02d:%02d:%02d', $hours, $minutes, $secs);
+        }
+
+        return sprintf('%02d:%02d', $minutes, $secs);
+    }
+}
+
+if (!function_exists('formatNameToUsername')) {
+    /**
+     * Format user name to username. For instance: 'Mario Pérez' to 'marioperez'
+     *
+     * @param string $name
+     * @return string
+     */
+    function formatNameToUsername($name)
+    {
+        // Normalize chars
+        $name = normalizeChars($name);
+
+        // replace non letter or digits by -
+        $name = preg_replace('~[^\pL\d]+~u', '', $name);
+
+        // transliterate
+        $name = iconv('utf-8', 'us-ascii//TRANSLIT', $name);
+
+        // remove unwanted characters
+        $name = preg_replace('~[^-\w]+~', '', $name);
+
+        // trim
+        $name = trim($name, '-');
+
+        // remove duplicate -
+        $name = preg_replace('~-+~', '', $name);
+
+        // lowercase
+        $name = strtolower($name);
+
+        if (empty($name)) {
+            return 'n-a';
+        }
+
+        return $name;
     }
 }
 

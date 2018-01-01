@@ -32,4 +32,18 @@ class UserValidator extends LaravelValidator implements ValidableInterface
 
         return $this;
     }
+
+    /**
+     * Rules to validate password.
+     *
+     * @return $this
+     */
+    public function validatePassword()
+    {
+        $this->rules = [
+            'password' => 'required|min:6',
+        ];
+
+        return $this;
+    }
 }

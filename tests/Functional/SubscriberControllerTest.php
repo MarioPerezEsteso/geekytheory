@@ -1,5 +1,10 @@
 <?php
 
+namespace Tests\Functional;
+
+use App\Subscriber;
+use Tests\TestCase;
+
 class SubscriberControllerTest extends TestCase
 {
     /**
@@ -7,7 +12,9 @@ class SubscriberControllerTest extends TestCase
      */
     public function testSubscribeWithoutConfirmOk()
     {
-        $email = 'random@email.com';
+        $faker = \Faker\Factory::create();
+        $email = $faker->email;
+
         $response = $this->call('POST', 'newsletter/subscribe', [
             'email' => $email,
         ]);
@@ -20,9 +27,13 @@ class SubscriberControllerTest extends TestCase
         $this->assertDatabaseHas('subscribers', [
             'email' => $email,
             'active' => false,
-            'token_expires_at' => \Carbon\Carbon::now()->addHours(24),
             'activated_at' => null,
             'unsubscribed_at' => null,
+        ]);
+
+        $this->assertDatabaseMissing('subscribers', [
+            'email' => $email,
+            'token_expires_at' => null,
         ]);
     }
 
@@ -31,10 +42,8 @@ class SubscriberControllerTest extends TestCase
      */
     public function testSubscribeEmailNotConfirmedAndTokenHasNotExpiredError()
     {
-        $subscriber = factory(App\Subscriber::class)->create([
-            'email' => 'alice@geekytheory.com',
+        $subscriber = factory(Subscriber::class)->create([
             'active' => false,
-            'token' => 'abcdef',
             'token_expires_at' => \Carbon\Carbon::now()->addHours(20),
             'activated_at' => null,
             'unsubscribed_at' => null,
@@ -55,10 +64,8 @@ class SubscriberControllerTest extends TestCase
      */
     public function testSubscribeEmailNotConfirmedAndTokenExpiredOk()
     {
-        $subscriber = factory(App\Subscriber::class)->create([
-            'email' => 'alice@geekytheory.com',
+        $subscriber = factory(Subscriber::class)->create([
             'active' => false,
-            'token' => 'abcdef',
             'token_expires_at' => \Carbon\Carbon::now()->subHours(20),
             'activated_at' => null,
             'unsubscribed_at' => null,
@@ -76,7 +83,6 @@ class SubscriberControllerTest extends TestCase
         $this->assertDatabaseHas('subscribers', [
             'email' => $subscriber->email,
             'active' => false,
-            'token_expires_at' => \Carbon\Carbon::now()->addHours(24),
             'activated_at' => null,
             'unsubscribed_at' => null,
         ]);
@@ -84,6 +90,7 @@ class SubscriberControllerTest extends TestCase
         $this->assertDatabaseMissing('subscribers', [
             'email' => $subscriber->email,
             'token' => $subscriber->token,
+            'token_expires_at' => null,
         ]);
     }
 
@@ -92,9 +99,7 @@ class SubscriberControllerTest extends TestCase
      */
     public function testIsUnsubscribedAndSubscribesAgain()
     {
-        $subscriber = factory(App\Subscriber::class)->create([
-            'email' => 'alice@geekytheory.com',
-            'token' => 'abcdef123456',
+        $subscriber = factory(Subscriber::class)->create([
             'active' => false,
             'token_expires_at' => \Carbon\Carbon::now()->subDays(2),
             'activated_at' => \Carbon\Carbon::now()->subDays(2),
@@ -116,9 +121,9 @@ class SubscriberControllerTest extends TestCase
             'token_expires_at' => $subscriber->token_expires_at,
         ]);
 
-        $this->assertDatabaseHas('subscribers', [
+        $this->assertDatabaseMissing('subscribers', [
             'email' => $subscriber->email,
-            'token_expires_at' => \Carbon\Carbon::now()->addHours(24),
+            'token_expires_at' => null,
         ]);
     }
 
@@ -127,10 +132,9 @@ class SubscriberControllerTest extends TestCase
      */
     public function testSubscriptionConfirmationOk()
     {
-        $subscriber = factory(App\Subscriber::class)->create([
-            'email' => 'alice@geekytheory.com',
-            'token' => 'abcdef123456',
+        $subscriber = factory(Subscriber::class)->create([
             'active' => false,
+            'activated_at' => null,
             'token_expires_at' => \Carbon\Carbon::now()->addHours(24),
         ]);
 
@@ -142,9 +146,13 @@ class SubscriberControllerTest extends TestCase
             'email' => $subscriber->email,
             'token' => $subscriber->token,
             'active' => true,
-            'token_expires_at' => \Carbon\Carbon::now(),
-            'activated_at' => \Carbon\Carbon::now(),
             'unsubscribed_at' => null,
+        ]);
+
+        $this->assertDatabaseMissing('subscribers', [
+            'email' => $subscriber->email,
+            'token_expires_at' => null,
+            'activated_at' => null,
         ]);
     }
 
@@ -154,9 +162,7 @@ class SubscriberControllerTest extends TestCase
      */
     public function testRedirectToHomePageOnSubscriptionConfirmationIfUserHasBeenPreviouslyActivatedAndTokenIsStillValid()
     {
-        $subscriber = factory(App\Subscriber::class)->create([
-            'email' => 'alice@geekytheory.com',
-            'token' => 'abcdef123456',
+        $subscriber = factory(Subscriber::class)->create([
             'active' => true,
             'token_expires_at' => \Carbon\Carbon::now()->addHours(23),
             'activated_at' => \Carbon\Carbon::now()->subMinutes(30),
@@ -176,9 +182,7 @@ class SubscriberControllerTest extends TestCase
      */
     public function testRedirectToHomePageOnSubscriptionConfirmationIfUserHasBeenPreviouslyActivatedAndTokenHasExpired()
     {
-        $subscriber = factory(App\Subscriber::class)->create([
-            'email' => 'alice@geekytheory.com',
-            'token' => 'abcdef123456',
+        $subscriber = factory(Subscriber::class)->create([
             'active' => true,
             'token_expires_at' => \Carbon\Carbon::now()->subHour(10),
             'activated_at' => \Carbon\Carbon::now()->subHour(15),
@@ -208,9 +212,7 @@ class SubscriberControllerTest extends TestCase
      */
     public function testUnsubscribeUser()
     {
-        $subscriber = factory(App\Subscriber::class)->create([
-            'email' => 'alice@geekytheory.com',
-            'token' => 'abcdef123456',
+        $subscriber = factory(Subscriber::class)->create([
             'active' => true,
             'token_expires_at' => \Carbon\Carbon::now()->subHour(10),
             'activated_at' => \Carbon\Carbon::now()->subHour(15),
@@ -247,9 +249,7 @@ class SubscriberControllerTest extends TestCase
      */
     public function testRedirectToHomePageIfUserHasBeenPreviouslyUnsubscribed()
     {
-        $subscriber = factory(App\Subscriber::class)->create([
-            'email' => 'alice@geekytheory.com',
-            'token' => 'abcdef123456',
+        $subscriber = factory(Subscriber::class)->create([
             'active' => false,
             'token_expires_at' => \Carbon\Carbon::now()->subHour(10),
             'activated_at' => \Carbon\Carbon::now()->subHour(15),
