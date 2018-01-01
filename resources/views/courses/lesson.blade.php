@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="utf-8">
-    <title>Geeky Theory Cursos</title>
-    <meta name="description" content="Geeky Theory Cursos"/>
+    <title>{{ $course->title }} - {{ $lesson->title }}</title>
+    <meta name="description" content="{{ $course->description }}"/>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">

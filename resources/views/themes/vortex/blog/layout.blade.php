@@ -24,108 +24,79 @@
     <link rel="apple-touch-icon" sizes="114x114"
           href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo_114) }}">
 
-    <!-- Bootstrap core CSS -->
-    <link href="/assets/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <!-- Loading Bootstrap -->
+    <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
 
-    <!-- Plugins -->
-    <link href="{{ autoVersion("/themes/vortex/assets/css/font-awesome.min.css") }}" rel="stylesheet">
-    <link href="{{ autoVersion("/themes/vortex/assets/css/ionicons.min.css") }}" rel="stylesheet">
-    <link href="{{ autoVersion("/themes/vortex/assets/css/simpletextrotator.css") }}" rel="stylesheet">
-    <link href="{{ autoVersion("/themes/vortex/assets/css/magnific-popup.css") }}" rel="stylesheet">
-    <link href="{{ autoVersion("/themes/vortex/assets/css/owl.carousel.css") }}" rel="stylesheet">
-    <link href="{{ autoVersion("/themes/vortex/assets/css/superslides.css") }}" rel="stylesheet">
-    <link href="{{ autoVersion("/themes/vortex/assets/css/vertical.css") }}" rel="stylesheet">
-    <link href="{{ autoVersion("/themes/vortex/assets/css/animate.css") }}" rel="stylesheet">
-    <link href="{{ autoVersion("/themes/vortex/assets/css/custom.css") }}" rel="stylesheet">
+    <!-- Loading Flat UI -->
+    <link href="/assets/vendor/flat-ui/dist/css/flat-ui.css" rel="stylesheet">
+    <link href="{{ autoVersion('/assets/courses/css/app.css') }}" rel="stylesheet">
+    <link href="{{ autoVersion('/assets/css/blog.css') }}" rel="stylesheet">
 
-@yield('custom-css')
+    <link rel="shortcut icon" href="/assets/vendor/flat-ui/img/favicon.ico">
 
-@include('themes.vortex.partials.cookies')
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+    <script src="/assets/vendor/flat-ui/dist/js/vendor/html5shiv.js"></script>
+    <script src="/assets/vendor/flat-ui/dist/js/vendor/respond.min.js"></script>
+    <![endif]-->
 
-<!-- Template core CSS -->
-    <link href="{{ autoVersion("/themes/vortex/assets/css/style.css") }}" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Merriweather' rel='stylesheet' type='text/css'>
+
+    @if (!empty($siteMeta->analytics_script))
+        {!! $siteMeta->analytics_script !!}
+    @endif
+
+    @include('courses.partials.cookies')
+
+    @yield('custom-css')
+
     @if (!empty($siteMeta->analytics_script))
         {!! $siteMeta->analytics_script !!}
     @endif
 </head>
 <body>
 
-<!-- OVERLAY MENU -->
-@include('themes.vortex.partials.overlay-menu')
-<!-- /OVERLAY MENU -->
+@include('courses.partials.navbar')
 
-<!-- WRAPPER -->
-<div class="wrapper">
-
-    <!-- NAVIGATION -->
-@include('themes.vortex.partials.navigation')
-<!-- /NAVIGATION -->
-
-@include('themes.vortex.blog.partials.posthero')
-
-@yield('content')
-
-<!-- FOOTER -->
-@include('themes.vortex.partials.footer')
-<!-- /FOOTER -->
-
-</div>
-<!-- /WRAPPER -->
-
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="pswp__bg"></div>
-    <div class="pswp__scroll-wrap">
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-        <div class="pswp__ui pswp__ui--hidden">
-            <div class="pswp__top-bar">
-                <div class="pswp__counter"></div>
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
+@if (!isset($user))
+    <div class="jumbotron jumbotron-home background-home center-flex">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 hidden-xs">
+                    <h1 class="jumbotron-title">{{ trans('public.home_header') }}</h1>
+                    <p>{{ trans('public.home_subheader') }}</p>
                 </div>
-            </div>
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
+                <div class="col-lg-5 col-lg-push-1 col-md-6">
+                    @include('courses.partials.auth.register')
+                </div>
             </div>
         </div>
     </div>
-</div>
+@endif
+
+@yield('content')
+
+@if (!isset($user) || (isset($user) && !$user['premium']))
+    <section class="container-fluid section-pricing">
+        @include('courses.partials.pricing')
+    </section>
+@endif
+
+<!-- FOOTER -->
+@include('courses.partials.footer')
+<!-- /FOOTER -->
 
 <!-- Javascript files -->
 <script src="/themes/vortex/assets/js/jquery-2.1.3.min.js"></script>
 <script src="/assets/js/bootstrap/bootstrap.min.js"></script>
-<script src="/themes/vortex/assets/js/jquery.superslides.min.js"></script>
-<script src="/themes/vortex/assets/js/jquery.mb.YTPlayer.min.js"></script>
-<script src="/themes/vortex/assets/js/jquery.magnific-popup.min.js"></script>
-<script src="/themes/vortex/assets/js/owl.carousel.min.js"></script>
-<script src="/themes/vortex/assets/js/jquery.simple-text-rotator.min.js"></script>
-<script src="/themes/vortex/assets/js/imagesloaded.pkgd.min.js"></script>
-<script src="/themes/vortex/assets/js/isotope.pkgd.min.js"></script>
-<script src="/themes/vortex/assets/js/packery-mode.pkgd.min.js"></script>
-<script src="/themes/vortex/assets/js/appear.min.js"></script>
-<script src="/themes/vortex/assets/js/jquery.easing.1.3.min.js"></script>
-<script src="/themes/vortex/assets/js/wow.min.js"></script>
-<script src="/themes/vortex/assets/js/jqBootstrapValidation.min.js"></script>
-<script src="/themes/vortex/assets/js/jquery.fitvids.min.js"></script>
-<script src="/themes/vortex/assets/js/jquery.parallax-1.1.3.min.js"></script>
-<script src="/themes/vortex/assets/js/smoothscroll.min.js"></script>
-<script src="/themes/vortex/assets/js/custom.min.js"></script>
+<script src="/assets/vendor/fluidvids/fluidvids.min.js"></script>
+<script>
+    fluidvids.init({
+        selector: ['iframe'],
+        players: ['www.youtube.com', 'player.vimeo.com']
+    });
+</script>
 
 @yield('custom-javascript')
 
