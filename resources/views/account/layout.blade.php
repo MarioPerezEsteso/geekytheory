@@ -47,8 +47,9 @@
         </div>
 
         <div class="header__logo hidden-sm-down">
-            <img class="img-responsive" src="/images/logo-footer-geekytheory.png"
-                 alt="GeekyTheory.com"/>
+            <a href="{{ $siteMeta->url }}">
+                <img class="img-responsive" src="/images/logo-footer-geekytheory.png" alt="GeekyTheory.com"/>
+            </a>
         </div>
 
         <ul class="top-nav">
