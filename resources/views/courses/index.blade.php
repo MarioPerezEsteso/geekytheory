@@ -22,11 +22,11 @@
                     </div>
                 @else
                     <div class="col-lg-6 col-md-6">
-                        <h3 class="jumbotron-title">{{ trans('public.home_header') }}</h3>
+                        <h1 class="jumbotron-title">{{ trans('public.home_header') }}</h1>
                         <p>{{ trans('public.home_subheader') }}</p>
                     </div>
                     <div class="col-lg-5 col-lg-push-1 col-md-6 hidden-sm hidden-xs">
-                        <img class="img-responsive" src="/images/terminal.png">
+                        <img class="img-responsive" src="/images/terminal.png" alt="Terminal Geeky Theory">
                     </div>
                 @endif
             </div>
