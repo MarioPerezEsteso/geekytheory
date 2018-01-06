@@ -14,6 +14,9 @@
                     <li>
                         <strong>Acceso a cursos gratuitos</strong>
                     </li>
+                    <li>
+                        <strong>Preguntar dudas en cada curso</strong>
+                    </li>
                     <li class="plan-action">
                         @if (!isset($user))
                             <a href="{{ route('auth.register.get') }}"
@@ -39,9 +42,9 @@
                     <li>
                         <strong>Certificado de finalización</strong>
                     </li>
-                    {{--<li>
+                    <li>
                         <strong>Preguntar dudas en cada curso</strong>
-                    </li>--}}
+                    </li>
                     <li>
                         <strong>Acceso a contenido exclusivo</strong>
                     </li>

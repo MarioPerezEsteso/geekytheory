@@ -81,4 +81,5 @@ return [
     'obtain' => 'Obtain',
     'i_want_it' => 'I want it!',
     'you_have_it' => 'You have it',
+    'pricing_description' => 'Aprende a programar desde cero con Geeky Theory y los curso de Vagrant, Laravel, Javascript, VueJS, PHP, SQL y muchas tecnologías.',
 ];

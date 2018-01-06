@@ -18,6 +18,7 @@
     </script>
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     <script type="text/javascript" src="/account/js/subscription/payMethodFormHandler.js"></script>
+    <script src="/assets/courses/js/drift.js" async></script>
 @endsection
 
 @section('content')
