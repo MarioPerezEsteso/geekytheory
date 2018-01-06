@@ -40,6 +40,12 @@
                         @endif
                     @endforeach
 
+                    <li>
+                        <a href="{{ route('pricing') }}" title="Precios">
+                            Precios
+                        </a>
+                    </li>
+
                     @if(Auth::user() !== null)
                         <div class="navbar-header navbar-header-avatar">
                             <a class="navbar-brand" href="{{ route('account.profile') }}">
