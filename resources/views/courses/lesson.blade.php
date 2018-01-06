@@ -4,9 +4,14 @@
     <meta charset="utf-8">
     <title>{{ $course->title }} - {{ $lesson->title }}</title>
     <meta name="description" content="{{ $course->description }}"/>
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <!-- Favicons -->
+    <link rel="shortcut icon" href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->favicon) }}">
+    <link rel="apple-touch-icon" href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo_57) }}">
+    <link rel="apple-touch-icon" sizes="72x72" href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo_72) }}">
+    <link rel="apple-touch-icon" sizes="114x114" href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo_114) }}">
 
     <!-- Loading Bootstrap -->
     <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -14,8 +19,6 @@
     <!-- Loading Flat UI -->
     <link href="/assets/vendor/flat-ui/dist/css/flat-ui.css" rel="stylesheet">
     <link href="{{ autoVersion('/assets/courses/css/app.css') }}" rel="stylesheet">
-
-    <link rel="shortcut icon" href="/assets/vendor/flat-ui/img/favicon.ico">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
     <!--[if lt IE 9]>
