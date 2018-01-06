@@ -139,4 +139,5 @@ return [
     'incorrect_zip' => 'El código postal es incorrecto.',
     'stripe_processing_error' => 'Ha habido un error procesando el pago. Por favor, inténtelo de nuevo.',
     'password_incorrect' => 'Contraseña incorrecta',
+    'account' => 'Cuenta',
 ];

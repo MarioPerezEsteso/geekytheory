@@ -137,4 +137,5 @@ return [
     'incorrect_zip' => 'Your ZIP is incorrect.',
     'stripe_processing_error' => 'There has been an error processing the payment. Please, try it again.',
     'password_incorrect' => 'Incorrect password',
+    'account' => 'Account',
 ];
