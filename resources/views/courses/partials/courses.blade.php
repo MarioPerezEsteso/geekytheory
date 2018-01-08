@@ -38,31 +38,6 @@
                 <div class="col-lg-4 col-sm-12">
                     <div class="card hovercard">
                         <div class="cardheader"
-                             style="background: url('https://geekytheory.com/uploads/2018/01/laravel.png');">
-                        </div>
-                        <div class="avatar">
-                            <img alt="Mario Pérez Esteso"
-                                 src="//www.gravatar.com/avatar/4a6f506a1fc112ebbbaa3f26b19f175a?s=50&amp;d=mm&amp;r=g">
-                        </div>
-                        <div class="info">
-                            <div class="title">
-                                Curso de Laravel
-                            </div>
-                        </div>
-                        <div class="bottom">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="info">
-                                        <span class="fui-calendar"></span> 10 de enero de 2018
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-sm-12">
-                    <div class="card hovercard">
-                        <div class="cardheader"
                              style="background: url('https://geekytheory.com/uploads/2018/01/vuejs.jpeg');">
                         </div>
                         <div class="avatar">
