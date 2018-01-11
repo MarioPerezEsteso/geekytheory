@@ -15,7 +15,7 @@ class AccountController extends Controller
      */
     public function index()
     {
-        $courses = Course::getPublished()->get();
+        $courses = Course::getPublishedAndScheduled()->get();
 
         /** @var User $user */
         $user = Auth::user();

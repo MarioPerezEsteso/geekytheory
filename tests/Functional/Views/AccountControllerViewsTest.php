@@ -3,6 +3,7 @@
 namespace Tests\Functional\Views;
 
 use App\User;
+use Tests\Helpers\Response;
 use Tests\Helpers\TestUtils;
 use Tests\TestCase;
 
@@ -31,14 +32,17 @@ class AccountControllerViewsTest extends TestCase
             $user = factory(User::class)->create();
         }
 
-        $courses = TestUtils::createCoursesWithChaptersAndLessons(null, $numberOfCourses);
+        TestUtils::createCoursesWithChaptersAndLessons(null, $numberOfCourses);
+        TestUtils::createCoursesWithChaptersAndLessons(null, $numberOfCourses, 1, 1, ['status' => 'scheduled']);
 
         // Request
         $this->actingAs($user);
 
+        /** @var Response $response */
         $response = $this->call('GET', $this->accountUrl);
 
         // Asserts
+        // @TODO: test that published and scheduled courses are being shown in the view.
         $response->assertStatus(200);
         $response->assertResponseIsView('account.index');
         $response->assertResponseDataItemHasValue('userHasSubscriptionActive', $subscriptionActive);
