@@ -8,26 +8,39 @@
                 @foreach ($coursesChunk as $course)
                     <div class="col-lg-4 col-sm-12">
                         <div class="card hovercard">
+                            @if ($course->isPublished())
+                                <a href="{{ route('course', ['slug' => $course->slug]) }}">
+                            @endif
                             <div class="cardheader" style="background: url('{{ $course->image }}');">
-                                @if ($course->free)
+                                @if ($course->isFree())
                                     <div class="cardheader-label-free">Gratis</div>
                                 @endif
                             </div>
+                            @if ($course->isPublished())
+                                </a>
+                            @endif
                             <div class="avatar">
                                 <img alt="{{ $course->teacher->name }}"
                                      src="{{ getGravatar($course->teacher->email, 50) }}">
                             </div>
                             <div class="info">
                                 <div class="title">
-                                    <a href="{{ route('course', ['slug' => $course->slug]) }}">{{ $course->title }}</a>
+                                    @if ($course->isPublished())
+                                        <a href="{{ route('course', ['slug' => $course->slug]) }}">{{ $course->title }}</a>
+                                    @else
+                                        {{ $course->title }}
+                                    @endif
                                 </div>
                             </div>
                             <div class="bottom">
                                 <div class="row">
                                     <div class="col-lg-12">
                                         <div class="info">
-                                            ¡Ya está disponible!
-                                            {{--<span class="fui-user info"></span>{{ $course->students }}--}}
+                                            @if ($course->isPublished())
+                                                <strong>¡Ya está disponible!</strong>
+                                            @else
+                                                <strong>Próximamente</strong>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -35,31 +48,6 @@
                         </div>
                     </div>
                 @endforeach
-                <div class="col-lg-4 col-sm-12">
-                    <div class="card hovercard">
-                        <div class="cardheader"
-                             style="background: url('https://geekytheory.com/uploads/2018/01/vuejs.jpeg');">
-                        </div>
-                        <div class="avatar">
-                            <img alt="Mario Pérez Esteso"
-                                 src="//www.gravatar.com/avatar/4a6f506a1fc112ebbbaa3f26b19f175a?s=50&amp;d=mm&amp;r=g">
-                        </div>
-                        <div class="info">
-                            <div class="title">
-                                Curso de Vue.JS
-                            </div>
-                        </div>
-                        <div class="bottom">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="info">
-                                        <span class="fui-calendar"></span> 1 de febrero de 2018
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         @endforeach
     </div>

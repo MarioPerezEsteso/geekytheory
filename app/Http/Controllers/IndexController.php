@@ -51,7 +51,7 @@ class IndexController extends Controller
             $posts = Article::findArticles(null, true, $postsToShow);
         }
 
-        $courses = Course::getPublished()->with('teacher')->get();
+        $courses = Course::getPublishedAndScheduled()->with('teacher')->get();
 
         return view('courses.index', compact('posts', 'courses'));
     }
