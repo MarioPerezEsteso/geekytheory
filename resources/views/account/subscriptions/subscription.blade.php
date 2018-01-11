@@ -126,7 +126,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <p id="error-message" class="text-danger" style="display: none">
-                                    Ha habido un error en la comunicación con Stripe. Por favor, inténtalo de nuevo.
+                                    Ha habido un error con Stripe o tu tarjeta no está soportada. Por favor, inténtalo de nuevo.
                                 </p>
                             </div>
                         </div>
