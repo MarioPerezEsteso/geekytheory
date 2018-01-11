@@ -224,6 +224,17 @@ class SubscriptionControllerTest extends TestCase
                     'expected_error' => 'home.incorrect_zip'
                 ],
             ],
+            [
+                [
+                    'stripe_token' => 'tok_discover',
+                    'expected_error' => 'home.credit_card_not_valid',
+                ],
+            ], [
+                [
+                    'stripe_token' => 'tok_jcb',
+                    'expected_error' => 'home.credit_card_not_valid',
+                ],
+            ],
         ];
     }
 
@@ -271,24 +282,6 @@ class SubscriptionControllerTest extends TestCase
     {
         return [
             [
-                [
-                    'stripe_token' => 'tok_discover',
-                    'expected_error' => 'home.credit_card_not_valid',
-                    'card' => [
-                        'last_four' => '9424',
-                        'brand' => 'Discover',
-                    ],
-                ],
-            ], [
-                [
-                    'stripe_token' => 'tok_jcb',
-                    'expected_error' => 'home.credit_card_not_valid',
-                    'card' => [
-                        'last_four' => '0000',
-                        'brand' => 'JCB',
-                    ],
-                ],
-            ], [
                 [
                     'stripe_token' => 'tok_chargeDeclinedFraudulent',
                     'expected_error' => 'home.credit_card_not_valid',
