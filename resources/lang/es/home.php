@@ -74,7 +74,6 @@ return [
     'site_logo_114' => 'Logo (formato PNG 114x114px)',
     'sitemeta_update_success' => 'Las opciones del sitio han sido actualizadas exitosamente',
     'site_url' => 'URL del sitio',
-    'allow_register' => 'Permitir el registro de nuevos usuarios',
     'settings' => 'Ajustes',
     'menu' => 'Menú',
     'menu_page_description' => 'En esta página podrá editar el menú de su web',

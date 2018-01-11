@@ -152,7 +152,6 @@ class SiteMetaController extends Controller
             'logo_57' => $siteLogo57,
             'logo_72' => $siteLogo72,
             'logo_114' => $siteLogo114,
-            'allow_register' => $request->allow_register && $request->allow_register == 'on',
             'show_author_post_list' => $request->show_author_post_list && $request->show_author_post_list == 'on',
             'show_author_post' => $request->show_author_post && $request->show_author_post == 'on',
             'akismet_api_key' => isset($request->akismet_api_key) ? $request->akismet_api_key : '',
