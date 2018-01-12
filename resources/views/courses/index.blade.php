@@ -8,6 +8,13 @@
 {{ $siteMeta->description }}
 @endsection
 
+@section('twitter_meta_tags')
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $siteMeta->title }}">
+    <meta name="twitter:description" content="{{ $siteMeta->description }}">
+    <meta name="twitter:image" content="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl('images/geekytheory-twitter.jpg', false, true) }}">
+@endsection
+
 @section('content')
     <div class="jumbotron jumbotron-home background-home center-flex">
         <div class="container">
