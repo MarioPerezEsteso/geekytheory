@@ -40,7 +40,7 @@
         {!! $siteMeta->analytics_script !!}
     @endif
 
-    @include('courses.partials.cookies')
+{{--    @include('courses.partials.cookies')--}}
     @include('courses.partials.hotjar')
 </head>
 <body>
