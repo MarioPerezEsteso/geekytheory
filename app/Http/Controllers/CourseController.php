@@ -11,6 +11,11 @@ use Illuminate\Support\MessageBag;
 
 class CourseController extends Controller
 {
+    /**
+     * Show all courses.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $courses = Course::getPublishedAndScheduled()->with('teacher')->get();
