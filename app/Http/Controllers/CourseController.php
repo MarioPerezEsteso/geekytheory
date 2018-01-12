@@ -11,6 +11,13 @@ use Illuminate\Support\MessageBag;
 
 class CourseController extends Controller
 {
+    public function index()
+    {
+        $courses = Course::getPublishedAndScheduled()->with('teacher')->get();
+
+        return view('courses.courses', compact('courses'));
+    }
+
     /**
      * Show single course.
      *
