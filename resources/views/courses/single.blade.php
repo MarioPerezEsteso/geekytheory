@@ -8,6 +8,10 @@
 {{ $course->description }}
 @endsection
 
+@section('twitter_meta_tags')
+    @include('courses.partials.twitterMetaTags')
+@endsection
+
 @section('content')
 
     @if(isset($errors) && $errors->has('subscription_error'))
