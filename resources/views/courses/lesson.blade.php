@@ -102,6 +102,7 @@
 <script src="https://player.vimeo.com/api/player.js"></script>
 <script src="/assets/courses/js/video.js"></script>
 <script src="/assets/courses/js/disqus.js"></script>
+<script src="/assets/courses/js/drift.js" async></script>
 
 </body>
 </html>
