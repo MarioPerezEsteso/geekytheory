@@ -7,6 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $course->title }}: {{ $lesson->title}}">
+    <meta name="twitter:description" content="{{ $course->description }}">
+    <meta name="twitter:image" content="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($course->image, false, true) }}">
+
     <link rel="canonical" href="{{ URL::current() }}"/>
 
     <!-- Favicons -->

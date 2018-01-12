@@ -10,6 +10,8 @@
     @if (env('GOOGLE_SITE_VERIFICATION_KEY') !== null)
         <meta name="google-site-verification" content="{{ env('GOOGLE_SITE_VERIFICATION_KEY') }}" />
     @endif
+
+    @yield('twitter_meta_tags')
     
     <link rel="canonical" href="{{ URL::current() }}"/>
 
@@ -38,7 +40,7 @@
         {!! $siteMeta->analytics_script !!}
     @endif
 
-    @include('courses.partials.cookies')
+{{--    @include('courses.partials.cookies')--}}
     @include('courses.partials.hotjar')
 </head>
 <body>
