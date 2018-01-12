@@ -105,6 +105,16 @@ class Course extends Model
     }
 
     /**
+     * Get published and scheduled courses.
+     *
+     * @return Builder
+     */
+    public static function getPublishedAndScheduled()
+    {
+        return Course::whereIn('status', [self::STATUS_PUBLISHED, self::STATUS_SCHEDULED]);
+    }
+
+    /**
      * Check if a course is published.
      *
      * @return bool

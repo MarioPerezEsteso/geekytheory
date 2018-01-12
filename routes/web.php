@@ -42,13 +42,11 @@ Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']
  */
 Route::get('registro', [
     'as' => 'auth.register.get',
-    'middleware' => 'allow_user_registration',
     'uses' => 'Auth\RegisterController@showRegistrationForm'
 ]);
 
 Route::post('register', [
     'as' => 'auth.register.post',
-    'middleware' => 'allow_user_registration',
     'uses' => 'Auth\RegisterController@register'
 ]);
 
