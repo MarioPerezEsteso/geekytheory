@@ -158,6 +158,10 @@ a {
     margin-top: 53px;
 }
 
+.section-courses {
+    margin-top: 53px;
+}
+
 @media (max-width: 576px) {
     .section-pricing {
         height: 1150px;

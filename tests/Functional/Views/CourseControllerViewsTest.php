@@ -3,15 +3,44 @@
 namespace Tests\Functional\Views;
 
 use App\User;
+use Tests\Helpers\Response;
 use Tests\Helpers\TestUtils;
 use Tests\TestCase;
 
 class CourseControllerViewsTest extends TestCase
 {
     /**
+     * View all courses endpoint.
+     *
+     * @var string
+     */
+    protected $allCoursesUrl = 'cursos';
+
+    /**
      * Single course endpoint.
+     *
+     * @var string
      */
     protected $singleCourseUrl = 'curso/{slug}';
+
+    /**
+     * Test visit courses page and view courses ok.
+     */
+    public function testVisitPageCoursesOk()
+    {
+        // Prepare
+        TestUtils::createCoursesWithChaptersAndLessons(null, 1, 3, 5);
+        TestUtils::createCoursesWithChaptersAndLessons(null, 1, 3, 5, ['status' => 'scheduled']);
+
+        // Request
+        /** @var Response $response */
+        $response = $this->call('GET', $this->allCoursesUrl);
+
+        // Asserts
+        $response->assertStatus(200);
+        $response->assertResponseIsView('courses.courses');
+        $response->assertResponseHasData('courses');
+    }
 
     /**
      * Test page single course ok.
