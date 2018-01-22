@@ -62,6 +62,18 @@ Route::get('password/reset/{token?}', ['as' => 'password.reset', 'uses' => 'Auth
 Route::post('password/reset', ['as' => 'password.reset.post', 'uses' => 'Auth\ResetPasswordController@reset']);
 
 /**
+ * Redirects
+ */
+Route::get('introduccion-a-python-instalacion-y-hola-mundo', 'RedirectionController@redirect');
+Route::get('introduccion-a-python-instalacion-y-hola-mundo', 'RedirectionController@redirect');
+Route::get('operadores-y-tipos-en-python', 'RedirectionController@redirect');
+Route::get('variables-en-python', 'RedirectionController@redirect');
+Route::get('definicion-funciones-python', 'RedirectionController@redirect');
+Route::get('bucles-en-python', 'RedirectionController@redirect');
+Route::get('la-funcion-range-en-python', 'RedirectionController@redirect');
+Route::get('como-crear-una-lista-de-tareas-con-laravel-tutorial-php', 'RedirectionController@redirect');
+
+/**
  * Routes for courses
  */
 Route::get('cursos', [
