@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
 use App\Post;
 use App\Article;
 use App\Repositories\UserRepository;
@@ -106,6 +107,8 @@ class ArticleController extends PostController
 
 		$socialShareButtons = $this->getSocialShareButtonsData($post);
 
+		$courses = Course::getPublished()->get();
+
 		/*
 		 * The comments are cached apart from the post, tags and categories
 		 * because they are going to be modified frequently.
@@ -120,7 +123,7 @@ class ArticleController extends PostController
 
 		$commentCount = count($comments);
 
-		return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'authorUser', 'comments', 'commentCount', 'socialShareButtons'));
+		return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'authorUser', 'comments', 'commentCount', 'socialShareButtons', 'courses'));
 	}
 
 	/**
