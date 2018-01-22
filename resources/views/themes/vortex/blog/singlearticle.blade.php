@@ -65,6 +65,10 @@
             </div>
         @endif--}}
     </div>
+
+    <section class="container-fluid section-gray section-courses">
+        @include('courses.partials.courses')
+    </section>
 @endsection
 
 @section('custom-javascript')
