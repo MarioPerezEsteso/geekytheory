@@ -25,6 +25,7 @@ class LessonPolicy
         $userHasSubscriptionActive = $user->hasSubscriptionActive();
 
         return !$userHasJoinedCourse && $courseIsPremium && !$lessonIsPremium
+            || !$userHasJoinedCourse && !$courseIsPremium && !$lessonIsPremium
             || $userHasJoinedCourse && !$courseIsPremium && !$lessonIsPremium
             || $userHasJoinedCourse && $courseIsPremium && $userHasSubscriptionActive;
     }

@@ -112,7 +112,7 @@ class LessonControllerTest extends TestCase
                     'premiumCourse' => false,
                     'premiumLesson' => false,
                     'premiumUser' => false,
-                    'canMarkLessonAsCompleted' => false,
+                    'canMarkLessonAsCompleted' => true,
                 ]
             ], [
                 [
@@ -120,7 +120,7 @@ class LessonControllerTest extends TestCase
                     'premiumCourse' => false,
                     'premiumLesson' => false,
                     'premiumUser' => true,
-                    'canMarkLessonAsCompleted' => false,
+                    'canMarkLessonAsCompleted' => true,
                 ]
             ], [
                 [
