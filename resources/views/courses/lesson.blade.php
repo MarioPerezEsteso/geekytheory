@@ -10,15 +10,20 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ $course->title }}: {{ $lesson->title}}">
     <meta name="twitter:description" content="{{ $course->description }}">
-    <meta name="twitter:image" content="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($course->image, false, true) }}">
+    <meta name="twitter:image"
+          content="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($course->image, false, true) }}">
 
     <link rel="canonical" href="{{ URL::current() }}"/>
 
     <!-- Favicons -->
-    <link rel="shortcut icon" href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->favicon) }}">
-    <link rel="apple-touch-icon" href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo_57) }}">
-    <link rel="apple-touch-icon" sizes="72x72" href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo_72) }}">
-    <link rel="apple-touch-icon" sizes="114x114" href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo_114) }}">
+    <link rel="shortcut icon"
+          href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->favicon) }}">
+    <link rel="apple-touch-icon"
+          href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo_57) }}">
+    <link rel="apple-touch-icon" sizes="72x72"
+          href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo_72) }}">
+    <link rel="apple-touch-icon" sizes="114x114"
+          href="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($siteMeta->logo_114) }}">
 
     <!-- Loading Bootstrap -->
     <link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
@@ -26,6 +31,8 @@
     <!-- Loading Flat UI -->
     <link href="/assets/vendor/flat-ui/dist/css/flat-ui.css" rel="stylesheet">
     <link href="{{ autoVersion('/assets/courses/css/app.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="/assets/vendor/highlight/css/hightlight.min.css">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
     <!--[if lt IE 9]>
@@ -99,10 +106,19 @@
 <script src="/assets/vendor/flat-ui/dist/js/vendor/video.js"></script>
 <script src="/assets/vendor/flat-ui/dist/js/flat-ui.min.js"></script>
 <script src="/assets/vendor/flat-ui/docs/assets/js/application.js"></script>
-<script src="https://player.vimeo.com/api/player.js"></script>
-<script src="/assets/courses/js/video.js"></script>
+@if (!empty($lesson->video))
+    <script src="https://player.vimeo.com/api/player.js"></script>
+    <script src="/assets/courses/js/video.js"></script>
+@endif
 <script src="/assets/courses/js/disqus.js"></script>
 <script src="/assets/courses/js/drift.js" async></script>
-
+<script src="/assets/vendor/highlight/js/highlight.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('pre').each(function(i, block) {
+      hljs.highlightBlock(block);
+    });
+  });
+</script>
 </body>
 </html>
