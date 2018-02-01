@@ -22,11 +22,27 @@ h5 {
     padding-top: 100px;
 }
 
-img {
+.post-single img {
     display: block;
     max-width: 100%;
     width: 100%;
     height: auto;
     padding-top: 30px;
     padding-bottom : 30px;
+}
+
+.alert-telegram {
+    margin-top: 50px;
+    color: white;
+    background-color: #2890cb;
+    border-color: #2890cb;
+    font-weight: bold;
+}
+
+.alert-telegram a {
+    color : white;
+}
+
+.alert-telegram a:hover {
+    color: #45bfb0;
 }
