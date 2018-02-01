@@ -69,7 +69,7 @@
                         </div>
                         <div class="col-sm-11">
                             <a href="https://goo.gl/eyS32z" target="_blank">
-                                ¿Quieres estar al día de lo que pasa en Geeky Theory? ¡Únete a nuestro canal de Telegram aqui!
+                                ¿Quieres estar al día de lo que pasa en Geeky Theory? ¡Únete a nuestro canal de Telegram aquí!
                             </a>
                         </div>
                     </div>
