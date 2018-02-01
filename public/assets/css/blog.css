@@ -21,3 +21,12 @@ h5 {
 .post-container {
     padding-top: 100px;
 }
+
+img {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    padding-top: 30px;
+    padding-bottom : 30px;
+}
