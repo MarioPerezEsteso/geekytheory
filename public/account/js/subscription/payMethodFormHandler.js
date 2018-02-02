@@ -64,6 +64,57 @@ $('#credit-card-number').keyup(function () {
     }
 });
 
+$('#coupon').keyup(function () {
+    if ($(this).val()) {
+        $('#btn-apply-coupon').prop('disabled', false);
+    }
+});
+
+$('#btn-apply-coupon').click(function () {
+    console.log("CLICKADO");
+    $.ajax({
+        type: 'POST',
+        url: '/coupon/validate',
+        data: {
+            coupon: $('#coupon').val()
+        },
+        dataType: 'JSON',
+        success: function (coupon) {
+            var couponValidAlert = $('#coupon-valid-alert');
+            var couponInvalidAlert = $('#coupon-invalid-alert');
+            if (coupon.status === 'valid') {
+                if (coupon.duration === 'forever') {
+                    couponValidAlert.html(coupon.percent_off + '% de descuento para siempre.');
+                } else {
+                    if (coupon.duration_in_months > 1) {
+                        couponValidAlert.html(coupon.percent_off + '% de descuento durante ' + coupon.duration_in_months + ' meses.'); 
+                    } else {
+                        couponValidAlert.html(coupon.percent_off + '% de descuento durante ' + coupon.duration_in_months + ' mes.'); 
+                    }
+                }
+                couponValidAlert.css('display', '');
+                couponInvalidAlert.css('display', 'none');
+            } else {
+                if (coupon.status === 'redeemed') {
+                    couponInvalidAlert.html('El cupón ya ha sido utilizado.')
+                } else if (coupon.status === 'expired') {
+                    couponInvalidAlert.html('Este cupón ha expirado.');
+                } else {
+                    couponInvalidAlert.html('Este cupón no es válido.')
+                }
+
+                couponValidAlert.css('display', 'none');
+                couponInvalidAlert.css('display', '');
+            }
+        },
+        error: function (response) {
+            $('#coupon-invalid-alert').html('Ha habido un error aplicando el cupón.')
+            $('#coupon-invalid-alert').css("display", "");
+            $('#coupon-valid-alert').css("display", "none");
+        }
+    });
+});
+
 /**
  * Stripe response handler.
  * @param status

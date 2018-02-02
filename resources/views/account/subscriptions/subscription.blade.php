@@ -124,6 +124,27 @@
                         </div>
 
                         <div class="row">
+                            <div class="col-lg-3">
+                                <div class="form-group form-group--float">
+                                    {!! Form::text('coupon', null, ['class' => 'form-control', 'required' => 'required', 'id' => 'coupon',]) !!}
+                                    {!! Form::label('coupon', '¿Tienes un cupón?', ['class' => 'form-control-label']) !!}
+                                    <i class="form-group__bar"></i>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="form-group form-group--float">                                
+                                    {!! Form::button('Aplicar', ['class' => 'btn btn-primary waves-effect', 'id' => 'btn-apply-coupon', 'disabled' => true]) !!}
+                                </div>
+                            </div>
+                            <div class="col-lg-7">
+                                <div class="form-group form-group--float">                                                                
+                                    <p id="coupon-valid-alert" class="text-success" style="display: none;"></p>
+                                    <p id="coupon-invalid-alert" class="text-danger" style="display: none"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
                             <div class="col-lg-12">
                                 <p id="error-message" class="text-danger" style="display: none">
                                     Ha habido un error con Stripe o tu tarjeta no está soportada. Por favor, inténtalo de nuevo.
