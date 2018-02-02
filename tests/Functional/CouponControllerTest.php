@@ -92,6 +92,21 @@ class CouponControllerTest extends TestCase
     }
 
     /**
+     * Test coupon validation failure.
+     */
+    public function testCouponValidationFailure()
+    {
+        // Prepare
+        $user = factory(User::class)->create();
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->validateCouponEndpoint, ['coupon' => '',]);
+
+        // Asserts
+        $response->assertExactJson(['status' => 'invalid']);
+    }
+
+    /**
      * Test check coupon redirects to login if user is not logged in.
      */
     public function testCheckCouponNonLoggedUserNotAuthorized()
