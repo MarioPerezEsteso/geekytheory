@@ -17,6 +17,20 @@ class Coupon extends Model
     const STATUS_EXPIRED = 'expired';
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'status',
+        'percent_off',
+        'duration',
+        'duration_in_months',
+        'applied_at',
+        'ends_at',
+    ];
+
+    /**
      * Get coupon from Stripe.
      *
      * @param string $coupon
@@ -49,6 +63,7 @@ class Coupon extends Model
         } catch (\Exception $exception) {
             $this->status = self::STATUS_INVALID;
         }
+
         return $this;
     }
 
