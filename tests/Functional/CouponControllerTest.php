@@ -52,6 +52,41 @@ class CouponControllerTest extends TestCase
                     'applied_at' => null,
                     'ends_at' => null,
                 ],
+            ], [
+                'coupon' => 'test-coupon-5-months',
+                'couponResponse' => [
+                    'status' => 'valid',
+                    'percent_off' => 20,
+                    'duration' => 'repeating',
+                    'duration_in_months' => 5,
+                    'applied_at' => null,
+                    'ends_at' => null,
+                ],
+            ], [
+                'coupon' => 'test-coupon-forever',
+                'couponResponse' => [
+                    'status' => 'valid',
+                    'percent_off' => 35,
+                    'duration' => 'forever',
+                    'duration_in_months' => null,
+                    'applied_at' => null,
+                    'ends_at' => null,
+                ],
+            ], [
+                'coupon' => 'test-coupon-redeemed',
+                'couponResponse' => [
+                    'status' => 'redeemed',
+                ]
+            ], [
+                'coupon' => 'test-coupon-that-does-not-exist',
+                'couponResponse' => [
+                    'status' => 'invalid',
+                ]
+            ], [
+                'coupon' => 'test-coupon-expired',
+                'couponResponse' => [
+                    'status' => 'expired',
+                ]
             ],
         ];
     }
