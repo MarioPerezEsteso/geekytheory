@@ -127,11 +127,13 @@ function stripeResponseHandler(status, response) {
         $('#error-message').css("display", "none");
         // Get the token ID
         var token = response.id;
+        var coupon = $('#coupon').val();
 
         // Submit the form with the Stripe Token
         var form = $('#subscription-form');
 
         form.append($('<input type="hidden" name="stripe_token" />').val(token));
+        form.append($('<input type="hidden" name="coupon" />').val(coupon));
 
         form.get(0).submit();
     }
