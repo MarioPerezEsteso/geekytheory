@@ -146,6 +146,86 @@ class SubscriptionControllerTest extends TestCase
     }
 
     /**
+     * Test create subscription with valid coupon OK.
+     */
+    public function testCreateSubscriptionWithCouponOk()
+    {
+        /** @var User $user */
+        $user = factory(User::class)->create();
+
+        $requestData = [
+            'stripe_token' => 'tok_visa',
+            'coupon' => 'test-coupon-forever',
+        ];
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->subscriptionCreatePostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertSessionHas('success', trans('home.subscription_created'));
+
+        // Database asserts
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'card_brand' => 'Visa',
+            'card_last_four' => '4242',
+            'trial_ends_at' => null,
+        ]);
+
+        $this->assertDatabaseHas('subscriptions', [
+            'user_id' => $user->id,
+            'name' => TestConstants::MODEL_SUBSCRIPTION_PLAN_NAME,
+            'stripe_plan' => TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY,
+            'quantity' => 1,
+            'trial_ends_at' => null,
+            'ends_at' => null,
+        ]);
+
+        // @TODO: assert that the coupon has been applied.
+    }
+
+    /**
+     * Test that a subscription can be created even with an invalid coupon.
+     */
+    public function testCreateSubscriptionWithInvalidCouponOk()
+    {
+        /** @var User $user */
+        $user = factory(User::class)->create();
+
+        $requestData = [
+            'stripe_token' => 'tok_visa',
+            'coupon' => 'this-coupon-does-not-exist',
+        ];
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $this->subscriptionCreatePostUrl, $requestData);
+
+        // Asserts
+        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertSessionHas('success', trans('home.subscription_created'));
+
+        // Database asserts
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'card_brand' => 'Visa',
+            'card_last_four' => '4242',
+            'trial_ends_at' => null,
+        ]);
+
+        $this->assertDatabaseHas('subscriptions', [
+            'user_id' => $user->id,
+            'name' => TestConstants::MODEL_SUBSCRIPTION_PLAN_NAME,
+            'stripe_plan' => TestConstants::MODEL_SUBSCRIPTION_PLAN_MONTHLY,
+            'quantity' => 1,
+            'trial_ends_at' => null,
+            'ends_at' => null,
+        ]);
+
+        // @TODO: assert that the coupon has not been applied.
+    }
+
+    /**
      * Test the different Stripe errors that could be received on a subscription creation.
      *
      * @dataProvider providerTestSubscriptionNotCreatedAndCreditCardNotStoredWithErrorsFromStripe
