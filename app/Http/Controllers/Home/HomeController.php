@@ -8,12 +8,6 @@ use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Show home homepage
      *
@@ -23,5 +17,4 @@ class HomeController extends Controller
     {
         return view('home.home.home');
     }
-
 }
