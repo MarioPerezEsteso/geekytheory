@@ -70,17 +70,6 @@
                                     @endif
                                 </p>
                             </li>
-                            <!-- Menu Footer-->
-                            <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="{{ url('home/profile') }}"
-                                       class="btn btn-default btn-flat">{{ trans('home.user_profile') }}</a>
-                                </div>
-                                <div class="pull-right">
-                                    <a href="{{ url('logout') }}"
-                                       class="btn btn-default btn-flat">{{ trans('auth.logout') }}</a>
-                                </div>
-                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -177,12 +166,6 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-                <li class="{{ classActiveRoute(array('home/profile')) }}">
-                    <a href="{{ url('home/profile') }}">
-                        <i class="fa fa-user"></i>
-                        <span>{{ trans('home.user_profile') }}</span>
-                    </a>
                 </li>
                 {{--<li class="treeview">
                     <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span> <i
