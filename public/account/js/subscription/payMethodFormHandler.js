@@ -67,11 +67,14 @@ $('#credit-card-number').keyup(function () {
 $('#coupon').keyup(function () {
     if ($(this).val()) {
         $('#btn-apply-coupon').prop('disabled', false);
+    } else {
+        $('#btn-apply-coupon').prop('disabled', true);
+        $('#coupon-valid-alert').css('display', 'none');
+        $('#coupon-invalid-alert').css('display', 'none');
     }
 });
 
 $('#btn-apply-coupon').click(function () {
-    console.log("CLICKADO");
     $.ajax({
         type: 'POST',
         url: '/coupon/validate',
