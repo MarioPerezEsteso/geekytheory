@@ -8,7 +8,7 @@ before_script:
     - cp phpunit.xml.example phpunit.xml
     - mysql -e 'create database db_test;'
     - composer self-update
-    - composer install --no-interaction
+    - composer install --no-interaction --no-scripts
     - php artisan key:generate
 
 script:
