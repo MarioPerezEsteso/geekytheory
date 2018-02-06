@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Coupon;
 use App\Subscription;
 use App\User;
 use App\Validators\SubscriptionValidator;
@@ -9,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\MessageBag;
+use Laravel\Cashier\SubscriptionBuilder;
 use Stripe\Error\Card;
 
 class SubscriptionController extends Controller
@@ -63,9 +65,19 @@ class SubscriptionController extends Controller
         }
 
         try {
-            /** @var \Stripe\Subscription $subscription */
-            $user->newSubscription(Subscription::PLAN_NAME, Subscription::PLAN_MONTHLY)
-                ->skipTrial()
+            /** @var SubscriptionBuilder $subscriptionBuilder */
+            $subscriptionBuilder = $user->newSubscription(Subscription::PLAN_NAME, Subscription::PLAN_MONTHLY);
+
+            if (!empty($request->coupon)) {
+                /** @var Coupon */
+                $coupon = (new Coupon())->getFromStripe($request->coupon);
+                
+                if ($coupon->status === Coupon::STATUS_VALID) {
+                    $subscriptionBuilder->withCoupon($request->coupon);
+                }
+            }
+
+            $subscriptionBuilder->skipTrial()
                 ->create($request->stripe_token, [
                     'email' => $user->email,
                     'metadata' => [

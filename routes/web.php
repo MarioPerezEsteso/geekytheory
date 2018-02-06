@@ -171,6 +171,12 @@ Route::get('precios', [
     'uses' => 'IndexController@pricing',
 ]);
 
+Route::post('coupon/validate', [
+    'as' => 'coupon.validate',
+    'middleware' => 'auth',
+    'uses' => 'CouponController@checkCoupon',
+]);
+
 /*
  * Newsletter subscription routes
  */
