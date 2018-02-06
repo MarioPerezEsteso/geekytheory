@@ -82,12 +82,12 @@ class CouponControllerTest extends TestCase
                 'couponResponse' => [
                     'status' => 'invalid',
                 ]
-            ], [
+            ], /*[
                 'coupon' => 'test-coupon-expired',
                 'couponResponse' => [
                     'status' => 'expired',
                 ]
-            ],
+            ],*/
         ];
     }
 
