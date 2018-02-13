@@ -10,7 +10,7 @@ use Tests\TestCase;
 class ArticleControllerViewsTest extends TestCase
 {
     /**
-     * Test administrator user can visit the article create page.
+     * Test administrator user can visit some article pages.
      *
      * @dataProvider providerArticleGETPages
      * @param string $page
@@ -34,7 +34,7 @@ class ArticleControllerViewsTest extends TestCase
     }
 
     /**
-     * Test non administrator user can't visit the article create page.
+     * Test non administrator user can't visit some article pages.
      *
      * @dataProvider providerArticleGETPages
      * @param string $page
@@ -58,7 +58,7 @@ class ArticleControllerViewsTest extends TestCase
     }
 
     /**
-     * Test non administrator user can't visit the article create page.
+     * Test non administrator user can't visit some article pages.
      *
      * @dataProvider providerArticleGETPages
      * @param string $page

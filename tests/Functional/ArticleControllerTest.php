@@ -11,7 +11,7 @@ use Tests\TestCase;
 class ArticleControllerTest extends TestCase
 {
     /**
-     * Test non administrator user can't visit the article create page.
+     * Test non administrator user can't make POST requests.
      *
      * @dataProvider providerArticlePOSTPages
      * @param string $page
@@ -35,7 +35,7 @@ class ArticleControllerTest extends TestCase
     }
 
     /**
-     * Test non administrator user can't visit the article create page.
+     * Test non administrator user can't make POST requests.
      *
      * @dataProvider providerArticlePOSTPages
      * @param string $page
