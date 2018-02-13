@@ -41,7 +41,7 @@ Route::get('home/articles/preview/{slug}', [
     'uses' => 'ArticleController@preview'
 ]);
 
-Route::get('home/pages/create', [
+/*Route::get('home/pages/create', [
     'uses' => 'PageController@create'
 ]);
 
@@ -65,7 +65,7 @@ Route::post('home/pages/store', [
 
 Route::get('home/pages/preview/{slug}', [
     'uses' => 'PageController@preview'
-]);
+]);*/
 
 Route::get('home/posts/delete/{id}', [
     'uses' => 'PostController@delete'
@@ -75,7 +75,7 @@ Route::get('home/posts/restore/{id}', [
     'uses' => 'PostController@restore'
 ]);
 
-Route::get('home/tags', [
+/*Route::get('home/tags', [
     'uses' => 'TagController@create'
 ]);
 
@@ -95,9 +95,9 @@ Route::post('home/tags/store', [
 Route::post('home/tags/update/{id}', [
     'before' => 'csrf',
     'uses' => 'TagController@update'
-]);
+]);*/
 
-Route::get('home/categories', [
+/*Route::get('home/categories', [
     'uses' => 'CategoryController@create'
 ]);
 
@@ -122,7 +122,7 @@ Route::post('home/categories/update/{id}', [
 Route::post('home/categories/delete-image', [
     'before' => 'csrf',
     'uses' => 'CategoryController@deleteImage',
-]);
+]);*/
 
 Route::get('home/articles/imagemanager/upload', [
     'uses' => 'ImageManagerController@create'
@@ -132,13 +132,13 @@ Route::get('home/articles/edit/imagemanager/upload', [
     'uses' => 'ImageManagerController@create'
 ]);
 
-Route::get('home/pages/imagemanager/upload', [
+/*Route::get('home/pages/imagemanager/upload', [
     'uses' => 'ImageManagerController@create'
 ]);
 
 Route::get('home/pages/edit/imagemanager/upload', [
     'uses' => 'ImageManagerController@create'
-]);
+]);*/
 
 Route::post('home/posts/delete-image', [
     'before' => 'csrf',
@@ -149,7 +149,7 @@ Route::post('home/imagemanager/upload', [
     'uses' => 'ImageManagerController@store',
 ]);
 
-Route::get('home/sitemeta', [
+/*Route::get('home/sitemeta', [
     'uses' => 'SiteMetaController@edit',
 ]);
 
@@ -161,9 +161,9 @@ Route::post('home/sitemeta/update', [
 Route::post('home/sitemeta/delete-image', [
     'before' => 'csrf',
     'uses' => 'SiteMetaController@deleteImage',
-]);
+]);*/
 
-Route::get('home/menu', [
+/*Route::get('home/menu', [
     'uses' => 'SiteMetaController@editMenu',
 ]);
 
@@ -175,4 +175,4 @@ Route::post('home/menu/update', [
 Route::get('home/menu/getNewMenuItemHtml', [
     'before' => 'csrf',
     'uses' => 'SiteMetaController@getNewMenuItemHtml',
-]);
+]);*/
