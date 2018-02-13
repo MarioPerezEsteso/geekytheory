@@ -231,7 +231,7 @@ class PostController extends Controller
         $post->status = Post::STATUS_DRAFT;
         $post->save();
 
-        return Redirect::back();
+        return redirect()->route('home.articles');
     }
 
     /**
@@ -245,7 +245,7 @@ class PostController extends Controller
         $post = Post::findOrFail($id);
         $post->update(['status' => Post::STATUS_DELETED]);
 
-        return Redirect::back();
+        return redirect()->route('home.articles');
     }
 
     /**

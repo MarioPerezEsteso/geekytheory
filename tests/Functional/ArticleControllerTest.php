@@ -5,11 +5,71 @@ namespace Tests\Functional;
 use App\User;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use App\Post;
+use Tests\Helpers\TestUtils;
 use Tests\TestCase;
 
 class ArticleControllerTest extends TestCase
 {
-    use WithoutMiddleware;
+    /**
+     * Test non administrator user can't make POST requests.
+     *
+     * @dataProvider providerArticlePOSTPages
+     * @param string $page
+     */
+    public function testUserNonAdministratorCannotMakePostRequest(string $page)
+    {
+        // Prepare
+        /** @var User $user */
+        $user = factory(User::class)->create(['is_admin' => false,]);
+        $article = factory(Post::class)->create([
+            'status' => 'draft',
+        ]);
+
+        $page = TestUtils::createEndpoint($page, ['id' => $article->id, 'slug' => $article->slug,]);
+
+        // Request
+        $response = $this->actingAs($user)->call('POST', $page);
+
+        // Asserts
+        $response->assertStatus(404);
+    }
+
+    /**
+     * Test non administrator user can't make POST requests.
+     *
+     * @dataProvider providerArticlePOSTPages
+     * @param string $page
+     */
+    public function testNonLoggedUserCannotMakePostRequest(string $page)
+    {
+        // Prepare
+        $article = factory(Post::class)->create([
+            'status' => 'draft',
+        ]);
+
+        $page = TestUtils::createEndpoint($page, ['id' => $article->id, 'slug' => $article->slug,]);
+
+        // Request
+        $response = $this->call('POST', $page);
+
+        // Asserts
+        $response->assertRedirect($this->loginUrl);
+    }
+
+    public function providerArticlePOSTPages(): array
+    {
+        return [
+            [
+                'home/articles/update/{id}'
+            ], [
+                'home/articles/store',
+            ], [
+                'home/posts/delete-image',
+            ], [
+                'home/imagemanager/upload',
+            ]
+        ];
+    }
 
     /**
      * Test delete success.
@@ -17,10 +77,14 @@ class ArticleControllerTest extends TestCase
     public function testDeleteSuccess()
     {
 		$id = 1;
-		$user = factory(User::class)->create();
+		$user = factory(User::class)->create([
+		    'is_admin' => true,
+        ]);
+
+		// Request
 		$response = $this->actingAs($user)->call("GET", "home/posts/delete/$id");
-		
-		$response->assertStatus(404);
+
+        $response->assertRedirect('home/articles');
     }
 
     /**

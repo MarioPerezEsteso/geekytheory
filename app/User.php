@@ -127,6 +127,16 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if a user is administrator or not.
+     *
+     * @return bool
+     */
+    public function isAdmin(): bool
+    {
+        return $this->is_admin ?? false;
+    }
+
+    /**
      * Returns the basic user data for the admin panel view.
      *
      * @return array
