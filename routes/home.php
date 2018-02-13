@@ -29,6 +29,7 @@ Route::post('home/articles/update/{id?}', [
 ]);
 
 Route::get('home/articles/{username?}', [
+    'as' => 'home.articles',
     'uses' => 'ArticleController@indexHome'
 ]);
 
