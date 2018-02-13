@@ -64,6 +64,60 @@ $('#credit-card-number').keyup(function () {
     }
 });
 
+$('#coupon').keyup(function () {
+    if ($(this).val()) {
+        $('#btn-apply-coupon').prop('disabled', false);
+    } else {
+        $('#btn-apply-coupon').prop('disabled', true);
+        $('#coupon-valid-alert').css('display', 'none');
+        $('#coupon-invalid-alert').css('display', 'none');
+    }
+});
+
+$('#btn-apply-coupon').click(function () {
+    $.ajax({
+        type: 'POST',
+        url: '/coupon/validate',
+        data: {
+            coupon: $('#coupon').val()
+        },
+        dataType: 'JSON',
+        success: function (coupon) {
+            var couponValidAlert = $('#coupon-valid-alert');
+            var couponInvalidAlert = $('#coupon-invalid-alert');
+            if (coupon.status === 'valid') {
+                if (coupon.duration === 'forever') {
+                    couponValidAlert.html(coupon.percent_off + '% de descuento para siempre.');
+                } else {
+                    if (coupon.duration_in_months > 1) {
+                        couponValidAlert.html(coupon.percent_off + '% de descuento durante ' + coupon.duration_in_months + ' meses.'); 
+                    } else {
+                        couponValidAlert.html(coupon.percent_off + '% de descuento durante ' + coupon.duration_in_months + ' mes.'); 
+                    }
+                }
+                couponValidAlert.css('display', '');
+                couponInvalidAlert.css('display', 'none');
+            } else {
+                if (coupon.status === 'redeemed') {
+                    couponInvalidAlert.html('El cupón ya ha sido utilizado.')
+                } else if (coupon.status === 'expired') {
+                    couponInvalidAlert.html('Este cupón ha expirado.');
+                } else {
+                    couponInvalidAlert.html('Este cupón no es válido.')
+                }
+
+                couponValidAlert.css('display', 'none');
+                couponInvalidAlert.css('display', '');
+            }
+        },
+        error: function (response) {
+            $('#coupon-invalid-alert').html('Ha habido un error aplicando el cupón.')
+            $('#coupon-invalid-alert').css("display", "");
+            $('#coupon-valid-alert').css("display", "none");
+        }
+    });
+});
+
 /**
  * Stripe response handler.
  * @param status
@@ -76,11 +130,13 @@ function stripeResponseHandler(status, response) {
         $('#error-message').css("display", "none");
         // Get the token ID
         var token = response.id;
+        var coupon = $('#coupon').val();
 
         // Submit the form with the Stripe Token
         var form = $('#subscription-form');
 
         form.append($('<input type="hidden" name="stripe_token" />').val(token));
+        form.append($('<input type="hidden" name="coupon" />').val(coupon));
 
         form.get(0).submit();
     }

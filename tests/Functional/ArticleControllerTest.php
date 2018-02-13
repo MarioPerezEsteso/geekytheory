@@ -2,6 +2,7 @@
 
 namespace Tests\Functional;
 
+use App\User;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use App\Post;
 use Tests\TestCase;
@@ -16,12 +17,10 @@ class ArticleControllerTest extends TestCase
     public function testDeleteSuccess()
     {
 		$id = 1;
-		$this->call("GET", "home/posts/delete/$id");
+		$user = factory(User::class)->create();
+		$response = $this->actingAs($user)->call("GET", "home/posts/delete/$id");
 		
-		$this->assertDatabaseHas('posts', [
-			'id' => $id,
-			'status' => Post::STATUS_DELETED,
-		]);
+		$response->assertStatus(404);
     }
 
     /**

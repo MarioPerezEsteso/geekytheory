@@ -52,6 +52,10 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
 
     public function tearDown()
     {
+        $this->beforeApplicationDestroyed(function () {
+            \DB::disconnect();
+        });
+
         parent::tearDown();
     }
 
