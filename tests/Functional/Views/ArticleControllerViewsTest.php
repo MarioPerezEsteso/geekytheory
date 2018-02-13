@@ -98,8 +98,6 @@ class ArticleControllerViewsTest extends TestCase
                 'home/articles/imagemanager/upload',
             ], [
                 'home/articles/edit/imagemanager/upload'
-            ], [
-
             ],
         ];
     }
