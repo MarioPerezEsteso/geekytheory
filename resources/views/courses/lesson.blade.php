@@ -73,9 +73,7 @@
                 </div>
                 <div class="lesson-content">
                     @if (!isset($user) || (isset($user) && !$user['premium']))
-                        <div class="alert alert-info">
-                            Solo los usuarios Premium pueden ver este contenido.
-                        </div>
+                        Solo los usuarios Premium pueden ver el contenido teórico.
                     @else
                         {!! $lesson->content !!}
                     @endif
