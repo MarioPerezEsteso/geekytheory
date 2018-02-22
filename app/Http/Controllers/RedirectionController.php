@@ -17,6 +17,8 @@ class RedirectionController extends Controller
         'bucles-en-python' => 'curso/python-3/bucles-while',
         'la-funcion-range-en-python' => 'curso/python-3/bucles-for',
         'como-crear-una-lista-de-tareas-con-laravel-tutorial-php' => 'curso/laravel',
+        'tutorial-vagrant-1-que-es-y-como-usarlo' => 'curso/vagrant',
+        'json-i-que-es-y-para-que-sirve-json' => 'curso/json/que-es-y-para-que-sirve-json',
     ];
 
     public function redirect(Request $request)

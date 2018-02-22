@@ -72,6 +72,8 @@ Route::get('definicion-funciones-python', 'RedirectionController@redirect');
 Route::get('bucles-en-python', 'RedirectionController@redirect');
 Route::get('la-funcion-range-en-python', 'RedirectionController@redirect');
 Route::get('como-crear-una-lista-de-tareas-con-laravel-tutorial-php', 'RedirectionController@redirect');
+Route::get('tutorial-vagrant-1-que-es-y-como-usarlo', 'RedirectionController@redirect');
+Route::get('json-i-que-es-y-para-que-sirve-json', 'RedirectionController@redirect');
 
 /**
  * Routes for courses
