@@ -72,7 +72,13 @@
                     </div>
                 </div>
                 <div class="lesson-content">
-                    {!! $lesson->content !!}
+                    @if (!isset($user) || (isset($user) && !$user['premium']))
+                        <div class="alert alert-info">
+                            Solo los usuarios Premium pueden ver este contenido.
+                        </div>
+                    @else
+                        {!! $lesson->content !!}
+                    @endif
                 </div>
             </div>
             <div class="row">
@@ -96,9 +102,11 @@
     </div>
 </section>
 
-<section class="container-fluid section-pricing">
-    @include('courses.partials.pricing')
-</section>
+@if (!isset($user) || (isset($user) && !$user['premium']))
+    <section class="container-fluid section-pricing">
+        @include('courses.partials.pricing')
+    </section>
+@endif
 
 @include('courses.partials.footer')
 
@@ -114,11 +122,11 @@
 <script src="/assets/courses/js/drift.js" async></script>
 <script src="/assets/vendor/highlight/js/highlight.min.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() {
-    $('pre').each(function(i, block) {
-      hljs.highlightBlock(block);
+    $(document).ready(function () {
+        $('pre').each(function (i, block) {
+            hljs.highlightBlock(block);
+        });
     });
-  });
 </script>
 </body>
 </html>
