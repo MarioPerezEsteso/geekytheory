@@ -138,6 +138,16 @@ a {
     }
 }
 
+.course-header-item {
+    font-size : 25px;
+    padding-bottom: 15px;
+}
+
+.course-header-item-icon {
+    font-size: 20px;
+    padding-right : 10px;
+}
+
 /**
  * Sections
  */
