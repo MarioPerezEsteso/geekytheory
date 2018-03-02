@@ -64,11 +64,19 @@
                                 <div class="progress-bar" style="width: {{ $coursePercentageCompleted }}%;"></div>
                             </div>
                         @else
-                            {!! Form::open(['url' => route('course.join.post', ['id' => $course->id])]) !!}
-                            <button type="submit" class="btn btn-info course-header-item">
-                                Comenzar curso <span class="fui-triangle-right-large course-header-item-icon"></span>
-                            </button>
-                            {!! Form::close() !!}
+                            @if (isset($user))
+                                {!! Form::open(['url' => route('course.join.post', ['id' => $course->id])]) !!}
+                                <button type="submit" class="btn btn-info course-header-item">
+                                    Comenzar curso
+                                    <span class="fui-triangle-right-large course-header-item-icon"></span>
+                                </button>
+                                {!! Form::close() !!}
+                            @else
+                                <a href="#pricing" class="btn btn-info course-header-item">
+                                    Comenzar curso
+                                    <span class="fui-triangle-right-large course-header-item-icon"></span>
+                                </a>
+                            @endif
                         @endif
                     </div>
                 </div>
