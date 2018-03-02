@@ -179,6 +179,11 @@ Route::post('coupon/validate', [
     'uses' => 'CouponController@checkCoupon',
 ]);
 
+Route::get('suscripcion', [
+    'as' => 'subscription',
+    'uses' => 'SubscriptionController@showFastSubscriptionPage',
+]);
+
 /*
  * Newsletter subscription routes
  */

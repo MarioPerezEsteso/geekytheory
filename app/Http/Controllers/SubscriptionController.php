@@ -57,9 +57,11 @@ class SubscriptionController extends Controller
         }
 
         if ($user->hasSubscriptionActive()) {
-            $errors = new MessageBag([
-                'subscription_error' => trans('home.subscription_already_active'),
-            ]);
+            $errors = new MessageBag(
+                [
+                    'subscription_error' => trans('home.subscription_already_active'),
+                ]
+            );
 
             return redirect()->route('account.subscription')->withErrors($errors);
         }
@@ -71,19 +73,22 @@ class SubscriptionController extends Controller
             if (!empty($request->coupon)) {
                 /** @var Coupon */
                 $coupon = (new Coupon())->getFromStripe($request->coupon);
-                
+
                 if ($coupon->status === Coupon::STATUS_VALID) {
                     $subscriptionBuilder->withCoupon($request->coupon);
                 }
             }
 
             $subscriptionBuilder->skipTrial()
-                ->create($request->stripe_token, [
-                    'email' => $user->email,
-                    'metadata' => [
-                        'ip' => getClientIPAddress(),
+                ->create(
+                    $request->stripe_token,
+                    [
+                        'email' => $user->email,
+                        'metadata' => [
+                            'ip' => getClientIPAddress(),
+                        ],
                     ]
-                ]);
+                );
         } catch (\Exception $exception) {
             $errors = new MessageBag();
             if ($exception instanceof Card) {
@@ -116,6 +121,14 @@ class SubscriptionController extends Controller
 
         // Response
         return redirect()->route('account.subscription')->withSuccess(trans('home.subscription_created'));
+    }
+
+    /**
+     * Show subscription page that does not need previous user registration.
+     */
+    public function showFastSubscriptionPage()
+    {
+        return view('courses.subscription');
     }
 
     /**
@@ -191,7 +204,9 @@ class SubscriptionController extends Controller
             return redirect()->route('account.subscription.payment-method')->withErrors($errors);
         }
 
-        return redirect()->route('account.subscription.payment-method')->withSuccess(trans('home.subscription_card_updated'));
+        return redirect()->route('account.subscription.payment-method')->withSuccess(
+            trans('home.subscription_card_updated')
+        );
     }
 
     /**
@@ -207,9 +222,11 @@ class SubscriptionController extends Controller
 
         if (!Hash::check($request->password, $user->password)) {
             return redirect()->route('account.subscription')->withErrors(
-                new MessageBag([
-                    'password' => trans('home.password_incorrect'),
-                ])
+                new MessageBag(
+                    [
+                        'password' => trans('home.password_incorrect'),
+                    ]
+                )
             );
         }
 
@@ -218,9 +235,11 @@ class SubscriptionController extends Controller
 
         if (is_null($subscription) || !$subscription->active()) {
             return redirect()->route('account.subscription')->withErrors(
-                new MessageBag([
-                    'subscription_error' => trans('home.subscription_needed_to_cancel_it')
-                ])
+                new MessageBag(
+                    [
+                        'subscription_error' => trans('home.subscription_needed_to_cancel_it'),
+                    ]
+                )
             );
         }
 
