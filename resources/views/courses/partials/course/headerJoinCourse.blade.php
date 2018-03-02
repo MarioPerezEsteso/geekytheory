@@ -58,14 +58,21 @@
                 </div>
                 <div class="row course-header-item">
                     <div class="col-lg-12">
-                        <button class="btn btn-info course-header-item">
-                            Comenzar curso <span class="fui-triangle-right-large course-header-item-icon"></span>
-                        </button>
+                        @if ($userHasJoinedCourse)
+                            <span class="fui-eye"></span> {{ $coursePercentageCompleted }}% completado
+                            <div class="progress">
+                                <div class="progress-bar" style="width: {{ $coursePercentageCompleted }}%;"></div>
+                            </div>
+                        @else
+                            {!! Form::open(['url' => route('course.join.post', ['id' => $course->id])]) !!}
+                            <button type="submit" class="btn btn-info course-header-item">
+                                Comenzar curso <span class="fui-triangle-right-large course-header-item-icon"></span>
+                            </button>
+                            {!! Form::close() !!}
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-{{--{!!  $course->chapters->first()->lessons->first()->video !!}--}}
