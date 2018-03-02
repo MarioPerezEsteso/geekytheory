@@ -143,4 +143,20 @@ class Course extends Model
     {
         return !$this->isFree();
     }
+
+    /**
+     * Get the number of lessons of a course.
+     *
+     * @return int
+     */
+    public function getTotalLessonsCount(): int
+    {
+        $count = 0;
+
+        foreach ($this->chapters as $chapter) {
+            $count+= count($chapter->lessons);
+        }
+
+        return $count;
+    }
 }

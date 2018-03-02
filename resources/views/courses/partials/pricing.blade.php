@@ -1,3 +1,4 @@
+<a name="pricing"></a>
 <div class="row pricing">
     <div class="col-sm-8 col-sm-offset-2 col-xs-12">
         <h2>Planes</h2>

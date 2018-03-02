@@ -271,6 +271,27 @@ if (!function_exists('formatSeconds')) {
     }
 }
 
+if (!function_exists('formatSecondsToHoursAndMinutes')) {
+    /**
+     * Format seconds to 'hh:mm:ss' if hours > 0 or 'mm:ss' if hours < 0.
+     *
+     * @param integer $seconds
+     * @return string
+     */
+    function formatSecondsToHoursAndMinutes($seconds)
+    {
+        $hours = floor($seconds / 3600);
+        $minutes = floor($seconds / 60 % 60);
+        $secs = floor($seconds % 60);
+
+        if ($hours > 0) {
+            return sprintf('%02dh %02dm', $hours, $minutes);
+        }
+
+        return sprintf('%02dm %02ds', $minutes, $secs);
+    }
+}
+
 if (!function_exists('formatNameToUsername')) {
     /**
      * Format user name to username. For instance: 'Mario Pérez' to 'marioperez'

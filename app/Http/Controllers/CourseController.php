@@ -33,9 +33,12 @@ class CourseController extends Controller
     {
         /** @var User $user */
         $loggedUser = Auth::user();
+
+        /** @var Course $course */
         $course = Course::getPublished(['slug' => $slug])->with('teacher')->with('chapters.lessons')->firstOrFail();
 
         $userHasJoinedCourse = false;
+        $coursePercentageCompleted = 0;
 
         if (!is_null($loggedUser)) {
             $userHasJoinedCourse = $loggedUser->hasJoinedCourse($course);
@@ -43,18 +46,22 @@ class CourseController extends Controller
             if ($userHasJoinedCourse) {
                 /** @var Collection $completedLessons */
                 $completedLessons = $loggedUser->lessons;
+                $courseCompletedLessons = 0;
 
                 foreach ($course->chapters as $chapter) {
                     foreach ($chapter->lessons as $chapterLesson) {
                         if ($completedLessons->contains($chapterLesson)) {
                             $chapterLesson->completed = true;
+                            $courseCompletedLessons++;
                         }
                     }
                 }
+
+                $coursePercentageCompleted = round($courseCompletedLessons * 100 / $course->getTotalLessonsCount());
             }
         }
 
-        return view('courses.single', compact('course', 'userHasJoinedCourse'));
+        return view('courses.single', compact('course', 'userHasJoinedCourse', 'coursePercentageCompleted'));
     }
 
 
