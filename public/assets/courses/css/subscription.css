@@ -1,0 +1,54 @@
+.panel-subscription {
+    border: none;
+}
+
+.panel-subscription.panel-subscription-premium > .panel-heading {
+    background: #2f4154;
+}
+
+.panel-subscription > .panel-heading {
+    height: 10px;
+    padding: 0px;
+}
+
+.panel-subscription > .panel-body {
+    padding: 40px 40px 25px;
+}
+
+.panel-subscription > .panel-body > h3 {
+    font-size: 24px;
+}
+
+.list-perks {
+    margin: 0;
+}
+
+.list-unstyled {
+    padding-left: 0;
+    list-style: none;
+}
+
+.list-perks.list-perks-premium li {
+    background: transparent url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20d%3D%22M13.613%2027.068l-7.94-7.28q-.285-.267-.442-.613t-.172-.7.11-.71.394-.638q.52-.583%201.3-.614T8.225%2017l6.13%205.626%208.79-17q.363-.693%201.104-.93t1.433.118.93%201.103-.126%201.442L16.56%2026.55q-.204.394-.558.654t-.78.34q-.063.015-.118.023t-.11.008-.102%200q-.74%200-1.276-.504z%22%20fill%3D%22%231DB954%22%20/%3E%3C/svg%3E') no-repeat left 3px;
+    background-size: auto auto;
+    background-size: 17px;
+}
+
+.list-perks li {
+    margin: 15px 0;
+    padding-left: 40px;
+    color: #919496;
+}
+
+.panel-subscription > .panel-footer {
+    padding: 0px 40px 20px;
+    text-align: center;
+    color: #919496;
+    background: #fff;
+    border-radius: 0;
+    border: none;
+}
+
+.panel-subscription > .panel-footer > p {
+    color: #2f4154;
+}
