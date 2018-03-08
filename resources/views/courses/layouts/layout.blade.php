@@ -59,5 +59,6 @@
 <script src="/assets/vendor/flat-ui/docs/assets/js/application.js"></script>
 <script src="/assets/courses/js/drift.js" async></script>
 
+@yield('customJavascript')
 </body>
 </html>

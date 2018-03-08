@@ -15,7 +15,7 @@
     padding: 40px 40px 25px;
 }
 
-.panel-subscription > .panel-body > h3 {
+.panel-subscription > .panel-body h3 {
     font-size: 24px;
 }
 
@@ -51,4 +51,26 @@
 
 .panel-subscription > .panel-footer > p {
     color: #2f4154;
+}
+
+.img-cards {
+    max-width: 40%;
+    vertical-align: middle;
+    margin-bottom: 0.25em;
+}
+
+.tooltip.top .tooltip-arrow {
+    display: none;
+}
+
+.tooltip-icon {
+    font-size: 15px;
+    vertical-align: middle;
+    margin-bottom: 0.25em;
+}
+
+.full-width-div {
+    position: absolute;
+    width: 100%;
+    left: 0;
 }
