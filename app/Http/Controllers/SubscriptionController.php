@@ -144,7 +144,7 @@ class SubscriptionController extends Controller
                 $errors->add('stripe_error', trans('home.stripe_processing_error'));
             }
 
-            return redirect()->route('account.subscription')->withErrors($errors);
+            return redirect()->route('subscription.create')->withErrors($errors);
         }
 
         // Response

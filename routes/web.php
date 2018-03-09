@@ -138,6 +138,11 @@ Route::post('account/profile/password', [
     'uses' => 'UserController@updatePassword',
 ]);
 
+Route::get('suscripcion', [
+    'as' => 'subscription.create',
+    'uses' => 'SubscriptionController@create',
+]);
+
 Route::get('cuenta/suscripcion', [
     'as' => 'account.subscription',
     'middleware' => 'auth',
@@ -177,11 +182,6 @@ Route::post('coupon/validate', [
     'as' => 'coupon.validate',
     'middleware' => 'auth',
     'uses' => 'CouponController@checkCoupon',
-]);
-
-Route::get('suscripcion', [
-    'as' => 'subscription',
-    'uses' => 'SubscriptionController@showFastSubscriptionPage',
 ]);
 
 /*
