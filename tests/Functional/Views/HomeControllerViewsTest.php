@@ -49,6 +49,6 @@ class HomeControllerViewsTest extends TestCase
         $response = $this->call('GET', 'home');
 
         // Asserts
-        $response->assertStatus(404);
+        $response->assertStatus(302);
     }
 }
