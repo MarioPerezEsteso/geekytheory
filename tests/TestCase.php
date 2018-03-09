@@ -31,6 +31,11 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
     protected $loginUrl = '/login';
 
     /**
+     * @var string
+     */
+    protected $registrationUrl = '/registro';
+
+    /**
      * HTTP headers.
      *
      * @var array

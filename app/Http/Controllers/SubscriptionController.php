@@ -35,11 +35,39 @@ class SubscriptionController extends Controller
      */
     public function show()
     {
+        /** @var User $user */
         $user = Auth::user();
+
+        if (!$user->hasSubscriptionActive()) {
+            return redirect()->route('subscription.create');
+        }
+
         $subscription = $user->subscription(Subscription::PLAN_NAME);
 
         return view('account.subscriptions.subscription', compact('subscription'));
     }
+
+    /**
+     * Show subscription creation page.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function create()
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        if (is_null($user)) {
+            return redirect()->route('auth.register.get')->with(['message' => 'Crea una cuenta antes de obtener tu suscripción Premium']);
+        }
+
+        if ($user->hasSubscriptionActive()) {
+            return redirect()->route('account.subscription');
+        }
+
+        return view('courses.subscription');
+    }
+
 
     /**
      * Create a new subscription.
@@ -57,9 +85,11 @@ class SubscriptionController extends Controller
         }
 
         if ($user->hasSubscriptionActive()) {
-            $errors = new MessageBag([
-                'subscription_error' => trans('home.subscription_already_active'),
-            ]);
+            $errors = new MessageBag(
+                [
+                    'subscription_error' => trans('home.subscription_already_active'),
+                ]
+            );
 
             return redirect()->route('account.subscription')->withErrors($errors);
         }
@@ -71,19 +101,22 @@ class SubscriptionController extends Controller
             if (!empty($request->coupon)) {
                 /** @var Coupon */
                 $coupon = (new Coupon())->getFromStripe($request->coupon);
-                
+
                 if ($coupon->status === Coupon::STATUS_VALID) {
                     $subscriptionBuilder->withCoupon($request->coupon);
                 }
             }
 
             $subscriptionBuilder->skipTrial()
-                ->create($request->stripe_token, [
-                    'email' => $user->email,
-                    'metadata' => [
-                        'ip' => getClientIPAddress(),
+                ->create(
+                    $request->stripe_token,
+                    [
+                        'email' => $user->email,
+                        'metadata' => [
+                            'ip' => getClientIPAddress(),
+                        ],
                     ]
-                ]);
+                );
         } catch (\Exception $exception) {
             $errors = new MessageBag();
             if ($exception instanceof Card) {
@@ -111,7 +144,7 @@ class SubscriptionController extends Controller
                 $errors->add('stripe_error', trans('home.stripe_processing_error'));
             }
 
-            return redirect()->route('account.subscription')->withErrors($errors);
+            return redirect()->route('subscription.create')->withErrors($errors);
         }
 
         // Response
@@ -130,7 +163,7 @@ class SubscriptionController extends Controller
         $loggedUser = Auth::user();
 
         if (!$loggedUser->hasSubscriptionActive()) {
-            return redirect()->route('account.subscription');
+            return redirect()->route('subscription.create');
         }
 
         return view('account.subscriptions.paymentMethod', compact('loggedUser'));
@@ -191,7 +224,9 @@ class SubscriptionController extends Controller
             return redirect()->route('account.subscription.payment-method')->withErrors($errors);
         }
 
-        return redirect()->route('account.subscription.payment-method')->withSuccess(trans('home.subscription_card_updated'));
+        return redirect()->route('account.subscription.payment-method')->withSuccess(
+            trans('home.subscription_card_updated')
+        );
     }
 
     /**
@@ -207,9 +242,11 @@ class SubscriptionController extends Controller
 
         if (!Hash::check($request->password, $user->password)) {
             return redirect()->route('account.subscription')->withErrors(
-                new MessageBag([
-                    'password' => trans('home.password_incorrect'),
-                ])
+                new MessageBag(
+                    [
+                        'password' => trans('home.password_incorrect'),
+                    ]
+                )
             );
         }
 
@@ -218,9 +255,11 @@ class SubscriptionController extends Controller
 
         if (is_null($subscription) || !$subscription->active()) {
             return redirect()->route('account.subscription')->withErrors(
-                new MessageBag([
-                    'subscription_error' => trans('home.subscription_needed_to_cancel_it')
-                ])
+                new MessageBag(
+                    [
+                        'subscription_error' => trans('home.subscription_needed_to_cancel_it'),
+                    ]
+                )
             );
         }
 

@@ -105,7 +105,7 @@ class LoginControllerTest extends TestCase
     public function testRedirectToLoginIfUserNotAuthenticatedAndAccessToAdminHomeUrl()
     {
         $response = $this->call('GET', $this->adminHomeUrl);
-        $response->assertStatus(404);
+        $response->assertStatus(302);
     }
 
     /**

@@ -7,21 +7,13 @@ $.ajaxSetup({
 Stripe.setPublishableKey(window.stripePublicKey);
 
 $('#btn-add-credit-card').click(function () {
-    var creditCardNameInput = $('#credit-card-name');
     var creditCardNumberInput = $('#credit-card-number');
     var creditCardExpirationMonthInput = $('#credit-card-expiration-month');
     var creditCardExpirationYearInput = $('#credit-card-expiration-year');
     var creditCardExpirationCVVInput = $('#credit-card-cvv');
     var errors = false;
 
-    const classInputWithError = 'has-danger';
-
-    if (!creditCardNameInput.val()) {
-        errors = true;
-        creditCardNameInput.closest('div').addClass(classInputWithError);
-    } else {
-        creditCardNameInput.closest('div').removeClass(classInputWithError);
-    }
+    const classInputWithError = 'has-error';
 
     if (!Stripe.card.validateCardNumber(creditCardNumberInput.val())) {
         errors = true;
@@ -52,7 +44,6 @@ $('#btn-add-credit-card').click(function () {
             cvc: creditCardExpirationCVVInput.val(),
             exp_month: creditCardExpirationMonthInput.val(),
             exp_year: creditCardExpirationYearInput.val(),
-            name: creditCardNameInput.val()
         }, stripeResponseHandler);
     }
 });
@@ -111,7 +102,7 @@ $('#btn-apply-coupon').click(function () {
             }
         },
         error: function (response) {
-            $('#coupon-invalid-alert').html('Ha habido un error aplicando el cupón.')
+            $('#coupon-invalid-alert').html('Ha habido un error aplicando el cupón.');
             $('#coupon-invalid-alert').css("display", "");
             $('#coupon-valid-alert').css("display", "none");
         }

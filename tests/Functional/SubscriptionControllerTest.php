@@ -18,11 +18,18 @@ class SubscriptionControllerTest extends TestCase
     protected $subscriptionCreatePostUrl = '/account/subscription';
 
     /**
-     * Subscription page URL.
+     * Subscription create page URL.
      *
      * @var string
      */
-    protected $subscriptionPageUrl = '/cuenta/suscripcion';
+    protected $createSubscriptionPageUrl = '/suscripcion';
+
+    /**
+     * Subscription show page URL.
+     *
+     * @var string
+     */
+    protected $showSubscriptionPageUrl = '/cuenta/suscripcion';
 
     /**
      * Update subscription card POST URL.
@@ -64,7 +71,7 @@ class SubscriptionControllerTest extends TestCase
         $response = $this->actingAs($user)->call('POST', $this->subscriptionCreatePostUrl, $requestData);
 
         // Asserts
-        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertRedirect($this->showSubscriptionPageUrl);
         $response->assertSessionHas('success', trans('home.subscription_created'));
 
         // Database asserts
@@ -162,7 +169,7 @@ class SubscriptionControllerTest extends TestCase
         $response = $this->actingAs($user)->call('POST', $this->subscriptionCreatePostUrl, $requestData);
 
         // Asserts
-        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertRedirect($this->showSubscriptionPageUrl);
         $response->assertSessionHas('success', trans('home.subscription_created'));
 
         // Database asserts
@@ -202,7 +209,7 @@ class SubscriptionControllerTest extends TestCase
         $response = $this->actingAs($user)->call('POST', $this->subscriptionCreatePostUrl, $requestData);
 
         // Asserts
-        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertRedirect($this->showSubscriptionPageUrl);
         $response->assertSessionHas('success', trans('home.subscription_created'));
 
         // Database asserts
@@ -244,7 +251,7 @@ class SubscriptionControllerTest extends TestCase
         $response = $this->actingAs($user)->call('POST', $this->subscriptionCreatePostUrl, $requestData);
 
         // Asserts
-        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertRedirect($this->createSubscriptionPageUrl);
 
         $response->assertSessionHasErrors(['stripe_error' => trans($example['expected_error'])]);
 
@@ -337,7 +344,7 @@ class SubscriptionControllerTest extends TestCase
         $response = $this->actingAs($user)->call('POST', $this->subscriptionCreatePostUrl, $requestData);
 
         // Asserts
-        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertRedirect($this->createSubscriptionPageUrl);
 
         $response->assertSessionHasErrors(['stripe_error' => trans($example['expected_error'])]);
 
@@ -406,7 +413,7 @@ class SubscriptionControllerTest extends TestCase
         $response = $this->actingAs($user)->call('POST', $this->subscriptionCreatePostUrl, $requestData);
 
         // Asserts
-        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertRedirect($this->showSubscriptionPageUrl);
 
         $response->assertSessionHasErrors(['subscription_error' => trans('home.subscription_already_active')]);
 
@@ -448,7 +455,7 @@ class SubscriptionControllerTest extends TestCase
         $response = $this->actingAs($user)->call('POST', $this->subscriptionCreatePostUrl, $requestData);
 
         // Asserts
-        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertRedirect($this->showSubscriptionPageUrl);
 
         $response->assertSessionHasErrors($validationErrorKeys);
 
@@ -780,7 +787,7 @@ class SubscriptionControllerTest extends TestCase
         $response = $this->actingAs($user)->call('POST', $this->subscriptionCancelPostUrl, $requestData);
 
         // Asserts
-        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertRedirect($this->showSubscriptionPageUrl);
         $response->assertSessionHas(['success' => trans('home.subscription_canceled')]);
 
         // Assert that the attribute ends_at is not null
@@ -809,7 +816,7 @@ class SubscriptionControllerTest extends TestCase
         $response = $this->actingAs($user)->call('POST', $this->subscriptionCancelPostUrl, $requestData);
 
         // Asserts
-        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertRedirect($this->showSubscriptionPageUrl);
         $response->assertSessionHasErrors(['subscription_error' => trans('home.subscription_needed_to_cancel_it')]);
 
         // Assert that the attribute ends_at is not null
@@ -840,7 +847,7 @@ class SubscriptionControllerTest extends TestCase
         $response = $this->actingAs($user)->call('POST', $this->subscriptionCancelPostUrl, $requestData);
 
         // Asserts
-        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertRedirect($this->showSubscriptionPageUrl);
         $response->assertSessionHasErrors(['subscription_error' => trans('home.subscription_needed_to_cancel_it')]);
 
         // Assert that the attribute ends_at is not null
@@ -868,7 +875,7 @@ class SubscriptionControllerTest extends TestCase
         $response = $this->actingAs($user)->call('POST', $this->subscriptionCancelPostUrl, $requestData);
 
         // Asserts
-        $response->assertRedirect($this->subscriptionPageUrl);
+        $response->assertRedirect($this->showSubscriptionPageUrl);
         $response->assertSessionHasErrors(['password' => trans('home.password_incorrect')]);
 
         // Assert that the attribute ends_at is not null

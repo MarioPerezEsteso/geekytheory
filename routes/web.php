@@ -138,6 +138,11 @@ Route::post('account/profile/password', [
     'uses' => 'UserController@updatePassword',
 ]);
 
+Route::get('suscripcion', [
+    'as' => 'subscription.create',
+    'uses' => 'SubscriptionController@create',
+]);
+
 Route::get('cuenta/suscripcion', [
     'as' => 'account.subscription',
     'middleware' => 'auth',
