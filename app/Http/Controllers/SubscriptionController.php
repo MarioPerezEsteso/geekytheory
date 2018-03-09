@@ -35,11 +35,39 @@ class SubscriptionController extends Controller
      */
     public function show()
     {
+        /** @var User $user */
         $user = Auth::user();
+
+        if (!$user->hasSubscriptionActive()) {
+            return redirect()->route('subscription.create');
+        }
+
         $subscription = $user->subscription(Subscription::PLAN_NAME);
 
         return view('account.subscriptions.subscription', compact('subscription'));
     }
+
+    /**
+     * Show subscription creation page.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     */
+    public function create()
+    {
+        /** @var User $user */
+        $user = Auth::user();
+
+        if (is_null($user)) {
+            return redirect()->route('auth.register.get')->with(['message' => 'Crea una cuenta antes de obtener tu suscripción Premium']);
+        }
+
+        if ($user->hasSubscriptionActive()) {
+            return redirect()->route('account.subscription');
+        }
+
+        return view('courses.subscription');
+    }
+
 
     /**
      * Create a new subscription.
@@ -124,14 +152,6 @@ class SubscriptionController extends Controller
     }
 
     /**
-     * Show subscription page that does not need previous user registration.
-     */
-    public function showFastSubscriptionPage()
-    {
-        return view('courses.subscription');
-    }
-
-    /**
      * Show subscription payment method view.
      *
      * @param Request $request
@@ -143,7 +163,7 @@ class SubscriptionController extends Controller
         $loggedUser = Auth::user();
 
         if (!$loggedUser->hasSubscriptionActive()) {
-            return redirect()->route('account.subscription');
+            return redirect()->route('subscription.create');
         }
 
         return view('account.subscriptions.paymentMethod', compact('loggedUser'));
