@@ -9,7 +9,8 @@ before_script:
     - mysql -e 'create database db_test;'
     - composer self-update
     - composer install --no-interaction --no-scripts
-    # - php artisan key:generate
+    - php artisan key:generate
+    - php artisan migrate
 
 script:
     - vendor/bin/phpunit -c phpunit.xml --debug
