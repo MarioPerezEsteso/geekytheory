@@ -79,7 +79,7 @@
                                                 <div class="form-group">
                                                     <label for="cardnumber">
                                                         <span id="trans-cardnumber">Número de tarjeta</span>
-                                                        <img src="/public/images/cards.png" class="img-cards">
+                                                        <img src="/images/cards.png" class="img-cards">
                                                     </label>
                                                     <a href="#" class="pull-right" data-toggle="tooltip"
                                                        title="Las transacciones están cifradas y son seguras">
