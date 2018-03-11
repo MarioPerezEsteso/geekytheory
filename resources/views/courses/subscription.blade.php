@@ -175,12 +175,40 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <label>¿Tienes un cupón?</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-6 col-xs-12">
+                                                <div class="form-group">
+                                                    {!! Form::text('coupon', null, ['class' => 'form-control', 'id' => 'coupon', 'placeholder' => 'Cupón']) !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-xs-12">
+                                                <div class="form-group">
+                                                    {!! Form::button('Validar', ['class' => 'btn btn-primary form-control', 'id' => 'btn-apply-coupon', 'disabled' => true]) !!}
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-12">
+                                                <div class="form-group form-group--float">
+                                                    <div id="coupon-valid-alert" class="alert alert-success coupon-feedback-alert" style="display: none;"></div>
+                                                    <div id="coupon-invalid-alert" class="alert alert-danger coupon-feedback-alert" style="display: none"></div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <hr>
                                     <div class="panel-footer">
-                                        <button id="btn-add-credit-card" class="btn btn-primary">
-                                            <strong>COMENZAR CON GEEKY THEORY PREMIUM</strong>
-                                        </button>
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <button id="btn-add-credit-card" class="btn btn-primary">
+                                                    <strong>COMENZAR CON GEEKY THEORY PREMIUM</strong>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </article>
                             </div>

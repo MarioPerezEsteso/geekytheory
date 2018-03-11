@@ -74,3 +74,7 @@
     width: 100%;
     left: 0;
 }
+
+.coupon-feedback-alert {
+    font-size: 15px;
+}
