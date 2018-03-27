@@ -6,6 +6,7 @@ use App\Subscriber;
 use App\User;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class SendNewsletter extends Command
@@ -62,18 +63,20 @@ class SendNewsletter extends Command
 
         foreach ($emails as $email) {
             $data = [
-                'subject' => 'Novedades de Geeky Theory',
+                'subject' => '¡Hoy lanzamos nuevo curso de Ansible!',
                 'to' => $email,
             ];
 
             try {
                 Mail::send('newsletter.' . $viewNewsletter, $data, function ($message) use ($data) {
-                    $message->from('no-reply@geekytheory.com', 'Geeky Theory');
+                    $message->from('no-reply@geekytheory.com', 'Mario de Geeky Theory');
                     $message->to($data['to']);
                     $message->subject($data['subject']);
                 });
                 $this->info("Email successfully sent to " . $email);
             } catch (\Exception $e) {
+                Log::info("Failed to send email to " . $email);
+                Log::info((string)$e);
                 $this->info("Failed to send email to " . $email);
                 $this->info((string)$e);
             }
