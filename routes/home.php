@@ -164,7 +164,7 @@ Route::post('home/sitemeta/delete-image', [
     'uses' => 'SiteMetaController@deleteImage',
 ]);*/
 
-/*Route::get('home/menu', [
+Route::get('home/menu', [
     'uses' => 'SiteMetaController@editMenu',
 ]);
 
@@ -176,4 +176,4 @@ Route::post('home/menu/update', [
 Route::get('home/menu/getNewMenuItemHtml', [
     'before' => 'csrf',
     'uses' => 'SiteMetaController@getNewMenuItemHtml',
-]);*/
+]);
