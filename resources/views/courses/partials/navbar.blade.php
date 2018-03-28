@@ -40,6 +40,14 @@
                         @endif
                     @endforeach
 
+                    @if (!isset($user) || (isset($user) && !$user['premium']))
+                        <li>
+                            <a href="{{ route('pricing') }}" title="Hazte Premium">
+                                Hazte Premium
+                            </a>
+                        </li>
+                    @endif
+
                     @if(Auth::user() !== null)
                         <div class="navbar-header navbar-header-avatar">
                             <a class="navbar-brand" href="{{ route('account.profile') }}">
