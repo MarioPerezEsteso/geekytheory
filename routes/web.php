@@ -74,6 +74,20 @@ Route::get('la-funcion-range-en-python', 'RedirectionController@redirect');
 Route::get('como-crear-una-lista-de-tareas-con-laravel-tutorial-php', 'RedirectionController@redirect');
 Route::get('tutorial-vagrant-1-que-es-y-como-usarlo', 'RedirectionController@redirect');
 Route::get('json-i-que-es-y-para-que-sirve-json', 'RedirectionController@redirect');
+Route::get('tutorial-0-introduccion-a-java-y-netbeans', 'RedirectionController@redirect');
+Route::get('tutorial-1-java-hola-mundo', 'RedirectionController@redirect');
+Route::get('tutorial-2-java-estructuras-secuenciales', 'RedirectionController@redirect');
+Route::get('tutorial-3-java-estructuras-condicionales-y-excepciones', 'RedirectionController@redirect');
+Route::get('tutorial-4-bucles', 'RedirectionController@redirect');
+Route::get('tutorial-5-java-cadenas-de-caracteres', 'RedirectionController@redirect');
+Route::get('tutorial-6-java-definicion-de-clases-y-objetos', 'RedirectionController@redirect');
+Route::get('tutorial-7-java-vectores', 'RedirectionController@redirect');
+Route::get('tutorial-8-java-vectores-parte-2', 'RedirectionController@redirect');
+Route::get('tutorial-9-java-vectores-parte-3', 'RedirectionController@redirect');
+Route::get('tutorial-10-java-matrices', 'RedirectionController@redirect');
+Route::get('tutorial-11-java-constructor-de-la-clase', 'RedirectionController@redirect');
+Route::get('tutorial-12-java-uso-de-varias-clases', 'RedirectionController@redirect');
+Route::get('tutorial-13-java-herencia', 'RedirectionController@redirect');
 
 /**
  * Routes for courses
