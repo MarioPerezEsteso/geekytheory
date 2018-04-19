@@ -63,7 +63,7 @@ class SendNewsletter extends Command
 
         foreach ($emails as $email) {
             $data = [
-                'subject' => '¡Hoy lanzamos nuevo curso de Ansible!',
+                'subject' => '☕️ ¡Hoy lanzamos nuevo curso de Java!',
                 'to' => $email,
             ];
 
