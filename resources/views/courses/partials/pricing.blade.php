@@ -52,6 +52,9 @@
                     <li>
                         <strong>Soporte</strong>
                     </li>
+                    <li>
+                        <strong>Sin publicidad</strong>
+                    </li>
                     <li class="plan-action">
                         @if (!isset($user))
                             <a href="{{ route('auth.register.get') }}"

@@ -26,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
             $user = Auth::user();
             if ($user != null) {
                 $view->with('user', Auth::user()->getBasicUserData());
+            } else {
+                $view->with('user', null);
             }
         });
 
