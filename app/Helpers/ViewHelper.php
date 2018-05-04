@@ -27,8 +27,8 @@ if (!function_exists('showBanner')) {
 /**
  * Method to check if a user is Premium or not.
  *
- * @param array $paths
- * @return string
+ * @param array $user
+ * @return bool
  */
 if (!function_exists('isPremiumUser')) {
     function isPremiumUser($user)
