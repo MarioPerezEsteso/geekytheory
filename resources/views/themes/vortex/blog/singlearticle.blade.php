@@ -10,6 +10,15 @@
 
 @section('content')
     <div class="container post-container">
+
+        @if (showBanner($user, $siteMeta))
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    {!! $siteMeta->adsense_script !!}
+                </div>
+            </div>
+        @endif
+
         <div class="row">
             <div class="col-sm-10 col-sm-offset-1">
                 <article class="post post-single">
@@ -58,24 +67,35 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="col-sm-10 col-sm-offset-1">
-                <div class="alert alert-telegram">
-                    <div class="row">
-                        <div class="col-sm-1">
-                            <a href="https://goo.gl/eyS32z" target="_blank">
-                                <img src="/images/telegram.png" class="img-responsive">
-                            </a>
-                        </div>
-                        <div class="col-sm-11">
-                            <a href="https://goo.gl/eyS32z" target="_blank">
-                                ¿Quieres estar al día de lo que pasa en Geeky Theory? ¡Únete a nuestro canal de Telegram aquí!
-                            </a>
+        @if (showBanner($user, $siteMeta))
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    {!! $siteMeta->adsense_script !!}
+                </div>
+            </div>
+        @else
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1">
+                    <div class="alert alert-telegram">
+                        <div class="row">
+                            <div class="col-sm-1">
+                                <a href="https://goo.gl/eyS32z" target="_blank">
+                                    <img src="/images/telegram.png" class="img-responsive">
+                                </a>
+                            </div>
+                            <div class="col-sm-11">
+                                <a href="https://goo.gl/eyS32z" target="_blank">
+                                    ¿Quieres estar al día de lo que pasa en Geeky Theory? ¡Únete a nuestro canal de
+                                    Telegram
+                                    aquí!
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
+
         {{--@if($post->allow_comments)
             <div class="row">
                 <div class="col-sm-10 col-sm-offset-1">
