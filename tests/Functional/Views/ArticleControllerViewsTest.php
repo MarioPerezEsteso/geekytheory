@@ -19,7 +19,7 @@ class ArticleControllerViewsTest extends TestCase
     {
         // Prepare
         /** @var User $user */
-        $user = factory(User::class)->create();
+        $user = factory(User::class)->create(['is_admin' => true]);
         $article = factory(Post::class)->create([
             'status' => 'draft',
         ]);
