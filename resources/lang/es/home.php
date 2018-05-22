@@ -105,6 +105,7 @@ return [
     'show_post_description' => 'Mostrar la descripción del post en la cabecera sobre la imagen (su tema debe soportarlo)',
     'allow_comments' => 'Permitir comentarios',
     'enable_adsense' => 'Habilitar adsense para este sitio (su tema debe soportarlo)',
+    'receive_newsletter' => 'Recibir newsletter',
     'current_password' => 'Contraseña actual',
     'new_password' => 'Nueva contraseña',
     'password_changed' => '¡Tu contraseña ha sido cambiada!',

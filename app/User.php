@@ -27,7 +27,13 @@ class User extends Authenticatable
         'username',
         'email',
         'password',
+        'receive_newsletter',
     );
+
+    protected $casts = [
+        'is_admin' => 'boolean',
+        'receive_newsletter' => 'boolean',
+    ];
 
     /**
      * The attributes excluded from the model's JSON form.
