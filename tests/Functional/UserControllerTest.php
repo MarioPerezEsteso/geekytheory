@@ -128,6 +128,7 @@ class UserControllerTest extends TestCase
             'name' => $userData['name'],
             'username' => $userData['username'],
             'email' => $userData['email'],
+            'receive_newsletter' => array_key_exists('receive_newsletter', $userData) && $userData['receive_newsletter'] == 'on',
         ]);
 
         if (!$userHasMetadata && empty($userMetadata)) {
@@ -173,6 +174,7 @@ class UserControllerTest extends TestCase
                 'name' => $faker->name,
                 'email' => $faker->email,
                 'username' => str_random(),
+                'receive_newsletter' => 'on',
             ], [], false,],
             'User data without metadata and previous metadata existent' => [[
                 'name' => $faker->name,
@@ -183,6 +185,7 @@ class UserControllerTest extends TestCase
                 'name' => $faker->name,
                 'email' => $faker->email,
                 'username' => str_random(),
+                'receive_newsletter' => 'on',
             ], $userMetadata, false,],
             'User data with metadata and previous metadata existent' => [[
                 'name' => $faker->name,
