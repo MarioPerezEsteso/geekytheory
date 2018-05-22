@@ -54,6 +54,13 @@
                         <i class="form-group__bar"></i>
                     </div>
 
+                    <div class="form-group checkbox">
+                        <label>
+                            <input name="user[receive_newsletter]"
+                                   type="checkbox" {{ ($userProfile->receive_newsletter) ? 'checked' : '' }}> {{ trans('home.receive_newsletter') }}
+                        </label>
+                    </div>
+
                     <div class="form-group {{ (isset($errors) && $errors->has('biography')) ? ' has-danger' : ''}}">
                         {!! Form::label('biography', trans('auth.biography') . ((isset($errors) && $errors->has('biography')) ? '. ' . $errors->first('biography') : ''), ['class' => 'form-control-label']) !!}
                         {!! Form::textarea('usermeta[biography]', $userProfile->userMeta->biography ?? '', ['class' => 'form-control', 'rows' => '4']) !!}

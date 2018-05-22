@@ -103,6 +103,7 @@ return [
     'show_post_description' => 'Show the description of the post above the image in header (your theme must support it)',
     'allow_comments' => 'Allow comments',
     'enable_adsense' => 'Enable adsense for this site (your theme must support it)',
+    'receive_newsletter' => 'Receive newsletter',
     'current_password' => 'Current password',
     'new_password' => 'New password',
     'password_changed' => 'Your password has been modified!',
