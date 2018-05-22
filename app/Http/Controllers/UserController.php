@@ -74,7 +74,11 @@ class UserController extends Controller
 
             return redirect()->route('account.profile')->withErrors($errors)->withInput();
         } else {
-            $user->update($request->user);
+            /** @var array $userData */
+            $userData = $request->user;
+            $userData['receive_newsletter'] = array_key_exists('receive_newsletter', $request->user) && $request->user['receive_newsletter'] == 'on';
+
+            $user->update($userData);
             if (!empty($request->usermeta)) {
                 if (!$user->userMeta) {
                     $userMeta = new UserMeta($request->usermeta);
