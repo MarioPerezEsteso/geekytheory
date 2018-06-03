@@ -10,6 +10,24 @@ use Tests\TestCase;
 class ArticleControllerViewsTest extends TestCase
 {
     /**
+     * Test that any user can visit the blog page.
+     */
+    public function testVisitBlogPageOk()
+    {
+        $response = $this->call('GET', 'blog');
+
+        $response->assertStatus(200);
+
+        $response->assertStatus(200);
+        $response->assertViewIs('web.blog.postlist.index');
+
+        $response->assertResponseHasData('articles');
+        $response->assertResponseDataCollectionHasNumberOfItems('articles', 10);
+        $response->assertResponseDataHasRelationLoaded('articles', 'user', 1);
+        $response->assertResponseDataHasRelationLoaded('articles', 'categories', 0);
+    }
+
+    /**
      * Test administrator user can visit some article pages.
      *
      * @dataProvider providerArticleGETPages
