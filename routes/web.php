@@ -89,6 +89,11 @@ Route::get('tutorial-11-java-constructor-de-la-clase', 'RedirectionController@re
 Route::get('tutorial-12-java-uso-de-varias-clases', 'RedirectionController@redirect');
 Route::get('tutorial-13-java-herencia', 'RedirectionController@redirect');
 
+Route::get('blog', [
+    'as' => 'blog',
+    'uses' => 'ArticleController@index',
+]);
+
 /**
  * Routes for courses
  */
@@ -219,7 +224,10 @@ Route::get('comment/getForm', [
 
 Route::get('feed', 'FeedController@feed');
 
-Route::get('/{slug?}', 'ArticleController@show');
+Route::get('/{slug?}', [
+    'as' => 'article',
+    'uses' => 'ArticleController@show',
+]);
 
 Route::post('share-article', [
     'before' => 'csrf',
@@ -230,6 +238,9 @@ Route::get('/p/{slug?}', 'PageController@show');
 
 Route::get('user/{username}', 'ArticleController@showByUsername');
 
-Route::get('category/{slug}', 'CategoryController@showByCategory');
+Route::get('category/{slug}', [
+    'as' => 'post-category',
+    'uses' => 'CategoryController@showByCategory',
+]);
 
 Route::get('tag/{slug}', 'TagController@showByTag');
