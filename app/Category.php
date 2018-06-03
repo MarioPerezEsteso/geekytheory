@@ -35,4 +35,15 @@ class Category extends Model
         return $this->belongsToMany('App\Post', 'posts_categories');
     }
 
+    /**
+     * Get category by slug.
+     *
+     * @param $slug
+     * @return Category
+     */
+    public static function getBySlug($slug)
+    {
+        return self::where('slug', $slug)->firstOrFail();
+    }
+
 }

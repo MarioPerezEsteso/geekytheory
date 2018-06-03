@@ -44,16 +44,11 @@ class IndexController extends Controller
         $adsensePostlistEnabled = $this->siteMetaRepository->getSiteMeta()->adsense_postlist_enabled;
         $postsToShow = $adsensePostlistEnabled ? self::SHOW_NUMBER_POSTS - 1 : self::SHOW_NUMBER_POSTS;
 
-        if (!empty($request->search)) {
-            $posts = Article::findArticlesBySearch(true, $postsToShow, $request->search);
-            $posts->appends(Input::except('page'));
-        } else {
-            $posts = Article::findArticles(null, true, $postsToShow);
-        }
+        $posts = Article::findArticles(null, true, $postsToShow);
 
         $courses = Course::getPublishedAndScheduled()->with('teacher')->get();
 
-        return view('courses.index', compact('posts', 'courses'));
+        return view('web.index', compact('posts', 'courses'));
     }
 
     /**

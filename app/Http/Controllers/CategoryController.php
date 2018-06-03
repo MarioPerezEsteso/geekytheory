@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Article;
 use App\Category;
-use App\Repositories\CategoryRepository;
-use App\Repositories\PostRepository;
 use App\Validators\CategoryValidator;
 use File;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Validator;
 use Illuminate\Support\Facades\Redirect;
 
@@ -21,11 +19,6 @@ class CategoryController extends Controller
     const TAGS_PAGINATION_NUMBER = 10;
 
     /**
-     * @var CategoryRepository
-     */
-    protected $repository;
-
-    /**
      * Validator for Category creation and update.
      *
      * @var CategoryValidator
@@ -35,12 +28,10 @@ class CategoryController extends Controller
     /**
      * CategoryController constructor.
      *
-     * @param CategoryRepository $categoryRepository
      * @param CategoryValidator $categoryValidator
      */
-    public function __construct(CategoryRepository $categoryRepository, CategoryValidator $categoryValidator)
+    public function __construct(CategoryValidator $categoryValidator)
     {
-        $this->repository = $categoryRepository;
         $this->validator = $categoryValidator;
     }
 
@@ -51,7 +42,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = $this->repository->paginate(self::TAGS_PAGINATION_NUMBER);
+        $categories = Category::paginate(self::TAGS_PAGINATION_NUMBER);
         return view('home.posts.categories', compact('categories'));
     }
 
@@ -62,14 +53,14 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = $this->repository->paginate(self::TAGS_PAGINATION_NUMBER);
+        $categories = Category::paginate(self::TAGS_PAGINATION_NUMBER);
         return view('home.posts.categories', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -97,7 +88,7 @@ class CategoryController extends Controller
                 $data['image'] = ImageManagerController::getPathYearMonth() . $fileName;
             }
 
-            $this->repository->create($data);
+            Category::create($data);
         }
 
         return Redirect::to('home/categories')->withSuccess(trans('home.category_create_success'));
@@ -111,37 +102,40 @@ class CategoryController extends Controller
      */
     public function showByCategory($categorySlug)
     {
-        $category = $this->repository->findCategoryBySlug($categorySlug);
-        $posts = (new PostRepository())->findPostsByCategory($category);
-        return view('themes.' . IndexController::THEME . '.categoryposts', compact('posts', 'category'));
+        $category = Category::getBySlug($categorySlug);
+        $articles = Article::getByCategory($category)->with('user', 'categories')->paginate(10);
+
+        return view('web.blog.postlist.index', compact('articles'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-        $category = $this->repository->findOrFail($id);
-        $categories = $this->repository->paginate(self::TAGS_PAGINATION_NUMBER);
+        $category = Category::findOrFail($id);
+        $categories = Category::paginate(self::TAGS_PAGINATION_NUMBER);
+
         return view('home.posts.categories', compact('category', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
+        $category = Category::findOrFail($id);
         $data = array(
-            'category'   => $request->category,
+            'category' => $request->category,
             'description' => $request->description,
-            'slug'  => $request->slug,
+            'slug' => $request->slug,
             'image' => $request->file('image'),
         );
 
@@ -153,20 +147,23 @@ class CategoryController extends Controller
                 $data['image']->move(ImageManagerController::getPathYearMonth(), $fileName);
                 $data['image'] = ImageManagerController::getPathYearMonth() . $fileName;
             }
-            $this->repository->update($id, $data);
+            $category->update($id, $data);
         }
+
         return Redirect::to('home/categories')->withSuccess(trans('home.category_update_success'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $this->repository->destroy($id);
+        $category = Category::findOrFail($id);
+        $category->destroy($id);
+
         return Redirect::to('home/categories')->withSuccess(trans('home.category_delete_success'));
     }
 
@@ -179,7 +176,7 @@ class CategoryController extends Controller
     public function deleteImage(Request $request)
     {
         if (!empty($request->id)) {
-            $category = $this->repository->findOrFail($request->id);
+            $category = Category::findOrFail($request->id);
             $category->image = NULL;
             $category->save();
             return response()->json(['error' => 0]);
