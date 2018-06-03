@@ -117,3 +117,37 @@ $factory->define(App\Post::class, function (Faker\Generator $faker) {
         'published_at' => \Carbon\Carbon::now(),
     ];
 });
+
+$factory->define(App\Article::class, function (Faker\Generator $faker) {
+    return [
+        'user_id' => 1,
+        'slug' => $faker->slug,
+        'title' => $faker->text(100),
+        'body' => $faker->text(100),
+        'description' => $faker->text(100),
+        'status' => 'published',
+        'image' => $faker->slug,
+        'type' => 'article',
+        'allow_comments' => true,
+        'show_title' => true,
+        'show_description' => true,
+        'shares_whatsapp' => 0,
+        'shares_twitter' => 0,
+        'shares_facebook' => 0,
+        'shares_google-plus' => 0,
+        'shares_telegram' => 0,
+        'shares_mail' => 0,
+        'published_at' => \Carbon\Carbon::now(),
+    ];
+});
+
+$factory->define(App\Category::class, function (Faker\Generator $faker) {
+    return [
+        'category' => $faker->text(100),
+        'image' => $faker->slug,
+        'slug' => $faker->slug,
+        'description' => $faker->text(100),
+        'created_at' => \Carbon\Carbon::now(),
+        'updated_at' => \Carbon\Carbon::now(),
+    ];
+});
