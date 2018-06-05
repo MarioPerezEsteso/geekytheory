@@ -2,6 +2,11 @@
 
 namespace App;
 
+use Doctrine\DBAL\Query\QueryBuilder;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
+
 class Article extends Post
 {
     /**
@@ -24,17 +29,17 @@ class Article extends Post
     {
         return $this->comments()->where(['spam' => 0, 'approved' => 1])->orderBy('created_at', 'DESC');
     }
-    
+
     /**
      * Find the articles owned by an author.
      *
      * @param User $author
      * @param bool $onlyPublishedArticles
      * @param int $paginate
-     * 
+     *
      * @return mixed
      */
-    public static function findArticles(User $author = null, $onlyPublishedArticles = false, $paginate = self::PAGINATION_DEFAULT, $text = null)
+    public static function findArticles(User $author = null, $onlyPublishedArticles = false, $paginate = self::PAGINATION_DEFAULT)
     {
         $columns = User::$mappings;
         array_push($columns, 'posts.*');
@@ -50,19 +55,53 @@ class Article extends Post
             $query->where('posts.status', self::STATUS_PUBLISHED);
         }
 
-        if ($text !== null) {
-            $query->where('posts.body', 'like', "%$text%")
-                ->orWhere('posts.title', 'like', "%$text%");
-        }
-
         return $query->paginate($paginate);
+    }
+
+    public static function getPublishedArticles()
+    {
+        return Article::where('status', self::STATUS_PUBLISHED)
+            ->where('type', self::POST_ARTICLE)
+            ->orderBy('created_at', 'DESC');
+    }
+
+    /**
+     * Get articles by category.
+     *
+     * @param Category $category
+     * @return Builder
+     */
+    public static function getByCategory(Category $category)
+    {
+        return self::select('posts.*')
+            ->join('posts_categories', 'posts.id', '=', 'posts_categories.post_id')
+            ->where('posts_categories.category_id', $category->id)
+            ->where('posts.status', self::STATUS_PUBLISHED)
+            ->where('posts.type', self::POST_ARTICLE)
+            ->orderBy('created_at', 'DESC');
+    }
+
+    /**
+     * Get articles by tag.
+     *
+     * @param Tag $tag
+     * @return Builder
+     */
+    public static function getByTag(Tag $tag)
+    {
+        return self::select('posts.*')
+            ->join('posts_tags', 'posts.id', '=', 'posts_tags.post_id')
+            ->where('posts_tags.tag_id', $tag->id)
+            ->where('posts.status', self::STATUS_PUBLISHED)
+            ->where('posts.type', self::POST_ARTICLE)
+            ->orderBy('created_at', 'DESC');
     }
 
     /**
      * Find all articles.
      *
      * @param int $paginate
-     * 
+     *
      * @return mixed
      */
     public static function findAllArticles($paginate = self::PAGINATION_DEFAULT)
@@ -75,7 +114,7 @@ class Article extends Post
      *
      * @param $slug
      * @param bool $isPreview
-     * 
+     *
      * @return Article
      */
     public static function findArticleBySlug($slug, $isPreview = false)
@@ -94,26 +133,15 @@ class Article extends Post
      * Find the published articles owned by an author.
      *
      * @param User $author
-     * @param int $paginate
-     * 
-     * @return mixed
-     */
-    public static function findPublishedArticlesByAuthor(User $author, $paginate = self::PAGINATION_DEFAULT)
-    {
-        return self::findArticles($author, true, $paginate);
-    }
-
-    /**
-     * Find articles by search.
      *
-     * @param bool $onlyPublishedArticles
-     * @param int $paginate
-     * @param null $text
-     * 
-     * @return mixed
+     * @return Builder
      */
-    public static function findArticlesBySearch($onlyPublishedArticles = false, $paginate = self::PAGINATION_DEFAULT, $text = null)
+    public static function getPublishedArticlesByAuthor(User $author)
     {
-        return self::findArticles(null, $onlyPublishedArticles, $paginate, $text);
+        return self::select('posts.*')
+            ->where('posts.user_id', $author->id)
+            ->where('posts.status', self::STATUS_PUBLISHED)
+            ->where('posts.type', self::POST_ARTICLE)
+            ->orderBy('created_at', 'DESC');
     }
 }

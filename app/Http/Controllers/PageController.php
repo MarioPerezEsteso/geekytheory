@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
 use App\Page;
 use App\Post;
 use App\Validators\PageValidator;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Repositories\CategoryRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Redirect;
 
@@ -21,12 +21,12 @@ class PageController extends PostController
     /**
      * PageController constructor.
      *
-     * @param CategoryRepository $categoryRepository
      * @param UserRepository $userRepository
+     * @param PageValidator $pageValidator
      */
-    public function __construct(CategoryRepository $categoryRepository, UserRepository $userRepository, PageValidator $pageValidator)
+    public function __construct(UserRepository $userRepository, PageValidator $pageValidator)
     {
-        parent::__construct($categoryRepository, $userRepository, $pageValidator);
+        parent::__construct($userRepository, $pageValidator);
     }
 
     /**
@@ -55,7 +55,7 @@ class PageController extends PostController
      */
     public function create()
     {
-        $categories = $this->categoryRepository->all();
+        $categories = Category::all();
         $type = self::TYPE;
         return view('home.posts.page', compact('categories', 'type'));
     }
@@ -112,7 +112,7 @@ class PageController extends PostController
     public function edit($id)
     {
         $post = Page::findOrFail($id);
-        $categories = $this->categoryRepository->all();
+        $categories = Category::all();
 
         return view('home.posts.page', compact('categories', 'post'));
     }

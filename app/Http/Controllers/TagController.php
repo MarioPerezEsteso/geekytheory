@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Article;
 use App\Repositories\PostRepository;
-use App\Repositories\TagRepository;
 use App\Validators\TagCreateValidator;
 use App\Validators\TagValidator;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Tag;
 use Validator;
@@ -21,11 +20,6 @@ class TagController extends Controller
     const TAGS_PAGINATION_NUMBER = 10;
 
     /**
-     * @var TagRepository
-     */
-    protected $repository;
-
-    /**
      * Validator for Tag creation
      *
      * @var TagValidator
@@ -35,12 +29,10 @@ class TagController extends Controller
     /**
      * TagController constructor.
      *
-     * @param TagRepository $tagRepository
      * @param TagValidator $tagValidator
      */
-    public function __construct(TagRepository $tagRepository, TagValidator $tagValidator)
+    public function __construct(TagValidator $tagValidator)
     {
-        $this->repository = $tagRepository;
         $this->validator = $tagValidator;
     }
 
@@ -51,7 +43,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = $this->repository->paginate(self::TAGS_PAGINATION_NUMBER);
+        $tags = Tag::paginate(self::TAGS_PAGINATION_NUMBER);
+
         return view('home.posts.tags', compact('tags'));
     }
 
@@ -62,7 +55,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        $tags = $this->repository->paginate(self::TAGS_PAGINATION_NUMBER);
+        $tags = Tag::paginate(self::TAGS_PAGINATION_NUMBER);
         return view('home.posts.tags', compact('tags'));
     }
 
@@ -81,15 +74,15 @@ class TagController extends Controller
         }
 
         $data = array(
-            'tag'   => $request->get('tag'),
+            'tag' => $request->get('tag'),
             'description' => $request->get('description'),
-            'slug'  => $slug
+            'slug' => $slug
         );
 
         if (!$this->validator->with($data)->passes()) {
             return Redirect::to('home/tags')->withErrors($this->validator->errors());
         } else {
-            $this->repository->create($data);
+            Tag::create($data);
         }
 
         return Redirect::to('home/tags')->withSuccess(trans('home.tag_create_success'));
@@ -103,9 +96,10 @@ class TagController extends Controller
      */
     public function showByTag($tagSlug)
     {
-        $tag = $this->repository->findTagBySlug($tagSlug);
-        $posts = (new PostRepository())->findPostsByTag($tag);
-        return view('themes.' . IndexController::THEME . '.tagposts', compact('posts', 'tag'));
+        $tag = Tag::findBySlugOrFail($tagSlug);
+        $articles = Article::getByTag($tag)->with('user', 'categories')->paginate(self::TAGS_PAGINATION_NUMBER);
+
+        return view('web.blog.postlist.index', compact('articles'));
     }
 
 
@@ -117,8 +111,9 @@ class TagController extends Controller
      */
     public function edit($id)
     {
-        $tag = $this->repository->findOrFail($id);
-        $tags = $this->repository->paginate(self::TAGS_PAGINATION_NUMBER);
+        $tag = Tag::findOrFail($id);
+        $tags = Tag::paginate(self::TAGS_PAGINATION_NUMBER);
+
         return view('home.posts.tags', compact('tag', 'tags'));
     }
 
@@ -131,17 +126,21 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $tag = Tag::findOrFail($id);
+
         $data = array(
-            'tag'   => $request->get('tag'),
-            'description'   => $request->get('description'),
-            'slug'  => $request->get('slug'),
+            'tag' => $request->get('tag'),
+            'description' => $request->get('description'),
+            'slug' => $request->get('slug'),
         );
 
         if (!$this->validator->update($id)->with($data)->passes()) {
+
             return Redirect::to("home/tags/edit/$id")->withErrors($this->validator->errors());
         } else {
-            $this->repository->update($id, $data);
+            $tag->update($id, $data);
         }
+
         return Redirect::to('home/tags')->withSuccess(trans('home.tag_create_success'));
     }
 
@@ -153,7 +152,9 @@ class TagController extends Controller
      */
     public function destroy($id)
     {
-        $this->repository->destroy($id);
+        $tag = Tag::findOrFail($id);
+        $tag->destroy($id);
+
         return Redirect::to('home/tags')->withSuccess(trans('home.tag_delete_success'));
     }
 

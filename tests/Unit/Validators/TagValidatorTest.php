@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Validators;
 
-use App\Repositories\TagRepository;
+use App\Tag;
 use App\Validators\TagValidator;
 use Illuminate\Support\Facades\App;
 use Tests\TestCase;
@@ -44,7 +44,7 @@ class TagValidatorTest extends TestCase
     public function testUpdateFailure()
     {
         /** @var \App\Tag $tag */
-        $tag = (new TagRepository())->find(1);
+        $tag = Tag::findOrFail(1);
         $validator = new TagValidator(App::make('validator'));
         $this->assertFalse($validator->update(2)->with($tag->getAttributes())->passes());
     }

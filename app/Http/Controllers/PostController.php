@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use App\Repositories\CategoryRepository;
-use App\Repositories\PostRepository;
 use App\Repositories\SiteMetaRepository;
 use App\Repositories\UserRepository;
 use App\Validators\ArticleValidator;
@@ -16,7 +14,6 @@ use Auth;
 use App\Post;
 use Illuminate\Support\Facades\Cache;
 use Validator;
-use Illuminate\Support\Facades\Redirect;
 
 class PostController extends Controller
 {
@@ -33,18 +30,13 @@ class PostController extends Controller
     /**
      * Number of posts to show with pagination in public view
      */
-    const POSTS_PUBLIC_PAGINATION_NUMBER = 6;
+    const POSTS_PUBLIC_PAGINATION_NUMBER = 10;
 
     /**
      * Actions when editing a post
      */
     const POST_ACTION_PUBLISH = 'publish';
     const POST_ACTION_UPDATE = 'update';
-
-    /**
-     * @var CategoryRepository
-     */
-    protected $categoryRepository;
 
     /**
      * @var UserRepository
@@ -59,13 +51,11 @@ class PostController extends Controller
     /**
      * PostController constructor.
      *
-     * @param CategoryRepository $categoryRepository
      * @param UserRepository $userRepository
      * @param PageValidator|ArticleValidator $validator
      */
-    public function __construct(CategoryRepository $categoryRepository, UserRepository $userRepository, $validator = null)
+    public function __construct(UserRepository $userRepository, $validator = null)
     {
-        $this->categoryRepository = $categoryRepository;
         $this->userRepository = $userRepository;
         $this->validator = $validator;
     }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Foundation\Testing\TestResponse;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use PHPUnit\Framework\Assert as PHPUnit;
@@ -116,6 +117,10 @@ class Response extends TestResponse
             foreach ($object as $item) {
                 $this->assertRelationsLoaded($item, $relation, $relationsLoaded);
             }
+        } else if ($object instanceof LengthAwarePaginator) {
+            foreach ($object->items() as $item) {
+                $this->assertRelationsLoaded($item, $relation, $relationsLoaded);
+            }
         } else {
             $this->assertRelationsLoaded($object, $relation, $relationsLoaded);
         }
@@ -165,6 +170,29 @@ class Response extends TestResponse
     }
 
     /**
+     * Assert that response data collection item values are the expected ones.
+     *
+     * @param string $collection
+     * @param integer $index
+     * @param array $values
+     */
+    public function assertResponseDataCollectionItemHasValues($collection, $index, $values)
+    {
+        $itemsExploded = explode('.', $collection);
+
+        /** @var Model $collection*/
+        $collection = $this->viewData[$itemsExploded[0]];
+
+        for ($itemIndex = 1; $itemIndex < count($itemsExploded); $itemIndex++) {
+            $collection = $collection->getRelationValue($itemsExploded[$itemIndex]);
+        }
+
+        $actual = $collection->get($index)->attributesToArray();
+
+        PHPUnit::assertEquals($values, $actual);
+    }
+
+    /**
      * Assert that response data item has value.
      *
      * @param $item
@@ -175,6 +203,26 @@ class Response extends TestResponse
         $actual = $this->viewData[$item];
 
         PHPUnit::assertEquals($value, $actual);
+    }
+
+    /**
+     * @param $collection
+     * @param $numberOfItemsExpected
+     */
+    public function assertResponseDataCollectionHasNumberOfItems($collection, $numberOfItemsExpected)
+    {
+        $itemsExploded = explode('.', $collection);
+
+        /** @var Model $collection*/
+        $collection = $this->viewData[$itemsExploded[0]];
+
+        for ($itemIndex = 1; $itemIndex < count($itemsExploded); $itemIndex++) {
+            $collection = $collection->getRelationValue($itemsExploded[$itemIndex]);
+        }
+
+        $actual = count($collection->all());
+
+        PHPUnit::assertEquals($numberOfItemsExpected, $actual);
     }
 
     /**
