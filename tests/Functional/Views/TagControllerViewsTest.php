@@ -3,28 +3,28 @@
 namespace Tests\Functional\Views;
 
 use App\Article;
-use App\Category;
+use App\Tag;
 use Tests\Helpers\TestUtils;
 use Tests\TestCase;
 
-class CategoryControllerViewsTest extends TestCase
+class TagControllerViewsTest extends TestCase
 {
     /**
      * @var string
      */
-    protected $articlesByCategoryPageUrl = 'category/{slug}';
+    protected $articlesByTagPageUrl = 'tag/{slug}';
 
     /**
-     * Test show list of articles by category ok.
+     * Test show list of articles by tag ok.
      */
-    public function testVisitShowArticlesByCategoryPageOk()
+    public function testVisitShowArticlesByTagPageOk()
     {
         // Prepare
-        $categoryOne = factory(Category::class)->create([
+        $tagOne = factory(Tag::class)->create([
             'slug' => 'whatever-slug',
         ]);
 
-        $categoryTwo = factory(Category::class)->create([
+        $tagTwo = factory(Tag::class)->create([
             'slug' => 'whatever-slug-different-to-the-first-one',
         ]);
 
@@ -40,12 +40,12 @@ class CategoryControllerViewsTest extends TestCase
             'status' => 'published',
         ]);
 
-        $articleOne->categories()->sync($categoryOne);
-        $articleTwo->categories()->sync($categoryOne);
-        $articleThree->categories()->sync($categoryTwo);
+        $articleOne->tags()->sync($tagOne);
+        $articleTwo->tags()->sync($tagOne);
+        $articleThree->tags()->sync($tagTwo);
 
         // Request
-        $response = $this->call('GET', TestUtils::createEndpoint($this->articlesByCategoryPageUrl, ['slug' => $categoryOne->slug]));
+        $response = $this->call('GET', TestUtils::createEndpoint($this->articlesByTagPageUrl, ['slug' => $tagOne->slug]));
 
         $response->assertStatus(200);
         $response->assertViewIs('web.blog.postlist.index');
@@ -54,16 +54,16 @@ class CategoryControllerViewsTest extends TestCase
         $response->assertResponseDataCollectionHasNumberOfItems('articles', 1);
         $response->assertResponseDataCollectionItemHasValues('articles', 0, $articleOne->attributesToArray());
         $response->assertResponseDataHasRelationLoaded('articles', 'user', 1);
-        $response->assertResponseDataHasRelationLoaded('articles', 'categories', 1);
+        $response->assertResponseDataHasRelationLoaded('articles', 'categories', 0);
     }
 
     /**
-     * Test show list of articles by non-existen category throws 404 error.
+     * Test show list of articles by non-existent tag throws 404 error.
      */
-    public function testVisitShowArticlesByCategoryPageNotFound()
+    public function testVisitShowArticlesByTagPageNotFound()
     {
         // Request
-        $response = $this->call('GET', TestUtils::createEndpoint($this->articlesByCategoryPageUrl, ['slug' => 'invented-slug']));
+        $response = $this->call('GET', TestUtils::createEndpoint($this->articlesByTagPageUrl, ['slug' => 'invented-slug']));
 
         $response->assertStatus(404);
     }

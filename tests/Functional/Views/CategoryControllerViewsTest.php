@@ -58,7 +58,7 @@ class CategoryControllerViewsTest extends TestCase
     }
 
     /**
-     * Test show list of articles by non-existen category throws 404 error.
+     * Test show list of articles by non-existent category throws 404 error.
      */
     public function testVisitShowArticlesByCategoryPageNotFound()
     {
