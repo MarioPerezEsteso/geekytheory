@@ -2,6 +2,7 @@
 
 namespace Tests\Functional\Views;
 
+use App\Article;
 use App\Post;
 use App\User;
 use Tests\Helpers\TestUtils;
@@ -10,14 +11,24 @@ use Tests\TestCase;
 class ArticleControllerViewsTest extends TestCase
 {
     /**
+     * @var string
+     */
+    protected $blogPageUrl = 'blog';
+
+    /**
+     * @var string
+     */
+    protected $articlesByUserPageUrl = 'user/{username}';
+
+    /**
      * Test that any user can visit the blog page.
      */
     public function testVisitBlogPageOk()
     {
-        $response = $this->call('GET', 'blog');
+        // Request
+        $response = $this->call('GET', $this->blogPageUrl);
 
-        $response->assertStatus(200);
-
+        // Asserts
         $response->assertStatus(200);
         $response->assertViewIs('web.blog.postlist.index');
 
@@ -25,6 +36,61 @@ class ArticleControllerViewsTest extends TestCase
         $response->assertResponseDataCollectionHasNumberOfItems('articles', 10);
         $response->assertResponseDataHasRelationLoaded('articles', 'user', 1);
         $response->assertResponseDataHasRelationLoaded('articles', 'categories', 0);
+    }
+
+    /**
+     * Test show list of articles by user ok.
+     */
+    public function testVisitShowArticlesByUserPageOk()
+    {
+        // Prepare
+        $userOne = factory(User::class)->create();
+
+        $userTwo = factory(User::class)->create();
+
+        $articleOne = factory(Article::class)->create([
+            'user_id' => $userOne->id,
+            'status' => 'published',
+        ]);
+
+        $articleTwo = factory(Article::class)->create([
+            'user_id' => $userOne->id,
+            'status' => 'published',
+        ]);
+
+        factory(Article::class)->create([
+            'user_id' => $userOne->id,
+            'status' => 'draft',
+        ]);
+
+        factory(Article::class)->create([
+            'user_id' => $userTwo->id,
+            'status' => 'published',
+        ]);
+
+        // Request
+        $response = $this->call('GET', TestUtils::createEndpoint($this->articlesByUserPageUrl, ['username' => $userOne->username]));
+
+        $response->assertStatus(200);
+        $response->assertViewIs('web.blog.postlist.index');
+
+        $response->assertResponseHasData('articles');
+        $response->assertResponseDataCollectionHasNumberOfItems('articles', 2);
+        $response->assertResponseDataCollectionItemHasValues('articles', 0, $articleOne->attributesToArray());
+        $response->assertResponseDataCollectionItemHasValues('articles', 1, $articleTwo->attributesToArray());
+        $response->assertResponseDataHasRelationLoaded('articles', 'user', 1);
+        $response->assertResponseDataHasRelationLoaded('articles', 'categories', 0);
+    }
+
+    /**
+     * Test show list of articles by non-existent username throws 404 error.
+     */
+    public function testVisitShowArticlesByUsernamePageNotFound()
+    {
+        // Request
+        $response = $this->call('GET', TestUtils::createEndpoint($this->articlesByUserPageUrl, ['username' => 'doesnotexist']));
+
+        $response->assertStatus(404);
     }
 
     /**
