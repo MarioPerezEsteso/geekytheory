@@ -1,6 +1,6 @@
 <div class="card card-fluid bg-base-1 text-white overflow--hidden z-depth-3-top border-0">
     <div class="card-body py-5">
-        <span class="d-block meta-category mb-3">
+        <span class="d-block meta-category meta-category-colored mb-3">
             @foreach($article->categories as $category)
                 <a href="{{ route('post-category', ['slug' => $category->slug]) }}"
                    class="text-md strong-600">{{ $category->category }}</a>
