@@ -143,6 +143,17 @@ class User extends Authenticatable
     }
 
     /**
+     * Find user by its username or fail.
+     *
+     * @param string $username
+     * @return User
+     */
+    public static function findByUsernameOrFail(string $username)
+    {
+        return self::where('username', '=', $username)->firstOrFail();
+    }
+
+    /**
      * Returns the basic user data for the admin panel view.
      *
      * @return array

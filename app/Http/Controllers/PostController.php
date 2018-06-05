@@ -30,7 +30,7 @@ class PostController extends Controller
     /**
      * Number of posts to show with pagination in public view
      */
-    const POSTS_PUBLIC_PAGINATION_NUMBER = 6;
+    const POSTS_PUBLIC_PAGINATION_NUMBER = 10;
 
     /**
      * Actions when editing a post

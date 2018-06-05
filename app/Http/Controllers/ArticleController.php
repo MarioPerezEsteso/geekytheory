@@ -7,6 +7,7 @@ use App\Course;
 use App\Post;
 use App\Article;
 use App\Repositories\UserRepository;
+use App\User;
 use App\Validators\ArticleValidator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
@@ -50,7 +51,7 @@ class ArticleController extends PostController
     public function index()
     {
         /** @var Collection $articles */
-        $articles = Article::getPublishedArticles()->with('user', 'categories')->paginate(10);
+        $articles = Article::getPublishedArticles()->with('user', 'categories')->paginate(self::POSTS_PUBLIC_PAGINATION_NUMBER);
 
         return view('web.blog.postlist.index', compact('articles'));
     }
@@ -163,9 +164,10 @@ class ArticleController extends PostController
      */
     public function showByUsername($username)
     {
-        $author = $this->userRepository->findUserByUsername($username);
-        $posts = Article::findPublishedArticlesByAuthor($author, self::POSTS_PUBLIC_PAGINATION_NUMBER);
-        return view('themes.' . IndexController::THEME . '.userposts', compact('posts', 'author'));
+        $author = User::findByUsernameOrFail($username);
+        $articles = Article::getPublishedArticlesByAuthor($author)->with('user', 'categories')->paginate(self::POSTS_PUBLIC_PAGINATION_NUMBER);
+
+        return view('web.blog.postlist.index', compact('articles'));
     }
 
     /**
@@ -178,6 +180,7 @@ class ArticleController extends PostController
     {
         $post = Article::findOrFail($id);
         $categories = Category::all();
+
         return view('home.posts.article', compact('categories', 'post'));
     }
 

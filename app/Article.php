@@ -133,12 +133,15 @@ class Article extends Post
      * Find the published articles owned by an author.
      *
      * @param User $author
-     * @param int $paginate
      *
-     * @return mixed
+     * @return Builder
      */
-    public static function findPublishedArticlesByAuthor(User $author, $paginate = self::PAGINATION_DEFAULT)
+    public static function getPublishedArticlesByAuthor(User $author)
     {
-        return self::findArticles($author, true, $paginate);
+        return self::select('posts.*')
+            ->where('posts.user_id', $author->id)
+            ->where('posts.status', self::STATUS_PUBLISHED)
+            ->where('posts.type', self::POST_ARTICLE)
+            ->orderBy('created_at', 'DESC');
     }
 }

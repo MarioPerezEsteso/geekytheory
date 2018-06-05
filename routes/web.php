@@ -236,7 +236,10 @@ Route::post('share-article', [
 
 Route::get('/p/{slug?}', 'PageController@show');
 
-Route::get('user/{username}', 'ArticleController@showByUsername');
+Route::get('user/{username}', [
+    'as' => 'posts-user',
+    'uses' => 'ArticleController@showByUsername',
+]);
 
 Route::get('category/{slug}', [
     'as' => 'post-category',
