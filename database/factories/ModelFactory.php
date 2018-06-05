@@ -151,3 +151,13 @@ $factory->define(App\Category::class, function (Faker\Generator $faker) {
         'updated_at' => \Carbon\Carbon::now(),
     ];
 });
+
+$factory->define(App\Tag::class, function (Faker\Generator $faker) {
+    return [
+        'tag' => $faker->text(100),
+        'slug' => $faker->slug,
+        'description' => $faker->text(100),
+        'created_at' => \Carbon\Carbon::now(),
+        'updated_at' => \Carbon\Carbon::now(),
+    ];
+});
