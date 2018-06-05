@@ -34,4 +34,14 @@ class Tag extends Model
         return $this->belongsToMany('App\Post', 'posts_tags');
     }
 
+    /**
+     * Find tag by slug or fail.
+     *
+     * @param string $slug
+     * @return Tag
+     */
+    public static function findBySlugOrFail(string $slug)
+    {
+        return self::where('slug', $slug)->firstOrFail();
+    }
 }

@@ -82,6 +82,22 @@ class Article extends Post
     }
 
     /**
+     * Get articles by tag.
+     *
+     * @param Tag $tag
+     * @return Builder
+     */
+    public static function getByTag(Tag $tag)
+    {
+        return self::select('posts.*')
+            ->join('posts_tags', 'posts.id', '=', 'posts_tags.post_id')
+            ->where('posts_tags.tag_id', $tag->id)
+            ->where('posts.status', self::STATUS_PUBLISHED)
+            ->where('posts.type', self::POST_ARTICLE)
+            ->orderBy('created_at', 'DESC');
+    }
+
+    /**
      * Find all articles.
      *
      * @param int $paginate
