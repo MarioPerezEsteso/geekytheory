@@ -4,7 +4,8 @@
             <div class="card-body">
                 <span class="d-block meta-category mb-4">
                     @foreach($article->categories as $category)
-                        <a href="{{ route('post-category', ['slug' => $category->slug]) }}" class="text-md strong-600">{{ $category->category }}</a>
+                        <a href="{{ route('post-category', ['slug' => $category->slug]) }}"
+                           class="text-md strong-600">{{ $category->category }}</a>
                     @endforeach
                 </span>
                 <h3 class="heading heading-3 strong-500">
@@ -24,7 +25,8 @@
                             </div>
                             <div class="author-info">
                                 <div class="author-name">
-                                    <a href="#" class="text-md strong-600">{{ $article->user->name }}</a>
+                                    <a href="{{ route('posts-user', ['username' => $article->user->username]) }}"
+                                       class="text-md strong-600">{{ $article->user->name }}</a>
                                 </div>
                             </div>
                         </div>

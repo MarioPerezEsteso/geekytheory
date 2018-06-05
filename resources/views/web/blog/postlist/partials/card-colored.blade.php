@@ -2,7 +2,8 @@
     <div class="card-body py-5">
         <span class="d-block meta-category mb-3">
             @foreach($article->categories as $category)
-                <a href="{{ route('post-category', ['slug' => $category->slug]) }}" class="text-md strong-600">{{ $category->category }}</a>
+                <a href="{{ route('post-category', ['slug' => $category->slug]) }}"
+                   class="text-md strong-600">{{ $category->category }}</a>
             @endforeach
         </span>
         <h3 class="heading heading-inverse heading-3 strong-500">
@@ -24,7 +25,8 @@
                     </div>
                     <div class="author-info">
                         <div class="author-name">
-                            <a href="#" class="text-md strong-600 c-gray-lighter">{{ $article->user->name }}</a>
+                            <a href="{{ route('posts-user', ['username' => $article->user->username]) }}"
+                               class="text-md strong-600 c-gray-lighter">{{ $article->user->name }}</a>
                         </div>
                     </div>
                 </div>

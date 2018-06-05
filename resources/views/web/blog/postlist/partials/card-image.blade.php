@@ -26,7 +26,8 @@
                     </div>
                     <div class="author-info">
                         <div class="author-name">
-                            <a href="#" class="text-md strong-600 c-gray-lighter">{{ $article->user->name }}</a>
+                            <a href="{{ route('posts-user', ['username' => $article->user->username]) }}"
+                               class="text-md strong-600 c-gray-lighter">{{ $article->user->name }}</a>
                         </div>
                     </div>
                 </div>

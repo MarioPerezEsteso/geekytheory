@@ -2,7 +2,8 @@
     <div class="row align-items-center">
         <div class="col-md-6">
             <div class="card-image-container card-image-left">
-                <img src="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($article->image) }}" class="card-image" width="600">
+                <img src="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($article->image) }}"
+                     class="card-image" width="600">
             </div>
         </div>
 
@@ -32,7 +33,8 @@
                             </div>
                             <div class="author-info">
                                 <div class="author-name">
-                                    <a href="#" class="text-md strong-600">{{ $article->user->name }}</a>
+                                    <a href="{{ route('posts-user', ['username' => $article->user->username]) }}"
+                                       class="text-md strong-600">{{ $article->user->name }}</a>
                                 </div>
                             </div>
                         </div>
