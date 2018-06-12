@@ -88,6 +88,7 @@ Route::get('tutorial-10-java-matrices', 'RedirectionController@redirect');
 Route::get('tutorial-11-java-constructor-de-la-clase', 'RedirectionController@redirect');
 Route::get('tutorial-12-java-uso-de-varias-clases', 'RedirectionController@redirect');
 Route::get('tutorial-13-java-herencia', 'RedirectionController@redirect');
+Route::get('como-crear-un-cluster-de-servidores-con-apache-spark', 'RedirectionController@redirect');
 
 /**
  * Routes for courses

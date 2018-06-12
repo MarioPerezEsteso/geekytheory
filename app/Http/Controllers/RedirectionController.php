@@ -33,6 +33,7 @@ class RedirectionController extends Controller
         'tutorial-11-java-constructor-de-la-clase' => 'curso/java/constructor-clase-java',
         'tutorial-12-java-uso-de-varias-clases' => 'curso/java/como-usar-varias-clases',
         'tutorial-13-java-herencia' => 'curso/java/herencia-java',
+        'como-crear-un-cluster-de-servidores-con-apache-spark' => 'curso/apache-spark-cluster-servidores',
     ];
 
     public function redirect(Request $request)
