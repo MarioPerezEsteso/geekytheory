@@ -37,8 +37,6 @@ class SendNewsletter extends Command
 
     /**
      * Execute the console command.
-     *
-     * @return mixed
      */
     public function handle()
     {
@@ -47,7 +45,7 @@ class SendNewsletter extends Command
 
         $subscribers = Subscriber::where('active', 1)->get();
 
-        $users = User::all();
+        $users = User::where('receive_newsletter', 1)->get();
 
         $emails = [];
 
@@ -61,9 +59,11 @@ class SendNewsletter extends Command
             }
         }
 
+        $bar = $this->output->createProgressBar(count($emails));
+
         foreach ($emails as $email) {
             $data = [
-                'subject' => '📢️ ¡Hoy lanzamos nuevo curso de JavaScript!',
+                'subject' => '⭐️ ¡Aprende a crear un clúster de servidores con Apache Spark!',
                 'to' => $email,
             ];
 
@@ -73,13 +73,16 @@ class SendNewsletter extends Command
                     $message->to($data['to']);
                     $message->subject($data['subject']);
                 });
-                $this->info("Email successfully sent to " . $email);
             } catch (\Exception $e) {
                 Log::info("Failed to send email to " . $email);
                 Log::info((string)$e);
                 $this->info("Failed to send email to " . $email);
                 $this->info((string)$e);
             }
+
+            $bar->advance();
         }
+
+        $bar->finish();
     }
 }
