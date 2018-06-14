@@ -123,21 +123,7 @@ class ArticleController extends PostController
 
         $courses = Course::getPublished()->get();
 
-        /*
-         * The comments are cached apart from the post, tags and categories
-         * because they are going to be modified frequently.
-         */
-        if (Cache::has('comments_' . $slug)) {
-            $comments = Cache::get('comments_' . $slug);
-        } else {
-            $comments = $post->hamComments()->get();
-            $comments = CommentController::sortByParent($comments);
-            Cache::put('comments_' . $slug, $comments, self::CACHE_EXPIRATION_TIME);
-        }
-
-        $commentCount = count($comments);
-
-        return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'authorUser', 'comments', 'commentCount', 'socialShareButtons', 'courses'));
+        return view('web.blog.post.post', compact('post', 'authorUser', 'socialShareButtons', 'courses'));
     }
 
     /**
@@ -153,7 +139,8 @@ class ArticleController extends PostController
         $comments = $post->hamComments()->get();
         $commentCount = count($comments);
         $socialShareButtons = $this->getSocialShareButtonsData($post);
-        return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'authorUser', 'comments', 'commentCount', 'socialShareButtons'));
+
+        return view('web.blog.post.post', compact('post', 'authorUser', 'comments', 'commentCount', 'socialShareButtons'));
     }
 
     /**

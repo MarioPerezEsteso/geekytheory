@@ -46,4 +46,6 @@
 
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="../../assets/vendor/highlightjs/css/styles/atom-one-dark.css" type="text/css">
 </head>
