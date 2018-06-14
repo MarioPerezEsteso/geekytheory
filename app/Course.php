@@ -111,7 +111,8 @@ class Course extends Model
      */
     public static function getPublishedAndScheduled()
     {
-        return Course::whereIn('status', [self::STATUS_PUBLISHED, self::STATUS_SCHEDULED]);
+        return Course::whereIn('status', [self::STATUS_PUBLISHED, self::STATUS_SCHEDULED])
+            ->orderBy('created_at', 'DESC');
     }
 
     /**
@@ -122,6 +123,16 @@ class Course extends Model
     public function isPublished()
     {
         return $this->status === self::STATUS_PUBLISHED;
+    }
+
+    /**
+     * Check if a course is scheduled.
+     *
+     * @return bool
+     */
+    public function isScheduled()
+    {
+        return $this->status === self::STATUS_SCHEDULED;
     }
 
     /**
@@ -154,7 +165,7 @@ class Course extends Model
         $count = 0;
 
         foreach ($this->chapters as $chapter) {
-            $count+= count($chapter->lessons);
+            $count += count($chapter->lessons);
         }
 
         return $count;

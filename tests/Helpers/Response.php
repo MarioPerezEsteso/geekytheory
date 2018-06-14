@@ -109,9 +109,6 @@ class Response extends TestResponse
         $objectsExploded = explode('.', $objects);
         /** @var Model $object */
         $object = $this->viewData[$objectsExploded[0]];
-        for ($index = 1; $index < count($objectsExploded); $index++) {
-            $object = $object->getRelationValue($objectsExploded[$index]);
-        }
 
         if ($object instanceof Collection) {
             foreach ($object as $item) {
@@ -157,7 +154,7 @@ class Response extends TestResponse
     {
         $itemsExploded = explode('.', $item);
 
-        /** @var Model $item*/
+        /** @var Model $item */
         $item = $this->viewData[$itemsExploded[0]];
 
         for ($index = 1; $index < count($itemsExploded); $index++) {
@@ -180,7 +177,7 @@ class Response extends TestResponse
     {
         $itemsExploded = explode('.', $collection);
 
-        /** @var Model $collection*/
+        /** @var Model $collection */
         $collection = $this->viewData[$itemsExploded[0]];
 
         for ($itemIndex = 1; $itemIndex < count($itemsExploded); $itemIndex++) {
@@ -213,7 +210,7 @@ class Response extends TestResponse
     {
         $itemsExploded = explode('.', $collection);
 
-        /** @var Model $collection*/
+        /** @var Model $collection */
         $collection = $this->viewData[$itemsExploded[0]];
 
         for ($itemIndex = 1; $itemIndex < count($itemsExploded); $itemIndex++) {

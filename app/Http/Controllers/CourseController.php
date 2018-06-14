@@ -18,9 +18,48 @@ class CourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::getPublishedAndScheduled()->with('teacher')->get();
+        /** @var Collection $courses */
+        $courses = Course::getPublishedAndScheduled()->with('chapters.lessons')->get();
 
-        return view('courses.courses', compact('courses'));
+        $loggedUser = Auth::user();
+        if (!is_null($loggedUser)) {
+            /** @var Collection $completedLessons */
+            $completedLessons = $loggedUser->lessons;
+            $courseCompletedLessons = 0;
+
+            foreach ($courses as $course) {
+                foreach ($course->chapters as $chapter) {
+                    foreach ($chapter->lessons as $chapterLesson) {
+                        if ($completedLessons->contains($chapterLesson)) {
+                            $chapterLesson->completed = true;
+                            $courseCompletedLessons++;
+                        }
+                    }
+                }
+                $course->lessons_completed = $courseCompletedLessons;
+            }
+        }
+
+
+        $premiumCourses = $courses->filter(function ($course) {
+            if ($course->isPremium() && $course->isPublished()) {
+                return $course;
+            }
+        });
+
+        $freeCourses = $courses->filter(function ($course) {
+            if ($course->isFree() && $course->isPublished()) {
+                return $course;
+            }
+        });
+
+        $scheduledCourses = $courses->filter(function ($course) {
+            if ($course->isScheduled()) {
+                return $course;
+            }
+        });
+
+        return view('web.courses.index', compact('premiumCourses', 'freeCourses', 'scheduledCourses'));
     }
 
     /**
