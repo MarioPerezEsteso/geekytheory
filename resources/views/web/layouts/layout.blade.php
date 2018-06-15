@@ -47,11 +47,10 @@
     <!-- Favicon -->
     <link href="https://preview.webpixels.io/boomerang-v3.6/assets/images/favicon.png" rel="icon" type="image/png">
 
-
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
-    <!-- Syntax highlighting -->
-    <link rel="stylesheet" href="../../assets/vendor/highlightjs/css/styles/atom-one-dark.css" type="text/css">
+    @yield('custom-css')
+
 </head>
 <body>
 <!-- MAIN WRAPPER -->
@@ -125,6 +124,8 @@
 
 <!-- App JS -->
 <script src="../../assets/js/app.min.js"></script>
+
+@yield('custom-javascript')
 
 </body>
 </html>
