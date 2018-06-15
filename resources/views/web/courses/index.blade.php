@@ -25,58 +25,8 @@
                 </h3>
             </div>
 
-            @foreach  ($premiumCourses->chunk(3) as $coursesChunk)
-                <div class="row cols-md-space cols-sm-space cols-xs-space">
-                    @foreach ($coursesChunk as $course)
-                        <div class="col-lg-4">
-                            <div class="card z-depth-2--hover">
-                                <div class="card-image">
-                                    <a href="{{ route('course', ['slug' => $course->slug]) }}">
-                                        <img src="{{ $course->image }}">
-                                    </a>
-                                </div>
-                                <div class="progress" style="height: 2px;">
-                                    <?php $percentageCompleted = $course->lessons_completed * 100 / $course->getTotalLessonsCount();?>
-                                    <div class="progress-bar" role="progressbar"
-                                         style="width: {{ $percentageCompleted }}%;"
-                                         aria-valuenow="{{ $percentageCompleted }}" aria-valuemin="0"
-                                         aria-valuemax="100"></div>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="{{ route('course', ['slug' => $course->slug]) }}">
-                                            {{ $course->title }}
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="row align-items-center">
-                                        <div class="col-4">
-                                            <h6 class="heading heading-sm strong-400 text-muted mb-0">
-                                                {{ formatSecondsToHoursAndMinutes($course->duration) }}
-                                            </h6>
-                                        </div>
-                                        <div class="col-4 text-center">
-                                            <i class="fa fa-lock text-muted" aria-hidden="true"></i>
-                                        </div>
-                                        <div class="col-4 text-right">
-                                            <h6 class="heading heading-sm strong-400 text-muted mb-0">
-                                                @if (!is_null($course->lessons_completed) && $course->lessons_completed > 0)
-                                                    {{ $course->lessons_completed }}
-                                                    /{{ $course->getTotalLessonsCount() }} vistas
-                                                @else
-                                                    {{ $course->getTotalLessonsCount() }} lecciones
-                                                @endif
-                                            </h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-                <span class="space-xs-sm"></span>
-            @endforeach
+            @include('web.courses.partials.list', ['courses' => $premiumCourses])
+
         </div>
     </section>
 
@@ -88,56 +38,8 @@
                 </h3>
             </div>
 
-            @foreach  ($freeCourses->chunk(3) as $coursesChunk)
-                <div class="row cols-md-space cols-sm-space cols-xs-space">
-                    @foreach ($coursesChunk as $course)
-                        <div class="col-lg-4">
-                            <div class="card z-depth-2--hover">
-                                <div class="card-image">
-                                    <a href="{{ route('course', ['slug' => $course->slug]) }}">
-                                        <img src="{{ $course->image }}">
-                                    </a>
-                                </div>
-                                <div class="progress" style="height: 2px;">
-                                    <?php $percentageCompleted = $course->lessons_completed * 100 / $course->getTotalLessonsCount();?>
-                                    <div class="progress-bar" role="progressbar"
-                                         style="width: {{ $percentageCompleted }}%;"
-                                         aria-valuenow="{{ $percentageCompleted }}" aria-valuemin="0"
-                                         aria-valuemax="100"></div>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="{{ route('course', ['slug' => $course->slug]) }}">
-                                            {{ $course->title }}
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="row align-items-center">
-                                        <div class="col-4">
-                                            {{ formatSecondsToHoursAndMinutes($course->duration) }}
-                                        </div>
-                                        <div class="col-4 text-center">
-                                            <i class="fa fa-unlock text-muted" aria-hidden="true"></i>
-                                        </div>
-                                        <div class="col-4 text-right">
-                                            <h6 class="heading heading-sm strong-400 text-muted mb-0">
-                                                @if (!is_null($course->lessons_completed) && $course->lessons_completed > 0)
-                                                    {{ $course->lessons_completed }}
-                                                    /{{ $course->getTotalLessonsCount() }} vistas
-                                                @else
-                                                    {{ $course->getTotalLessonsCount() }} lecciones
-                                                @endif
-                                            </h6>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-                <span class="space-xs-sm"></span>
-            @endforeach
+            @include('web.courses.partials.list', ['courses' => $freeCourses])
+
         </div>
     </section>
 
@@ -149,37 +51,8 @@
                 </h3>
             </div>
 
-            @foreach  ($scheduledCourses->chunk(3) as $coursesChunk)
-                <div class="row cols-md-space cols-sm-space cols-xs-space">
-                    @foreach ($coursesChunk as $course)
-                        <div class="col-lg-4">
-                            <div class="card z-depth-2--hover">
-                                <div class="card-image">
-                                    <a href="{{ route('course', ['slug' => $course->slug]) }}">
-                                        <img src="{{ $course->image }}">
-                                    </a>
-                                </div>
-                                <div class="card-body">
-                                    <h4 class="card-title">
-                                        <a href="{{ route('course', ['slug' => $course->slug]) }}">
-                                            {{ $course->title }}
-                                        </a>
-                                    </h4>
-                                </div>
-                                <div class="card-footer">
-                                    <div class="row align-items-center">
-                                        <div class="col-4"></div>
-                                        <div class="col-4 text-center">
-                                            <i class="fa fa-lock text-muted" aria-hidden="true"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-                <span class="space-xs-sm"></span>
-            @endforeach
+            @include('web.courses.partials.list', ['courses' => $scheduledCourses])
+
             <span class="space-xs-xl"></span>
         </div>
     </section>
