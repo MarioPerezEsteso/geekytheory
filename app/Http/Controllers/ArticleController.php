@@ -114,16 +114,14 @@ class ArticleController extends PostController
     public function show($slug)
     {
         $article = Cache::remember('article_' . $slug, self::CACHE_EXPIRATION_TIME, function () use ($slug) {
-            return Article::findArticleBySlug($slug)->with('tags', 'categories')->firstOrFail();
+            return Article::findArticleBySlug($slug)->with('tags', 'categories', 'user')->firstOrFail();
         });
-
-        $authorUser = $article->user()->with('userMeta')->first();
 
         $socialShareButtons = $this->getSocialShareButtonsData($article);
 
         $courses = Course::getPublished()->get();
 
-        return view('web.blog.post.post', compact('article', 'authorUser', 'socialShareButtons', 'courses'));
+        return view('web.blog.post.post', compact('article', 'socialShareButtons', 'courses'));
     }
 
     /**
