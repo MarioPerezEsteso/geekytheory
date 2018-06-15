@@ -3,7 +3,9 @@
 namespace Tests\Functional\Views;
 
 use App\Article;
+use App\Category;
 use App\Post;
+use App\Tag;
 use App\User;
 use Tests\Helpers\TestUtils;
 use Tests\TestCase;
@@ -21,6 +23,11 @@ class ArticleControllerViewsTest extends TestCase
     protected $articlesByUserPageUrl = 'user/{username}';
 
     /**
+     * @var string
+     */
+    protected $articleUrl = '{slug}';
+
+    /**
      * Test that any user can visit the blog page.
      */
     public function testVisitBlogPageOk()
@@ -36,6 +43,42 @@ class ArticleControllerViewsTest extends TestCase
         $response->assertResponseDataCollectionHasNumberOfItems('articles', 10);
         $response->assertResponseDataHasRelationLoaded('articles', 'user', 1);
         $response->assertResponseDataHasRelationLoaded('articles', 'categories', 0);
+    }
+
+    /**
+     * Test that a published article page can be visited.
+     */
+    public function testVisitPublishedArticlePageOk()
+    {
+        // Prepare
+        $article = factory(Article::class)->create([
+            'status' => 'published',
+        ]);
+
+        $categories = factory(Category::class)->times(2)->create();
+        $tags = factory(Tag::class)->times(2)->create();
+
+        $article->categories()->sync($categories);
+        $article->tags()->sync($tags);
+
+        $courses = TestUtils::createCoursesWithChaptersAndLessons(null, 3);
+
+        // Request
+        $response = $this->call('GET', TestUtils::createEndpoint($this->articleUrl, ['slug' => $article->slug]));
+
+        // Asserts
+        $response->assertStatus(200);
+        $response->assertResponseIsView('web.blog.post.post');
+
+        $response->assertResponseHasData('article');
+        $response->assertResponseDataModelHasValues('article', $article->attributesToArray());
+        $response->assertResponseDataHasRelationLoaded('article', 'user', 1);
+        $response->assertResponseDataHasRelationLoaded('article', 'tags', 2);
+        $response->assertResponseDataHasRelationLoaded('article', 'categories', 2);
+        $response->assertResponseDataCollectionItemHasValues('article.tags', 0, $tags->get(0)->attributesToArray());
+        $response->assertResponseDataCollectionItemHasValues('article.tags', 1, $tags->get(1)->attributesToArray());
+        $response->assertResponseDataCollectionItemHasValues('article.categories', 0, $categories->get(0)->attributesToArray());
+        $response->assertResponseDataCollectionItemHasValues('article.categories', 1, $categories->get(1)->attributesToArray());
     }
 
     /**
