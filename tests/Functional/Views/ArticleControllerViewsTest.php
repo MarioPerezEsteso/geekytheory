@@ -61,7 +61,9 @@ class ArticleControllerViewsTest extends TestCase
         $article->categories()->sync($categories);
         $article->tags()->sync($tags);
 
-        $courses = TestUtils::createCoursesWithChaptersAndLessons(null, 3);
+        $courses = TestUtils::createCoursesWithChaptersAndLessons(null, 3, 3, 2, [
+            'status' => 'published',
+        ]);
 
         // Request
         $response = $this->call('GET', TestUtils::createEndpoint($this->articleUrl, ['slug' => $article->slug]));
@@ -79,6 +81,12 @@ class ArticleControllerViewsTest extends TestCase
         $response->assertResponseDataCollectionItemHasValues('article.tags', 1, $tags->get(1)->attributesToArray());
         $response->assertResponseDataCollectionItemHasValues('article.categories', 0, $categories->get(0)->attributesToArray());
         $response->assertResponseDataCollectionItemHasValues('article.categories', 1, $categories->get(1)->attributesToArray());
+
+        $response->assertResponseDataCollectionHasNumberOfItems('courses', 3);
+        $response->assertResponseDataCollectionItemHasValues('courses', 0, $courses->get(0)->attributesToArray());
+        $response->assertResponseDataCollectionItemHasValues('courses', 1, $courses->get(1)->attributesToArray());
+        $response->assertResponseDataCollectionItemHasValues('courses', 2, $courses->get(2)->attributesToArray());
+        $response->assertResponseDataHasRelationLoaded('courses', 'chapters', 3);
     }
 
     /**
