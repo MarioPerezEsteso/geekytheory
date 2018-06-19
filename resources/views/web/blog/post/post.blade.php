@@ -31,6 +31,20 @@
             </div>
         </div>
     </section>
+    <hr>
+    <section class="slice-sm sct-color-1">
+        <div class="container">
+            <div class="section-title section-title--style-1 text-center">
+                <h3 class="section-title-inner text-normal strong-500">
+                    <span>¿Quieres seguir aprendiendo?</span>
+                </h3>
+            </div>
+
+            @include('web.courses.partials.list', ['courses' => $courses])
+
+            <span class="space-xs-xl"></span>
+        </div>
+    </section>
 @endsection
 
 @section('custom-css')

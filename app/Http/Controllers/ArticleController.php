@@ -12,6 +12,7 @@ use App\Validators\ArticleValidator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Cache;
 
@@ -119,7 +120,26 @@ class ArticleController extends PostController
 
         $socialShareButtons = $this->getSocialShareButtonsData($article);
 
-        $courses = Course::getPublished()->get();
+        $courses = Course::getPublished()->with('chapters.lessons')->get();
+
+        $loggedUser = Auth::user();
+        if (!is_null($loggedUser)) {
+            /** @var Collection $completedLessons */
+            $completedLessons = $loggedUser->lessons;
+            $courseCompletedLessons = 0;
+
+            foreach ($courses as $course) {
+                foreach ($course->chapters as $chapter) {
+                    foreach ($chapter->lessons as $chapterLesson) {
+                        if ($completedLessons->contains($chapterLesson)) {
+                            $chapterLesson->completed = true;
+                            $courseCompletedLessons++;
+                        }
+                    }
+                }
+                $course->lessons_completed = $courseCompletedLessons;
+            }
+        }
 
         return view('web.blog.post.post', compact('article', 'socialShareButtons', 'courses'));
     }
