@@ -2,9 +2,9 @@
     <div class="container navbar-container">
         <!-- Brand/Logo -->
         <a class="navbar-brand" href="https://preview.webpixels.io/boomerang-v3.6/index.html">
-            <img src="../../assets/images/logo/logo-1-a.png" class="d-none d-lg-inline-block"
+            <img src="/assets/images/logo/logo-1-a.png" class="d-none d-lg-inline-block"
                  alt="Boomerang">
-            <img src="../../assets/images/logo/logo-1-a.png" class="d-lg-none" alt="Boomerang">
+            <img src="/assets/images/logo/logo-1-a.png" class="d-lg-none" alt="Boomerang">
         </a>
 
         <div class="d-inline-block">

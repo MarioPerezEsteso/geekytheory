@@ -31,28 +31,31 @@
             </div>
         </div>
     </section>
-    <hr>
-    <section class="slice-sm sct-color-1">
-        <div class="container">
-            <div class="section-title section-title--style-1 text-center">
-                <h3 class="section-title-inner text-normal strong-500">
-                    <span>¿Quieres seguir aprendiendo?</span>
-                </h3>
+
+    @if (isset($courses) && $courses->count() > 0)
+        <hr>
+        <section class="slice-sm sct-color-1">
+            <div class="container">
+                <div class="section-title section-title--style-1 text-center">
+                    <h3 class="section-title-inner text-normal strong-500">
+                        <span>¿Quieres seguir aprendiendo?</span>
+                    </h3>
+                </div>
+
+                @include('web.courses.partials.list', ['courses' => $courses])
+
+                <span class="space-xs-xl"></span>
             </div>
-
-            @include('web.courses.partials.list', ['courses' => $courses])
-
-            <span class="space-xs-xl"></span>
-        </div>
-    </section>
+        </section>
+    @endif
 @endsection
 
 @section('custom-css')
     <!-- Syntax highlighting -->
-    <link rel="stylesheet" href="../../assets/vendor/highlightjs/css/styles/atom-one-dark.css" type="text/css">
+    <link rel="stylesheet" href="/assets/vendor/highlightjs/css/styles/atom-one-dark.css" type="text/css">
 @endsection
 
 @section('custom-javascript')
-    <script src="../../assets/vendor/highlightjs/js/highlight.pack.js"></script>
-    <script src="../../assets/vendor/highlightjs/js/highlight-pre-blocks.js"></script>
+    <script src="/assets/vendor/highlightjs/js/highlight.pack.js"></script>
+    <script src="/assets/vendor/highlightjs/js/highlight-pre-blocks.js"></script>
 @endsection

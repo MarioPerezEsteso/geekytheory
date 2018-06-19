@@ -152,13 +152,11 @@ class ArticleController extends PostController
      */
     public function preview($slug)
     {
-        $post = Article::findArticleBySlug($slug, true)->with('tags', 'categories')->firstOrFail();
-        $authorUser = $post->user()->with('userMeta')->first();
-        $comments = $post->hamComments()->get();
-        $commentCount = count($comments);
-        $socialShareButtons = $this->getSocialShareButtonsData($post);
+        $article = Article::findArticleBySlug($slug, true)->with('tags', 'categories', 'user')->firstOrFail();
 
-        return view('web.blog.post.post', compact('post', 'authorUser', 'comments', 'commentCount', 'socialShareButtons'));
+        $socialShareButtons = $this->getSocialShareButtonsData($article);
+
+        return view('web.blog.post.post', compact('article', 'socialShareButtons'));
     }
 
     /**
