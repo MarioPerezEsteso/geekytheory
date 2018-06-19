@@ -30,9 +30,21 @@ class CourseControllerViewsTest extends TestCase
     public function testVisitPageCoursesOk()
     {
         // Prepare
-        $premiumCourses = TestUtils::createCoursesWithChaptersAndLessons(null, 1, 3, 5, ['free' => false, 'status' => 'published']);
-        $freeCourses = TestUtils::createCoursesWithChaptersAndLessons(null, 1, 4, 7, ['free' => true, 'status' => 'published']);
-        $scheduledCourses = TestUtils::createCoursesWithChaptersAndLessons(null, 1, 3, 5, ['free' => false, 'status' => 'scheduled']);
+        $premiumCourses = TestUtils::createCoursesWithChaptersAndLessons(null, 1, 3, 5, [
+            'free' => false,
+            'status' => 'published',
+            'created_at' => Carbon::now()->subDays(3),
+        ]);
+        $freeCourses = TestUtils::createCoursesWithChaptersAndLessons(null, 1, 4, 7, [
+            'free' => true,
+            'status' => 'published',
+            'created_at' => Carbon::now()->subDays(2),
+        ]);
+        $scheduledCourses = TestUtils::createCoursesWithChaptersAndLessons(null, 1, 3, 5, [
+            'free' => false,
+            'status' => 'scheduled',
+            'created_at' => Carbon::now()->subDays(1),
+        ]);
 
         // Request
         /** @var Response $response */
@@ -49,11 +61,11 @@ class CourseControllerViewsTest extends TestCase
         $response->assertResponseDataCollectionHasNumberOfItems('scheduledCourses', 1);
         $response->assertResponseDataCollectionItemHasValues('scheduledCourses', 2, $scheduledCourses->get(0)->attributesToArray());
         $response->assertResponseDataHasRelationLoaded('premiumCourses', 'chapters', 3);
-//        $response->assertResponseDataHasRelationLoaded('premiumCourses.chapters', 'lessons', 5);
+        $response->assertResponseDataHasRelationLoaded('premiumCourses.chapters', 'lessons', 5);
         $response->assertResponseDataHasRelationLoaded('freeCourses', 'chapters', 4);
-//        $response->assertResponseDataHasRelationLoaded('freeCourses.chapters', 'lessons', 7);
+        $response->assertResponseDataHasRelationLoaded('freeCourses.chapters', 'lessons', 7);
         $response->assertResponseDataHasRelationLoaded('scheduledCourses', 'chapters', 3);
-//        $response->assertResponseDataHasRelationLoaded('scheduledCourses.chapters', 'lessons', 5);
+        $response->assertResponseDataHasRelationLoaded('scheduledCourses.chapters', 'lessons', 5);
     }
 
     /**

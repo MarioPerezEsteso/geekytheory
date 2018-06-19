@@ -112,14 +112,36 @@ class Response extends TestResponse
 
         if ($object instanceof Collection) {
             foreach ($object as $item) {
-                $this->assertRelationsLoaded($item, $relation, $relationsLoaded);
+                if (count($objectsExploded) > 1) {
+                    unset($objectsExploded[0]);
+                    foreach ($objectsExploded as $objectExploded) {
+                        $item = $item->getRelation($objectExploded);
+                    }
+                }
+
+                if ($item instanceof Collection) {
+                    $this->assertCollectionRelationsLoaded($item, $relation, $relationsLoaded);
+                } else {
+                    $this->assertRelationsLoaded($item, $relation, $relationsLoaded);
+                }
             }
         } else if ($object instanceof LengthAwarePaginator) {
             foreach ($object->items() as $item) {
                 $this->assertRelationsLoaded($item, $relation, $relationsLoaded);
             }
         } else {
-            $this->assertRelationsLoaded($object, $relation, $relationsLoaded);
+            if (count($objectsExploded) > 1) {
+                unset($objectsExploded[0]);
+                foreach ($objectsExploded as $objectExploded) {
+                    $object = $object->getRelation($objectExploded);
+                }
+            }
+
+            if ($object instanceof Collection) {
+                $this->assertCollectionRelationsLoaded($object, $relation, $relationsLoaded);
+            } else {
+                $this->assertRelationsLoaded($object, $relation, $relationsLoaded);
+            }
         }
     }
 
@@ -142,6 +164,20 @@ class Response extends TestResponse
             $actualCountRelationsLoaded,
             "Expected {$relationsLoaded} {$relation} but got {$actualCountRelationsLoaded}"
         );
+    }
+
+    /**
+     * Assert relations of an item.
+     *
+     * @param Collection $items
+     * @param string $relation
+     * @param integer $relationsLoaded
+     */
+    private function assertCollectionRelationsLoaded($items, $relation, $relationsLoaded)
+    {
+        foreach ($items as $item) {
+            $this->assertRelationsLoaded($item, $relation, $relationsLoaded);
+        }
     }
 
     /**
