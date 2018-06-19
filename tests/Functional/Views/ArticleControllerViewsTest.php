@@ -147,7 +147,7 @@ class ArticleControllerViewsTest extends TestCase
     /**
      * Test administrator user can visit some article pages.
      *
-     * @dataProvider providerArticleGETPages
+     * @dataProvider providerArticleGETPagesForAdminUsers
      * @param string $page
      */
     public function testUserAdministratorCanVisitPages(string $page)
@@ -169,9 +169,83 @@ class ArticleControllerViewsTest extends TestCase
     }
 
     /**
+     * @return array
+     */
+    public function providerArticleGETPagesForAdminUsers(): array
+    {
+        return [
+            [
+                'home/articles'
+            ], [
+                'home/articles/create',
+            ], [
+                'home/articles/edit/{id}'
+            ], [
+                'home/articles/preview/{slug}'
+            ], [
+                'home/articles/imagemanager/upload',
+            ], [
+                'home/articles/edit/imagemanager/upload'
+            ],
+        ];
+    }
+
+    /**
+     * Test administrator user can delete an article.
+     */
+    public function testUserAdministratorCanDeleteAnArticle()
+    {
+        // Prepare
+        /** @var User $user */
+        $user = factory(User::class)->create(['is_admin' => true]);
+        $article = factory(Post::class)->create([
+            'status' => 'published',
+        ]);
+
+        $page = TestUtils::createEndpoint('home/posts/delete/{id}', ['id' => $article->id, 'slug' => $article->slug,]);
+
+        // Request
+        $response = $this->actingAs($user)->call('GET', $page);
+
+        // Asserts
+        $response->assertStatus(302);
+
+        $this->assertDatabaseHas('posts', [
+            'id' => $article->id,
+            'status' => 'deleted',
+        ]);
+    }
+
+    /**
+     * Test administrator user can delete an article.
+     */
+    public function testUserAdministratorCanRestoreAnArticle()
+    {
+        // Prepare
+        /** @var User $user */
+        $user = factory(User::class)->create(['is_admin' => true]);
+        $article = factory(Post::class)->create([
+            'status' => 'deleted',
+        ]);
+
+        $page = TestUtils::createEndpoint('home/posts/restore/{id}', ['id' => $article->id, 'slug' => $article->slug,]);
+
+        // Request
+        $response = $this->actingAs($user)->call('GET', $page);
+
+        // Asserts
+        $response->assertStatus(302);
+
+        $this->assertDatabaseHas('posts', [
+            'id' => $article->id,
+            'status' => 'draft',
+        ]);
+    }
+
+    /**
      * Test non administrator user can't visit some article pages.
      *
-     * @dataProvider providerArticleGETPages
+     * @dataProvider providerArticleGETPagesForNonAdminUsers
      * @param string $page
      */
     public function testUserNonAdministratorCannotVisitPages(string $page)
@@ -192,10 +266,33 @@ class ArticleControllerViewsTest extends TestCase
         $response->assertStatus(404);
     }
 
+    public function providerArticleGETPagesForNonAdminUsers(): array
+    {
+        return [
+            [
+                'home/articles'
+            ], [
+                'home/articles/create',
+            ], [
+                'home/articles/edit/{id}'
+            ], [
+                'home/articles/preview/{slug}'
+            ], [
+                'home/posts/delete/{id}',
+            ], [
+                'home/posts/restore/{id}',
+            ], [
+                'home/articles/imagemanager/upload',
+            ], [
+                'home/articles/edit/imagemanager/upload'
+            ],
+        ];
+    }
+
     /**
      * Test non administrator user can't visit some article pages.
      *
-     * @dataProvider providerArticleGETPages
+     * @dataProvider providerArticleGETPagesForNonLoggedUsers
      * @param string $page
      */
     public function testNonLoggedUserCannotVisitArticleCreatePage(string $page)
@@ -214,7 +311,7 @@ class ArticleControllerViewsTest extends TestCase
         $response->assertRedirect($this->loginUrl);
     }
 
-    public function providerArticleGETPages(): array
+    public function providerArticleGETPagesForNonLoggedUsers(): array
     {
         return [
             [
