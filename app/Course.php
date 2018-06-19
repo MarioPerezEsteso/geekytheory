@@ -101,6 +101,8 @@ class Course extends Model
             $query = $query->where($key, '=', $value);
         }
 
+        $query->orderBy('created_at', 'DESC');
+
         return $query;
     }
 

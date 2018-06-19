@@ -3,8 +3,10 @@
 namespace Tests;
 
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Tests\Helpers\Response;
 
 class TestCase extends \Illuminate\Foundation\Testing\TestCase

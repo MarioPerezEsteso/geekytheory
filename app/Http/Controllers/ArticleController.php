@@ -12,6 +12,7 @@ use App\Validators\ArticleValidator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Cache;
 
@@ -113,31 +114,34 @@ class ArticleController extends PostController
      */
     public function show($slug)
     {
-        $post = Cache::remember('post_' . $slug, self::CACHE_EXPIRATION_TIME, function () use ($slug) {
-            return Article::findArticleBySlug($slug)->with('tags', 'categories')->firstOrFail();
+        $article = Cache::remember('article_' . $slug, self::CACHE_EXPIRATION_TIME, function () use ($slug) {
+            return Article::findArticleBySlug($slug)->with('tags', 'categories', 'user')->firstOrFail();
         });
 
-        $authorUser = $post->user()->with('userMeta')->first();
+        $socialShareButtons = $this->getSocialShareButtonsData($article);
 
-        $socialShareButtons = $this->getSocialShareButtonsData($post);
+        $courses = Course::getPublished()->with('chapters.lessons')->get();
 
-        $courses = Course::getPublished()->get();
+        $loggedUser = Auth::user();
+        if (!is_null($loggedUser)) {
+            /** @var Collection $completedLessons */
+            $completedLessons = $loggedUser->lessons;
+            $courseCompletedLessons = 0;
 
-        /*
-         * The comments are cached apart from the post, tags and categories
-         * because they are going to be modified frequently.
-         */
-        if (Cache::has('comments_' . $slug)) {
-            $comments = Cache::get('comments_' . $slug);
-        } else {
-            $comments = $post->hamComments()->get();
-            $comments = CommentController::sortByParent($comments);
-            Cache::put('comments_' . $slug, $comments, self::CACHE_EXPIRATION_TIME);
+            foreach ($courses as $course) {
+                foreach ($course->chapters as $chapter) {
+                    foreach ($chapter->lessons as $chapterLesson) {
+                        if ($completedLessons->contains($chapterLesson)) {
+                            $chapterLesson->completed = true;
+                            $courseCompletedLessons++;
+                        }
+                    }
+                }
+                $course->lessons_completed = $courseCompletedLessons;
+            }
         }
 
-        $commentCount = count($comments);
-
-        return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'authorUser', 'comments', 'commentCount', 'socialShareButtons', 'courses'));
+        return view('web.blog.post.post', compact('article', 'socialShareButtons', 'courses'));
     }
 
     /**
@@ -148,12 +152,11 @@ class ArticleController extends PostController
      */
     public function preview($slug)
     {
-        $post = Article::findArticleBySlug($slug, true)->with('tags', 'categories')->firstOrFail();
-        $authorUser = $post->user()->with('userMeta')->first();
-        $comments = $post->hamComments()->get();
-        $commentCount = count($comments);
-        $socialShareButtons = $this->getSocialShareButtonsData($post);
-        return view('themes.' . IndexController::THEME . '.blog.singlearticle', compact('post', 'authorUser', 'comments', 'commentCount', 'socialShareButtons'));
+        $article = Article::findArticleBySlug($slug, true)->with('tags', 'categories', 'user')->firstOrFail();
+
+        $socialShareButtons = $this->getSocialShareButtonsData($article);
+
+        return view('web.blog.post.post', compact('article', 'socialShareButtons'));
     }
 
     /**

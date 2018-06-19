@@ -5,7 +5,7 @@
             <div class="row cols-xs-space cols-sm-space cols-md-space">
                 <div class="col-lg-5">
                     <div class="col">
-                        <img src="../../assets/images/logo/logo-1-c.png">
+                        <img src="/assets/images/logo/logo-1-c.png">
                         <span class="clearfix"></span>
                         <span class="heading heading-sm c-gray-light strong-400">One template. Infinite solutions.</span>
                         <p class="mt-3">

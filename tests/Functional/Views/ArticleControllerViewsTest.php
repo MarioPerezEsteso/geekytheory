@@ -3,7 +3,9 @@
 namespace Tests\Functional\Views;
 
 use App\Article;
+use App\Category;
 use App\Post;
+use App\Tag;
 use App\User;
 use Tests\Helpers\TestUtils;
 use Tests\TestCase;
@@ -21,6 +23,11 @@ class ArticleControllerViewsTest extends TestCase
     protected $articlesByUserPageUrl = 'user/{username}';
 
     /**
+     * @var string
+     */
+    protected $articleUrl = '{slug}';
+
+    /**
      * Test that any user can visit the blog page.
      */
     public function testVisitBlogPageOk()
@@ -36,6 +43,50 @@ class ArticleControllerViewsTest extends TestCase
         $response->assertResponseDataCollectionHasNumberOfItems('articles', 10);
         $response->assertResponseDataHasRelationLoaded('articles', 'user', 1);
         $response->assertResponseDataHasRelationLoaded('articles', 'categories', 0);
+    }
+
+    /**
+     * Test that a published article page can be visited.
+     */
+    public function testVisitPublishedArticlePageOk()
+    {
+        // Prepare
+        $article = factory(Article::class)->create([
+            'status' => 'published',
+        ]);
+
+        $categories = factory(Category::class)->times(2)->create();
+        $tags = factory(Tag::class)->times(2)->create();
+
+        $article->categories()->sync($categories);
+        $article->tags()->sync($tags);
+
+        $courses = TestUtils::createCoursesWithChaptersAndLessons(null, 3, 3, 2, [
+            'status' => 'published',
+        ]);
+
+        // Request
+        $response = $this->call('GET', TestUtils::createEndpoint($this->articleUrl, ['slug' => $article->slug]));
+
+        // Asserts
+        $response->assertStatus(200);
+        $response->assertResponseIsView('web.blog.post.post');
+
+        $response->assertResponseHasData('article');
+        $response->assertResponseDataModelHasValues('article', $article->attributesToArray());
+        $response->assertResponseDataHasRelationLoaded('article', 'user', 1);
+        $response->assertResponseDataHasRelationLoaded('article', 'tags', 2);
+        $response->assertResponseDataHasRelationLoaded('article', 'categories', 2);
+        $response->assertResponseDataCollectionItemHasValues('article.tags', 0, $tags->get(0)->attributesToArray());
+        $response->assertResponseDataCollectionItemHasValues('article.tags', 1, $tags->get(1)->attributesToArray());
+        $response->assertResponseDataCollectionItemHasValues('article.categories', 0, $categories->get(0)->attributesToArray());
+        $response->assertResponseDataCollectionItemHasValues('article.categories', 1, $categories->get(1)->attributesToArray());
+
+        $response->assertResponseDataCollectionHasNumberOfItems('courses', 3);
+        $response->assertResponseDataCollectionItemHasValues('courses', 0, $courses->get(0)->attributesToArray());
+        $response->assertResponseDataCollectionItemHasValues('courses', 1, $courses->get(1)->attributesToArray());
+        $response->assertResponseDataCollectionItemHasValues('courses', 2, $courses->get(2)->attributesToArray());
+        $response->assertResponseDataHasRelationLoaded('courses', 'chapters', 3);
     }
 
     /**
@@ -96,7 +147,7 @@ class ArticleControllerViewsTest extends TestCase
     /**
      * Test administrator user can visit some article pages.
      *
-     * @dataProvider providerArticleGETPages
+     * @dataProvider providerArticleGETPagesForAdminUsers
      * @param string $page
      */
     public function testUserAdministratorCanVisitPages(string $page)
@@ -118,9 +169,83 @@ class ArticleControllerViewsTest extends TestCase
     }
 
     /**
+     * @return array
+     */
+    public function providerArticleGETPagesForAdminUsers(): array
+    {
+        return [
+            [
+                'home/articles'
+            ], [
+                'home/articles/create',
+            ], [
+                'home/articles/edit/{id}'
+            ], [
+                'home/articles/preview/{slug}'
+            ], [
+                'home/articles/imagemanager/upload',
+            ], [
+                'home/articles/edit/imagemanager/upload'
+            ],
+        ];
+    }
+
+    /**
+     * Test administrator user can delete an article.
+     */
+    public function testUserAdministratorCanDeleteAnArticle()
+    {
+        // Prepare
+        /** @var User $user */
+        $user = factory(User::class)->create(['is_admin' => true]);
+        $article = factory(Post::class)->create([
+            'status' => 'published',
+        ]);
+
+        $page = TestUtils::createEndpoint('home/posts/delete/{id}', ['id' => $article->id, 'slug' => $article->slug,]);
+
+        // Request
+        $response = $this->actingAs($user)->call('GET', $page);
+
+        // Asserts
+        $response->assertStatus(302);
+
+        $this->assertDatabaseHas('posts', [
+            'id' => $article->id,
+            'status' => 'deleted',
+        ]);
+    }
+
+    /**
+     * Test administrator user can delete an article.
+     */
+    public function testUserAdministratorCanRestoreAnArticle()
+    {
+        // Prepare
+        /** @var User $user */
+        $user = factory(User::class)->create(['is_admin' => true]);
+        $article = factory(Post::class)->create([
+            'status' => 'deleted',
+        ]);
+
+        $page = TestUtils::createEndpoint('home/posts/restore/{id}', ['id' => $article->id, 'slug' => $article->slug,]);
+
+        // Request
+        $response = $this->actingAs($user)->call('GET', $page);
+
+        // Asserts
+        $response->assertStatus(302);
+
+        $this->assertDatabaseHas('posts', [
+            'id' => $article->id,
+            'status' => 'draft',
+        ]);
+    }
+
+    /**
      * Test non administrator user can't visit some article pages.
      *
-     * @dataProvider providerArticleGETPages
+     * @dataProvider providerArticleGETPagesForNonAdminUsers
      * @param string $page
      */
     public function testUserNonAdministratorCannotVisitPages(string $page)
@@ -141,10 +266,33 @@ class ArticleControllerViewsTest extends TestCase
         $response->assertStatus(404);
     }
 
+    public function providerArticleGETPagesForNonAdminUsers(): array
+    {
+        return [
+            [
+                'home/articles'
+            ], [
+                'home/articles/create',
+            ], [
+                'home/articles/edit/{id}'
+            ], [
+                'home/articles/preview/{slug}'
+            ], [
+                'home/posts/delete/{id}',
+            ], [
+                'home/posts/restore/{id}',
+            ], [
+                'home/articles/imagemanager/upload',
+            ], [
+                'home/articles/edit/imagemanager/upload'
+            ],
+        ];
+    }
+
     /**
      * Test non administrator user can't visit some article pages.
      *
-     * @dataProvider providerArticleGETPages
+     * @dataProvider providerArticleGETPagesForNonLoggedUsers
      * @param string $page
      */
     public function testNonLoggedUserCannotVisitArticleCreatePage(string $page)
@@ -163,7 +311,7 @@ class ArticleControllerViewsTest extends TestCase
         $response->assertRedirect($this->loginUrl);
     }
 
-    public function providerArticleGETPages(): array
+    public function providerArticleGETPagesForNonLoggedUsers(): array
     {
         return [
             [
