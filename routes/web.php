@@ -94,6 +94,17 @@ Route::get('blog', [
     'uses' => 'ArticleController@index',
 ]);
 
+Route::get('contacto', [
+    'as' => 'contact',
+    'uses' => 'ContactController@show',
+]);
+
+Route::post('contacto', [
+    'as' => 'contact.post',
+    'before' => 'csrf',
+    'uses' => 'ContactController@contact',
+]);
+
 /**
  * Routes for courses
  */
