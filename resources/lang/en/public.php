@@ -33,6 +33,8 @@ return [
     'in' => 'in',
     'reply' => 'Reply',
     'name' => 'Name',
+    'message' => 'Message',
+    'send_message' => 'Send message',
     'email' => 'E-mail',
     'website' => 'Website',
     'post_comment' => 'Post comment',
