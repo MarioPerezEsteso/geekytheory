@@ -62,6 +62,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Contact form notification address
+    |--------------------------------------------------------------------------
+    |
+    | E-mail address to be notified when you receive a contact request.
+    |
+    */
+
+    'contactform' => [
+        'notificationaddress' => env('MAIL_NOTIFICATION_ADDRESS'),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | E-Mail Encryption Protocol
     |--------------------------------------------------------------------------
     |
