@@ -47,10 +47,10 @@
                         <div class="col">
                             <div class="form-group">
                                 {!! Form::text('name', null, [
-                                        'class' => 'form-control form-control-xl '. ($errors->has('name') ? 'is-invalid' : '').'',
+                                        'class' => 'form-control form-control-xl '. (isset($errors) && $errors->has('name') ? 'is-invalid' : '').'',
                                         'placeholder' => trans('public.name'),
                                         'required' => 'required']) !!}
-                                @if ($errors->has('name'))
+                                @if (isset($errors) && $errors->has('name'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('name') }}
                                     </div>
@@ -60,10 +60,10 @@
                         <div class="col">
                             <div class="form-group">
                                 {!! Form::email('email', null, [
-                                        'class' => 'form-control form-control-xl '. ($errors->has('email') ? 'is-invalid' : '').'',
+                                        'class' => 'form-control form-control-xl '. (isset($errors) && $errors->has('email') ? 'is-invalid' : '').'',
                                         'placeholder' => 'nombre@email.com',
                                         'required' => 'required']) !!}
-                                @if ($errors->has('email'))
+                                @if (isset($errors) && $errors->has('email'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('email') }}
                                     </div>
@@ -75,11 +75,11 @@
                         <div class="col">
                             <div class="form-group">
                                 {!! Form::textarea('formMessage', null, [
-                                        'class' => 'form-control form-control-xl '. ($errors->has('formMessage') ? 'is-invalid' : '').'',
+                                        'class' => 'form-control form-control-xl '. (isset($errors) && $errors->has('formMessage') ? 'is-invalid' : '').'',
                                         'rows' => '5',
                                         'placeholder' => trans('public.message'),
                                         'required' => 'required']) !!}
-                                @if ($errors->has('formMessage'))
+                                @if (isset($errors) && $errors->has('formMessage'))
                                     <div class="invalid-feedback">
                                         {{ $errors->first('formMessage') }}
                                     </div>
