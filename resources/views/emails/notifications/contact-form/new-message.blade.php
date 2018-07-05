@@ -13,7 +13,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ \App\Mail\ContactFormSubmitted::SUBJECT }}</title>
+    <title>Has recibido un nuevo mensaje</title>
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <style type="text/css">
         p {
@@ -484,51 +484,6 @@
                                 <tr>
                                     <td align="center" valign="top" width="600" style="width:600px;">
                             <![endif]-->
-                            <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%"
-                                   class="templateContainer"
-                                   style="border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;max-width: 600px !important;">
-                                <tbody>
-                                <tr>
-                                    <td valign="top" class="headerContainer"
-                                        style="background:#FFFFFF none no-repeat center/cover;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;background-color: #FFFFFF;background-image: none;background-repeat: no-repeat;background-position: center;background-size: cover;border-top: 0;border-bottom: 0;padding-top: 45px;padding-bottom: 45px;">
-                                        <table border="0" cellpadding="0" cellspacing="0" width="100%"
-                                               class="mcnImageBlock"
-                                               style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
-                                            <tbody class="mcnImageBlockOuter">
-                                            <tr>
-                                                <td valign="top"
-                                                    style="padding: 9px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;"
-                                                    class="mcnImageBlockInner">
-                                                    <table align="left" width="100%" border="0" cellpadding="0"
-                                                           cellspacing="0" class="mcnImageContentContainer"
-                                                           style="min-width: 100%;border-collapse: collapse;mso-table-lspace: 0pt;mso-table-rspace: 0pt;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
-                                                        <tbody>
-                                                        <tr>
-                                                            <td class="mcnImageContent" valign="top"
-                                                                style="padding-right: 9px;padding-left: 9px;padding-top: 0;padding-bottom: 0;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
-
-                                                                <a href="https://geekytheory.com/images/logo-footer-geekytheory.png"
-                                                                   title="" class="" target="_blank"
-                                                                   style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
-                                                                    <img align="center" alt=""
-                                                                         src="https://geekytheory.com/images/logo-footer-geekytheory.png"
-                                                                         width="416.5"
-                                                                         style="max-width: 833px;padding-bottom: 0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;"
-                                                                         class="mcnRetinaImage">
-                                                                </a>
-
-                                                            </td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
                             <!--[if (gte mso 9)|(IE)]>
                             </td>
                             </tr>
@@ -577,14 +532,14 @@
                                                             <td valign="top" class="mcnTextContent"
                                                                 style="padding-top: 0;padding-right: 18px;padding-bottom: 9px;padding-left: 18px;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;word-break: break-word;color: #808080;font-family: 'Nunito', sans-serif;font-size: 16px;line-height: 150%;text-align: left;">
 
-                                                                <h3 style="display: block;margin: 0;padding: 0;color: #444444;font-family: 'Nunito', sans-serif;font-size: 22px;font-style: normal;font-weight: bold;line-height: 150%;letter-spacing: normal;text-align: left;">
-                                                                    Hola {{ $name }},</h3>
-
                                                                 <p style="margin: 10px 0;padding: 0;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;color: #808080;font-family: 'Nunito', sans-serif;font-size: 16px;line-height: 150%;text-align: left;">
-                                                                    Hemos recibido tu mensaje y te responderemos lo
-                                                                    antes posible. Esto es lo que nos has enviado:<br>
+                                                                    Has recibido un nuevo mensaje desde el formulario de
+                                                                    contacto:<br>
                                                                 </p>
 
+                                                                <p>Nombre: {{ $name }}</p>
+                                                                <p>Email: {{ $email }}</p>
+                                                                <p>Mensaje:</p>
                                                                 <cite>{{ $formMessage }}</cite>
 
                                                             </td>
