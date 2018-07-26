@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    @if (env('GOOGLE_SITE_VERIFICATION_KEY') !== null)
-        <meta name="google-site-verification" content="{{ env('GOOGLE_SITE_VERIFICATION_KEY') }}" />
+    @if (config('services.google.siteVerificationKey') !== null)
+        <meta name="google-site-verification" content="{{ config('services.google.siteVerificationKey') }}" />
     @endif
 
     @yield('twitter_meta_tags')

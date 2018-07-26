@@ -37,4 +37,8 @@ return [
         'webhookRoute' => env('STRIPE_WEBHOOK_ROUTE'),
     ],
 
+    'google' => [
+        'siteVerificationKey' => env('GOOGLE_SITE_VERIFICATION_KEY'),
+    ]
+
 ];
