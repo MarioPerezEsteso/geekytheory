@@ -90,6 +90,10 @@ Route::get('tutorial-12-java-uso-de-varias-clases', 'RedirectionController@redir
 Route::get('tutorial-13-java-herencia', 'RedirectionController@redirect');
 Route::get('como-crear-un-cluster-de-servidores-con-apache-spark', 'RedirectionController@redirect');
 
+Route::get('articles.xml', [
+    'uses' => 'SitemapController@articles',
+]);
+
 /**
  * Routes for courses
  */
@@ -220,7 +224,10 @@ Route::get('comment/getForm', [
 
 Route::get('feed', 'FeedController@feed');
 
-Route::get('/{slug?}', 'ArticleController@show');
+Route::get('/{slug?}', [
+    'as' => 'article',
+    'uses' => 'ArticleController@show'
+]);
 
 Route::post('share-article', [
     'before' => 'csrf',
