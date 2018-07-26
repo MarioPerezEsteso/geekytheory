@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Collection;
+
 class Article extends Post
 {
     /**
@@ -56,6 +58,20 @@ class Article extends Post
         }
 
         return $query->paginate($paginate);
+    }
+
+    /**
+     * Find all the articles published.
+     *
+     * @return Collection
+     */
+    public static function findAllPublished()
+    {
+        $query = Article::where('type', self::POST_ARTICLE)
+            ->where('status', self::STATUS_PUBLISHED)
+            ->orderBy('created_at', 'DESC');
+
+        return $query->get();
     }
 
     /**
