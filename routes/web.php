@@ -20,7 +20,10 @@ Route::pattern('base', '[a-zA-Z0-9]+');
 Route::pattern('slug', '[a-z0-9-]+');
 Route::pattern('username', '[a-zA-Z0-9]{3,20}');
 
-Route::get('/', 'IndexController@index');
+Route::get('/', [
+    'as' => 'home',
+    'uses' => 'IndexController@index'
+]);
 
 /*
  * Authentication routes
