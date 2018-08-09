@@ -100,7 +100,7 @@ class CourseController extends Controller
             }
         }
 
-        return view('courses.single', compact('course', 'userHasJoinedCourse', 'coursePercentageCompleted'));
+        return view('web.courses.course.course', compact('course', 'userHasJoinedCourse', 'coursePercentageCompleted'));
     }
 
 
