@@ -61,7 +61,7 @@
                                     <div class="col-lg-9 col-md-10 col-sm-9 col-12">
                                         <div class="row">
                                             <div class="col-lg-1 col-md-2 col-3 my-auto">
-                                                @if (!is_null($lesson->icon))
+                                                @if (!empty($lesson->icon))
                                                     <img class="lesson-icon" src="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($lesson->icon, false, true) }}"/>
                                                     @if ($lesson->completed === true)
                                                         <i class="lesson-completed-icon lesson-completed-icon-over-icon fa fa-check-circle"></i>
