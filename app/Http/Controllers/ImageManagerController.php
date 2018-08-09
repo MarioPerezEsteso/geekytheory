@@ -99,7 +99,7 @@ class ImageManagerController extends Controller
         $publicImageUrl = '/' . $publicImageUrl;
 
         if ($withUrl) {
-            $url = (new SiteMetaRepository())->getSiteMeta()->url ?? '';
+            $url = config('app.url') ?? '';
             return $url . $publicImageUrl;
         }
 
