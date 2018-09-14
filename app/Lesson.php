@@ -74,4 +74,18 @@ class Lesson extends Model
     {
         return !$this->isFree();
     }
+
+    /**
+     * Get image attribute.
+     *
+     * @return string
+     */
+    public function getImageAttribute()
+    {
+        if (!empty($this->image)) {
+            return $this->image;
+        }
+
+        return '/assets/images/lessons/code.png';
+    }
 }
