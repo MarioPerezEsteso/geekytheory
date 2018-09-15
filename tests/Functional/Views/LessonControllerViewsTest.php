@@ -54,7 +54,7 @@ class LessonControllerViewsTest extends TestCase
 
         // Asserts
         $response->assertStatus(200);
-        $response->assertResponseIsView('courses.lesson');
+        $response->assertResponseIsView('web.lessons.lesson.lesson');
         $response->assertResponseHasData('course');
         $response->assertResponseDataModelHasValues('course', $course->attributesToArray());
         $response->assertResponseHasData('lesson');
