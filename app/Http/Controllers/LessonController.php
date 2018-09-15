@@ -96,7 +96,7 @@ class LessonController extends Controller
 
         list($previousLesson, $nextLesson) = $this->getPreviousAndNextLessons($course, $lesson);
 
-        return view('courses.lesson', compact('course', 'lesson', 'user', 'showHeaderTemplate', 'previousLesson', 'nextLesson'));
+        return view('web.lessons.lesson.lesson', compact('course', 'lesson', 'user', 'showHeaderTemplate', 'previousLesson', 'nextLesson'));
     }
 
     /**
