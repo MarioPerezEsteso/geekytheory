@@ -9,6 +9,7 @@
         </div>
         <?php $lessonIndex = 1; ?>
         @foreach($chapter->lessons as $lesson)
+        <a href="{{ route('course.lesson', ['courseSlug' => $course->slug, 'lessonSlug' => $lesson->slug]) }}" class="lesson-link">
             <div class="block-footer border-top">
                 <div class="row h-100">
                     <div class="col-lg-1 col-md-2 col-2 my-auto">
@@ -24,9 +25,7 @@
                     <div class="col-8 col-lg-10 my-auto">
                         <div class="row">
                             <div class="col-12">
-                                <a href="{{ route('course.lesson', ['courseSlug' => $course->slug, 'lessonSlug' => $lesson->slug]) }}" class="lesson-link">
-                                    {{ $lesson->title }}
-                                </a>
+                                {{ $lesson->title }}
                             </div>
                         </div>
                         <div class="row">
@@ -39,6 +38,7 @@
                     </div>
                 </div>
             </div>
+        </a>
         @endforeach
     @endforeach
 </div>
