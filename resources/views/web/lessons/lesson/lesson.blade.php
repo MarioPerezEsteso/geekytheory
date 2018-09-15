@@ -28,8 +28,8 @@
 
 <section class="container-fluid" style="padding-top: 50px;">
     <div class="row">
-        <div class="col-1"></div>
-        <div class="col-6">
+        <div class="col-1 d-lg-none d-xl-block"></div>
+        <div class="col-12 col-xl-6 col-lg-8 col-md-12 col-sm-12">
             <div class="row">
                 <div class="col-12">
                     <div class="clearfix">
@@ -80,8 +80,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-1"></div>
-        <div class="col-3">
+        <div class="col-1 d-lg-none d-xl-block"></div>
+        <div class="col-12 col-xl-3 col-lg-4 col-md-12 col-sm-12">
             <div class="row">
                 <div class="col-12">
                     @include('web.lessons.partials.list')

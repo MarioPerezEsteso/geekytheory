@@ -12,17 +12,17 @@
         <a href="{{ route('course.lesson', ['courseSlug' => $course->slug, 'lessonSlug' => $lesson->slug]) }}" class="lesson-link">
             <div class="block-footer border-top">
                 <div class="row h-100">
-                    <div class="col-lg-1 col-md-2 col-2 my-auto">
+                    <div class="col-1 my-auto">
                         {{ $chapter->order }}.{{ $lessonIndex++ }}
                     </div>
-                    <div class="col-lg-1 col-md-2 col-2 my-auto">
+                    <div class="col-1 my-auto">
                         @if ($lesson->completed === true)
                             <i class="lesson-completed-icon fa fa-check-circle"></i>
                         @elseif (!empty($lesson->icon))
                             <img class="lesson-technology-img" src="{{ \App\Http\Controllers\ImageManagerController::getPublicImageUrl($lesson->icon, false, true) }}"/>
                         @endif
                     </div>
-                    <div class="col-8 col-lg-10 my-auto">
+                    <div class="col-9 my-auto">
                         <div class="row">
                             <div class="col-12">
                                 {{ $lesson->title }}
