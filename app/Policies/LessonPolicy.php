@@ -19,14 +19,10 @@ class LessonPolicy
      */
     public function complete(User $user, Lesson $lesson)
     {
-        $userHasJoinedCourse = $user->hasJoinedCourse($lesson->chapter->course);
-        $courseIsPremium = $lesson->chapter->course->isPremium();
-        $lessonIsPremium = $lesson->isPremium();
-        $userHasSubscriptionActive = $user->hasSubscriptionActive();
+        if (!$lesson->isPremium()) {
+            return true;
+        }
 
-        return !$userHasJoinedCourse && $courseIsPremium && !$lessonIsPremium
-            || !$userHasJoinedCourse && !$courseIsPremium && !$lessonIsPremium
-            || $userHasJoinedCourse && !$courseIsPremium && !$lessonIsPremium
-            || $userHasJoinedCourse && $courseIsPremium && $userHasSubscriptionActive;
+        return $user->hasSubscriptionActive();
     }
 }
