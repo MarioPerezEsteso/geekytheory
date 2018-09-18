@@ -122,6 +122,17 @@ class User extends Authenticatable
     }
 
     /**
+     * Check if a user has started a lesson.
+     *
+     * @param Lesson $lesson
+     * @return bool
+     */
+    public function hasStartedLesson(Lesson $lesson): bool
+    {
+        return $this->lessons->contains($lesson);
+    }
+
+    /**
      * Check if a user has completed a lesson.
      *
      * @param Lesson $lesson
@@ -129,7 +140,13 @@ class User extends Authenticatable
      */
     public function hasCompletedLesson(Lesson $lesson): bool
     {
-        return $this->lessons->contains($lesson);
+        $userLesson = $this->lessons->filter(function ($userLesson) use ($lesson) {
+            if ($userLesson->id === $lesson->id) {
+                return $lesson;
+            }
+        })->first();
+
+        return $userLesson->completed_at !== null;
     }
 
     /**

@@ -127,6 +127,65 @@ class LessonController extends Controller
     }
 
     /**
+     * Mark lesson as started for a certain user.
+     *
+     * @param Request $request
+     */
+    public function start(Request $request)
+    {
+        if (!$this->lessonValidator->with($request->all())->start()->passes()) {
+
+            return response()->json(
+                [
+                    'message' => $this->lessonValidator->errors(),
+                ],
+                422
+            );
+        }
+
+        /** @var Lesson $lesson */
+        $lesson = Lesson::with('chapter.course')->findOrFail($request->lesson_id);
+
+        /** @var User $user */
+        $user = Auth::user();
+
+        // Check if the course is published
+        if (!$lesson->chapter->course->isPublished()) {
+            abort(404);
+        }
+
+        if ($user->hasStartedLesson($lesson)) {
+
+            return response()->json(
+                [
+                    'message' => 'Lesson already started',
+                ]
+            );
+        }
+
+        if (!policy($lesson)->start($user, $lesson)) {
+
+            return response()->json(
+                [
+                    'message' => 'Could not mark lesson as started',
+                ],
+                403
+            );
+        }
+
+        $user->lessons()->attach($lesson->id, [
+            'started_at' => \Carbon\Carbon::now(), 
+            'completed_at' => null,
+        ]);
+
+        return response()->json(
+            [
+                'message' => 'Lesson started',
+            ]
+        );
+    }
+
+    /**
      * Mark lesson as completed for a certain user.
      *
      * @param Request $request
