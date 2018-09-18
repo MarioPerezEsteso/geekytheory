@@ -13,7 +13,14 @@ use Tests\TestCase;
 class LessonControllerTest extends TestCase
 {
     /**
-     * Subscription creation POST URL.
+     * Start lesson POST URL.
+     *
+     * @var string
+     */
+    protected $startLessonPostUrl = '/lesson/start';
+    
+    /**
+     * Complete lesson POST URL.
      *
      * @var string
      */
@@ -30,7 +37,6 @@ class LessonControllerTest extends TestCase
         // Prepare
         $isFreeCourse = $example['premiumCourse'] === false;
         $isFreeLesson = $example['premiumLesson'] === false;
-        $hasJoinedCourse = $example['joinedCourse'] === true;
         $isPremiumUser = $example['premiumUser'] === true;
         $userCanMarkLessonAsCompleted = $example['canMarkLessonAsCompleted'] === true;
 
@@ -56,10 +62,6 @@ class LessonControllerTest extends TestCase
             list($pupil, $subscription) = TestUtils::createUserAndSubscription();
         } else {
             $pupil = factory(User::class)->create([]);
-        }
-
-        if ($hasJoinedCourse) {
-            TestUtils::enrollUserInCourse($pupil, $course);
         }
 
         // Request
@@ -108,7 +110,6 @@ class LessonControllerTest extends TestCase
         return [
             [
                 [
-                    'joinedCourse' => false,
                     'premiumCourse' => false,
                     'premiumLesson' => false,
                     'premiumUser' => false,
@@ -116,7 +117,6 @@ class LessonControllerTest extends TestCase
                 ]
             ], [
                 [
-                    'joinedCourse' => false,
                     'premiumCourse' => false,
                     'premiumLesson' => false,
                     'premiumUser' => true,
@@ -124,7 +124,20 @@ class LessonControllerTest extends TestCase
                 ]
             ], [
                 [
-                    'joinedCourse' => false,
+                    'premiumCourse' => false,
+                    'premiumLesson' => true,
+                    'premiumUser' => false,
+                    'canMarkLessonAsCompleted' => false,
+                ]
+            ], [
+                [
+                    'premiumCourse' => false,
+                    'premiumLesson' => true,
+                    'premiumUser' => true,
+                    'canMarkLessonAsCompleted' => true,
+                ]
+            ], [
+                [
                     'premiumCourse' => true,
                     'premiumLesson' => false,
                     'premiumUser' => false,
@@ -132,7 +145,6 @@ class LessonControllerTest extends TestCase
                 ]
             ], [
                 [
-                    'joinedCourse' => false,
                     'premiumCourse' => true,
                     'premiumLesson' => false,
                     'premiumUser' => true,
@@ -140,7 +152,6 @@ class LessonControllerTest extends TestCase
                 ]
             ], [
                 [
-                    'joinedCourse' => false,
                     'premiumCourse' => true,
                     'premiumLesson' => true,
                     'premiumUser' => false,
@@ -148,39 +159,6 @@ class LessonControllerTest extends TestCase
                 ]
             ], [
                 [
-                    'joinedCourse' => false,
-                    'premiumCourse' => true,
-                    'premiumLesson' => true,
-                    'premiumUser' => true,
-                    'canMarkLessonAsCompleted' => false,
-                ]
-            ], [
-                [
-                    'joinedCourse' => true,
-                    'premiumCourse' => false,
-                    'premiumLesson' => false,
-                    'premiumUser' => false,
-                    'canMarkLessonAsCompleted' => true,
-                ]
-            ], [
-                [
-                    'joinedCourse' => true,
-                    'premiumCourse' => false,
-                    'premiumLesson' => false,
-                    'premiumUser' => true,
-                    'canMarkLessonAsCompleted' => true,
-                ]
-            ], [
-                [
-                    'joinedCourse' => true,
-                    'premiumCourse' => true,
-                    'premiumLesson' => false,
-                    'premiumUser' => true,
-                    'canMarkLessonAsCompleted' => true,
-                ]
-            ], [
-                [
-                    'joinedCourse' => true,
                     'premiumCourse' => true,
                     'premiumLesson' => true,
                     'premiumUser' => true,
