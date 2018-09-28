@@ -12,6 +12,8 @@
           content="bootstrap, responsive, template, website, html, theme, ux, ui, web, design, developer, support, business, corporate, real estate, education, medical, school, education, demo, css, framework">
     <meta name="author" content="Webpixels">
 
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     <title>Boomerang - Multipurpose Bootstrap Theme</title>
 
     <!-- Bootstrap -->

@@ -232,7 +232,7 @@ class LessonController extends Controller
             );
         }
 
-        $user->lessons()->attach($lesson->id);
+        $user->completeLesson($lesson);
 
         return response()->json(
             [

@@ -2,8 +2,9 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Cashier\Billable;
 
 class User extends Authenticatable
@@ -101,6 +102,20 @@ class User extends Authenticatable
     }
 
     /**
+     * Set lesson as completed for a user.
+     *
+     * @param Lesson $lesson
+     * @return boolean
+     */
+    public function completeLesson(Lesson $lesson)
+    {
+        return DB::update(
+            "UPDATE users_lessons SET completed_at = ? WHERE user_id = ? AND lesson_id = ?;",
+            [\Carbon\Carbon::now(), $this->id, $lesson->id]
+        );
+    }
+
+    /**
      * Check if user has subscription active.
      *
      * @return bool
@@ -140,13 +155,16 @@ class User extends Authenticatable
      */
     public function hasCompletedLesson(Lesson $lesson): bool
     {
-        $userLesson = $this->lessons->filter(function ($userLesson) use ($lesson) {
-            if ($userLesson->id === $lesson->id) {
-                return $lesson;
-            }
-        })->first();
+        $userLesson = DB::select(
+            "SELECT * FROM users_lessons WHERE user_id = ? AND lesson_id = ?",
+            [$this->id, $lesson->id]
+        );
 
-        return $userLesson->completed_at !== null;
+        if (!empty($userLesson)) {
+            return $userLesson[0]->completed_at !== null;
+        }
+
+        return false;
     }
 
     /**
