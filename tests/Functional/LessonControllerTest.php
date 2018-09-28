@@ -420,6 +420,8 @@ class LessonControllerTest extends TestCase
             $pupil = factory(User::class)->create([]);
         }
 
+        TestUtils::markLessonAsStartedForUser($pupil, $lesson);
+
         // Request
         /** @var Response $response */
         $response = $this->actingAs($pupil)->call(
@@ -449,9 +451,10 @@ class LessonControllerTest extends TestCase
                 'message' => 'Could not mark lesson as completed',
             ]);
 
-            $this->assertDatabaseMissing('users_lessons', [
+            $this->assertDatabaseHas('users_lessons', [
                 'user_id' => $pupil->id,
                 'lesson_id' => $lesson->id,
+                'completed_at' => null,
             ]);
         }
     }
