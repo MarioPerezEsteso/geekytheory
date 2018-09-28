@@ -11,6 +11,22 @@ class LessonPolicy
     use HandlesAuthorization;
 
     /**
+     * Policy to check if a user can mark a lesson as started.
+     *
+     * @param User $user
+     * @param Lesson $lesson
+     * @return bool
+     */
+    public function start(User $user, Lesson $lesson)
+    {
+        if (!$lesson->isPremium()) {
+            return true;
+        }
+
+        return $user->hasSubscriptionActive();
+    }
+
+    /**
      * Policy to check if a user can mark a lesson as completed.
      *
      * @param User $user
@@ -19,14 +35,10 @@ class LessonPolicy
      */
     public function complete(User $user, Lesson $lesson)
     {
-        $userHasJoinedCourse = $user->hasJoinedCourse($lesson->chapter->course);
-        $courseIsPremium = $lesson->chapter->course->isPremium();
-        $lessonIsPremium = $lesson->isPremium();
-        $userHasSubscriptionActive = $user->hasSubscriptionActive();
+        if (!$lesson->isPremium()) {
+            return true;
+        }
 
-        return !$userHasJoinedCourse && $courseIsPremium && !$lessonIsPremium
-            || !$userHasJoinedCourse && !$courseIsPremium && !$lessonIsPremium
-            || $userHasJoinedCourse && !$courseIsPremium && !$lessonIsPremium
-            || $userHasJoinedCourse && $courseIsPremium && $userHasSubscriptionActive;
+        return $user->hasSubscriptionActive();
     }
 }

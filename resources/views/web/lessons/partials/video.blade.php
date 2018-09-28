@@ -3,7 +3,7 @@
     <div class="container relative">
         <div class="row cols-xs-space cols-sm-space cols-md-space align-items-center text-left">
             <div class="col-12 ml-lg-auto">
-                <div class="lesson-video embed-responsive embed-responsive-16by9">
+                <div id="lesson-video" data-lesson-id="{{ $lesson->id }}" class="lesson-video embed-responsive embed-responsive-16by9">
                     {!! $lesson->video !!}
                     @if (!is_null($previousLesson))
                         <div class="lesson-navigation-button previous">

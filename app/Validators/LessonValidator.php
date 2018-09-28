@@ -24,6 +24,21 @@ class LessonValidator extends LaravelValidator implements ValidableInterface
     }
 
     /**
+     * Modify the rules for starting a Lesson.
+     *
+     * @param null $id
+     * @return $this|ValidableInterface
+     */
+    public function start($id = null)
+    {
+        $this->rules = [
+            'lesson_id' => 'required|integer|min:1',
+        ];
+
+        return $this;
+    }
+
+    /**
      * Modify the rules for completing a Lesson.
      *
      * @param null $id

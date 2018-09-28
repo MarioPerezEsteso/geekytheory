@@ -188,6 +188,20 @@ class TestUtils
     }
 
     /**
+     * Mark lesson as started for a given user.
+     *
+     * @param User $user
+     * @param Lesson $lesson
+     */
+    public static function markLessonAsStartedForUser(User $user, Lesson $lesson)
+    {
+        $user->lessons()->attach($lesson->id, [
+            'started_at' => \Carbon\Carbon::now(),
+            'completed_at' => null,
+        ]);
+    }
+
+    /**
      * Mark lesson as completed for a given user.
      *
      * @param User $user
@@ -195,7 +209,10 @@ class TestUtils
      */
     public static function markLessonAsCompletedForUser(User $user, Lesson $lesson)
     {
-        $user->lessons()->attach($lesson->id);
+        $user->lessons()->attach($lesson->id, [
+            'started_at' => \Carbon\Carbon::now(),
+            'completed_at' => \Carbon\Carbon::now(),
+        ]);
     }
 
     /**
