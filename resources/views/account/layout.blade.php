@@ -49,7 +49,7 @@
 
         <div class="header__logo hidden-sm-down">
             <a href="{{ $siteMeta->url }}">
-                <img class="img-responsive" src="/images/logo-footer-geekytheory.png" alt="GeekyTheory.com"/>
+                <img class="img-responsive" src="/assets/images/logo/logo-geeky-theory.png" alt="GeekyTheory.com"/>
             </a>
         </div>
 

@@ -507,11 +507,11 @@
                                                             <td class="mcnImageContent" valign="top"
                                                                 style="padding-right: 9px;padding-left: 9px;padding-top: 0;padding-bottom: 0;text-align: center;mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
 
-                                                                <a href="https://geekytheory.com/images/logo-footer-geekytheory.png"
+                                                                <a href="https://geekytheory.com/assets/images/logo/logo-geeky-theory.png"
                                                                    title="" class="" target="_blank"
                                                                    style="mso-line-height-rule: exactly;-ms-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;">
                                                                     <img align="center" alt=""
-                                                                         src="https://geekytheory.com/images/logo-footer-geekytheory.png"
+                                                                         src="https://geekytheory.com/assets/images/logo/logo-geeky-theory.png"
                                                                          width="416.5"
                                                                          style="max-width: 833px;padding-bottom: 0;display: inline !important;vertical-align: bottom;border: 0;height: auto;outline: none;text-decoration: none;-ms-interpolation-mode: bicubic;"
                                                                          class="mcnRetinaImage">

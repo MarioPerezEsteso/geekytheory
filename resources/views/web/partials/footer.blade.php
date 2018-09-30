@@ -5,7 +5,7 @@
             <div class="row cols-xs-space cols-sm-space cols-md-space">
                 <div class="col-lg-5">
                     <div class="col">
-                        <img class="img-responsive" src="/assets/images/logo/logo-footer-geekytheory.png">
+                        <img class="img-responsive" src="/assets/images/logo/logo-geeky-theory.png">
                         <span class="clearfix"></span>
                         <div class="mt-4">
                             <p>

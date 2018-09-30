@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="footer-brand">
-                            <img class="img-responsive" src="/images/logo-footer-geekytheory.png"
+                            <img class="img-responsive" src="/assets/images/logo/logo-geeky-theory.png"
                                  alt="GeekyTheory.com"/>
                         </div>
                     </div>

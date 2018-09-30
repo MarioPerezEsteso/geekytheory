@@ -1,7 +1,7 @@
 @extends('web.layouts.layout')
 
 @section('content')
-    <section class="slice slice--offset-top bg-base-2 holder-item holder-item-dark">
+    <section class="bg-base-2 holder-item holder-item-dark">
         <div class="container container-sm d-flex align-items-center">
             <div class="col">
                 <div class="row py-5 text-center justify-content-center">
