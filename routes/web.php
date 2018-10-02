@@ -25,45 +25,6 @@ Route::get('/', [
     'uses' => 'IndexController@index'
 ]);
 
-/*
- * Authentication routes
- */
-Route::get('login', [
-    'as' => 'login',
-    'uses' => 'Auth\LoginController@showLoginForm',
-]);
-
-Route::post('login', [
-    'as' => 'login',
-    'uses' => 'Auth\LoginController@login'
-]);
-
-Route::get('logout', ['as' => 'logout', 'uses' => 'Auth\LoginController@logout']);
-
-/*
- * Registration routes
- */
-Route::get('registro', [
-    'as' => 'auth.register.get',
-    'uses' => 'Auth\RegisterController@showRegistrationForm'
-]);
-
-Route::post('register', [
-    'as' => 'auth.register.post',
-    'uses' => 'Auth\RegisterController@register'
-]);
-
-/**
- * Password routes
- */
-Route::get('password/reset', [
-    'as' => 'password.request',
-    'uses' => 'Auth\ForgotPasswordController@showLinkRequestForm'
-]);
-Route::post('password/email', ['as' => 'password.email', 'uses' => 'Auth\ForgotPasswordController@sendResetLinkEmail']);
-Route::get('password/reset/{token?}', ['as' => 'password.reset', 'uses' => 'Auth\ResetPasswordController@showResetForm']);
-Route::post('password/reset', ['as' => 'password.reset.post', 'uses' => 'Auth\ResetPasswordController@reset']);
-
 /**
  * Redirects
  */
@@ -190,7 +151,7 @@ Route::get('cuenta/suscripcion', [
 
 Route::post('account/subscription', [
     'as' => 'account.subscription.post',
-    'middleware' => 'auth',
+//    'middleware' => 'auth',
     'uses' => 'SubscriptionController@store',
 ]);
 

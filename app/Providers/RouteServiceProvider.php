@@ -37,6 +37,8 @@ class RouteServiceProvider extends ServiceProvider
     {
 //        $this->mapApiRoutes();
 
+        $this->mapAuthenticationRoutes();
+
         $this->mapHomeRoutes();
 
         $this->mapWebRoutes();
@@ -56,6 +58,20 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
              ->namespace($this->namespace)
              ->group(base_path('routes/web.php'));
+    }
+
+    /**
+     * Define the authentication routes for the application.
+     *
+     * These routes all receive session state, CSRF protection, etc.
+     *
+     * @return void
+     */
+    protected function mapAuthenticationRoutes()
+    {
+        Route::middleware('web')
+             ->namespace($this->namespace)
+             ->group(base_path('routes/auth.php'));
     }
 
     /**
