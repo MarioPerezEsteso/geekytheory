@@ -11,7 +11,7 @@
                         <div class="col-6">
                             <h3 class="heading heading-inverse heading-2 strong-600">Esta lección es solo para miembros Premium</h2>
                                 <p class="card-text c-gray-lighter">¡Suscríbete hoy y obtén acceso a todas las lecciones! ¡No te quedes atrás!</p>
-                                <a href="{{ route('pricing') }}" class="btn btn-styled btn-base-1 btn-circle">Pásate a Premium</a>
+                                <a href="{{ route('pricing') }}" class="btn btn-styled btn-mint btn-circle">Pásate a Premium</a>
                         </div>
                     </div>
                 </div>

@@ -20,11 +20,9 @@
 
 @section('content')
 
-    <section class="slice--offset-top bg-base-2 holder-item holder-item-dark"></section>
-
     @if($showHeaderTemplate == \App\Http\Controllers\LessonController::TEMPLATE_HEADER_VIDEO)
         @include('web.lessons.partials.video')
-    @elseif($showHeaderTemplate == \App\Http\Controllers\LessonController::TEMPLATE_HEADER_REGISTER)
+    @else
         @include('web.lessons.partials.onlyForMembers')
     @endif
 
