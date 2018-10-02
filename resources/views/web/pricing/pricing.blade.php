@@ -44,10 +44,22 @@
                                     <span class="strong-700">15</span>
                                     <span class="price-type">/mes</span>
                                 </span>
-                                
-                                <a href="pricing.html#" class="btn btn-styled btn-base-1 btn-circle btn-shadow text-uppercase strong-600 mt-3 px-5">
-                                    Comenzar ahora
-                                </a>
+
+                                @if (!isset($user))
+                                    <a href="{{ route('auth.register.subscription.get') }}" class="btn btn-styled btn-mint btn-circle btn-shadow text-uppercase strong-600 mt-3 px-5">
+                                        <i class="fa fa-bolt" aria-hidden="true" style="color:#ffc107;"></i>
+                                        Comenzar ahora
+                                    </a>
+                                @elseif(isset($user) && !$user['premium'])
+                                    <a href="{{ route('account.subscription') }}" class="btn btn-styled btn-mint btn-circle btn-shadow text-uppercase strong-600 mt-3 px-5">
+                                        <i class="fa fa-bolt" aria-hidden="true" style="color:#ffc107;"></i>
+                                        Comenzar ahora
+                                    </a>
+                                @elseif(isset($user) && $user['premium'] === true)
+                                    <div class="alert alert-primary" role="alert">
+                                        Ya eres Premium
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

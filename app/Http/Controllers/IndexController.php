@@ -58,7 +58,7 @@ class IndexController extends Controller
      */
     public function pricing()
     {
-        return view('courses.pricing');
+        return view('web.pricing.pricing');
     }
 
 }
